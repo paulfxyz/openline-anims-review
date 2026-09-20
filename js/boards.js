@@ -15,6 +15,9 @@ import { BIZ_NEEDS_VARIANTS } from './business-needs.js';
 import { HOSP_VARIANTS } from './hosp.js';
 import { BLOG_VARIANTS } from './iot-blog.js';
 import { C1_VARIANTS, C2_VARIANTS, C3_VARIANTS, WIDE, SMALL } from './iot-cells.js';
+import { LOUNGE_VARIANTS, NOMAD_VARIANTS, KYC_VARIANTS, LOUNGE_BOX, NOMAD_BOX, KYC_BOX } from './plus.js';
+import { ICONS } from './icons.js';
+import { buildIconBoard } from './iconboard.js';
 
 const KEPT_ORANGE = [
   'Same warm Openline orange: #FF5314 / #E23D00',
@@ -444,6 +447,121 @@ export const BOARDS = [
     },
   },
 
+
+  /* ── /openline-plus · the only dark page in the hub ───────────────── */
+  {
+    key: 'pluslounge', page: 'Openline+', path: '/openline-plus', section: 'Airport Lounge & Fast Track Access',
+    short: 'Lounge & fast track', count: 6, accent: TONES.orange, variants: LOUNGE_VARIANTS,
+    embed: LOUNGE_BOX, stageTone: 'plus',
+    problem: 'A boarding pass and two queue bars using a third of a 642px-tall dark panel, with no lounge in it.',
+    cfg: {
+      embed: LOUNGE_BOX, stageTone: 'plus',
+      kicker: 'Openline+ · perks', heading: 'Airport Lounge &', headingAccent: 'Fast Track Access',
+      lead: 'The left cell of the perks block on the dark Openline+ page, measured at 574×642. The right cell carries the benefit cards, so this panel never has to hold copy. Access to VIP lounges and security fast track, included in the $99 plan.',
+      bullets: ['<b>Real box</b> — 574 × 642, tall', '<b>Surface</b> — dark navy panel, orange accent',
+        '<b>Subject</b> — lounge access and fast track', '<b>Job</b> — make the perk pay for the plan'],
+      keptIdentical: kept('#FF5314', '#E23D00', ['Same dark navy panel, warm gradient and dot field', 'Same 574×642 cell']),
+      thinking: {
+        title: 'A good object, in a panel twice its size',
+        lead: 'The boarding pass is the best single object on this page. It is sitting in the top third of a very tall panel above two bars that never finish, and the word "Lounge" — first word of the section title — is never illustrated.',
+        jobs: [
+          { t: 'Finish the comparison', d: 'Two lanes is the right idea, but neither bar resolves. A fast-track claim is worth nothing until the reader sees one lane finish while the other is still going.' },
+          { t: 'Show the lounge', d: 'Half the section title is about a room with a shower, a meal and a desk in it. Nothing on the panel suggests any of that exists.' },
+          { t: 'Connect it to the price', d: 'A day pass and a fast-track ticket have list prices. Four trips a year covers most of the $99, and that arithmetic is not on screen anywhere.' },
+        ],
+      },
+      pick: [
+        { k: 'My pick', h: '1 · Two Lanes, One Clock', d: 'A queue is a vertical object and this is a tall panel, so it fills the box as its subject rather than padding it. One clock across both lanes makes the saving impossible to argue with, and the regular lane still running after you are through is the beat people remember.' },
+        { k: 'If the goal is value', d: '4 · What It Would Have Cost. It is the only option that makes the perk visibly pay for the subscription.' },
+        { k: 'If the goal is least risk', d: '6 · Pass, Upgraded. Same objects, same layout, but the composition is centred and finally resolves.' },
+      ],
+    },
+  },
+
+  {
+    key: 'plusnomad', page: 'Openline+', path: '/openline-plus', section: 'Built for Digital Nomads',
+    short: 'Digital nomads', count: 6, accent: TONES.orange, variants: NOMAD_VARIANTS,
+    embed: NOMAD_BOX, stageTone: 'plus',
+    problem: 'A skeleton-screen monitor in a 656px-tall panel, with nothing nomadic about it.',
+    cfg: {
+      embed: NOMAD_BOX, stageTone: 'plus',
+      kicker: 'Openline+ · audience', heading: 'Built for', headingAccent: 'Digital Nomads',
+      lead: 'The tallest animated panel in the hub at 574×656, on the dark Openline+ page. The right cell carries the benefit cards. This is the panel that has to say why a location-independent professional needs a permanent phone number.',
+      bullets: ['<b>Real box</b> — 574 × 656, tallest in the hub', '<b>Surface</b> — dark navy panel, orange accent',
+        '<b>Subject</b> — one number across every move', '<b>Job</b> — replace a loading placeholder with an argument'],
+      keptIdentical: kept('#FF5314', '#E23D00', ['Same dark navy panel, warm gradient and dot field', 'Same 574×656 cell']),
+      thinking: {
+        title: 'The weakest panel on the page',
+        lead: 'A grey monitor with four skeleton text lines is a loading state, not a picture. It fills about a fifth of the tallest panel in the hub and contains nothing a digital nomad would recognise as their own life.',
+        jobs: [
+          { t: 'Say the actual promise', d: 'The product is a permanent phone number that survives every move. Nothing on this panel mentions a number, a country or a move.' },
+          { t: 'Use 656 pixels', d: 'This is the tallest box available anywhere in the hub. A year of moves, a stack of failures or twelve months of spend all fit down it without compression.' },
+          { t: 'Name the real fear', d: 'This audience has been locked out of a bank by a two-factor code sent to a dead SIM. That is the sale, and it is not on the page.' },
+        ],
+      },
+      pick: [
+        { k: 'My pick', h: '1 · Six Cities, One Number', d: 'It states the product in one picture: the left column changes six times, the right column never changes once. It is the promise the whole page is built on and currently nothing illustrates it.' },
+        { k: 'If the goal is urgency', d: '2 · What Breaks Without It. Naming the two-factor lockout is the sharpest thing this page could do.' },
+        { k: 'If the goal is warmth', d: '4 · Desk, Anywhere. The only option that sells the life rather than the mechanics.' },
+      ],
+    },
+  },
+
+  {
+    key: 'pluskyc', page: 'Openline+', path: '/openline-plus', section: 'Verified & Secure',
+    short: 'Verified & secure', count: 6, accent: { main: '#22C55E', deep: '#16A34A', wash: '#F0FDF4' },
+    variants: KYC_VARIANTS, embed: KYC_BOX, stageTone: 'plusgreen', count2: 6,
+    problem: 'A VERIFIED stamp printed over the Selfie label, and four ticks that are already ticked.',
+    cfg: {
+      embed: KYC_BOX, stageTone: 'plusgreen',
+      accent: { main: '#22C55E', deep: '#16A34A', wash: '#F0FDF4' },
+      kicker: 'Openline+ · security', heading: 'Verified &', headingAccent: 'Secure',
+      lead: 'The one green block on the Openline+ page, 574×432 and landscape rather than tall. Full KYC is required here, unlike the standard anonymous crypto-friendly eSIM — so this panel has to make a requirement feel like a feature.',
+      bullets: ['<b>Real box</b> — 574 × 432, landscape', '<b>Surface</b> — dark navy panel, green accent',
+        '<b>Subject</b> — full KYC, card payment, real number', '<b>Job</b> — explain why, not just that'],
+      keptIdentical: kept('#22C55E', '#16A34A', ['Same dark panel with the green gradient and dot field', 'Same 574×432 cell']),
+      thinking: {
+        title: 'The most finished panel, with a live layout bug',
+        lead: 'This is the best of the three panels on the page and it still has a VERIFIED stamp printed straight across the word "Selfie". Behind that, every field is already ticked on the first frame, so the reader never sees anything get verified.',
+        jobs: [
+          { t: 'Fix the overlap, then animate it', d: 'Move the stamp off the form and let the four checks clear one at a time. A verification panel where nothing verifies is a wasted panel.' },
+          { t: 'Answer "why"', d: 'The copy beside it spends its first paragraph explaining that this is different from the anonymous product. The panel should be carrying that, because a real number is a regulated object.' },
+          { t: 'Address retention', d: 'A brand that sells an anonymous crypto eSIM elsewhere has to say what happens to a passport after it has been checked. Nobody in this category does.' },
+        ],
+      },
+      pick: [
+        { k: 'My pick', h: '2 · Two Doors', d: 'The section copy exists to explain that Openline+ and the standard eSIM are two different products with two different rules. A landscape panel is the right shape for that split, and it protects the anonymous product instead of appearing to contradict it.' },
+        { k: 'If the goal is trust', d: '4 · Verified, Then Sealed. It answers the question readers actually have, which is about retention rather than verification.' },
+        { k: 'If the goal is least risk', d: '1 · Four Checks, Cleared. It fixes the live overlap bug and makes the existing panel resolve, and nothing else.' },
+      ],
+    },
+  },
+
+
+  /* ── /login · the Aloha icon ──────────────────────────────────────── */
+  {
+    key: 'aloha', page: 'Login', path: '/login', section: 'The "Aloha!" icon',
+    short: 'Aloha icon', count: 20, accent: TONES.orange, special: 'icons',
+    problem: 'One small swaying figure in a 56px badge — and twenty alternatives to weigh it against.',
+    cfg: {
+      thinking: {
+        title: 'The first thing anybody sees after clicking Sign in',
+        lead: 'It is 56 pixels across and it sits directly above the only word on the page with any personality in it. That makes it the cheapest piece of brand on the whole site to change, and the one with the least room to hide a bad decision.',
+        jobs: [
+          { t: 'Read at 34 pixels', d: 'The art box is 34px square. Anything with more than one silhouette, or a stroke thinner than about two device pixels, turns to mush. Half the ideas that sound good die on this constraint alone.' },
+          { t: 'Loop without nagging', d: 'People sit on this page waiting for an OAuth redirect. The motion has to stay pleasant on the twentieth pass, which means gentle and continuous, or one clean beat with a rest after it.' },
+          { t: 'Mean "Aloha" or mean Openline', d: 'There are two honest directions: lean into the greeting — a hand, a flower, a lei — or lean into the product, with a chip, a globe or the logo arc. Both are represented below; a third group reads the page literally and animates a door or a lock.' },
+        ],
+      },
+      pick: [
+        { k: 'My pick', h: '02 · Waving Hand', d: 'It is the only icon that means "hello" to everybody, with no cultural reading required and no object to decode. One solid silhouette fills the badge, the three motion arcs make the wave legible even at 34px, and it sits beside the word "Aloha!" without competing with it.' },
+        { k: 'If the goal is brand', h: '18 · Logo Mark', d: 'The arc drawing itself is the most restrained option here and the only one that leaves the reader with the Openline mark rather than a decoration. Pairs best if the greeting copy ever changes.' },
+        { k: 'If the goal is the island', h: '01 · Shaka', d: 'The truest translation of the word into a gesture, it fills the badge better than the current figure, and it is warm in a way the product icons are not.' },
+        { k: 'If the goal is the page', h: '16 · Unlock', d: 'The only icon describing what the button underneath actually does, and it ties to the 2FA note at the foot of the card.' },
+      ],
+    },
+  },
+
   /* ── /blog ──────────────────────────────────────────────────── */
   {
     key: 'blog', page: 'Blog', path: '/blog', section: 'Hero',
@@ -498,6 +616,7 @@ function ensure(b) {
   if (built.has(b.key)) return el;
   built.add(b.key);
   if (b.special === 'tier1') initTier1();
+  else if (b.special === 'icons') buildIconBoard(el, { icons: ICONS, chosen: b.chosen, ...b.cfg });
   else buildBoard(el, { id: b.key, variants: b.variants, accent: b.accent, chosen: b.chosen, ...b.cfg });
   return el;
 }

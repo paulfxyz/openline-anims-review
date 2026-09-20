@@ -384,3 +384,86 @@ svg .marker { transition: transform .5s cubic-bezier(.2,.7,.3,1); }
   background: linear-gradient(135deg,#1A1526,#0D0B14 50%,#241A38);
 }
 .bd-stage.tone-dark { box-shadow: inset 0 0 0 1px rgba(255,255,255,0.07); }
+
+/* ── /openline-plus dark panels ──────────────────────────────────────── */
+.bd-stage.tone-plus, .tile .frame.tone-plus {
+  background: linear-gradient(160deg,#2A1A18,#131826 45%,#241A16);
+}
+.bd-stage.tone-plusgreen, .tile .frame.tone-plusgreen {
+  background: linear-gradient(160deg,#122A1F,#131826 45%,#102A20);
+}
+.bd-stage.tone-plus, .bd-stage.tone-plusgreen { box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); }
+
+/* ══ /login icon board ════════════════════════════════════════════════ */
+.icon-board { --acc: #FF5314; --acc-deep: #E23D00; }
+.ib-top { display: grid; gap: 48px; align-items: start; }
+@media (min-width: 1000px) { .ib-top { grid-template-columns: 1fr 420px; gap: 64px; } }
+
+/* the real badge, to the pixel */
+.ic-badge { display: inline-flex; align-items: center; justify-content: center;
+  width: 56px; height: 56px; border-radius: 16px; flex: none;
+  background: linear-gradient(135deg, rgba(255,83,20,0.10), rgba(255,83,20,0.05)); }
+.ic-badge > svg { width: 34px; height: 34px; }
+.ic-badge.lg { width: 96px; height: 96px; border-radius: 26px; }
+.ic-badge.lg > svg { width: 58px; height: 58px; }
+.ic-badge.xl { width: 168px; height: 168px; border-radius: 44px; }
+.ic-badge.xl > svg { width: 102px; height: 102px; }
+
+.ib-meta { margin-top: 30px; display: grid; gap: 14px 28px; grid-template-columns: repeat(2, minmax(0,1fr)); max-width: 460px; }
+.ib-meta > div { display: flex; flex-direction: column; gap: 3px; border-top: 1.5px solid rgba(0,0,0,0.1); padding-top: 10px; }
+.ib-meta span { font-family: ui-monospace, Menlo, monospace; font-size: 10px; font-weight: 700;
+  letter-spacing: 1.1px; text-transform: uppercase; color: rgba(0,0,0,0.4); }
+.ib-meta b { font-size: 14px; }
+
+.ib-stage { display: flex; flex-direction: column; gap: 22px; }
+.ib-big { display: flex; justify-content: center; padding: 30px 0 6px; }
+.ib-bigmeta { text-align: center; }
+.ib-bigname { font-size: 20px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 9px; }
+.ib-bigname em { font-family: ui-monospace, Menlo, monospace; font-style: normal; font-size: 12px;
+  font-weight: 700; color: var(--acc-deep); background: rgba(255,83,20,0.1); border-radius: 7px; padding: 3px 8px; }
+.ib-bignote { margin: 10px auto 0; max-width: 380px; font-size: 13.5px; line-height: 1.6; color: rgba(0,0,0,0.6); }
+
+/* a replica of the live login card */
+.ib-card { border: 1.5px solid rgba(0,0,0,0.1); border-radius: 22px; padding: 26px 24px 20px;
+  background: #fff; box-shadow: 0 18px 44px -28px rgba(0,0,0,0.22); }
+.ib-cardhead { text-align: center; display: flex; flex-direction: column; align-items: center; }
+.ib-aloha { margin-top: 15px; font-size: 27px; font-weight: 600; letter-spacing: -0.4px; }
+.ib-sub { margin-top: 5px; font-size: 13px; color: rgba(0,0,0,0.55); }
+.ib-btns { margin-top: 22px; display: grid; gap: 9px; }
+.ib-btn { border: 1.5px solid rgba(0,0,0,0.12); border-radius: 12px; padding: 11px; text-align: center;
+  font-size: 13.5px; font-weight: 600; color: rgba(0,0,0,0.75); }
+.ib-ctxnote { margin-top: 16px; text-align: center; font-family: ui-monospace, Menlo, monospace;
+  font-size: 9.5px; font-weight: 700; letter-spacing: 1.1px; text-transform: uppercase; color: rgba(0,0,0,0.32); }
+
+.ib-job { border-top: 2px solid rgba(0,0,0,0.85); padding-top: 14px; }
+.ib-jobt { font-size: 15.5px; font-weight: 700; }
+.ib-jobd { margin-top: 7px; font-size: 14px; line-height: 1.65; color: rgba(0,0,0,0.62); }
+
+.ib-grid { margin-top: 34px; display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(288px, 1fr)); }
+.ib-tile { text-align: left; border: 1.5px solid rgba(0,0,0,0.1); border-radius: 18px; padding: 16px 16px 15px;
+  background: #fff; cursor: pointer; transition: border-color .16s, box-shadow .16s, transform .16s; }
+.ib-tile:hover { border-color: rgba(255,83,20,0.5); transform: translateY(-2px);
+  box-shadow: 0 16px 34px -26px rgba(0,0,0,0.3); }
+.ib-tile.on { border-color: var(--acc); box-shadow: 0 0 0 3px rgba(255,83,20,0.13); }
+.ib-tile.chosen { border-color: #16A34A; }
+.ib-tilehead { display: flex; align-items: center; gap: 8px; }
+.ib-num { font-family: ui-monospace, Menlo, monospace; font-size: 10px; font-weight: 700; letter-spacing: 1px;
+  color: var(--acc-deep); background: rgba(255,83,20,0.1); border-radius: 6px; padding: 3px 7px; }
+.ib-fam { font-family: ui-monospace, Menlo, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1px;
+  text-transform: uppercase; color: rgba(0,0,0,0.38); }
+.ib-tilerow { margin-top: 14px; display: flex; align-items: center; gap: 18px; }
+.ib-tilename { margin-top: 14px; font-size: 15.5px; font-weight: 700; }
+.ib-tilenote { margin-top: 5px; font-size: 12.5px; line-height: 1.6; color: rgba(0,0,0,0.58); }
+.ib-chosen { font-family: ui-monospace, Menlo, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1px;
+  color: #fff; background: #16A34A; border-radius: 999px; padding: 3px 8px; }
+.ib-chosen.sm { margin-left: auto; }
+
+.ib-pick { border: 1.5px solid rgba(0,0,0,0.1); border-radius: 18px; padding: 20px; background: #fff; }
+.ib-pickk { font-family: ui-monospace, Menlo, monospace; font-size: 10px; font-weight: 700; letter-spacing: 1.1px;
+  text-transform: uppercase; color: var(--acc-deep); }
+.ib-pickh { margin-top: 8px; font-size: 16.5px; font-weight: 700; }
+.ib-pickd { margin-top: 8px; font-size: 14px; line-height: 1.65; color: rgba(0,0,0,0.62); }
+
+@media (prefers-reduced-motion: reduce) {
+  .ic-badge svg * { animation: none !important; }
+}
