@@ -176,3 +176,26 @@ svg .marker { transition: transform .5s cubic-bezier(.2,.7,.3,1); }
 @media (max-width: 700px) {
   [data-stage] .pill-slot { display: none; }
 }
+
+/* ══ /network hero · Mast Handoff lane states ═════════════════ */
+.nm .up, .nm .cone { opacity: 0; transition: opacity .4s ease; }
+.nm.on .up, .nm.on .cone { opacity: 1; }
+.nm .mname, .nm .mping { transition: opacity .4s ease, fill .4s ease; }
+.nm.on .mname { fill: #E23D00; opacity: 1; }
+.nm.on .mping { opacity: 0.7; }
+
+/* ══ Referral board · white-on-orange stage ═══════════════════ */
+[data-stage].tone-orange {
+  background: linear-gradient(135deg, #FF5314 0%, #F0651F 55%, #FF8A4C 100%);
+  border-color: rgba(255,255,255,.22);
+}
+[data-stage].tone-orange .pill.white { background:#fff; }
+
+/* selected-option marker */
+.tile .selflag, .tab .selflag { display: none; }
+.tile.picked { border-color:#16A34A !important; box-shadow:0 0 0 3px rgba(22,163,74,.2) !important; }
+.badge-picked { display:inline-flex; align-items:center; gap:5px; border-radius:999px;
+  background:#DCFCE7; color:#166534; padding:2px 9px; font-size:11px; font-weight:800; }
+.mrow.picked { background: rgba(22,163,74,.14) !important; }
+.mrow.picked .idx { background:#16A34A !important; color:#fff !important; }
+.tile .frame.g.tone-orange { background: linear-gradient(135deg,#FF5314,#F0651F 55%,#FF8A4C); }

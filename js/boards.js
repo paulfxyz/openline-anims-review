@@ -1,6 +1,8 @@
 import { buildBoard } from './board.js';
 import { WHAT_VARIANTS } from './esim-what.js';
 import { TRAVEL_VARIANTS } from './esim-travel.js';
+import { REFERRAL_VARIANTS } from './referral.js';
+import { NET_HERO_VARIANTS, WHY_VARIANTS } from './network.js';
 
 const keptGlobal = [
   'Same warm Openline orange: #FF5314 / #E23D00',
@@ -70,6 +72,116 @@ buildBoard(document.getElementById('board-travel'), {
     { k: 'My pick', h: '1 · Border Run', d: 'It keeps today\'s argument exactly — plastic stalls, Openline does not — but runs it on one continuous line with real city names, so the whole panel has a single subject and the loop has built-in rhythm. Biggest gain for the smallest conceptual change.' },
     { k: 'If the goal is a premium feel', d: '2 · One Card, Every Flag. Nothing moves except the network name, the data trace never breaks, and the three zero-counters do the arguing. It is also the only one I would ship on the storefront hero without changes.' },
     { k: 'If the goal is credibility', d: '3 · Trip Tape. It looks like the Openline app doing its job rather than an illustration about it, and it scales to any itinerary length. Cut it to three rows on a phone.' },
+  ],
+});
+
+
+
+/* ── /home · referral box ─────────────────────────────────────── */
+buildBoard(document.getElementById('board-referral'), {
+  id: 'referral',
+  sectionTone: 'orangeBox',
+  stageTone: 'orange',
+  kicker: 'Referral programme',
+  heading: 'Refer a friend, and you\'ll both',
+  headingAccent: 'get US$5!',
+  lead: 'Share your unique referral link with friends and family. When they make their first purchase, you\'ll both receive $5 credit.',
+  bullets: [
+    'Unique link per account, no code to remember',
+    'Credit lands as soon as their first purchase clears',
+    'Both sides get the same US$5 — no small print',
+    'Join 1M+ travellers already earning rewards',
+  ],
+  variants: REFERRAL_VARIANTS,
+  compareTitle: 'All six, side by side',
+  keptIdentical: [
+    'Same orange box, same copy, same email form',
+    'Artwork stays white-on-orange with the mint credit badges',
+    'Same panel size — only the right half changes',
+    'Pure inline SVG + SMIL — no new dependency',
+  ],
+  thinking: {
+    title: 'A referral panel has to make the money feel real',
+    lead: 'The box already explains the offer perfectly in two sentences. The panel beside it is doing nothing to make anyone believe it or want it, which is the only job left.',
+    jobs: [
+      { t: 'Show value arriving', d: 'A static +US$5 badge is a label. Money landing — a coin dropping, a balance ticking, a row appearing — is what converts a reader of the offer into someone who fills the form.' },
+      { t: 'Hint at repeating', d: 'The offer has no obvious cap, and nothing on screen suggests referring twice is worth it. Compounding is the strongest argument available and it is currently unused.' },
+      { t: 'Earn its half of the box', d: 'The right half is currently one line, two circles and empty orange. In a box this large that reads as unfinished and makes the whole offer feel provisional.' },
+    ],
+  },
+  pick: [
+    { k: 'My pick', h: '4 · Two Wallets', d: 'Perfect symmetry answers the only question anyone has — do I really get the same as them — and the numbers rising is the most persuasive motion available next to a form. It is also the calmest, which matters when the real call to action is the email field beside it.' },
+    { k: 'If the goal is virality', d: '1 · Chain Reaction. It is the only option that shows the upside growing past one friend. Worth checking against the programme\'s actual cap before shipping, since it implies unlimited earning.' },
+    { k: 'If the goal is credibility', d: '5 · Referral Ledger. A money claim is more believable as an account statement than as an illustration, and it quietly signals that other people are already doing this.' },
+  ],
+});
+
+/* ── /network · hero ──────────────────────────────────────────── */
+buildBoard(document.getElementById('board-nethero'), {
+  id: 'nethero',
+  kicker: 'Network Infrastructure',
+  heading: 'The World\'s Most',
+  headingAccent: 'Reliable Network',
+  lead: 'Built on partnerships with 50+ Tier-1 carriers globally. Automatic network switching ensures you always have the strongest signal and fastest speeds.',
+  bullets: [
+    '<b>50+</b> Tier-1 carriers',
+    '<b>190+</b> countries',
+    '<b>99.9%</b> uptime SLA',
+    '<b>5G</b> ready',
+  ],
+  variants: NET_HERO_VARIANTS,
+  compareTitle: 'All seven, side by side',
+  keptIdentical: keptGlobal,
+  thinking: {
+    title: 'The headline makes two claims and the artwork proves neither',
+    lead: '"Most reliable" is a claim about time. "Automatic switching" is a claim about change. A still diagram of three masts can express neither, however well drawn it is.',
+    jobs: [
+      { t: 'Prove reliability over time', d: 'Reliability only exists across a duration. Something has to survive a visible interruption, or a number has to hold steady while conditions move underneath it.' },
+      { t: 'Show the switch', d: 'Automatic switching is the differentiator on this whole page. Right now nothing switches, so the most valuable sentence in the hero is carried entirely by the copy.' },
+      { t: 'Make 50+ look like fifty', d: 'Three masts illustrate three carriers. The stat directly beneath says fifty. Either show quantity or stop drawing individual towers.' },
+    ],
+  },
+  pick: [
+    { k: 'My pick', h: '1 · Mast Handoff', d: 'It keeps the exact composition that is live — same masts, same phone, same bloom — and adds the one thing missing: the handoff actually happening, with full bars held through every switch. Smallest diff on the board and it converts the diagram into proof of both claims.' },
+    { k: 'If the goal is credibility', d: '6 · Network HUD, or 2 · Uptime Trace. Both read as monitoring rather than marketing, which is the right register for an enterprise-grade claim, and both can be wired to real values so they stay honest.' },
+    { k: 'If the goal is conversion', d: '3 · Coverage Arcs. Reliability is what you say to engineers; "you are going to Tokyo and it will just work" is what you say to travellers. Also the warmest option and reusable on the country pages.' },
+  ],
+});
+
+/* ── /network · Why Our Network is Different ──────────────────── */
+buildBoard(document.getElementById('board-why'), {
+  id: 'why',
+  kicker: 'Advanced Features',
+  heading: 'Why Our Network is',
+  headingAccent: 'Different',
+  lead: 'Advanced technology that keeps you connected. Four capabilities sit beside this panel — automatic switching, LTE/5G, built-in redundancy and global roaming — and the panel should be supporting at least one of them.',
+  bullets: [
+    '<b>Automatic switching</b> — zero manual intervention',
+    '<b>LTE/5G ready</b> — up to 1 Gbps speeds',
+    '<b>Redundancy built-in</b> — 99.9% uptime',
+    '<b>Global roaming</b> — true global coverage',
+  ],
+  variants: WHY_VARIANTS,
+  compareTitle: 'All four, side by side',
+  keptIdentical: [
+    'Same white card, same grid of rounded squares where kept',
+    'Same warm orange tints and the same badge at the foot',
+    'Same panel size and position beside the four feature cards',
+    'Pure inline SVG + SMIL — no new dependency',
+  ],
+  thinking: {
+    title: 'Pretty texture, doing no work',
+    lead: 'The grid twinkles on random timers. It is genuinely nice to look at, and it supports none of the four claims printed immediately to its right.',
+    jobs: [
+      { t: 'Count something', d: 'Random opacity changes read as decoration. The same cells, lit in a deliberate order with a counter, read as a system checking every network it has.' },
+      { t: 'Support a card', d: 'Four capabilities are listed beside this panel. Illustrating even one of them — redundancy is the one customers worry about — earns the space better than abstract texture.' },
+      { t: 'Resolve', d: 'There is no start and no end, so nothing ever completes. A loop that reaches a conclusion gives a visitor a reason to watch it once through.' },
+    ],
+  },
+  pick: [
+    { k: 'My pick', h: '1 · Coverage Sweep', d: 'It is nearly free — the existing grid plus a sweep and a counter — and it converts decoration into a measurable claim that resolves at 190+. Lowest risk, clearest gain, and it keeps the texture you already like.' },
+    { k: 'If the goal is trust', d: '2 · Failover Grid. Redundancy is the card that actually sells reliability, and a visible outage with no visible consequence is the strongest proof of it available in one panel.' },
+    { k: 'If the goal is clarity', d: '3 · Feature Stack. It makes the panel a legend for the four cards, so the section finally coheres — at the cost of the map-ish atmosphere the grid currently gives you.' },
   ],
 });
 

@@ -13,7 +13,9 @@ const total = v => CRITERIA.reduce((s, c) => s + (v.scores?.[c.key] || 0), 0);
 const bar = n => `<span class="score o">${[1, 2, 3, 4, 5].map(k => `<i class="${k <= n ? 'f' : ''}"></i>`).join('')}</span>`;
 
 export function buildBoard(root, cfg) {
-  const { kicker, heading, headingAccent, lead, bullets, variants, thinking, pick, keptIdentical } = cfg;
+  const { kicker, heading, headingAccent, lead, bullets, variants, thinking, pick, keptIdentical,
+          stageTone, chosen, compareTitle, sectionTone } = cfg;
+  const boxed = sectionTone === 'orangeBox';
 
   root.innerHTML = `
   <section class="border-b border-black/10 bg-gradient-to-b from-[#FFF7F3] to-white py-14 md:py-20">
@@ -22,26 +24,28 @@ export function buildBoard(root, cfg) {
         <span class="text-[12px] font-bold uppercase tracking-[0.14em] text-[#E23D00]">Animation review</span>
         <nav data-tabs class="flex flex-wrap items-center gap-1.5"></nav>
       </div>
+      <div class="${boxed ? 'overflow-hidden rounded-[28px] bg-gradient-to-r from-[#FF5314] to-[#F0651F] p-8 md:p-12' : ''}">
       <div class="grid gap-10 lg:grid-cols-2 lg:gap-14 items-center">
         <div>
-          <div class="inline-flex items-center gap-2 rounded-full bg-[#FF5314]/12 px-4 py-1.5 text-[12px] font-bold text-[#E23D00] mb-5">${kicker}</div>
-          <h2 class="text-3xl md:text-4xl font-bold leading-[1.1]">${heading} <span class="text-[#FF5314]">${headingAccent}</span></h2>
-          <p class="mt-5 max-w-xl text-[16.5px] leading-relaxed text-black/60">${lead}</p>
+          <div class="inline-flex items-center gap-2 rounded-full ${boxed ? 'bg-white/20 text-white' : 'bg-[#FF5314]/12 text-[#E23D00]'} px-4 py-1.5 text-[12px] font-bold mb-5">${kicker}</div>
+          <h2 class="text-3xl md:text-4xl font-bold leading-[1.1] ${boxed ? 'text-white' : ''}">${heading} <span class="${boxed ? 'text-white/85' : 'text-[#FF5314]'}">${headingAccent}</span></h2>
+          <p class="mt-5 max-w-xl text-[16.5px] leading-relaxed ${boxed ? 'text-white/85' : 'text-black/60'}">${lead}</p>
           <div class="mt-7 grid gap-x-8 gap-y-4 sm:grid-cols-2 max-w-xl">
             ${bullets.map(b => `
               <div class="flex gap-3">
-                <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-[#FF5314]/12 text-[#FF5314]">
+                <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md ${boxed ? 'bg-white/22 text-white' : 'bg-[#FF5314]/12 text-[#FF5314]'}">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3"><path d="M20 6 9 17l-5-5"/></svg>
                 </span>
-                <span class="text-[14.5px] leading-snug text-black/70">${b}</span>
+                <span class="text-[14.5px] leading-snug ${boxed ? 'text-white/90' : 'text-black/70'}">${b}</span>
               </div>`).join('')}
           </div>
         </div>
         <!-- animation slot -->
-        <div data-stage class="relative rounded-[26px] border border-[#FF5314]/15 bg-gradient-to-br from-[#FFF7F3] to-white" style="aspect-ratio:640/460">
+        <div data-stage class="relative overflow-hidden rounded-[26px] ${stageTone === 'orange' ? 'tone-orange' : 'border border-[#FF5314]/15 bg-gradient-to-br from-[#FFF7F3] to-white'}" style="aspect-ratio:640/460">
           <div data-stage-svg style="position:absolute;inset:0;pointer-events:none;overflow:hidden"></div>
           <div data-stage-pills></div>
         </div>
+      </div>
       </div>
     </div>
   </section>
@@ -104,7 +108,7 @@ export function buildBoard(root, cfg) {
 
   <section class="border-t border-black/10 bg-gradient-to-b from-white to-[#FFF7F3] py-16">
     <div class="mx-auto max-w-7xl px-4 md:px-8">
-      <h3 class="text-[28px] font-bold">All four, side by side</h3>
+      <h3 class="text-[28px] font-bold">${compareTitle || `All ${variants.length}, side by side`}</h3>
       <p class="mt-3 max-w-2xl text-[17px] leading-relaxed text-black/60">Every tile runs live at the same time. Click any tile — or any row in the score table — to load it into the section above.</p>
       <div data-grid class="mt-10 grid gap-6 sm:grid-cols-2"></div>
     </div>
@@ -146,7 +150,8 @@ export function buildBoard(root, cfg) {
   variants.forEach((v, i) => {
     const b = document.createElement('button');
     b.className = 'tab o';
-    b.textContent = i === 0 ? 'Current' : `${i}. ${v.name}`;
+    b.textContent = (i === 0 ? 'Current' : `${i}. ${v.name}`) + (chosen === i ? '  ✓' : '');
+    if (chosen === i) b.style.boxShadow = 'inset 0 0 0 2px #16A34A';
     b.addEventListener('click', () => mount(i));
     tabsEl.appendChild(b);
   });
@@ -154,13 +159,14 @@ export function buildBoard(root, cfg) {
   variants.forEach((v, i) => {
     const built = v.build(`${cfg.id}-tile-${v.id}`);
     const t = document.createElement('div');
-    t.className = 'tile o';
+    t.className = 'tile o' + (chosen === i ? ' picked' : '');
     t.innerHTML = `
-      <div class="frame g">${built.svg}</div>
+      <div class="frame g${stageTone === 'orange' ? ' tone-orange' : ''}">${built.svg}</div>
       <div class="p-5 border-t border-black/10">
         <div class="flex items-center gap-2">
           <span class="rounded-full bg-[#FF5314]/10 px-2.5 py-0.5 text-[11px] font-bold text-[#E23D00]">${i === 0 ? 'LIVE TODAY' : 'OPTION ' + i}</span>
           <span class="text-[11px] font-bold uppercase tracking-wider text-black/35">${v.family}</span>
+          ${chosen === i ? '<span class="badge-picked">CHOSEN</span>' : ''}
         </div>
         <div class="mt-2.5 text-[17px] font-bold">${v.name}</div>
         <div class="text-[13px] font-semibold text-black/45">${v.tagline}</div>
@@ -185,7 +191,7 @@ export function buildBoard(root, cfg) {
       <div class="text-right">Total</div>
     </div>
     ${variants.map((v, i) => `
-      <button class="mrow" data-mrow="${i}">
+      <button class="mrow${chosen === i ? ' picked' : ''}" data-mrow="${i}">
         <div class="name"><span class="idx">${i === 0 ? '—' : i}</span>${v.name}</div>
         ${CRITERIA.map(c => `<div>${bar(v.scores?.[c.key] || 0)}</div>`).join('')}
         <div class="text-right font-bold">${total(v)}</div>
@@ -196,5 +202,5 @@ export function buildBoard(root, cfg) {
       stage.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }));
 
-  mount(1);
+  mount(typeof chosen === 'number' ? chosen : 1);
 }
