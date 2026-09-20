@@ -123,7 +123,7 @@ export const lgCurrent = {
   pros: ['The boarding pass is a strong, on-brand object', 'Two lanes is the correct idea for a fast-track claim', 'Correct dark treatment and orange accent'],
   cons: ['Uses roughly a third of a very tall panel; the rest is empty gradient', 'The two bars never finish, so the comparison never lands', 'No lounge anywhere in a section whose first word is "Lounge"', 'No figure: not minutes saved, not lounges available, not value'],
   scores: { story: 3, motion: 2, perf: 5, mobile: 4, brand: 4, ease: 5 },
-  build: (uid) => wL(`
+  build: (uid) => ({ pills: noPills, svg: wL(`
     ${bg(uid, 574, 642)}
     ${glow(287, 320, 260, uid)}
     ${boardingPass(153, 176)}
@@ -143,7 +143,7 @@ export const lgCurrent = {
     </g>
     <g transform="translate(153 506)">
       ${chip(0, 0, 104, '🛋 Lounge access')}${chip(112, 0, 92, '✈ Fast track', { op: 1 })}${chip(212, 0, 76, '✓ Included', { op: 0.5 })}
-    </g>`),
+    </g>`) }),
 };
 
 export const lgTwoLanes = {
@@ -916,16 +916,16 @@ export const kyFourChecks = {
         ${fields.map(([f, tm], i) => `
           <g transform="translate(20 ${56 + i * 58})">
             <text x="0" y="0" font-size="11" font-weight="600" fill="#334155">${f}</text>
-            <rect y="11" width="182" height="19" rx="6" fill="#E8EEEA"/>
+            <rect y="11" width="150" height="19" rx="6" fill="#E8EEEA"/>
             <rect x="8" y="17.5" width="0" height="6" rx="3" fill="#9FB3A6">
               <animate attributeName="width" values="0;${[64, 88, 54, 104][i]}" dur="0.5s"
                 begin="${(0.3 + i * 0.85).toFixed(2)}s" fill="freeze" repeatCount="indefinite"/></rect>
-            <circle cx="202" cy="20.5" r="9" fill="#D7E1DA"/>
+            <circle cx="170" cy="20.5" r="9" fill="#D7E1DA"/>
             <g opacity="0">
               <animate attributeName="opacity" values="0;1" dur="0.3s" begin="${(0.85 + i * 0.85).toFixed(2)}s" fill="freeze" repeatCount="indefinite"/>
-              <circle cx="202" cy="20.5" r="9" fill="${GRN}"/>
-              <path d="M 198 20.5 l 2.8 3 l 5 -5.8" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round"/>
-              <text x="222" y="24.5" font-size="9" font-weight="700" fill="${GRN_DEEP}" style="font-family:${MONO}">${tm}</text>
+              <circle cx="170" cy="20.5" r="9" fill="${GRN}"/>
+              <path d="M 166 20.5 l 2.8 3 l 5 -5.8" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round"/>
+              <text x="188" y="24.5" font-size="9" font-weight="700" fill="${GRN_DEEP}" style="font-family:${MONO}">${tm}</text>
             </g>
           </g>`).join('')}
       </g>
@@ -1015,11 +1015,12 @@ export const kyLiveness = {
         <ellipse rx="76" ry="96" fill="none" stroke="${GRN}" stroke-width="2.5" stroke-dasharray="14 10" opacity="0">
           <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.44;0.5;0.94;1" dur="7s" repeatCount="indefinite"/></ellipse>
         <!-- face -->
-        <g opacity="0.55" stroke="${W}" stroke-width="2.2" fill="none" stroke-linecap="round">
-          <path d="M -40 -22 a 40 52 0 0 1 80 0 v 30 a 40 48 0 0 1 -80 0 z"/>
-          <circle cx="-16" cy="-8" r="3.4" fill="${W}" stroke="none"/><circle cx="16" cy="-8" r="3.4" fill="${W}" stroke="none"/>
-          <path d="M 0 -4 v 14 M -9 24 q 9 7 18 0"/>
-          <path d="M -44 -30 q 44 -26 88 0" />
+        <g opacity="0.6" stroke="${W}" stroke-width="2.4" fill="none" stroke-linecap="round">
+          <ellipse rx="44" ry="58"/>
+          <circle cx="-17" cy="-14" r="4" fill="${W}" stroke="none"/>
+          <circle cx="17" cy="-14" r="4" fill="${W}" stroke="none"/>
+          <path d="M 0 -6 v 14 q 0 4 5 4"/>
+          <path d="M -15 30 q 15 11 30 0"/>
         </g>
         <!-- scan line -->
         <g><rect x="-76" y="-6" width="152" height="4" rx="2" fill="${GRN_LIT}" opacity="0.8">
