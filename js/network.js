@@ -677,12 +677,12 @@ export const sweep = {
     <rect x="${gx(0) - 6}" y="${gy(0) - 8}" width="26" height="${GRID_R * CELL + 8}" fill="${G.orange}" opacity="0.14">
       <animate attributeName="x" values="${gx(0) - 6};${gx(GRID_C - 1) + 8};${gx(GRID_C - 1) + 8}" dur="${DUR}s"
         keyTimes="0;0.70;1" calcMode="linear" repeatCount="indefinite"/>
-      <animate attributeName="opacity" values="0.16;0.16;0" dur="${DUR}s" keyTimes="0;0.70;0.80" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.16;0.16;0;0" dur="${DUR}s" keyTimes="0;0.70;0.80;1" repeatCount="indefinite"/>
     </rect>
     <rect x="${gx(0) + 6}" y="${gy(0) - 8}" width="2.5" height="${GRID_R * CELL + 8}" fill="${G.orange}">
       <animate attributeName="x" values="${gx(0) + 6};${gx(GRID_C - 1) + 20};${gx(GRID_C - 1) + 20}" dur="${DUR}s"
         keyTimes="0;0.70;1" calcMode="linear" repeatCount="indefinite"/>
-      <animate attributeName="opacity" values="1;1;0" dur="${DUR}s" keyTimes="0;0.70;0.80" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;1;0;0" dur="${DUR}s" keyTimes="0;0.70;0.80;1" repeatCount="indefinite"/>
     </rect>
 
     <g transform="translate(96 384)">

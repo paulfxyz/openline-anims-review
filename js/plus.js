@@ -423,7 +423,7 @@ export const lgUpgrade = {
           ${boardingPass(0, 0)}
         </g>
         <rect x="-10" y="-10" width="288" height="136" rx="16" fill="none" stroke="${O}" stroke-width="2.5" opacity="0">
-          <animate attributeName="opacity" values="0;0.9;0" keyTimes="0;0.16;0.3" dur="7s" repeatCount="indefinite"/></rect>
+          <animate attributeName="opacity" values="0;0.9;0;0" keyTimes="0;0.16;0.3;1" dur="7s" repeatCount="indefinite"/></rect>
         <rect x="0" y="0" width="268" height="5" fill="${O}" opacity="0.7">
           <animate attributeName="y" values="0;111;0" dur="1.2s" repeatCount="indefinite"/></rect>
       </g>
@@ -811,8 +811,8 @@ export const nmClock = {
             <circle r="4" fill="${GRN_LIT}">
               <animateMotion dur="${senders.length * 1.6}s" begin="${i * 1.6}s" repeatCount="indefinite"
                 path="M ${x.toFixed(1)} ${y.toFixed(1)} L ${ix.toFixed(1)} ${iy.toFixed(1)}"/>
-              <animate attributeName="opacity" values="0;1;1;0" dur="${senders.length * 1.6}s" begin="${i * 1.6}s"
-                keyTimes="0;0.04;${(1 / senders.length - 0.02).toFixed(3)};${(1 / senders.length).toFixed(3)}" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0;1;1;0;0" dur="${senders.length * 1.6}s" begin="${i * 1.6}s"
+                keyTimes="0;0.04;${(1 / senders.length - 0.02).toFixed(3)};${(1 / senders.length).toFixed(3)};1" repeatCount="indefinite"/>
             </circle>
             ${m(x * 1.12, y * 1.12 + 4, who.toUpperCase(), { size: 8, anchor: Math.cos(rad) < -0.2 ? 'end' : Math.cos(rad) > 0.2 ? 'start' : 'middle', op: 0.42 })}
           </g>`;
@@ -1033,7 +1033,7 @@ export const kyLiveness = {
       </g>
       <path d="M 262 208 H 322" stroke="${GRN}" stroke-width="2" opacity="0.3" stroke-dasharray="6 6"/>
       <circle r="4" fill="${GRN_LIT}" opacity="0">
-        <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.52;0.56;0.72;0.76" dur="7s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.52;0.56;0.72;0.76;1" dur="7s" repeatCount="indefinite"/>
         <animateMotion dur="7s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.54;0.72;1" calcMode="linear" path="M 262 208 H 322"/>
       </circle>
       <g transform="translate(336 126)">
@@ -1097,7 +1097,7 @@ export const kySealed = {
       <!-- only the flag travels on -->
       <path d="M 204 214 H 316" stroke="${GRN}" stroke-width="2" opacity="0.28" stroke-dasharray="6 6"/>
       <circle r="4.5" fill="${GRN_LIT}" opacity="0">
-        <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.6;0.64;0.8;0.84" dur="8s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.6;0.64;0.8;0.84;1" dur="8s" repeatCount="indefinite"/>
         <animateMotion dur="8s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.62;0.8;1" calcMode="linear" path="M 204 214 H 316"/>
       </circle>
       <g transform="translate(332 136)">
@@ -1197,7 +1197,7 @@ export const kyCommunity = {
             <animateTransform attributeName="transform" type="translate" values="0 380;0 380;0 ${declined ? 300 : 180};0 ${declined ? 470 : 180}"
               keyTimes="0;0.06;0.4;1" dur="${6 * 1.45}s" begin="${i * 1.45}s" repeatCount="indefinite"/>
             <g opacity="0">
-              <animate attributeName="opacity" values="0;1;1;${declined ? 0 : 1};0" keyTimes="0;0.05;0.4;0.62;0.72"
+              <animate attributeName="opacity" values="0;1;1;${declined ? 0 : 1};0;0" keyTimes="0;0.05;0.4;0.62;0.72;1"
                 dur="${6 * 1.45}s" begin="${i * 1.45}s" repeatCount="indefinite"/>
               <circle cy="-12" r="11" fill="${declined ? 'rgba(248,113,113,0.2)' : 'rgba(34,197,94,0.2)'}"
                 stroke="${declined ? RD : GRN}" stroke-width="2"/>

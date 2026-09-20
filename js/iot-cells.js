@@ -219,7 +219,7 @@ export const c1Ticks = {
         </g>
       </g>
       ${codes.map(([c, x], i) => `<g opacity="0" transform="translate(${x} 0)">
-        <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.04;0.3;0.4" dur="3.4s"
+        <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.04;0.3;0.4;1" dur="3.4s"
           begin="${(x / 684 * 3.4).toFixed(2)}s" repeatCount="indefinite"/>
         ${mono(0, 106, c, { size: 10, anchor: 'middle', op: 0.6, fill: P.deep })}</g>`).join('')}
       <g transform="translate(28 74)">
@@ -255,7 +255,7 @@ export const c1Customs = {
       <path d="M 16 176 H 726" stroke="${INK}" stroke-width="2.5"/>
       ${gates.map(([t, x], i) => `
         <g transform="translate(${x} 0)" opacity="0">
-          <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.04;0.82;0.9" dur="8s"
+          <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.04;0.82;0.9;1" dur="8s"
             begin="${(0.9 + i * 1.3)}s" repeatCount="indefinite"/>
           <g transform="rotate(-7 0 50)">
             ${card(-52, 34, 104, 26, { r: 6, fill: GREEN_SOFT, stroke: GREEN, sw: 2 })}
@@ -500,7 +500,7 @@ export const c2Space = {
         <text y="4" font-size="8.5" font-weight="700" text-anchor="middle" fill="${WHITE}" style="font-family:${MONO}">eSIM</text>
       </g>
       <g transform="translate(160 76)" opacity="0">
-        <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.36;0.44;0.84;0.9" dur="6s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.36;0.44;0.84;0.9;1" dur="6s" repeatCount="indefinite"/>
         ${card(0, 0, 90, 30, { r: 8, fill: INK, stroke: INK })}
         <text x="45" y="20" font-size="11.5" font-weight="700" text-anchor="middle" fill="${P.main}" style="font-family:${MONO}">+18%</text>
       </g>
@@ -540,7 +540,7 @@ export const c2Solder = {
         <animate attributeName="r" values="0;7;0" dur="0.5s" begin="${2.2 + i * 0.13}s" repeatCount="indefinite"/></circle>`).join('')}
       <!-- the failed lift -->
       <g opacity="0">
-        <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.56;0.62;0.86;0.92" dur="6.5s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.56;0.62;0.86;0.92;1" dur="6.5s" repeatCount="indefinite"/>
         <g transform="translate(242 74)">
           <path d="M 0 22 v -16 a 4 4 0 0 1 8 0 v -6 a 4 4 0 0 1 8 0 v 4 a 4 4 0 0 1 8 0 v 18 a 12 12 0 0 1 -12 12 h -6 a 8 8 0 0 1 -8 -8 z"
             fill="${WHITE}" stroke="${INK}" stroke-width="2.2"/>

@@ -16,6 +16,8 @@ import { HOSP_VARIANTS } from './hosp.js';
 import { BLOG_VARIANTS } from './iot-blog.js';
 import { C1_VARIANTS, C2_VARIANTS, C3_VARIANTS, WIDE, SMALL } from './iot-cells.js';
 import { LOUNGE_VARIANTS, NOMAD_VARIANTS, KYC_VARIANTS, LOUNGE_BOX, NOMAD_BOX, KYC_BOX } from './plus.js';
+import { PRIN_VARIANTS, TEAM_VARIANTS } from './about.js';
+import { PRIN_EXTRA, TEAM_EXTRA } from './about2.js';
 import { ICONS } from './icons.js';
 import { buildIconBoard } from './iconboard.js';
 
@@ -562,6 +564,65 @@ export const BOARDS = [
     },
   },
 
+
+  /* ── /about ─────────────────────────────────────────────────── */
+  {
+    key: 'prin', page: 'About', path: '/about', section: 'Our Principles',
+    short: 'Our Principles', count: 10, accent: TONES.orange,
+    variants: [...PRIN_VARIANTS, ...PRIN_EXTRA], embed: { w: 592, h: 430 },
+    problem: 'A second list of three set beside the four-card list already on the page, and nothing on it moves.',
+    cfg: {
+      kicker: 'About Openline', heading: 'Our', headingAccent: 'Principles',
+      lead: 'Four commitments that decide what we build, what we refuse to build, and what we put on the price.',
+      bullets: ['<b>Real box</b> — 592 × 430, landscape', '<b>Surface</b> — warm orange, dotted panel',
+        '<b>Subject</b> — four stated values', '<b>Job</b> — demonstrate one, rather than list three'],
+      keptIdentical: KEPT_ORANGE,
+      thinking: {
+        title: 'A list beside a list',
+        lead: 'The four cards on the left of this section already carry the principles. The animated panel on the right restates three of them in a slightly different style and then stops. The copy is genuinely good — "say the real number" is the best line on the site — and it is being wasted on a static card.',
+        jobs: [
+          { t: 'Show one, do not list four', d: 'A values block earns nothing by repeating itself. Pick the principle that can be evidenced — the price — and evidence it. The other three are already on the left.' },
+          { t: 'Make it checkable', d: 'The claims that survive scrutiny are the ones a reader can go and verify: a public repo, a published incident, a receipt with the total on it. Assertions cost nothing and are worth nothing.' },
+          { t: 'Stay warm', d: 'This is the page where the company is allowed some personality. Whatever goes here should not read like a dashboard.' },
+        ],
+      },
+      pick: [
+        { k: 'My pick', h: '1 · The Receipt', d: 'It takes the strongest principle on the page and turns it into an object the reader watches complete, with the total landing exactly where the price on the box says it will. No adjective does any work.' },
+        { k: 'If the goal is structure', h: '8 · Load-Bearing', d: 'The only option that keeps all four principles and argues they are a system rather than a list. Answers the "list beside a list" problem head on.' },
+        { k: 'If the goal is credibility', h: '10 · Kept Count', d: 'Puts a number against each promise and admits the one that broke. The admission is what makes the other three land.' },
+        { k: 'If the goal is engineering trust', h: '7 · Open by Default', d: 'The only genuinely checkable artefact in the set — a reader can open the repository and read it.' },
+      ],
+    },
+  },
+  {
+    key: 'team', page: 'About', path: '/about', section: 'Built by Travelers, for Travelers',
+    short: 'Built by Travelers', count: 10, accent: TONES.orange,
+    variants: [...TEAM_VARIANTS, ...TEAM_EXTRA], embed: { w: 592, h: 480 },
+    problem: 'An org chart standing in for a story about travelling, on the one section that should be personal.',
+    cfg: {
+      kicker: 'About Openline', heading: 'Built by Travelers,', headingAccent: 'for Travelers',
+      lead: 'A hundred people across eight countries, most of them on the road often enough to need the thing they are building.',
+      bullets: ['<b>Real box</b> — 592 × 480, near-square', '<b>Surface</b> — warm orange, dotted panel',
+        '<b>Subject</b> — the team and how it works', '<b>Job</b> — evidence the travelling, not the headcount'],
+      keptIdentical: KEPT_ORANGE,
+      thinking: {
+        title: 'The section is about travelling and the panel is about headcount',
+        lead: 'The heading promises people who travel. The panel delivers a department breakdown and a percentage. Both facts may be true, but an org chart is the least travelled object imaginable, and the 45%-engineering figure means nothing to a reader deciding whether to trust a data plan.',
+        jobs: [
+          { t: 'Evidence the claim in the title', d: 'If the company is built by travellers, show the travelling — stamps, live lines, the places people are working from today.' },
+          { t: 'Translate the statistic', d: '45% engineering is a fact in search of a consequence. The consequence is that a bug report reaches the person who wrote the code the same afternoon.' },
+          { t: 'Earn some warmth', d: 'This is the most human section on the site and currently the coldest panel. It can afford to be charming.' },
+        ],
+      },
+      pick: [
+        { k: 'My pick', h: '7 · Our Own Lines', d: 'The team\'s real eSIMs, in the countries they are actually in, with no staff plans. It is the strongest trust claim a company this size can make and almost nobody makes it.' },
+        { k: 'If the goal is warmth', h: '6 · Passport Pages', d: 'The most literal and most charming reading of the section title, and it works as a still frame before any motion starts.' },
+        { k: 'If the goal is the statistic', h: '10 · Straight to the Author', d: 'Converts the engineering ratio into a two-hour fix, which is the only form of that fact a traveller cares about.' },
+        { k: 'If the goal is scale', h: '9 · Where We Hired', d: 'Keeps the headcount the page is proud of and adds the geography that makes it interesting.' },
+      ],
+    },
+  },
+
   /* ── /blog ──────────────────────────────────────────────────── */
   {
     key: 'blog', page: 'Blog', path: '/blog', section: 'Hero',
@@ -617,7 +678,7 @@ function ensure(b) {
   built.add(b.key);
   if (b.special === 'tier1') initTier1();
   else if (b.special === 'icons') buildIconBoard(el, { icons: ICONS, chosen: b.chosen, ...b.cfg });
-  else buildBoard(el, { id: b.key, variants: b.variants, accent: b.accent, chosen: b.chosen, ...b.cfg });
+  else buildBoard(el, { id: b.key, variants: b.variants, accent: b.accent, chosen: b.chosen, ...b.cfg, ...(b.embed ? { embed: b.embed } : {}) });
   return el;
 }
 

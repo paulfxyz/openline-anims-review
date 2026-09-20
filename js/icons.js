@@ -193,7 +193,7 @@ export const icGlobe = {
       </g>
       ${[[-7, -6], [8, 3], [-2, 9]].map(([x, y], i) => `
         <g transform="translate(${x} ${y})" opacity="0">
-          <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.06;0.28;0.34" dur="4s" begin="${i * 1.34}s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.06;0.28;0.34;1" dur="4s" begin="${i * 1.34}s" repeatCount="indefinite"/>
           <circle r="4" fill="none" stroke="${OD}" stroke-width="2.4">
             <animate attributeName="r" values="3;13" dur="1s" begin="${i * 1.34}s" repeatCount="indefinite"/>
             <animate attributeName="opacity" values="0.9;0" dur="1s" begin="${i * 1.34}s" repeatCount="indefinite"/>
@@ -316,7 +316,7 @@ export const icPassScan = {
       <path d="M 9 -15 v 30" stroke="${INK}" stroke-width="2.4" stroke-dasharray="3 3"/>
       <path d="M -16 -6 h 18 M -16 2 h 12" stroke="${W}" stroke-width="2.6"/>
       <g transform="translate(16 0)" opacity="0">
-        <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.54;0.6;0.9;0.96" dur="3.2s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.54;0.6;0.9;0.96;1" dur="3.2s" repeatCount="indefinite"/>
         <circle r="7" fill="${GRN}"/>
         <path d="M -3 0 l 2.4 2.8 l 4.6 -5.6" stroke="${W}" stroke-width="2.2"/>
       </g>
@@ -443,7 +443,7 @@ export const icUnlock = {
       </g>
       <rect x="-15" y="-6" width="30" height="24" rx="6" fill="${O}" stroke="${INK}" stroke-width="3"/>
       <rect x="-15" y="-6" width="30" height="24" rx="6" fill="${GRN}" stroke="${INK}" stroke-width="3" opacity="0">
-        <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.44;0.5;0.84;0.9" dur="3.4s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.44;0.5;0.84;0.9;1" dur="3.4s" repeatCount="indefinite"/>
       </rect>
       <circle cy="4" r="3.4" fill="${W}"/>
       <path d="M 0 7 v 5" stroke="${W}" stroke-width="2.6"/>
@@ -460,7 +460,7 @@ export const icDoor = {
     <g transform="translate(32 32)">
       <path d="M -16 -22 h 32 v 44 h -32 z" fill="${AMB}" opacity="0.2"/>
       <path d="M -6 22 L 22 30 L 22 -14 L -6 -22 z" fill="${AMB}" opacity="0.3">
-        <animate attributeName="opacity" values="0;0.45;0.45;0" keyTimes="0;0.3;0.82;0.94" dur="4s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0;0.45;0.45;0;0" keyTimes="0;0.3;0.82;0.94;1" dur="4s" repeatCount="indefinite"/>
       </path>
       <path d="M -16 -22 h 32 v 44 h -32 z" stroke="${INK}" stroke-width="3.4"/>
       <g style="transform-origin:-16px 0px">
@@ -486,7 +486,7 @@ export const icLogo = {
         <animate attributeName="stroke-dashoffset" values="108;0;0;108" keyTimes="0;0.4;0.86;1" dur="4s" repeatCount="indefinite"/>
       </path>
       <circle cx="18" cy="-16" r="6" fill="${O}" opacity="0">
-        <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.42;0.5;0.86;0.94" dur="4s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.42;0.5;0.86;0.94;1" dur="4s" repeatCount="indefinite"/>
         <animate attributeName="r" values="1;7.4;6" keyTimes="0;0.6;1" dur="0.4s" begin="1.68s" repeatCount="indefinite"/>
       </circle>
     </g>`),

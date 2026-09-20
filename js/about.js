@@ -2,7 +2,7 @@
    Both blocks ship in the warm Openline orange system, so these boards
    keep that palette exactly.                                           */
 
-import { mk, INK, WHITE, GRAY, LINE, GREEN, GREEN_SOFT, GREEN_TEXT, RED, AMBER, pill, icon } from './kit.js';
+import { mk, INK, WHITE, GRAY, LINE, GREEN, GREEN_SOFT, GREEN_TEXT, RED, AMBER, pill, icon, boxWrap } from './kit.js';
 
 const K = mk('orange');
 const { P, wrap, dots, bloom, mono, label, num, card, panel, badge, tick, MONO } = K;
@@ -350,6 +350,10 @@ const avatar = (x, y, ini, city, o = {}) => `
   </g>`;
 
 /* ── 0 · CURRENT ───────────────────────────────────────────────────── */
+/* The team panel's real box on /about is 592 × 480 — taller than the hero
+   canvas — so these draw on 640 × 519 and the existing art is centred in it. */
+const wTM = (inner) => boxWrap(640, 519)(`<g transform="translate(0 29.5)">${inner}</g>`);
+
 export const teamCurrent = {
   id: 'tm-current',
   name: 'Current',
@@ -360,7 +364,7 @@ export const teamCurrent = {
   cons: ['Static — the caption says "right now" and then nothing is live', 'Avatars float on a dot field rather than on a map, so the geography is lost', 'Carries none of the 45 / 25 / 20 / 10 split that the section is actually about', 'The "notice something?" claim below it is left entirely to prose'],
   scores: { story: 3, motion: 2, perf: 5, mobile: 4, brand: 4, ease: 5 },
   build: (uid) => ({
-    svg: wrap(`
+    svg: wTM(`
       ${dots(uid)}
       ${bloom(320, 240, 240, uid)}
       ${mono(320, 52, 'THE TEAM, RIGHT NOW', { size: 10, op: 0.4, anchor: 'middle' })}
@@ -404,7 +408,7 @@ export const followSun = {
           <g transform="translate(${x - 20} ${y - 18})">
             <g opacity="0.3">
               <animate attributeName="opacity" values="0.3;0.3;1;1;0.3;0.3"
-                keyTimes="0;${(n * 0.155).toFixed(3)};${(n * 0.155 + 0.03).toFixed(3)};${(n * 0.155 + 0.2).toFixed(3)};${(n * 0.155 + 0.23).toFixed(3)};1"
+                keyTimes="0;${Math.min(n * 0.155, 0.9).toFixed(3)};${Math.min(n * 0.155 + 0.03, 0.925).toFixed(3)};${Math.min(n * 0.155 + 0.2, 0.95).toFixed(3)};${Math.min(n * 0.155 + 0.23, 0.975).toFixed(3)};1"
                 dur="18s" repeatCount="indefinite"/>
               ${avatar(0, 0, i, c)}
               <circle cx="15" cy="-14" r="5" fill="${GREEN}" stroke="${WHITE}" stroke-width="2"/>
@@ -416,7 +420,7 @@ export const followSun = {
         <circle cx="22" cy="18" r="5" fill="${GREEN}"/>
         ${label(38, 23, 'Someone is always awake', { size: 12.5 })}
       </g>`;
-    return { svg: wrap(inner), pills: pT('Six timezones, one network', 'Always one online') };
+    return { svg: wTM(inner), pills: pT('Six timezones, one network', 'Always one online') };
   },
 };
 
@@ -467,7 +471,7 @@ export const split = {
         <animate attributeName="opacity" values="0;1" dur="0.4s" begin="3.6s" fill="freeze"/>
         ${mono(0, 0, 'NEARLY HALF OF THIS TEAM WRITES THE PLATFORM', { size: 9.5, op: 0.42 })}
       </g>`;
-    return { svg: wrap(inner), pills: pT('100 people, counted', '45% engineering') };
+    return { svg: wTM(inner), pills: pT('100 people, counted', '45% engineering') };
   },
 };
 
@@ -514,7 +518,7 @@ export const versus = {
         ${label(22, 28, 'They spend headcount acquiring you.', { size: 13 })}
         <text x="22" y="48" font-size="12.5" fill="${P.deep}" font-weight="700">We spend it on the stack — which is why the price is lower.</text>
       </g>`;
-    return { svg: wrap(inner), pills: pT('45% engineering', 'vs 10% industry') };
+    return { svg: wTM(inner), pills: pT('45% engineering', 'vs 10% industry') };
   },
 };
 
@@ -554,7 +558,7 @@ export const ticketLife = {
         ${card(0, 0, 320, 40, { r: 10, fill: GREEN_SOFT, stroke: GREEN, sw: 2 })}
         ${mono(160, 25, 'FIXED ONCE — FIXED FOR EVERYONE', { size: 10.5, anchor: 'middle', op: 1, fill: GREEN_TEXT })}
       </g>`;
-    return { svg: wrap(inner), pills: pT('Support to engineering', '3 min 58 s') };
+    return { svg: wTM(inner), pills: pT('Support to engineering', '3 min 58 s') };
   },
 };
 
@@ -593,7 +597,7 @@ export const travelled = {
             <path d="M 0 0 c 0 -9 -7 -13 -7 -20 a 7 7 0 0 1 14 0 c 0 7 -7 11 -7 20 z" fill="${P.main}" stroke="${INK}" stroke-width="2"/>
             <circle cy="-20" r="2.6" fill="${WHITE}"/>
             <g opacity="0">
-              <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.06;0.5;0.62" dur="2.4s"
+              <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.06;0.5;0.62;1" dur="2.4s"
                 begin="${(0.2 + i * 0.42).toFixed(2)}s"/>
               ${card(10, -44, 108, 26, { r: 13, stroke: INK, sw: 2 })}
               ${mono(64, -26, `${ini} · ${place.toUpperCase()}`, { size: 8.5, anchor: 'middle', op: 0.75 })}
@@ -607,7 +611,7 @@ export const travelled = {
         <text x="60" y="38" font-size="11" fill="${WHITE}" opacity="0.5">of 190 covered</text>
       </g>
       ${mono(600, 410, 'SIX TIMEZONES · ONE NETWORK', { size: 9.5, op: 0.35, anchor: 'end' })}`;
-    return { svg: wrap(inner), pills: pT('74 countries, personally', 'Six timezones') };
+    return { svg: wTM(inner), pills: pT('74 countries, personally', 'Six timezones') };
   },
 };
 

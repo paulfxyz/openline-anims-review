@@ -182,3 +182,8 @@ export function icon(name) {
 }
 
 export const pill = (tone, html, pos) => ({ tone, html, pos });
+
+/* A wrapper for boards whose real embed box is not 640×460. Pass the box the
+   live page actually gives the animation and draw to that canvas. */
+export const boxWrap = (w, h) => (inner) =>
+  `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="xMidYMid meet" aria-hidden="true" style="width:100%;height:100%">${inner}</svg>`;
