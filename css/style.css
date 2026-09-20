@@ -1,0 +1,178 @@
+:root { --cyan:#06B6D4; --cyan-deep:#0891B2; --ink:#0B0B0F; }
+
+html { scroll-behavior: smooth; }
+body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; -webkit-font-smoothing: antialiased; }
+svg text { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+
+/* ── Floating pills (same styling as the live hero) ───────── */
+.pill-slot { position: absolute; animation: bob 5.5s ease-in-out infinite; }
+.pill-slot:nth-of-type(2) { animation-duration: 6.4s; animation-delay: -1.2s; }
+.pill-slot:nth-of-type(3) { animation-duration: 7.1s; animation-delay: -2.6s; }
+.pill-slot:nth-of-type(4) { animation-duration: 6s;  animation-delay: -3.4s; }
+@keyframes bob { 0%,100% { transform: translateY(-6px); } 50% { transform: translateY(2px); } }
+
+.pill { display: inline-flex; align-items: center; gap: 6px; border-radius: 999px; padding: 9px 16px;
+  font-size: 13px; font-weight: 700; box-shadow: 0 14px 30px rgba(15,23,42,.18); white-space: nowrap; }
+.pill.orange { background: #FF5314; color: #fff; }
+.pill.ink    { background: var(--ink); color: #fff; }
+.pill.white  { background: #fff; color: var(--ink); }
+.pill .ic { height: 14px; width: 14px; }
+.pill .dot { height: 8px; width: 8px; border-radius: 999px; background: #4ade80; box-shadow: 0 0 0 3px rgba(74,222,128,.25); }
+
+/* ── Variant 1 · Live Handoff ─────────────────────────────── */
+.lane .live { opacity: 0; transition: opacity .45s ease; }
+.lane.on .live { opacity: 1; }
+.lane .halo { display: none; }
+.lane.on .halo { display: block; }
+.lane .node { fill: #3D3D46; transition: fill .45s ease, r .45s ease; }
+.lane.on .node { fill: var(--cyan); }
+.lane .tag { transition: opacity .45s ease, fill .45s ease; }
+.lane.on .tag { fill: var(--cyan-deep); opacity: 1; }
+.lane.on .meta { opacity: .62; }
+.flash { transform-origin: 0 0; animation: flash .95s cubic-bezier(.2,.7,.3,1) forwards; }
+@keyframes flash {
+  from { transform: translate(400px,280px) scale(.72); opacity: .55; }
+  to   { transform: translate(400px,280px) scale(1.7); opacity: 0; }
+}
+
+/* ── Variant 3 · Price Auction ────────────────────────────── */
+.card .shell { transition: opacity .4s ease, stroke .4s ease; }
+.card .ring, .card .won { transition: opacity .4s ease; }
+.card.on .shell { opacity: 1; stroke: var(--cyan); }
+.card.on .ring { opacity: 1; }
+.card.on .won { opacity: 1; }
+
+/* ── Tabs ─────────────────────────────────────────────────── */
+.tab { border-radius: 999px; padding: 7px 14px; font-size: 12.5px; font-weight: 600;
+  border: 1px solid rgba(0,0,0,.12); color: rgba(0,0,0,.6); background: #fff; transition: all .18s ease; cursor: pointer; }
+.tab:hover { border-color: var(--cyan); color: var(--cyan-deep); }
+.tab.active { background: var(--cyan); border-color: var(--cyan); color: #fff; box-shadow: 0 6px 16px rgba(6,182,212,.32); }
+
+/* ── Compare tiles ────────────────────────────────────────── */
+.tile { text-align: left; border-radius: 20px; border: 1px solid rgba(0,0,0,.1); background: #fff; overflow: hidden;
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; cursor: pointer; }
+.tile:hover { transform: translateY(-3px); box-shadow: 0 18px 40px rgba(15,23,42,.12); border-color: var(--cyan); }
+.tile.active { border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(6,182,212,.18); }
+.tile .frame { position: relative; aspect-ratio: 640 / 460; background: linear-gradient(180deg,#ecfeff,#fff); }
+.tile .frame > svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+@media (prefers-reduced-motion: reduce) {
+  .pill-slot { animation: none; }
+}
+
+/* ── Phone: lay the pills out in a row so nothing clips ───── */
+@media (max-width: 760px) {
+  #stage { min-height: 480px !important; }
+  #stage-pills { position: absolute; left: 0; right: 0; bottom: -4px; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+  #stage-pills .pill-slot { position: static; animation: none; }
+  #stage-pills .pill { font-size: 12px; padding: 7px 12px; box-shadow: 0 8px 18px rgba(15,23,42,.14); }
+}
+
+/* ── Variant 6 · Failover ─────────────────────────────────── */
+.fl .up, .fl .down { opacity: 0; transition: opacity .35s ease; }
+.fl.on .up { opacity: 1; }
+.fl.dead .down { opacity: 1; }
+.fl .node { transition: fill .3s ease; }
+.fl.on .node { fill: #06B6D4; }
+.fl.dead .node { fill: #EF4444; }
+.fl.dead .cross { opacity: 1 !important; transition: opacity .2s ease; }
+.fl .cname, .fl .cstate { transition: opacity .3s ease, fill .3s ease; }
+.fl.on .cname { fill: #0891B2; opacity: 1; }
+.fl.on .cstate { fill: #0891B2; opacity: .85; }
+.fl.dead .cname { fill: #EF4444; opacity: .9; }
+.fl.dead .cstate { fill: #EF4444; opacity: 1; }
+
+/* ── Variant 7 · Auction Board ────────────────────────────── */
+.matrix .marker, .row .price, .row .badge { transition: all .45s cubic-bezier(.2,.7,.3,1); }
+svg .marker { transition: transform .5s cubic-bezier(.2,.7,.3,1); }
+
+/* ── Variant 9 · eSIM Wallet ──────────────────────────────── */
+.wcard { transition: transform .55s cubic-bezier(.2,.7,.3,1), opacity .55s ease; }
+.wcard .face, .wcard .wactive { transition: opacity .45s ease; }
+.wcard.front .face { opacity: 1; }
+.wcard.front .wactive { opacity: .9; }
+.wcard.front .wname, .wcard.front .wmeta { fill: #fff; }
+.wcard.front .wmeta { opacity: .8; }
+
+/* ── Scoring matrix ───────────────────────────────────────── */
+.matrix { border: 1px solid rgba(255,255,255,.12); border-radius: 20px; overflow: hidden; }
+.mrow { display: grid; grid-template-columns: 1.5fr repeat(6, 1fr) 62px; align-items: center; gap: 8px;
+  width: 100%; padding: 12px 18px; text-align: left; font-size: 13px; color: rgba(255,255,255,.8);
+  border-top: 1px solid rgba(255,255,255,.08); background: transparent; transition: background .2s ease; cursor: pointer; }
+.mrow.head { border-top: 0; background: rgba(255,255,255,.05); font-size: 11.5px; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.5); cursor: default; }
+.mrow:not(.head):hover { background: rgba(6,182,212,.1); }
+.mrow.on { background: rgba(6,182,212,.16); color: #fff; }
+.mrow .name { display: flex; align-items: center; gap: 10px; font-weight: 700; }
+.mrow .idx { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px;
+  border-radius: 999px; background: rgba(255,255,255,.1); font-size: 11px; font-weight: 700; }
+.mrow.on .idx { background: #06B6D4; color: #0B0B0F; }
+.score { display: inline-flex; gap: 3px; }
+.score i { width: 12px; height: 6px; border-radius: 2px; background: rgba(255,255,255,.14); }
+.score i.f { background: #06B6D4; }
+
+@media (max-width: 900px) {
+  .matrix { border: 0; }
+  .mrow { grid-template-columns: 1fr 62px; row-gap: 6px; }
+  .mrow.head { display: none; }
+  .mrow > div:not(.name):not(:last-child) { display: none; }
+  .mrow > div:last-child { grid-row: 1; grid-column: 2; text-align: right; }
+  .mrow .name { grid-column: 1; }
+}
+.wcard .wbar, .wcard .wchip, .wcard .wtrace { transition: fill .45s ease, stroke .45s ease, opacity .45s ease; }
+.wcard.front .wbar { fill: #fff; }
+.wcard.front .wchip { fill: #fff; opacity: .32; }
+.wcard.front .wtrace { stroke: #fff; opacity: .6; }
+
+/* Phone: one scrollable row of tabs instead of four stacked rows */
+@media (max-width: 760px) {
+  #tabs { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none;
+    max-width: 100%; padding-bottom: 2px; }
+  #tabs::-webkit-scrollbar { display: none; }
+  .tab { flex: 0 0 auto; }
+}
+
+/* ══ Global-eSIM boards (warm orange system) ══════════════════ */
+:root { --orange:#FF5314; --orange-deep:#E23D00; }
+
+/* top-level board switcher */
+.btab { display:inline-flex; align-items:center; gap:7px; border-radius:999px; padding:7px 14px;
+  font-size:12.5px; font-weight:700; border:1px solid rgba(0,0,0,.12); color:rgba(0,0,0,.6);
+  background:#fff; transition:all .18s ease; cursor:pointer; white-space:nowrap; }
+.btab .n { display:inline-flex; align-items:center; justify-content:center; min-width:18px; height:18px;
+  padding:0 5px; border-radius:999px; background:rgba(0,0,0,.07); font-size:10.5px; }
+.btab:hover { border-color:var(--cyan); color:var(--cyan-deep); }
+.btab.o:hover { border-color:var(--orange); color:var(--orange-deep); }
+.btab.active { background:var(--cyan); border-color:var(--cyan); color:#fff; box-shadow:0 6px 16px rgba(6,182,212,.30); }
+.btab.active .n { background:rgba(255,255,255,.26); color:#fff; }
+.btab.o.active { background:var(--orange); border-color:var(--orange); box-shadow:0 6px 16px rgba(255,83,20,.30); color:#fff; }
+
+/* orange variants of the review chrome */
+.tab.o:hover { border-color:var(--orange); color:var(--orange-deep); }
+.tab.o.active { background:var(--orange); border-color:var(--orange); color:#fff; box-shadow:0 6px 16px rgba(255,83,20,.30); }
+.tile.o:hover { border-color:var(--orange); }
+.tile.o.active { border-color:var(--orange); box-shadow:0 0 0 3px rgba(255,83,20,.16); }
+.tile .frame.g { aspect-ratio:640 / 460; background:linear-gradient(160deg,#FFF7F3,#fff); }
+.score.o i.f { background:var(--orange); }
+.matrix.o .mrow:not(.head):hover { background:rgba(255,83,20,.10); }
+.matrix.o .mrow.on { background:rgba(255,83,20,.15); }
+.matrix.o .mrow.on .idx { background:var(--orange); color:#fff; }
+
+/* board stages: pills sit inside the panel, so keep them clear of the artwork */
+[data-stage] .pill-slot { position:absolute; z-index:2; }
+[data-stage] .pill { font-size:12px; padding:8px 13px; }
+
+@media (max-width: 760px) {
+  #boardnav { flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none; max-width:100%; }
+  #boardnav::-webkit-scrollbar { display:none; }
+  .btab { flex:0 0 auto; }
+  [data-tabs] { flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none; max-width:100%; padding-bottom:2px; }
+  [data-tabs]::-webkit-scrollbar { display:none; }
+  [data-stage] .pill { font-size:10.5px; padding:6px 10px; }
+}
+
+/* On a narrow screen the floating pills are proportionally huge and start
+   covering the artwork, which already carries its own labels — so drop them. */
+@media (max-width: 700px) {
+  [data-stage] .pill-slot { display: none; }
+}
