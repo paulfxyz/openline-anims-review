@@ -13,7 +13,8 @@ import { ACCESS_VARIANTS } from './t1-access.js';
 import { BIZ_HERO_VARIANTS } from './business.js';
 import { BIZ_NEEDS_VARIANTS } from './business-needs.js';
 import { HOSP_VARIANTS } from './hosp.js';
-import { IOT_VARIANTS, BLOG_VARIANTS } from './iot-blog.js';
+import { BLOG_VARIANTS } from './iot-blog.js';
+import { C1_VARIANTS, C2_VARIANTS, C3_VARIANTS, WIDE, SMALL } from './iot-cells.js';
 
 const KEPT_ORANGE = [
   'Same warm Openline orange: #FF5314 / #E23D00',
@@ -355,30 +356,90 @@ export const BOARDS = [
   },
 
   /* ── /iot ───────────────────────────────────────────────────── */
+  /* ── /iot · the bento grid ──────────────────────────────────────
+     Three animated cells, three different boxes, measured on the live
+     page at 1440px. Each board below is drawn to its real embed size. */
   {
-    key: 'iot', page: 'IoT', path: '/iot', section: 'The SIM card is dead. Long live eSIM.',
-    count: 5, accent: TONES.purple, variants: IOT_VARIANTS,
-    problem: 'Grey bars and purple dots that decode to nothing, beside the boldest headline on the site.',
+    key: 'iotwide', page: 'IoT', path: '/iot', section: 'Cell 1 · wide, beside "Global Out of the Box"',
+    short: 'Cell 1 · wide', count: 6, accent: TONES.purple, variants: C1_VARIANTS, embed: WIDE,
+    problem: 'A 740×234 cell carrying grey bars that are not a chart, beside a card about shipping one SKU worldwide.',
     cfg: {
-      kicker: 'Why eSIM', heading: 'The SIM card is dead.', headingAccent: 'Long live eSIM.',
-      lead: 'Embedded SIM technology eliminates the biggest pain points of IoT connectivity at scale. Six benefit cards sit around this panel — global out of the box, remote provisioning, tamper-proof security, smaller form factor, lower total cost, instant activation.',
-      bullets: ['<b>Global out of the box</b> — ship one SKU worldwide', '<b>Remote provisioning</b> — no site visits',
-        '<b>Tamper-proof</b> — soldered and sealed', '<b>Smaller</b> — 30 mm² instead of 180',
-        '<b>Lower total cost</b> — fewer parts, no logistics', '<b>Instant activation</b> — batch, via API'],
-      keptIdentical: kept('#8B5CF6', '#7C3AED', ['Same purple dotted field and soft bloom']),
+      embed: WIDE,
+      kicker: 'Why eSIM · cell 1 of 3', heading: 'Global out of the box.', headingAccent: 'One SKU, everywhere.',
+      lead: 'The widest animated cell in the bento grid, 740×234, sitting immediately beside the "Global Out of the Box" card: ship one SKU worldwide, no country-specific SIM cards, no regional inventory. Every option below is drawn to that exact box.',
+      bullets: ['<b>Real box</b> — 740 × 234, col-span-2', '<b>Neighbour card</b> — Global Out of the Box',
+        '<b>Subject</b> — one SKU, no regional stock', '<b>Shape</b> — 3.16:1, so compositions run horizontally'],
+      keptIdentical: kept('#8B5CF6', '#7C3AED', ['Same purple dotted field and soft bloom', 'Same 740×234 cell, same corner radius']),
       thinking: {
-        title: 'The boldest headline on the site, with the weakest art',
-        lead: '"The SIM card is dead" is a quotable, confident claim. Beside it sits a set of grey bars with dots on them that mean nothing in particular.',
+        title: 'A very wide cell doing a very small job',
+        lead: 'This is the largest piece of canvas in the section and it is spending it on eleven grey bars with no axis. The card beside it makes a specific, checkable claim about inventory. That claim is what the cell should be carrying.',
         jobs: [
-          { t: 'Decode to something', d: 'Whatever the current shapes represent, no visitor can recover it. Abstract is fine; meaningless is not, especially next to six very specific benefit cards.' },
-          { t: 'Answer the headline', d: 'If the SIM card is dead, show it dying — or show the thing that replaced it doing something a SIM card cannot. Either is a one-beat animation.' },
-          { t: 'Speak to scale', d: 'This is a fleet product. One device, or no device at all, understates the only question that matters: does this hold up across twenty thousand units.' },
+          { t: 'Serve the neighbour', d: 'In a bento grid every animated cell sits beside a text card and is read as its illustration. This one illustrates nothing, so the pairing reads as decoration.' },
+          { t: 'Use the width', d: 'At 3.16:1 a centred subject wastes most of the cell. Conveyors, tickers, timelines and drain-to-zero sequences all want exactly this shape.' },
+          { t: 'Give procurement a number', d: 'The buyer here manages part numbers and stock. SKUs 42 → 1 and units held 8,400 → 0 are the two figures that close the argument.' },
         ],
       },
       pick: [
-        { k: 'My pick', h: '3 · The Tray Disappears', d: 'It is the most direct possible illustration of the sentence above it, resolves in one beat, and drops three measurable numbers as it does — footprint, bill of materials, failure points. It also supports two of the six cards at once.' },
-        { k: 'If the goal is operations', d: '2 · Over the Air. Never touching the device again is where the money actually is, and the parked truck makes that saving obvious without a word.' },
-        { k: 'If the goal is scale', d: '4 · Fleet Activation. Ten thousand tiles lighting in a wave is the only option that makes fleet size visible instead of stated.' },
+        { k: 'My pick', h: '1 · Inventory to Zero', d: 'It is the literal content of the card beside it, the drain-right motion is exactly what a 3.16:1 cell wants, and it lands the two numbers a hardware buyer actually cares about.' },
+        { k: 'If the goal is endless motion', d: '3 · One Line, Every Country. The strip never resets, so the cell always looks live rather than caught mid-loop.' },
+        { k: 'If the goal is restraint', d: '4 · One Ninety. Almost nothing to draw, nothing to break, and the count carries the whole argument.' },
+      ],
+    },
+  },
+
+  {
+    key: 'iotchip', page: 'IoT', path: '/iot', section: 'Cell 2 · small, beside "Smaller Form Factor"',
+    short: 'Cell 2 · small', count: 6, accent: TONES.purple, variants: C2_VARIANTS, embed: SMALL,
+    problem: 'A 360×234 cell with a chip and four unlabelled pads, in the row about form factor and cost.',
+    cfg: {
+      embed: SMALL,
+      kicker: 'Why eSIM · cell 2 of 3', heading: 'Soldered in.', headingAccent: 'Six square millimetres.',
+      lead: 'The single-column cell in row three, 360×234, sitting between "Smaller Form Factor" and "Lower Total Cost" — and one row below "Tamper-Proof Security". It is the smallest animated box in the section, so every option here is built to read at that size.',
+      bullets: ['<b>Real box</b> — 360 × 234, single column', '<b>Neighbour cards</b> — Smaller Form Factor, Lower Total Cost',
+        '<b>Subject</b> — no slot, no tray, soldered down', '<b>Shape</b> — 1.54:1, the tightest cell in the grid'],
+      keptIdentical: kept('#8B5CF6', '#7C3AED', ['Same purple chip idiom on a dotted field', 'Same 360×234 cell']),
+      thinking: {
+        title: 'The right subject, with nothing measured',
+        lead: 'This is the only live cell already drawing the right object. What it never does is give a dimension — and the two cards it sits between are both, in the end, about a number.',
+        jobs: [
+          { t: 'State the footprint', d: '30 mm² down to 6 mm² is the figure both neighbouring cards imply. Right now the cell shows a chip and leaves the reader to take "smaller" on faith.' },
+          { t: 'Show it is fixed', d: 'Soldered is the security claim and the reliability claim at once. Four floating outlines do not communicate a part that cannot be removed.' },
+          { t: 'Survive 360px', d: 'This is the smallest animated cell in the grid. Anything with more than one idea in it will not read here.' },
+        ],
+      },
+      pick: [
+        { k: 'My pick', h: '1 · The Tray Ejects', d: 'One beat, one unmistakable object, and it lands the footprint figure both neighbouring cards are really about. It is also the only option that reads perfectly at 360px with no text at all.' },
+        { k: 'If the goal is the benefit', d: '2 · Space Reclaimed. Showing the freed space being spent on a bigger battery is the harder and better half of the argument.' },
+        { k: 'If the goal is security', d: '3 · Solder Down. Nothing else in the whole grid supports the Tamper-Proof Security card.' },
+      ],
+    },
+  },
+
+  {
+    key: 'iotdark', page: 'IoT', path: '/iot', section: 'Cell 3 · wide dark, beside "Instant Activation"',
+    short: 'Cell 3 · wide dark', count: 6, accent: TONES.purple, variants: C3_VARIANTS, embed: WIDE,
+    stageTone: 'dark',
+    problem: 'A 740×234 dark cell with a sphere centred in it, leaving two thirds empty and nothing activating.',
+    cfg: {
+      embed: WIDE, stageTone: 'dark',
+      kicker: 'Why eSIM · cell 3 of 3', heading: 'Instant activation.', headingAccent: 'At fleet scale.',
+      lead: 'The dark cell at the bottom of the grid, 740×234, spanning two columns beside "Instant Activation": devices connect the moment they are powered on, zero-touch provisioning for mass deployments. It is the only dark surface on the page and the best-looking cell in the section.',
+      bullets: ['<b>Real box</b> — 740 × 234, col-span-2, dark', '<b>Neighbour card</b> — Instant Activation',
+        '<b>Subject</b> — zero-touch, at fleet scale', '<b>Shape</b> — 3.16:1, so a centred sphere wastes it'],
+      keptIdentical: kept('#8B5CF6', '#7C3AED', ['Same near-black gradient panel and purple dot texture', 'Same 740×234 dark cell']),
+      thinking: {
+        title: 'The best cell on the page, mostly empty',
+        lead: 'The dark treatment is the strongest visual decision anywhere in this section. It is being spent on a sphere centred in a cell three times wider than it is tall, with two thirds of the surface left as gradient.',
+        jobs: [
+          { t: 'Fill the width', d: 'Either stretch the subject across all 740px, or keep the sphere and put something live in the space beside it. Both are proposed below.' },
+          { t: 'Make something activate', d: 'The card beside it is about the moment a device comes online. Nothing in the current cell comes online.' },
+          { t: 'Carry the number', d: 'A dark panel is the best possible place on this page for one large live figure, and it currently has none.' },
+        ],
+      },
+      pick: [
+        { k: 'My pick', h: '1 · Night Side', d: 'It keeps the dark treatment that makes this cell work, uses the entire 740px, and every light in it is an activation — so the motion and the message are the same thing.' },
+        { k: 'If the goal is least risk', h: '3 · Globe and Ledger', d: 'The sphere is untouched and the wasted two thirds becomes a live activation log. It is the smallest change that fixes the real problem.' },
+        { k: 'If the goal is a hard number', d: '4 · Time to First Byte. "The moment they are powered on" is a claim about time, and this is the only option that puts a clock on it.' },
       ],
     },
   },
@@ -488,7 +549,7 @@ function renderNav() {
   navSections.innerHTML = `
     <span class="seclabel">${items[0].path}</span>
     ${items.map(x => `<button class="stab${x.key === current ? ' active' : ''}" data-key="${x.key}">
-      ${x.section}<span class="n">${x.count}</span>${x.chosen != null ? '<span class="ok">✓</span>' : ''}
+      ${x.short || x.section}<span class="n">${x.count}</span>${x.chosen != null ? '<span class="ok">✓</span>' : ''}
     </button>`).join('')}`;
   [...navSections.querySelectorAll('[data-key]')].forEach(el => el.onclick = () => show(el.dataset.key));
 }

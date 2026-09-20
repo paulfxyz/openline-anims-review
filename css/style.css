@@ -321,7 +321,7 @@ svg .marker { transition: transform .5s cubic-bezier(.2,.7,.3,1); }
 .bd-tick.on-box { background: rgba(255,255,255,.22); color: #fff; }
 .bd-bullet { font-size: 14.5px; line-height: 1.4; color: rgba(0,0,0,.7); }
 .bd-bullet.on-box { color: rgba(255,255,255,.92); }
-.bd-stage { position: relative; overflow: hidden; border-radius: 26px; aspect-ratio: 640/460;
+.bd-stage { position: relative; overflow: hidden; border-radius: 26px; aspect-ratio: var(--bd-ar, 640/460);
   border: 1px solid color-mix(in srgb, var(--acc) 22%, transparent);
   background: linear-gradient(150deg, var(--acc-wash), #fff); }
 .bd-stage > [data-stage-svg] { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
@@ -342,7 +342,7 @@ svg .marker { transition: transform .5s cubic-bezier(.2,.7,.3,1); }
 .tab.acc.picked { box-shadow: inset 0 0 0 2px #16A34A; }
 .tile.acc:hover { border-color: var(--acc); }
 .tile.acc.active { border-color: var(--acc); box-shadow: 0 0 0 3px color-mix(in srgb, var(--acc) 18%, transparent); }
-.tile .frame { position: relative; aspect-ratio: 640/460;
+.tile .frame { position: relative; aspect-ratio: var(--bd-ar, 640/460);
   background: linear-gradient(150deg, var(--acc-wash), #fff); }
 .tile .frame > svg { position: absolute; inset: 0; width: 100%; height: 100%; }
 .tile .frame.tone-orange { background: linear-gradient(135deg,#FF5314,#F0651F 55%,#FF8A4C); }
@@ -357,3 +357,30 @@ svg .marker { transition: transform .5s cubic-bezier(.2,.7,.3,1); }
   .bd-stage .pill-slot { display: none; }
   .bd-hero { padding: 32px 0 44px; }
 }
+
+
+/* ── true-size embed modes ──────────────────────────────────────────────
+   Some blocks on the hub are not hero panels. The /iot bento grid uses a
+   740x234 wide cell and a 360x234 single cell, so an option drawn at the
+   hero's 640x460 could never drop in. Boards carry their real embed box as
+   --bd-ar, and wide boards switch to a stacked layout so a 3.16:1 panel is
+   not squeezed into a half-width column.                                  */
+.bd-lay-wide .bd-split { display: block; }
+.bd-lay-wide .bd-copy { max-width: 780px; }
+.bd-lay-wide .bd-stage { margin-top: 34px; width: 100%; }
+.bd-lay-wide [data-grid] { grid-template-columns: 1fr; }
+@media (min-width: 1100px) {
+  .bd-lay-wide [data-grid] { grid-template-columns: 1fr; }
+}
+/* the small 360x234 cell is tiny — cap it so it reads at its real size */
+.bd-lay-small .bd-stage { max-width: 520px; }
+.bd-size-note { display: inline-flex; align-items: center; gap: 7px; font-family: var(--mono, ui-monospace, Menlo, monospace);
+  font-size: 10.5px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+  color: rgba(0,0,0,0.45); border: 1.5px solid rgba(0,0,0,0.12); border-radius: 999px; padding: 5px 11px; }
+.bd-size-note b { color: rgba(0,0,0,0.8); letter-spacing: 0.5px; }
+
+/* ── dark cell (/iot cell 3) ─────────────────────────────────────────── */
+.bd-stage.tone-dark, .tile .frame.tone-dark {
+  background: linear-gradient(135deg,#1A1526,#0D0B14 50%,#241A38);
+}
+.bd-stage.tone-dark { box-shadow: inset 0 0 0 1px rgba(255,255,255,0.07); }

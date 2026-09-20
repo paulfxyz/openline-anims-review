@@ -15,7 +15,7 @@ const bar = n => `<span class="score acc">${[1, 2, 3, 4, 5].map(k => `<i class="
 export function buildBoard(root, cfg) {
   const {
     kicker, heading, headingAccent, lead, bullets, variants, thinking, pick,
-    keptIdentical, stageTone, chosen, compareTitle, sectionTone, accent,
+    keptIdentical, stageTone, chosen, compareTitle, sectionTone, accent, embed,
   } = cfg;
   const boxed = sectionTone === 'accentBox';
   const A = accent || { main: '#FF5314', deep: '#E23D00', wash: '#FFF7F3' };
@@ -25,16 +25,24 @@ export function buildBoard(root, cfg) {
   root.style.setProperty('--acc-deep', A.deep);
   root.style.setProperty('--acc-wash', A.wash);
 
+  /* real embed box, measured off the live hub. Every option in the board is
+     drawn to exactly this ratio so it can be dropped in without re-cropping. */
+  const E = embed || { w: 640, h: 460, layout: 'split' };
+  root.style.setProperty('--bd-ar', `${E.w}/${E.h}`);
+  if (E.layout === 'wide') root.classList.add('bd-lay-wide');
+  if (E.layout === 'small') root.classList.add('bd-lay-small');
+
   root.innerHTML = `
   <section class="bd-hero">
     <div class="bd-wrap">
       <div class="mb-7 flex flex-wrap items-center gap-3">
         <span class="bd-eyebrow">Animation review</span>
+        <span class="bd-size-note" title="Measured on the live page at a 1440px viewport">Embed <b>${E.w}×${E.h}</b></span>
         <nav data-tabs class="flex flex-wrap items-center gap-1.5"></nav>
       </div>
       <div class="${boxed ? 'bd-box' : ''}">
-        <div class="grid gap-10 lg:grid-cols-2 lg:gap-14 items-center">
-          <div>
+        <div class="bd-split grid gap-10 lg:grid-cols-2 lg:gap-14 items-center">
+          <div class="bd-copy">
             <div class="bd-kicker${boxed ? ' on-box' : ''}">${kicker}</div>
             <h2 class="bd-h2${boxed ? ' on-box' : ''}">${heading} <span>${headingAccent}</span></h2>
             <p class="bd-lead${boxed ? ' on-box' : ''}">${lead}</p>

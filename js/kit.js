@@ -10,7 +10,19 @@ export const TONES = {
   teal: { main: '#0D9488', deep: '#0F766E', wash: '#F0FDFA', soft: '#CCFBF1' },
   purple: { main: '#8B5CF6', deep: '#7C3AED', wash: '#F5F3FF', soft: '#EDE9FE' },
   orange: { main: '#FF5314', deep: '#E23D00', wash: '#FFF7F3', soft: '#FFE4D6' },
+  /* /affiliate ships green — the only page on the hub that does */
+  green: { main: '#16A34A', deep: '#15803D', wash: '#F0FDF4', soft: '#DCFCE7' },
+  /* proposed character for /omdm-market: institutional navy, not orange.
+     Documented in STYLE-OMDM.md — navy panels, gold accent, tabular mono. */
+  market: { main: '#1B2A4A', deep: '#0E1A33', wash: '#F5F7FB', soft: '#DCE3F0' },
 };
+
+/* OMDM market semantics — bid/ask/gold, exported for the market boards */
+export const GOLD = '#C08B2C';
+export const GOLD_SOFT = '#F7EBD2';
+export const UP = '#127C52';
+export const DOWN = '#B4232A';
+export const TERM = '#0A1122';
 
 export const INK = '#0B0B0F';
 export const WHITE = '#FFFFFF';
