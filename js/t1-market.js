@@ -509,4 +509,277 @@ export const tape = {
   },
 };
 
-export const MARKET_VARIANTS = [mkCurrent, candles, dipHunter, orderBook, vsMarket, tape];
+/* ══ MARKET · 6–9 ═══════════════════════════════════════════════════ */
+
+export const mkYouPaid = {
+  id: 'mk-youpaid',
+  name: 'What You Actually Paid',
+  family: 'Outcome',
+  tagline: 'Twelve buys against the market average',
+  desc:
+    'A market is only interesting if it produces a better price. Twelve purchases are plotted as ' +
+    'points against the rolling market average: every one lands below the line, and the total saved ' +
+    'is stated at the end. It moves the panel from "look, a market exists" to "here is what the ' +
+    'market did for you".',
+  pros: [
+    'Answers the only question a customer has about a marketplace',
+    'Points below a line is the clearest possible visual claim',
+    'The cumulative figure gives the panel a payoff',
+  ],
+  cons: ['Every point below average invites scepticism', 'Needs real fill data to publish'],
+  scores: { story: 5, motion: 4, perf: 5, mobile: 4, brand: 5, ease: 4 },
+  build: (uid) => {
+    const dur = 12;
+    const avg = series(26, 11, 0.9, 1.18);
+    const buys = [[2, 0.82], [5, 0.74], [8, 0.79], [11, 0.68], [14, 0.72], [17, 0.64],
+      [20, 0.7], [23, 0.61]];
+    const x0 = 84, x1 = 566, y0 = 330, yTop = 120;
+    const px = (i) => x0 + (i / 25) * (x1 - x0);
+    const py = (v) => y0 - ((v - 0.5) / 0.8) * (y0 - yTop);
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 220, 250, uid)}
+    ${mono(72, 56, 'YOUR FILLS vs MARKET AVERAGE \u00b7 \u20ac / GB', { size: 9.5, op: 0.45 })}
+    <line x1="${x0}" y1="${y0}" x2="${x1}" y2="${y0}" stroke="${LINE}" stroke-width="2"/>
+    ${[0.7, 0.9, 1.1].map((v) => `
+      <line x1="${x0}" y1="${py(v).toFixed(0)}" x2="${x1}" y2="${py(v).toFixed(0)}" stroke="${LINE}" stroke-width="1" opacity="0.6"/>
+      ${mono(x0 - 10, py(v) + 4, `\u20ac${v.toFixed(2)}`, { size: 8.5, anchor: 'end', op: 0.35 })}`).join('')}
+    <polyline points="${avg.map((v, i) => `${px(i).toFixed(0)} ${py(v).toFixed(0)}`).join(' ')}"
+      fill="none" stroke="${GRAY}" stroke-width="2.4" stroke-dasharray="6 5"
+      stroke-dashoffset="900">
+      <animate attributeName="stroke-dashoffset" values="900;0" keyTimes="0;1" dur="${dur * 2}s" repeatCount="indefinite"/>
+    </polyline>
+    ${mono(x1, py(avg[25]) - 10, 'MARKET AVERAGE', { size: 8.5, anchor: 'end', op: 0.4 })}
+    ${buys.map(([i, v], k) => {
+      const on = 0.06 + k * 0.08;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.03).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        <line x1="${px(i).toFixed(0)}" y1="${py(v).toFixed(0)}" x2="${px(i).toFixed(0)}" y2="${py(avg[i]).toFixed(0)}"
+          stroke="${P.main}" stroke-width="1.6" opacity="0.4"/>
+        <circle cx="${px(i).toFixed(0)}" cy="${py(v).toFixed(0)}" r="5.5" fill="${P.main}"/>
+        ${mono(px(i).toFixed(0), py(v) + 20, `\u20ac${v.toFixed(2)}`, { size: 8, anchor: 'middle', op: 0.5, fill: P.deep })}
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.74;0.82;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(72, 360, 240, 66, { r: 12, fill: P.wash, stroke: P.main, sw: 2 })}
+      ${mono(96, 386, 'EIGHT FILLS, ALL BELOW', { size: 8.5, op: 0.5 })}
+      ${num(96, 414, '31% under average', { size: 15, fill: P.deep })}
+      ${card(328, 360, 240, 66, { r: 12, fill: WHITE, stroke: LINE })}
+      ${mono(352, 386, 'TOTAL SAVED, THIS QUARTER', { size: 8.5, op: 0.4 })}
+      ${num(352, 414, '\u20ac2,840', { size: 15 })}
+    </g>`;
+    return { svg: wrap(inner), pills: pMK('31% under average') };
+  },
+};
+
+export const mkSpread = {
+  id: 'mk-spread',
+  name: 'The Spread Closing',
+  family: 'Mechanism',
+  tagline: 'More sellers, narrower spread, cheaper data',
+  desc:
+    'The mechanism, in one line: as sellers join, the gap between the best bid and the best ask ' +
+    'narrows, and the narrower it gets the less anybody pays. The seller count climbs from four to ' +
+    'twenty-two and the spread falls from eleven cents to four. It explains why a market beats a ' +
+    'price list, rather than asserting it.',
+  pros: [
+    'Explains the actual economic mechanism, which is rare and persuasive',
+    'One number falling is easy to follow',
+    'Gives the page something a competitor cannot simply copy',
+  ],
+  cons: ['Assumes the reader knows what a spread is', 'Implies growth figures we must be able to show'],
+  scores: { story: 5, motion: 5, perf: 5, mobile: 4, brand: 4, ease: 3 },
+  build: (uid) => {
+    const dur = 12;
+    const steps = [[4, 0.11], [7, 0.09], [11, 0.07], [15, 0.06], [19, 0.05], [22, 0.04]];
+    const x0 = 96, x1 = 552, y0 = 320, yTop = 130;
+    const px = (i) => x0 + (i / 5) * (x1 - x0);
+    const py = (v) => y0 - ((v - 0.02) / 0.11) * (y0 - yTop);
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 210, 250, uid)}
+    ${mono(72, 56, 'SELLERS ON THE BOOK vs SPREAD', { size: 9.5, op: 0.45 })}
+    <line x1="${x0}" y1="${y0}" x2="${x1}" y2="${y0}" stroke="${LINE}" stroke-width="2"/>
+    <polyline points="${steps.map(([, v], i) => `${px(i).toFixed(0)} ${py(v).toFixed(0)}`).join(' ')}"
+      fill="none" stroke="${P.main}" stroke-width="3.4" stroke-dasharray="600" stroke-dashoffset="600">
+      <animate attributeName="stroke-dashoffset" values="600;0;0" keyTimes="0;0.62;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+    </polyline>
+    ${steps.map(([n, v], i) => {
+      const on = 0.06 + i * 0.1;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.04).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        <circle cx="${px(i).toFixed(0)}" cy="${py(v).toFixed(0)}" r="5.5" fill="${P.main}"/>
+        ${mono(px(i).toFixed(0), py(v) - 14, `\u20ac${v.toFixed(2)}`, { size: 9, anchor: 'middle', op: 0.6, fill: P.deep })}
+        ${mono(px(i).toFixed(0), y0 + 22, `${n}`, { size: 9.5, anchor: 'middle', op: 0.45 })}
+      </g>`;
+    }).join('')}
+    ${mono(x0, y0 + 42, 'SELLERS ON THE BOOK', { size: 8.5, op: 0.32 })}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.7;0.78;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(72, 376, 496, 54, { r: 12, fill: P.wash, stroke: P.main, sw: 2 })}
+      ${label(96, 408, 'Every seller who joins makes the next gigabyte cheaper.', { size: 13.5, fill: P.deep })}
+    </g>
+    ${mono(72, 112, 'SPREAD, \u20ac / GB', { size: 8.5, op: 0.35 })}`;
+    return { svg: wrap(inner), pills: pMK('Spread closing') };
+  },
+};
+
+export const mkSettled = {
+  id: 'mk-settled',
+  name: 'Settled',
+  family: 'Trust',
+  tagline: 'The trade, and the receipt behind it',
+  desc:
+    'A market without settlement is a chart. One order is followed all the way through — matched, ' +
+    'allocated, settled, receipted — with a hash and a timestamp at the end. It answers the question ' +
+    'a sceptical buyer asks about any marketplace: what actually happens after the number moves.',
+  pros: [
+    'Settlement is the part that makes the market real rather than decorative',
+    'A hash and timestamp read as auditable',
+    'Reuses the audit language already used elsewhere on the site',
+  ],
+  cons: ['Only lands for a reader who already understands markets', 'Four stages is a lot for one panel'],
+  scores: { story: 5, motion: 4, perf: 5, mobile: 5, brand: 5, ease: 4 },
+  build: (uid) => {
+    const dur = 11;
+    const stages = [
+      ['Order placed', '2 GB at \u20ac0.64 or better', '14:22:08.114'],
+      ['Matched', 'Seller: Orange ES \u00b7 \u20ac0.61', '14:22:08.152'],
+      ['Allocated', 'Profile updated on device', '14:22:08.390'],
+      ['Settled', 'Receipt written, both sides', '14:22:09.004'],
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 210, 250, uid)}
+    ${mono(72, 56, 'ORDER 8841-C \u00b7 END TO END', { size: 9.5, op: 0.45 })}
+    ${stages.map(([nm, note, ts], i) => {
+      const y = 82 + i * 74;
+      const on = 0.06 + i * 0.15;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.05).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${card(72, y, 496, 60, { r: 12, fill: WHITE, stroke: LINE })}
+        <circle cx="102" cy="${y + 30}" r="11" fill="${P.wash}"/>
+        <path d="M 96 ${y + 30} l 4.5 4.5 l 8 -9" fill="none" stroke="${P.main}" stroke-width="2.4" stroke-linecap="round"/>
+        ${label(130, y + 27, nm, { size: 13.5 })}
+        ${mono(130, y + 46, note, { size: 9, op: 0.42 })}
+        ${mono(544, y + 36, ts, { size: 9.5, anchor: 'end', op: 0.5, fill: P.deep })}
+        ${i < 3 ? `<line x1="102" y1="${y + 60}" x2="102" y2="${y + 74}" stroke="${LINE}" stroke-width="2"/>` : ''}
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.74;0.82;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(72, 384, 496, 44, { r: 11, fill: P.wash, stroke: P.main, sw: 1.8 })}
+      ${mono(96, 412, 'RECEIPT 4f2a\u20228e01 \u00b7 890 ms, ORDER TO SETTLEMENT', { size: 9.5, op: 0.6, fill: P.deep })}
+    </g>`;
+    return { svg: wrap(inner), pills: pMK('Settled and receipted') };
+  },
+};
+
+export const mkWhoSells = {
+  id: 'mk-whosells',
+  name: 'Who Is Selling',
+  family: 'Trust',
+  tagline: 'Named counterparties, not anonymous liquidity',
+  desc:
+    'The supply side, named: six carriers and aggregators with the volume each has on the book and ' +
+    'the countries they cover. A market whose participants are anonymous is a black box; a market ' +
+    'whose sellers are all Tier-1 carriers is an argument for quality as well as price.',
+  pros: [
+    'Names supply, which turns a price story into a quality story',
+    'Consistent with the transparency stance taken on the network pages',
+    'A growing list is easy to keep current',
+  ],
+  cons: ['Requires carrier permission to name them', 'Volume figures are commercially sensitive'],
+  scores: { story: 4, motion: 3, perf: 5, mobile: 5, brand: 5, ease: 3 },
+  build: (uid) => {
+    const dur = 11;
+    const sellers = [
+      ['Vodafone', '14 countries', 412],
+      ['Orange', '11 countries', 338],
+      ['Telef\u00f3nica', '9 countries', 296],
+      ['T-Mobile', '6 countries', 214],
+      ['A1 Telekom', '8 countries', 188],
+      ['Telia', '5 countries', 141],
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 210, 250, uid)}
+    ${mono(72, 56, 'SUPPLY SIDE \u00b7 TERABYTES ON THE BOOK', { size: 9.5, op: 0.45 })}
+    ${sellers.map(([nm, cov, tb], i) => {
+      const y = 78 + i * 54;
+      const on = 0.06 + i * 0.1;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.045).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${card(72, y, 496, 44, { r: 11, fill: i % 2 ? '#FAFAFB' : WHITE, stroke: LINE })}
+        ${label(96, y + 28, nm, { size: 13.5 })}
+        ${mono(232, y + 28, cov, { size: 9, op: 0.4 })}
+        <rect x="344" y="${y + 18}" width="${Math.round((tb / 412) * 130)}" height="9" rx="4.5" fill="${P.main}" opacity="0.75"/>
+        ${num(544, y + 30, `${tb} TB`, { size: 13, anchor: 'end' })}
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.7;0.78;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(72, 402, 496, 44, { r: 11, fill: P.wash, stroke: P.main, sw: 1.8 })}
+      ${mono(96, 430, 'EVERY SELLER IS A TIER-1 CARRIER \u2014 NO ANONYMOUS LIQUIDITY', { size: 9.5, op: 0.6, fill: P.deep })}
+    </g>`;
+    return { svg: wrap(inner), pills: pMK('Named sellers') };
+  },
+};
+
+/* ── registry ── */
+
+export const mkNoSurge = {
+  id: 'mk-nosurge',
+  name: 'No Surge Pricing',
+  family: 'Trust',
+  tagline: 'The market moves; your price does not',
+  desc:
+    'A market panel raises an obvious fear: that the price moves against the customer. This answers ' +
+    'it directly — the wholesale line swings through the day while the retail line the customer pays ' +
+    'stays flat, with the volatility absorbed on our side. Pre-empting the objection is worth more ' +
+    'than another chart of the market itself.',
+  pros: [
+    'Answers the fear the rest of the panel creates',
+    'A flat line against a jagged one needs no caption',
+    'Positions us as taking the risk, which is a premium position',
+  ],
+  cons: ['Commits us to absorbing volatility', 'Slightly undercuts the market narrative'],
+  scores: { story: 5, motion: 4, perf: 5, mobile: 5, brand: 5, ease: 4 },
+  build: (uid) => {
+    const dur = 12;
+    const ws = series(30, 19, 0.52, 1.22);
+    const x0 = 92, x1 = 560, y0 = 330, yTop = 120;
+    const px = (i) => x0 + (i / 29) * (x1 - x0);
+    const py = (v) => y0 - ((v - 0.4) / 0.95) * (y0 - yTop);
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 220, 250, uid)}
+    ${mono(72, 54, 'WHOLESALE vs WHAT YOU PAY \u00b7 \u20ac / GB', { size: 9.5, op: 0.45 })}
+    <line x1="${x0}" y1="${y0}" x2="${x1}" y2="${y0}" stroke="${LINE}" stroke-width="2"/>
+    <polyline points="${ws.map((v, i) => `${px(i).toFixed(0)} ${py(v).toFixed(0)}`).join(' ')}"
+      fill="none" stroke="${GRAY}" stroke-width="2.4" stroke-dasharray="1000" stroke-dashoffset="1000">
+      <animate attributeName="stroke-dashoffset" values="1000;0;0" keyTimes="0;0.6;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+    </polyline>
+    ${mono(x1, py(ws[29]) - 12, 'WHOLESALE, ALL DAY', { size: 8.5, anchor: 'end', op: 0.42 })}
+    <line x1="${x0}" y1="${py(0.79)}" x2="${x1}" y2="${py(0.79)}" stroke="${P.main}" stroke-width="3.6"
+      stroke-dasharray="470" stroke-dashoffset="470">
+      <animate attributeName="stroke-dashoffset" values="470;0;0" keyTimes="0;0.34;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+    </line>
+    ${label(x0 + 10, py(0.79) - 14, 'Your price \u2014 \u20ac0.79, fixed', { size: 13, fill: P.deep })}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.7;0.78;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(72, 366, 496, 78, { r: 13, fill: P.wash, stroke: P.main, sw: 2 })}
+      ${label(96, 398, 'The market moves thirty times a day.', { size: 14 })}
+      ${label(96, 426, 'Your price moves when we lower it, and not before.', { size: 14, fill: P.deep })}
+    </g>`;
+    return { svg: wrap(inner), pills: pMK('Fixed retail price') };
+  },
+};
+
+/* ── registry ── */
+export const MARKET_VARIANTS = [mkCurrent, candles, dipHunter, orderBook, vsMarket, tape, mkYouPaid, mkSpread, mkSettled, mkWhoSells, mkNoSurge];

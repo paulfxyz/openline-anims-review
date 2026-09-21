@@ -885,6 +885,12 @@ export const BOARDS = [
   },
 ];
 
+/* keep the nav badges honest: derive the proposal count from the registry */
+BOARDS.forEach((b) => {
+  if (Array.isArray(b.variants)) b.count = b.variants.length - 1;
+  else if (Array.isArray(b.icons)) b.count = b.icons.length;
+});
+
 /* ═════════════════════════ NAV + ROUTING ══════════════════════ */
 const PAGES = [...new Set(BOARDS.map(b => b.page))];
 const boardsHost = document.getElementById('boards');

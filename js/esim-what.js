@@ -784,5 +784,61 @@ export const nothingToLose = {
   },
 };
 
+export const whatTheSlot = {
+  id: 'what-slot',
+  name: 'The Empty Slot',
+  family: 'Definition',
+  tagline: 'The chip that was always in your phone',
+  desc:
+    'Most people think an eSIM is a download. It is a chip that shipped inside the phone years ago, ' +
+    'waiting for a profile. A cutaway shows the plastic tray beside the soldered eSIM already on the ' +
+    'board, and the profile arriving as software into hardware that was always there. It corrects the ' +
+    'single most common misunderstanding.',
+  pros: [
+    'Fixes the misconception that drives most support questions',
+    'A cutaway is a genuinely informative image, not a metaphor',
+    'Gives the reader a fact they will repeat to somebody else',
+  ],
+  cons: ['Technical register for a consumer page', 'Board artwork must stay plausible'],
+  scores: { story: 5, motion: 4, perf: 5, mobile: 4, brand: 4, ease: 4 },
+  build: (uid) => {
+    const dur = 11;
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 210, 250, uid)}
+    ${label(96, 62, 'It was already in your phone', { size: 15, op: 0.5 })}
+    ${card(96, 92, 448, 200, { r: 16, fill: '#F7F7F9', stroke: G.line })}
+    ${mono(120, 120, 'INSIDE THE HANDSET', { size: 9.5, op: 0.42 })}
+    <rect x="132" y="142" width="128" height="86" rx="8" fill="${G.white}" stroke="${G.line}" stroke-width="2"
+      stroke-dasharray="5 5"/>
+    ${mono(196, 190, 'SIM TRAY', { size: 9, anchor: 'middle', op: 0.4 })}
+    ${mono(196, 250, 'REMOVABLE, OPTIONAL', { size: 8.5, anchor: 'middle', op: 0.3 })}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.18;0.28;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      <rect x="332" y="158" width="72" height="54" rx="5" fill="${G.orange}" stroke="${G.deep}" stroke-width="2"/>
+      ${Array.from({ length: 5 }, (_, i) => `
+        <line x1="332" y1="${168 + i * 10}" x2="318" y2="${168 + i * 10}" stroke="${G.orange}" stroke-width="2"/>
+        <line x1="404" y1="${168 + i * 10}" x2="418" y2="${168 + i * 10}" stroke="${G.orange}" stroke-width="2"/>`).join('')}
+      ${mono(368, 236, 'eSIM, SOLDERED', { size: 9, anchor: 'middle', op: 0.6, fill: G.orange })}
+      ${mono(368, 256, 'SHIPPED IN 2021', { size: 8.5, anchor: 'middle', op: 0.35 })}
+    </g>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.44;0.54;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      <path d="M 470 184 H 438" stroke="${G.orange}" stroke-width="2.4"/>
+      <path d="M 432 184 l 9 -6 v 12 z" fill="${G.orange}"/>
+      ${mono(478, 176, 'THE PROFILE', { size: 8.5, op: 0.5, fill: G.orange })}
+      ${mono(478, 192, 'ARRIVES HERE', { size: 8.5, op: 0.5, fill: G.orange })}
+    </g>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.66;0.74;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(96, 320, 448, 92, { r: 16, fill: G.wash, stroke: G.orange, sw: 2 })}
+      ${label(124, 356, 'Nothing is delivered. Nothing is installed in a slot.', { size: 14 })}
+      ${label(124, 384, 'A profile is written to a chip that was already there.', { size: 14, fill: G.orange })}
+    </g>`;
+    return { svg: gWrap(inner), pills: pillsA('Already in your phone') };
+  },
+};
+
+/* ── registry ── */
 export const WHAT_VARIANTS = [whatCurrent, etch, twoWays, drawer, noPostOffice,
-  theProfile, shelfOfCountries, scanIt, landed, nothingToLose];
+  theProfile, shelfOfCountries, scanIt, landed, nothingToLose, whatTheSlot];

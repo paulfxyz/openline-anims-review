@@ -1,6 +1,6 @@
 /* ══ /multiple-tier1 · "Access to 50+ Tier-1 Networks" (cyan) ═════════ */
 
-import { mk, INK, WHITE, GRAY, LINE, GREEN, pill, icon } from './kit.js';
+import { mk, INK, WHITE, GRAY, LINE, GREEN, RED, pill, icon } from './kit.js';
 
 const K = mk('cyan');
 const { P, wrap, dots, bloom, mono, label, num, card, panel, phoneLight, bars, mast, badge, tick, MONO } = K;
@@ -443,4 +443,299 @@ export const signalLadder = {
   },
 };
 
-export const ACCESS_VARIANTS = [acCurrent, roster, wall, ladder, regional, signalLadder];
+/* ══ ACCESS · 6–9 ═══════════════════════════════════════════════════ */
+
+export const acYourRoute = {
+  id: 'ac-yourroute',
+  name: 'Your Route',
+  family: 'Relevance',
+  tagline: 'Fifty carriers is meaningless; yours is not',
+  desc:
+    'A roster of fifty means nothing until the reader finds their own country in it. This searches ' +
+    'a destination and returns the carriers available there with their generation and the fallback ' +
+    'order — Japan returns NTT Docomo, KDDI and SoftBank, in that priority. It turns a boast into a ' +
+    'lookup, which is what the reader actually wanted.',
+  pros: [
+    'Converts a vanity number into something personally relevant',
+    'Fallback order is real information nobody else publishes',
+    'Doubles as a product surface worth building for real',
+  ],
+  cons: ['Needs accurate per-country carrier data', 'A country with one carrier looks weak'],
+  scores: { story: 5, motion: 5, perf: 5, mobile: 5, brand: 5, ease: 3 },
+  build: (uid) => {
+    const dur = 12;
+    const q = 'Japan';
+    const res = [
+      ['NTT Docomo', '5G', 'Primary'],
+      ['KDDI au', '5G', 'First fallback'],
+      ['SoftBank', 'LTE', 'Second fallback'],
+    ];
+    const typed = q.split('').map((_, i) => q.slice(0, i + 1));
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 200, 250, uid)}
+    ${mono(72, 56, 'CHECK YOUR DESTINATION', { size: 9.5, op: 0.45 })}
+    ${card(72, 76, 496, 56, { r: 14, fill: WHITE, stroke: P.main, sw: 2 })}
+    <g transform="translate(100 104)" fill="none" stroke="${GRAY}" stroke-width="2.2" stroke-linecap="round">
+      <circle r="7"/><path d="M 5.5 5.5 L 11 11"/>
+    </g>
+    ${typed.map((t, i) => `
+      <g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1;0;0"
+          keyTimes="0;${(0.04 + i * 0.03).toFixed(4)};${(0.045 + i * 0.03).toFixed(4)};${i === typed.length - 1 ? '1;1;1' : `${(0.075 + i * 0.03).toFixed(4)};${(0.08 + i * 0.03).toFixed(4)};1`}"
+          dur="${dur}s" repeatCount="indefinite" calcMode="discrete" ${i === typed.length - 1 ? 'fill="freeze"' : ''}/>
+        ${label(126, 110, t, { size: 17 })}
+      </g>`).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.24;0.28;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${mono(544, 110, '3 CARRIERS', { size: 9.5, anchor: 'end', op: 0.55, fill: P.deep })}
+    </g>
+    ${res.map(([nm, gen, role], i) => {
+      const y = 152 + i * 74;
+      const on = 0.3 + i * 0.1;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.05).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${card(72, y, 496, 60, { r: 12, fill: i === 0 ? P.wash : WHITE, stroke: i === 0 ? P.main : LINE, sw: i === 0 ? 2 : 1.5 })}
+        ${mast(112, y + 44, 0.4, i === 0)}
+        ${label(150, y + 28, nm, { size: 14 })}
+        ${mono(150, y + 46, role, { size: 9, op: 0.42 })}
+        ${badge(510, y + 20, gen, { fill: i === 0 ? P.main : GRAY })}
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.7;0.78;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${mono(72, 404, 'WE PUBLISH THE ORDER, NOT JUST THE COUNT', { size: 9.5, op: 0.55, fill: P.deep })}
+    </g>`;
+    return { svg: wrap(inner), pills: pAC('Search your country') };
+  },
+};
+
+export const acWhatTier1Means = {
+  id: 'ac-meaning',
+  name: 'What Tier-1 Means',
+  family: 'Explainability',
+  tagline: 'Direct agreement, or somebody else\u2019s leftovers',
+  desc:
+    '"Tier-1" is a phrase every reseller uses and almost none of them earn. Two supply chains are drawn ' +
+    'side by side: ours goes device to carrier, theirs goes device to aggregator to broker to carrier, ' +
+    'with the throttle applied at each hop. Defining the term is how we stop competitors borrowing it.',
+  pros: [
+    'Defines the term on our own ground, which is a durable advantage',
+    'The extra hops visibly explain the performance difference',
+    'Gives sales a diagram to draw on a whiteboard',
+  ],
+  cons: ['Directly characterises how competitors operate', 'Needs to be true for every market we sell in'],
+  scores: { story: 5, motion: 4, perf: 5, mobile: 4, brand: 5, ease: 4 },
+  build: (uid) => {
+    const dur = 11;
+    const hop = (x, y, w, txt, sub, col, op = 1) => `
+      ${card(x, y, w, 46, { r: 10, fill: col === P.main ? P.wash : WHITE, stroke: col, sw: col === P.main ? 2 : 1.5, op })}
+      ${label(x + w / 2, y + 24, txt, { size: 12, anchor: 'middle' })}
+      ${mono(x + w / 2, y + 38, sub, { size: 8, anchor: 'middle', op: 0.4 })}`;
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 210, 250, uid)}
+    ${mono(72, 52, 'HOW THE TRAFFIC ACTUALLY GETS THERE', { size: 9.5, op: 0.45 })}
+
+    ${mono(72, 92, 'OPENLINE', { size: 9, op: 0.55, fill: P.deep })}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.06;0.16;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${hop(72, 104, 200, 'Your device', 'esim profile', LINE)}
+      <path d="M 280 127 H 324" stroke="${P.main}" stroke-width="3"/>
+      <path d="M 330 127 l -9 -6 v 12 z" fill="${P.main}"/>
+      ${hop(340, 104, 228, 'Tier-1 carrier', 'direct agreement', P.main)}
+      ${tick(72, 172, 'One hop. Full band access, full speed.', { size: 12 })}
+    </g>
+
+    ${mono(72, 230, 'A TYPICAL RESELLER', { size: 9, op: 0.45 })}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.34;0.44;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${hop(72, 244, 112, 'Device', '', LINE)}
+      ${hop(204, 244, 112, 'Aggregator', 'capped', LINE)}
+      ${hop(336, 244, 112, 'Broker', 'capped again', LINE)}
+      ${hop(468, 244, 100, 'Carrier', '', LINE)}
+      ${[190, 322, 454].map((x) => `
+        <path d="M ${x} 267 H ${x + 8}" stroke="${RED}" stroke-width="3"/>
+        <path d="M ${x + 14} 267 l -8 -5 v 10 z" fill="${RED}"/>
+        <circle cx="${x + 4}" cy="290" r="8" fill="#FEF2F2"/>
+        <path d="M ${x} 286 l 8 8 M ${x + 8} 286 l -8 8" stroke="${RED}" stroke-width="1.8" stroke-linecap="round"/>`).join('')}
+      ${mono(72, 316, 'THREE HOPS \u00b7 THROTTLED AT EACH ONE \u00b7 NOBODY ACCOUNTABLE', { size: 8.5, op: 0.5, fill: RED })}
+    </g>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.66;0.74;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(72, 340, 496, 86, { r: 13, fill: P.wash, stroke: P.main, sw: 2 })}
+      ${label(96, 374, 'Everybody says Tier-1.', { size: 14 })}
+      ${label(96, 402, 'Ask how many companies sit between you and the tower.', { size: 14, fill: P.deep })}
+    </g>`;
+    return { svg: wrap(inner), pills: pAC('Direct, no brokers') };
+  },
+};
+
+export const acSideBySide = {
+  id: 'ac-sidebyside',
+  name: 'Same Street',
+  family: 'Proof',
+  tagline: 'Two phones, one pavement, one speed test',
+  desc:
+    'The only test anybody trusts is the one they could run themselves. Two phones on the same ' +
+    'pavement run a speed test simultaneously — ours on a Tier-1 agreement, a cheap eSIM beside it — ' +
+    'and the counters diverge as they climb. A repeatable, falsifiable test is worth more than any ' +
+    'roster.',
+  pros: [
+    'A test the reader could reproduce, which is the strongest kind of proof',
+    'Racing counters are compelling to watch and hold as a still',
+    'Concrete answer to the "why not the cheap one" objection',
+  ],
+  cons: ['Comparative performance claims carry legal exposure', 'A single location is not a general result'],
+  scores: { story: 5, motion: 5, perf: 5, mobile: 4, brand: 4, ease: 3 },
+  build: (uid) => {
+    const dur = 11;
+    const ph = (x, on, top, name, sub) => `
+      ${card(x, 96, 200, 252, { r: 22, fill: INK, stroke: INK })}
+      ${card(x + 8, 104, 184, 236, { r: 16, fill: '#17171C', stroke: '#17171C' })}
+      ${mono(x + 100, 138, name, { size: 9, anchor: 'middle', op: 0.5, fill: WHITE })}
+      <text x="${x + 100}" y="216" font-size="44" font-weight="800" text-anchor="middle"
+        fill="${on ? P.main : GRAY}" style="font-family:${MONO}">
+        <animate attributeName="opacity" values="0.3;1;1" keyTimes="0;0.5;1" dur="${dur}s" repeatCount="indefinite"/>
+        ${top}</text>
+      ${mono(x + 100, 240, 'Mbps DOWN', { size: 8.5, anchor: 'middle', op: 0.4, fill: WHITE })}
+      ${Array.from({ length: 5 }, (_, i) => `
+        <rect x="${x + 48 + i * 22}" y="${300 - (on ? i * 9 : Math.min(i, 1) * 9)}" width="14"
+          height="${(on ? 14 + i * 9 : 14 + Math.min(i, 1) * 9)}" rx="2"
+          fill="${on ? P.main : GRAY}" opacity="0.85"/>`).join('')}
+      ${mono(x + 100, 332, sub, { size: 8.5, anchor: 'middle', op: 0.45, fill: WHITE })}`;
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 210, 250, uid)}
+    ${mono(72, 56, 'LISBON, AVENIDA DA LIBERDADE \u00b7 14:22 \u00b7 SAME SECOND', { size: 9.5, op: 0.45 })}
+    ${ph(72, true, '214', 'OPENLINE \u00b7 VODAFONE 5G', 'n78 \u00b7 full band access')}
+    ${ph(368, false, '38', 'CHEAP eSIM \u00b7 RESOLD LTE', 'B3 only \u00b7 capped upstream')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.7;0.8;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(72, 372, 496, 56, { r: 12, fill: P.wash, stroke: P.main, sw: 2 })}
+      ${label(96, 406, '5.6\u00d7 faster, standing in the same spot', { size: 14, fill: P.deep })}
+    </g>`;
+    return { svg: wrap(inner), pills: pAC('5.6\u00d7 on the same street') };
+  },
+};
+
+export const acFiftyTwo = {
+  id: 'ac-fiftytwo',
+  name: 'Fifty-Two, Counted',
+  family: 'Coverage',
+  tagline: 'The roster, by region, adding up in public',
+  desc:
+    'If the headline claims fifty-plus, the panel should be able to count them. Five regions fill in ' +
+    'with named carriers and a running total that ends at fifty-two, so the number in the heading is ' +
+    'demonstrated rather than asserted. The least clever option here, and the one that makes the ' +
+    'headline honest.',
+  pros: [
+    'Makes the headline number verifiable, which nothing currently does',
+    'Regional grouping shows depth as well as breadth',
+    'The running total is a clean, satisfying payoff',
+  ],
+  cons: ['A pure inventory with no story', 'The list must be kept accurate as agreements change'],
+  scores: { story: 4, motion: 4, perf: 4, mobile: 4, brand: 4, ease: 4 },
+  build: (uid) => {
+    const dur = 12;
+    const regions = [
+      ['Europe', 18, ['Vodafone', 'Orange', 'Telef\u00f3nica', 'Swisscom', 'A1', 'Telia']],
+      ['North America', 6, ['AT&T', 'Verizon', 'T-Mobile', 'Bell']],
+      ['Asia Pacific', 15, ['NTT Docomo', 'KDDI', 'SK Telecom', 'Telstra', 'Jio']],
+      ['Middle East & Africa', 8, ['Etisalat', 'STC', 'MTN', 'Safaricom']],
+      ['Latin America', 5, ['Claro', 'Vivo', 'TIM']],
+    ];
+    let acc = 0;
+    const totals = regions.map(([, n]) => (acc += n));
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 210, 250, uid)}
+    ${mono(72, 54, 'THE ROSTER, COUNTED', { size: 9.5, op: 0.45 })}
+    ${regions.map(([nm, n, names], i) => {
+      const y = 76 + i * 62;
+      const on = 0.06 + i * 0.13;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.05).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${card(72, y, 496, 52, { r: 11, fill: WHITE, stroke: LINE })}
+        ${label(96, y + 24, nm, { size: 13 })}
+        ${mono(96, y + 42, names.join(' \u00b7 ') + ' \u2026', { size: 8.5, op: 0.38 })}
+        ${num(500, y + 32, `${n}`, { size: 20, anchor: 'end', fill: P.deep })}
+        ${mono(544, y + 32, `/${totals[i]}`, { size: 9, anchor: 'end', op: 0.35 })}
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.76;0.84;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(72, 390, 496, 56, { r: 12, fill: P.wash, stroke: P.main, sw: 2 })}
+      ${label(96, 424, 'Fifty-two direct agreements, named and published', { size: 13.5, fill: P.deep })}
+    </g>`;
+    return { svg: wrap(inner), pills: pAC('52, named') };
+  },
+};
+
+/* ── registry ── */
+
+export const acWhenItDrops = {
+  id: 'ac-whendrops',
+  name: 'When One Drops',
+  family: 'Guarantee',
+  tagline: 'Fifty carriers only matters if it switches',
+  desc:
+    'The roster is a static claim. Here it becomes a behaviour: the connected carrier loses coverage ' +
+    'entering a tunnel, the next one on the list attaches, and the session continues — the list read ' +
+    'as a fallback order rather than a boast. It is the one thing a fifty-carrier panel should prove ' +
+    'and currently does not.',
+  pros: [
+    'Turns the roster from a count into a guarantee',
+    'A visible fallback order is more useful than a logo wall',
+    'The continuing session is the payoff the panel has been missing',
+  ],
+  cons: ['Shows a coverage loss on a coverage panel', 'Needs the fallback order to be real'],
+  scores: { story: 5, motion: 5, perf: 5, mobile: 4, brand: 5, ease: 3 },
+  build: (uid) => {
+    const dur = 11;
+    const chain = [['Vodafone', '5G'], ['Orange', '5G'], ['T-Mobile', 'LTE']];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 200, 250, uid)}
+    ${mono(72, 54, 'ENTERING A TUNNEL \u00b7 FALLBACK ORDER', { size: 9.5, op: 0.45 })}
+    ${chain.map(([nm, gen], i) => {
+      const y = 82 + i * 92;
+      const lost = i === 0;
+      const takes = i === 1;
+      return `<g>
+        ${card(72, y, 496, 78, { r: 13, fill: WHITE, stroke: LINE })}
+        ${mast(112, y + 58, 0.46, false)}
+        ${label(154, y + 34, nm, { size: 15 })}
+        ${mono(154, y + 54, `PRIORITY ${i + 1}`, { size: 8.5, op: 0.38 })}
+        ${badge(500, y + 22, gen, { fill: GRAY })}
+        ${lost ? `<g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.28;0.34;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+          ${card(72, y, 496, 78, { r: 13, fill: '#FFF6F5', stroke: RED, sw: 2 })}
+          ${label(154, y + 34, nm, { size: 15 })}
+          ${mono(154, y + 54, 'COVERAGE LOST \u00b7 14:22:08', { size: 8.5, op: 0.6, fill: RED })}
+          ${mono(544, y + 44, 'DROPPED', { size: 9.5, anchor: 'end', op: 0.8, fill: RED })}
+        </g>` : ''}
+        ${takes ? `<g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.4;0.46;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+          ${card(72, y, 496, 78, { r: 13, fill: P.wash, stroke: P.main, sw: 2 })}
+          ${mast(112, y + 58, 0.46, true)}
+          ${label(154, y + 34, nm, { size: 15 })}
+          ${mono(154, y + 54, 'ATTACHED \u00b7 14:22:08 \u00b7 38 ms LATER', { size: 8.5, op: 0.6, fill: P.deep })}
+          ${badge(500, y + 22, gen, { fill: P.main })}
+        </g>` : ''}
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.62;0.7;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(72, 362, 496, 82, { r: 13, fill: WHITE, stroke: LINE })}
+      ${mono(96, 390, 'THE CALL YOU WERE ON', { size: 8.5, op: 0.4 })}
+      ${label(96, 424, 'Still connected. Nobody heard the gap.', { size: 15, fill: P.deep })}
+    </g>`;
+    return { svg: wrap(inner), pills: pAC('Fallback order published') };
+  },
+};
+
+/* ── registry ── */
+export const ACCESS_VARIANTS = [acCurrent, roster, wall, ladder, regional, signalLadder, acYourRoute, acWhatTier1Means, acSideBySide, acFiftyTwo, acWhenItDrops];

@@ -521,4 +521,296 @@ export const reviewLift = {
   },
 };
 
-export const HOSP_VARIANTS = [hCurrent, checkin, revenue, propTypes, roomBoard, reviewLift];
+/* ══ HOSP · 6–9 ═════════════════════════════════════════════════════ */
+
+export const hAncillary = {
+  id: 'h-ancillary',
+  name: 'The Ancillary Line',
+  family: 'Revenue',
+  tagline: 'Connectivity as a line on the property P&L',
+  desc:
+    'A hotelier reads a P&L, not a benefit list. Connectivity is added as an ancillary line beside ' +
+    'the ones they already know — parking, breakfast, late checkout — with its attachment rate and ' +
+    'its margin. Placing it in a familiar table is how it stops being a technology decision and ' +
+    'becomes a revenue one.',
+  pros: [
+    'Speaks the buyer\u2019s own language, which is revenue per room',
+    'Sitting beside known ancillaries makes the margin credible',
+    'Attachment rate is the metric a revenue manager already tracks',
+  ],
+  cons: ['Needs honest attachment and margin figures', 'A financial table is the least charming option here'],
+  scores: { story: 5, motion: 3, perf: 5, mobile: 5, brand: 4, ease: 4 },
+  build: (uid) => {
+    const dur = 11;
+    const rows = [
+      ['Parking', '31%', '\u20ac1,240', false],
+      ['Breakfast', '58%', '\u20ac3,910', false],
+      ['Late checkout', '12%', '\u20ac640', false],
+      ['Connectivity', '44%', '\u20ac2,480', true],
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 210, 250, uid)}
+    ${mono(72, 54, 'ANCILLARY REVENUE \u00b7 120 ROOMS \u00b7 LAST MONTH', { size: 9.5, op: 0.45 })}
+    ${mono(376, 96, 'ATTACH', { size: 8.5, anchor: 'middle', op: 0.4 })}
+    ${mono(544, 96, 'REVENUE', { size: 8.5, anchor: 'end', op: 0.4 })}
+    ${rows.map(([nm, at, rev, ours], i) => {
+      const y = 108 + i * 68;
+      const on = 0.06 + i * 0.14;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.06).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${card(72, y, 496, 56, { r: 12, fill: ours ? P.wash : WHITE, stroke: ours ? P.main : LINE, sw: ours ? 2 : 1.5 })}
+        ${label(96, y + 34, nm, { size: 14.5 })}
+        ${ours ? mono(96, y + 50, 'NEW THIS QUARTER', { size: 8, op: 0.5, fill: P.deep }) : ''}
+        ${num(376, y + 36, at, { size: 15, anchor: 'middle', fill: ours ? P.deep : GRAY })}
+        ${num(544, y + 36, rev, { size: 17, anchor: 'end', fill: ours ? P.deep : INK })}
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.72;0.8;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(72, 386, 496, 58, { r: 12, fill: WHITE, stroke: LINE })}
+      ${label(96, 420, 'Second-highest attachment on the property', { size: 13.5 })}
+      ${mono(544, 420, '92% MARGIN \u00b7 NO STOCK', { size: 9, anchor: 'end', op: 0.5, fill: P.deep })}
+    </g>`;
+    return { svg: wrap(inner), pills: pH('+\u20ac2,480 last month', '44% attachment') };
+  },
+};
+
+export const hArrival = {
+  id: 'h-arrival',
+  name: 'Before They Reach Reception',
+  family: 'Guest experience',
+  tagline: 'Connected in the taxi, not at the desk',
+  desc:
+    'The worst fifteen minutes of any stay are the ones spent finding the wifi password. The plan ' +
+    'activates when the booking confirmation is opened, so the guest is online in the taxi and ' +
+    'reception never hears about it. Moving the moment earlier is the whole idea, and it makes the ' +
+    'property look competent before anybody arrives.',
+  pros: [
+    'Reframes the benefit as arrival experience, which is what hoteliers optimise',
+    'Removes a real front-desk support burden',
+    'Puts the property\u2019s brand on the guest\u2019s phone before check-in',
+  ],
+  cons: ['Depends on the booking flow integration', 'Overlaps somewhat with the check-in option'],
+  scores: { story: 5, motion: 5, perf: 5, mobile: 5, brand: 5, ease: 4 },
+  build: (uid) => {
+    const dur = 11;
+    const steps = [
+      ['Booking confirmed', 'Three days out', 'Plan attached to the reservation'],
+      ['Wheels down', '17:05', 'Profile activates on landing'],
+      ['In the taxi', '17:22', 'Online, messaging the front desk'],
+      ['Reception', '17:48', 'No password, no queue, no ticket'],
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 200, 250, uid)}
+    ${mono(72, 54, 'ONE ARRIVAL, WITHOUT A WIFI PASSWORD', { size: 9.5, op: 0.45 })}
+    <line x1="104" y1="96" x2="104" y2="368" stroke="${LINE}" stroke-width="2.5"/>
+    <line x1="104" y1="96" x2="104" y2="368" stroke="${P.main}" stroke-width="3"
+      stroke-dasharray="272" stroke-dashoffset="272">
+      <animate attributeName="stroke-dashoffset" values="272;0;0" keyTimes="0;0.66;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+    </line>
+    ${steps.map(([nm, when, note], i) => {
+      const y = 100 + i * 90;
+      const on = (i / 4) * 0.66;
+      return `<g>
+        <circle cx="104" cy="${y}" r="8" fill="${WHITE}" stroke="${LINE}" stroke-width="2.5"/>
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(4)};${(on + 0.05).toFixed(4)};1"
+            dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+          <circle cx="104" cy="${y}" r="8" fill="${P.main}"/>
+          ${card(136, y - 26, 432, 58, { r: 12, fill: WHITE, stroke: LINE })}
+          ${label(160, y - 2, nm, { size: 14 })}
+          ${mono(160, y + 18, note, { size: 9, op: 0.4 })}
+          ${mono(544, y + 4, when, { size: 10, anchor: 'end', op: 0.5, fill: P.deep })}
+        </g>
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.74;0.82;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(72, 396, 496, 48, { r: 11, fill: P.wash, stroke: P.main, sw: 1.8 })}
+      ${label(96, 426, 'Forty-three minutes online before check-in', { size: 14, fill: P.deep })}
+    </g>`;
+    return { svg: wrap(inner), pills: pH('Online before arrival', 'Zero front-desk tickets') };
+  },
+};
+
+export const hFrontDesk = {
+  id: 'h-frontdesk',
+  name: 'What The Front Desk Stops Doing',
+  family: 'Operations',
+  tagline: 'The support calls that disappear',
+  desc:
+    'General managers buy things that reduce labour. Four recurring front-desk jobs — resetting the ' +
+    'wifi password, explaining the captive portal, rebooting the guest access point, escalating to ' +
+    'the IT contractor — are counted for a month and then struck out, with the hours returned to the ' +
+    'desk named at the end.',
+  pros: [
+    'Labour saving is the argument a GM actually approves budget for',
+    'Every item is a job the reader recognises from their own property',
+    'Hours returned is a number that survives a budget meeting',
+  ],
+  cons: ['Needs plausible call volumes for a mid-size property', 'Implies the property wifi is the problem'],
+  scores: { story: 5, motion: 4, perf: 5, mobile: 5, brand: 4, ease: 4 },
+  build: (uid) => {
+    const dur = 11;
+    const jobs = [
+      ['Wifi password resets', 148, '4 min each'],
+      ['Captive portal explained', 96, '6 min each'],
+      ['Guest AP rebooted', 34, '11 min each'],
+      ['Escalated to the IT contractor', 12, '40 min each'],
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 210, 250, uid)}
+    ${mono(72, 54, 'FRONT DESK \u00b7 CONNECTIVITY CALLS, LAST MONTH', { size: 9.5, op: 0.45 })}
+    ${jobs.map(([nm, n, each], i) => {
+      const y = 82 + i * 66;
+      const on = 0.06 + i * 0.1;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.05).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${card(72, y, 496, 54, { r: 12, fill: WHITE, stroke: LINE })}
+        ${label(96, y + 26, nm, { size: 13.5 })}
+        ${mono(96, y + 44, each, { size: 8.5, op: 0.38 })}
+        ${num(544, y + 34, `${n}`, { size: 19, anchor: 'end', fill: AMBER })}
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${(0.52 + i * 0.05).toFixed(3)};${(0.58 + i * 0.05).toFixed(3)};1"
+            dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+          <line x1="90" y1="${y + 22}" x2="${96 + nm.length * 7.6}" y2="${y + 22}" stroke="${P.deep}" stroke-width="2.4" stroke-linecap="round"/>
+        </g>
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.76;0.84;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(72, 352, 240, 82, { r: 12, fill: WHITE, stroke: LINE })}
+      ${mono(96, 380, 'STAFF TIME, BEFORE', { size: 8.5, op: 0.4 })}
+      ${num(96, 414, '29 hours', { size: 19, fill: AMBER })}
+      ${card(328, 352, 240, 82, { r: 12, fill: P.wash, stroke: P.main, sw: 2 })}
+      ${mono(352, 380, 'AFTER', { size: 8.5, op: 0.5, fill: P.deep })}
+      ${num(352, 414, 'under 2', { size: 19, fill: P.deep })}
+    </g>`;
+    return { svg: wrap(inner), pills: pH('27 hours back a month', 'Fewer desk calls') };
+  },
+};
+
+export const hPortfolio = {
+  id: 'h-portfolio',
+  name: 'Across The Portfolio',
+  family: 'Scale',
+  tagline: 'Nine properties, one contract, one report',
+  desc:
+    'Hospitality buying happens at group level, not property level. Nine properties across four ' +
+    'countries report attachment and revenue into a single view, with one contract behind all of them. ' +
+    'Speaking to the group rather than the single hotel is how this becomes a large deal instead of a ' +
+    'pilot.',
+  pros: [
+    'Targets the group buyer, who has the budget and the mandate',
+    'One contract across countries is a genuine procurement advantage',
+    'A per-property table is exactly the artefact a group asset manager wants',
+  ],
+  cons: ['Irrelevant to an independent hotel', 'Needs multi-property billing to actually work'],
+  scores: { story: 5, motion: 4, perf: 5, mobile: 4, brand: 4, ease: 3 },
+  build: (uid) => {
+    const dur = 12;
+    const props = [
+      ['Lisbon \u00b7 Baixa', 'PT', 120, '44%', 2480],
+      ['Porto \u00b7 Ribeira', 'PT', 86, '39%', 1610],
+      ['Madrid \u00b7 Salamanca', 'ES', 142, '47%', 3120],
+      ['Barcelona \u00b7 Eixample', 'ES', 118, '41%', 2240],
+      ['Paris \u00b7 11e', 'FR', 96, '36%', 1780],
+      ['Milan \u00b7 Navigli', 'IT', 74, '43%', 1390],
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 210, 250, uid)}
+    ${mono(72, 52, 'GROUP VIEW \u00b7 9 PROPERTIES \u00b7 4 COUNTRIES', { size: 9.5, op: 0.45 })}
+    ${mono(376, 86, 'ROOMS', { size: 8.5, anchor: 'middle', op: 0.4 })}
+    ${mono(452, 86, 'ATTACH', { size: 8.5, anchor: 'middle', op: 0.4 })}
+    ${mono(544, 86, 'REVENUE', { size: 8.5, anchor: 'end', op: 0.4 })}
+    ${props.map(([nm, cc, rooms, at, rev], i) => {
+      const y = 96 + i * 50;
+      const on = 0.06 + i * 0.1;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.045).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${card(72, y, 496, 42, { r: 10, fill: i % 2 ? '#FAFBFB' : WHITE, stroke: LINE })}
+        ${label(96, y + 26, nm, { size: 12.5 })}
+        ${mono(296, y + 26, cc, { size: 9, op: 0.35 })}
+        ${mono(376, y + 26, `${rooms}`, { size: 10, anchor: 'middle', op: 0.5 })}
+        ${num(452, y + 27, at, { size: 12, anchor: 'middle', fill: P.deep })}
+        ${num(544, y + 27, `\u20ac${rev.toLocaleString('en-US')}`, { size: 13, anchor: 'end' })}
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.7;0.78;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(72, 402, 496, 46, { r: 11, fill: P.wash, stroke: P.main, sw: 2 })}
+      ${label(96, 431, 'One contract \u00b7 one report \u00b7 one invoice', { size: 13.5 })}
+      ${num(544, 432, '\u20ac18,420 / mo', { size: 16, anchor: 'end', fill: P.deep })}
+    </g>`;
+    return { svg: wrap(inner), pills: pH('+\u20ac18,420 group-wide', '9 properties') };
+  },
+};
+
+/* ── registry ── */
+
+export const hZeroUpfront = {
+  id: 'h-zero',
+  name: 'Nothing To Install',
+  family: 'Objection',
+  tagline: 'No hardware, no cabling, no capex approval',
+  desc:
+    'The reason a property says no is not price, it is the works order. Four things a guest-wifi ' +
+    'upgrade would require — an access point per floor, cabling, a contractor visit, a capex approval ' +
+    '— are listed and then removed, leaving a revenue share that starts the same week. Removing the ' +
+    'project is the real offer.',
+  pros: [
+    'Names the actual blocker, which is installation rather than cost',
+    'Zero capex is the strongest line available to a property buyer',
+    '"Live this week" is a concrete, checkable promise',
+  ],
+  cons: ['Needs onboarding to genuinely be this light', 'Less visually interesting than the property artwork'],
+  scores: { story: 5, motion: 4, perf: 5, mobile: 5, brand: 4, ease: 5 },
+  build: (uid) => {
+    const dur = 11;
+    const items = [
+      ['An access point on every floor', '\u20ac6,400'],
+      ['Cabling and containment', '\u20ac3,100'],
+      ['Contractor site visits', '\u20ac1,800'],
+      ['A capex approval cycle', '11 weeks'],
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 200, 250, uid)}
+    ${mono(72, 54, 'WHAT A GUEST-WIFI UPGRADE WOULD NEED', { size: 9.5, op: 0.45 })}
+    ${items.map(([nm, cost], i) => {
+      const y = 80 + i * 62;
+      const on = 0.06 + i * 0.09;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.05).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${card(72, y, 496, 50, { r: 11, fill: WHITE, stroke: LINE })}
+        ${label(96, y + 30, nm, { size: 13.5 })}
+        ${num(544, y + 32, cost, { size: 14, anchor: 'end', fill: AMBER })}
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${(0.48 + i * 0.05).toFixed(3)};${(0.54 + i * 0.05).toFixed(3)};1"
+            dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+          <line x1="90" y1="${y + 25}" x2="${96 + nm.length * 7.4}" y2="${y + 25}" stroke="${P.deep}" stroke-width="2.4" stroke-linecap="round"/>
+        </g>
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.74;0.82;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(72, 336, 496, 108, { r: 14, fill: P.wash, stroke: P.main, sw: 2 })}
+      ${mono(96, 366, 'WHAT THIS NEEDS INSTEAD', { size: 9, op: 0.55, fill: P.deep })}
+      ${label(96, 400, 'A revenue share, and nothing installed', { size: 17 })}
+      ${mono(96, 426, 'ZERO CAPEX \u00b7 NO CONTRACTOR \u00b7 LIVE THIS WEEK', { size: 8.5, op: 0.45 })}
+    </g>`;
+    return { svg: wrap(inner), pills: pH('$0 upfront', 'Live this week') };
+  },
+};
+
+/* ── registries ── */
+export const HOSP_VARIANTS = [hCurrent, checkin, revenue, propTypes, roomBoard, reviewLift, hAncillary, hArrival, hFrontDesk, hPortfolio,
+  hZeroUpfront];

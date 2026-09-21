@@ -511,4 +511,296 @@ export const oneInvoice = {
   },
 };
 
-export const BIZ_HERO_VARIANTS = [bizCurrent, teamMap, invoice, onboard, opsFeed, oneInvoice];
+/* ══ BIZ HERO · 6–9 ═════════════════════════════════════════════════ */
+
+export const bizExpenses = {
+  id: 'biz-expenses',
+  name: 'The Expense Reports That Do Not Happen',
+  family: 'Operations',
+  tagline: 'Eleven claims, replaced by one line',
+  desc:
+    'The real cost of roaming in a company is not the data, it is eleven expense claims, a finance ' +
+    'reviewer and a month of chasing receipts. The claims arrive one by one and are then replaced by ' +
+    'a single invoice line. This is the argument that wins over finance, and it is currently missing ' +
+    'from the page.',
+  pros: [
+    'Speaks to finance, who sign the contract, rather than to travellers',
+    'Administrative time is a cost nobody else in the category quantifies',
+    'The collapse from eleven to one is a single clean movement',
+  ],
+  cons: ['Needs a defensible per-claim processing cost', 'Receipt artwork risks looking cluttered'],
+  scores: { story: 5, motion: 5, perf: 5, mobile: 4, brand: 4, ease: 4 },
+  build: (uid) => {
+    const dur = 11;
+    const claims = [['Tokyo', 42], ['London', 18], ['Singapore', 51], ['Nairobi', 24],
+      ['Berlin', 16], ['Dubai', 38], ['S\u00e3o Paulo', 29], ['Seoul', 33]];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 210, 250, uid)}
+    ${mono(72, 54, 'LAST MONTH, WITHOUT OPENLINE', { size: 9.5, op: 0.45 })}
+    ${claims.map(([city, amt], i) => {
+      const x = 72 + (i % 4) * 126, y = 74 + Math.floor(i / 4) * 66;
+      return `<g>
+        <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;${(0.3 + i * 0.024).toFixed(3)};${(0.36 + i * 0.024).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${card(x, y, 114, 54, { r: 9, fill: WHITE, stroke: LINE })}
+        ${mono(x + 14, y + 22, 'ROAMING CLAIM', { size: 7.5, op: 0.38 })}
+        ${label(x + 14, y + 42, city, { size: 12 })}
+        ${num(x + 100, y + 42, `\u20ac${amt}`, { size: 12, anchor: 'end', fill: RED })}
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.16;0.24;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${mono(544, 54, '8 CLAIMS \u00b7 3 REVIEWERS \u00b7 5 WEEKS', { size: 9, anchor: 'end', op: 0.5, fill: RED })}
+    </g>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.66;0.74;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(72, 224, 496, 94, { r: 14, fill: P.wash, stroke: P.main, sw: 2 })}
+      ${mono(96, 254, 'THIS MONTH, WITH OPENLINE', { size: 9, op: 0.55, fill: P.deep })}
+      ${label(96, 288, 'One invoice line \u00b7 8 travellers \u00b7 6 countries', { size: 16 })}
+      ${num(544, 290, '\u20ac251', { size: 24, anchor: 'end', fill: P.deep })}
+      ${mono(96, 308, 'NO CLAIMS, NO RECEIPTS, NO REVIEWERS', { size: 8.5, op: 0.4 })}
+    </g>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.78;0.86;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(72, 342, 240, 78, { r: 12, fill: WHITE, stroke: LINE })}
+      ${mono(96, 370, 'FINANCE TIME SAVED', { size: 8.5, op: 0.4 })}
+      ${num(96, 402, '9 hours / month', { size: 16 })}
+      ${card(328, 342, 240, 78, { r: 12, fill: WHITE, stroke: LINE })}
+      ${mono(352, 370, 'CLAIMS TO CHASE', { size: 8.5, op: 0.4 })}
+      ${num(352, 402, 'none', { size: 16, fill: P.deep })}
+    </g>`;
+    return { svg: wrap(inner), pills: pB('One invoice line') };
+  },
+};
+
+export const bizLanded = {
+  id: 'biz-landed',
+  name: 'Landed and Working',
+  family: 'Operations',
+  tagline: 'A new hire online before they reach the office',
+  desc:
+    'Provisioning is an IT queue, and this removes it. A new starter is added at 09:04, the profile ' +
+    'is issued at 09:04, and they are connected in S\u00e3o Paulo at 09:05 — no shipping, no local SIM, ' +
+    'no ticket. For a company hiring across borders, onboarding time is the metric IT is judged on.',
+  pros: [
+    'Onboarding speed is what IT reports on internally',
+    'Removes shipping, which is the real bottleneck for distributed hires',
+    'Timestamps make the claim specific rather than aspirational',
+  ],
+  cons: ['Overlaps with the existing onboarding option', 'Assumes a device already supports eSIM'],
+  scores: { story: 4, motion: 4, perf: 5, mobile: 5, brand: 4, ease: 5 },
+  build: (uid) => {
+    const dur = 10;
+    const steps = [
+      ['09:04:02', 'Added to the team', 'admin console, one field'],
+      ['09:04:06', 'Profile issued', 'no shipment, no courier'],
+      ['09:04:41', 'Installed on her phone', 'QR from the welcome email'],
+      ['09:05:12', 'Online in S\u00e3o Paulo', 'Claro 5G \u00b7 policy applied'],
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 210, 250, uid)}
+    ${mono(72, 54, 'NEW STARTER \u00b7 AMARA K. \u00b7 REMOTE, BRAZIL', { size: 9.5, op: 0.45 })}
+    ${steps.map(([ts, nm, note], i) => {
+      const y = 80 + i * 80;
+      const on = 0.06 + i * 0.16;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.06).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${card(72, y, 496, 66, { r: 12, fill: WHITE, stroke: LINE })}
+        <circle cx="104" cy="${y + 33}" r="12" fill="${P.wash}"/>
+        <path d="M 97 ${y + 33} l 5 5 l 9 -10" fill="none" stroke="${P.main}" stroke-width="2.4" stroke-linecap="round"/>
+        ${label(136, y + 30, nm, { size: 14 })}
+        ${mono(136, y + 50, note, { size: 9, op: 0.4 })}
+        ${mono(544, y + 40, ts, { size: 10, anchor: 'end', op: 0.55, fill: P.deep })}
+        ${i < 3 ? `<line x1="104" y1="${y + 66}" x2="104" y2="${y + 80}" stroke="${LINE}" stroke-width="2"/>` : ''}
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.76;0.84;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(72, 400, 496, 46, { r: 11, fill: P.wash, stroke: P.main, sw: 1.8 })}
+      ${label(96, 430, 'Seventy seconds, and no IT ticket', { size: 14, fill: P.deep })}
+    </g>`;
+    return { svg: wrap(inner), pills: pB('70 seconds to online') };
+  },
+};
+
+export const bizPolicy = {
+  id: 'biz-policy',
+  name: 'The Policy Holds',
+  family: 'Control',
+  tagline: 'A limit that stops the bill, not a warning email',
+  desc:
+    'Every company has been handed a surprise five-figure roaming bill. A policy is set at twenty ' +
+    'gigabytes per traveller, and when one device reaches it the data stops rather than a warning ' +
+    'being emailed to somebody on holiday. Hard caps are the reason a finance team will pick this over ' +
+    'a corporate carrier plan.',
+  pros: [
+    'A hard cap is what finance actually wants, and few competitors offer it',
+    'Turns a governance feature into a money argument',
+    'The stopped device is a decisive, legible moment',
+  ],
+  cons: ['Cutting a traveller off has support consequences', 'Needs per-user policy to genuinely exist'],
+  scores: { story: 5, motion: 4, perf: 5, mobile: 4, brand: 4, ease: 4 },
+  build: (uid) => {
+    const dur = 11;
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 210, 250, uid)}
+    ${mono(72, 54, 'POLICY \u00b7 20 GB PER TRAVELLER, PER MONTH', { size: 9.5, op: 0.45 })}
+    ${TEAM.map((t, i) => {
+      const y = 78 + i * 68;
+      const capped = i === 0;
+      const pct = capped ? 1 : [0, 0.42, 0.61, 0.28][i];
+      const on = 0.08 + i * 0.1;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.05).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${card(72, y, 496, 56, { r: 12, fill: WHITE, stroke: LINE })}
+        ${avatar(102, y + 28, t.i, capped)}
+        ${label(134, y + 26, t.n, { size: 13 })}
+        ${mono(134, y + 44, t.c, { size: 8.5, op: 0.38 })}
+        <rect x="272" y="${y + 23}" width="188" height="10" rx="5" fill="#EEF0F3"/>
+        <rect x="272" y="${y + 23}" width="0" height="10" rx="5" fill="${capped ? RED : P.main}">
+          <animate attributeName="width" values="0;${Math.round(pct * 188)};${Math.round(pct * 188)}"
+            keyTimes="0;${(on + 0.22).toFixed(3)};1" dur="${dur}s" repeatCount="indefinite"
+            calcMode="spline" keySplines="0.4 0 0.2 1;0 0 1 1"/>
+        </rect>
+        ${capped ? `<g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.5;0.58;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+          ${mono(544, y + 32, 'STOPPED AT 20 GB', { size: 9, anchor: 'end', op: 0.8, fill: RED })}
+        </g>` : `${mono(544, y + 32, `${(pct * 20).toFixed(1)} GB`, { size: 10, anchor: 'end', op: 0.5 })}`}
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.66;0.74;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(72, 356, 240, 76, { r: 12, fill: WHITE, stroke: LINE })}
+      ${mono(96, 384, 'WITHOUT A HARD CAP', { size: 8.5, op: 0.4 })}
+      ${num(96, 416, '\u20ac4,180 bill shock', { size: 15, fill: RED })}
+      ${card(328, 356, 240, 76, { r: 12, fill: P.wash, stroke: P.main, sw: 2 })}
+      ${mono(352, 384, 'WITH ONE', { size: 8.5, op: 0.5, fill: P.deep })}
+      ${num(352, 416, 'exactly \u20ac251', { size: 15, fill: P.deep })}
+    </g>`;
+    return { svg: wrap(inner), pills: pB('Hard caps, not warnings') };
+  },
+};
+
+export const bizWhereTheyAre = {
+  id: 'biz-where',
+  name: 'Where The Team Is',
+  family: 'Visibility',
+  tagline: 'Twelve people, four continents, one screen',
+  desc:
+    'Managing a distributed team means never quite knowing who is connected. A live roster shows ' +
+    'twelve people with their city, their carrier and their connection state, sorted by who is ' +
+    'currently offline. Operational visibility is the quiet reason an ops lead keeps a tool, and this ' +
+    'is the only option that offers it.',
+  pros: [
+    'Serves the daily user rather than the buying moment',
+    'Sorting offline people to the top is a genuinely useful design choice',
+    'Reads as a real product surface, which builds credibility',
+  ],
+  cons: ['Employee-location tracking needs careful framing', 'Dense at this size'],
+  scores: { story: 4, motion: 4, perf: 4, mobile: 3, brand: 4, ease: 4 },
+  build: (uid) => {
+    const dur = 12;
+    const people = [
+      ['AK', 'Amara Kon\u00e9', 'Nairobi', 'Safaricom', 'offline'],
+      ['JD', 'John Davis', 'Tokyo', 'NTT Docomo', 'online'],
+      ['SM', 'Sarah Miller', 'London', 'Vodafone', 'online'],
+      ['RC', 'Robert Chen', 'Singapore', 'Singtel', 'online'],
+      ['LB', 'Lena Bauer', 'Berlin', 'Telekom', 'online'],
+      ['MP', 'Miguel Pinto', 'S\u00e3o Paulo', 'Claro', 'online'],
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 210, 250, uid)}
+    ${mono(72, 54, 'TEAM \u00b7 12 PEOPLE \u00b7 SORTED BY WHO NEEDS HELP', { size: 9.5, op: 0.45 })}
+    ${people.map(([ini, nm, city, carrier, st], i) => {
+      const y = 76 + i * 56;
+      const off = st === 'offline';
+      const on = 0.06 + i * 0.09;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.045).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${card(72, y, 496, 46, { r: 11, fill: off ? '#FFF7F5' : WHITE, stroke: off ? RED : LINE, sw: off ? 1.8 : 1.5 })}
+        ${avatar(100, y + 23, ini, !off)}
+        ${label(130, y + 27, nm, { size: 12.5 })}
+        ${mono(280, y + 27, city, { size: 9, op: 0.42 })}
+        ${mono(392, y + 27, carrier, { size: 9, op: 0.42 })}
+        <circle cx="500" cy="${y + 23}" r="4.5" fill="${off ? RED : GREEN}"/>
+        ${mono(544, y + 27, st, { size: 9, anchor: 'end', op: 0.55, fill: off ? RED : GREEN_TEXT })}
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.66;0.74;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(72, 408, 496, 42, { r: 11, fill: P.wash, stroke: P.main, sw: 1.8 })}
+      ${label(96, 436, 'One person needs a top-up. You knew before they asked.', { size: 12.5, fill: P.deep })}
+    </g>`;
+    return { svg: wrap(inner), pills: pB('Live team roster') };
+  },
+};
+
+/* ── registry ── */
+
+export const bizTheSaving = {
+  id: 'biz-saving',
+  name: 'The Seventy-Five Percent',
+  family: 'Finance',
+  tagline: 'The headline number, shown as arithmetic',
+  desc:
+    'The copy claims a seventy-five percent saving and the panel proves none of it. This does the ' +
+    'arithmetic in public: twelve travellers, their actual roaming bills last quarter, the same usage ' +
+    'priced on Openline, and the percentage derived rather than asserted. If we are going to put a ' +
+    'number in the heading, the panel should be able to show it.',
+  pros: [
+    'Substantiates the page\u2019s own headline claim, which nothing currently does',
+    'Derived arithmetic survives a procurement challenge',
+    'Reusable as a slide in a sales deck',
+  ],
+  cons: ['The number must hold for a typical customer, not a best case', 'Numeric and dry'],
+  scores: { story: 5, motion: 4, perf: 5, mobile: 5, brand: 4, ease: 4 },
+  build: (uid) => {
+    const dur = 11;
+    const rows = [
+      ['Roaming, last quarter', '12 travellers \u00b7 6 countries', 9840, RED],
+      ['Same usage, on Openline', 'identical data, identical trips', 2460, null],
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 200, 250, uid)}
+    ${mono(72, 54, 'ACME INTERNATIONAL \u00b7 Q1, RECALCULATED', { size: 9.5, op: 0.45 })}
+    ${rows.map(([nm, note, amt, col], i) => {
+      const y = 82 + i * 116;
+      const on = 0.08 + i * 0.22;
+      const ours = col === null;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.07).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${card(72, y, 496, 98, { r: 14, fill: ours ? P.wash : WHITE, stroke: ours ? P.main : LINE, sw: ours ? 2 : 1.5 })}
+        ${mono(96, y + 30, nm.toUpperCase(), { size: 9, op: ours ? 0.55 : 0.42, fill: ours ? P.deep : INK })}
+        ${mono(96, y + 50, note, { size: 8.5, op: 0.35 })}
+        ${num(96, y + 86, `\u20ac${amt.toLocaleString('en-US')}`, { size: 30, fill: ours ? P.deep : (col || INK) })}
+        <rect x="300" y="${y + 62}" width="244" height="14" rx="7" fill="#EEF0F3"/>
+        <rect x="300" y="${y + 62}" width="0" height="14" rx="7" fill="${ours ? P.main : col}">
+          <animate attributeName="width" values="0;${ours ? 61 : 244};${ours ? 61 : 244}"
+            keyTimes="0;${(on + 0.18).toFixed(3)};1" dur="${dur}s" repeatCount="indefinite"
+            calcMode="spline" keySplines="0.4 0 0.2 1;0 0 1 1"/>
+        </rect>
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.7;0.78;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(72, 322, 496, 122, { r: 14, fill: WHITE, stroke: INK, sw: 2.5 })}
+      ${mono(96, 352, 'THE DIFFERENCE', { size: 9, op: 0.42 })}
+      ${num(96, 396, '\u20ac7,380 saved', { size: 26 })}
+      ${mono(96, 424, 'ON IDENTICAL USAGE \u00b7 NO BEHAVIOUR CHANGE REQUIRED', { size: 8.5, op: 0.38 })}
+      ${num(544, 396, '75%', { size: 40, anchor: 'end', fill: P.deep })}
+    </g>`;
+    return { svg: wrap(inner), pills: pB('75%, shown as arithmetic') };
+  },
+};
+
+/* ── registry ── */
+export const BIZ_HERO_VARIANTS = [bizCurrent, teamMap, invoice, onboard, opsFeed, oneInvoice, bizExpenses, bizLanded, bizPolicy, bizWhereTheyAre, bizTheSaving];

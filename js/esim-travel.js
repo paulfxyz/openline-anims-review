@@ -755,5 +755,65 @@ export const stillWorking = {
   },
 };
 
+export const travelTheMorning = {
+  id: 'travel-morning',
+  name: 'The First Morning',
+  family: 'Experience',
+  tagline: 'One hour, five things that just work',
+  desc:
+    'Seamless is an absence, and an absence is hard to draw. This makes it concrete by running the ' +
+    'first hour of a trip: the maps route at 07:12, the taxi app at 07:20, a call home at 07:34, a ' +
+    'boarding pass check at 07:48, a card payment at 07:55. Five ordinary things, none of them ' +
+    'interrupted. The point is that nothing happens.',
+  pros: [
+    'Makes an absence visible by showing the ordinary things that depend on it',
+    'Timestamps give the loop a natural rhythm',
+    'Reads as lived experience rather than a feature list',
+  ],
+  cons: ['No single dramatic moment', 'Five rows compete with the bullets beside it'],
+  scores: { story: 5, motion: 4, perf: 5, mobile: 5, brand: 5, ease: 4 },
+  build: (uid) => {
+    const dur = 11;
+    const events = [
+      ['07:12', 'Maps, from the terminal', 'route loaded in 2 s'],
+      ['07:20', 'Taxi booked', 'driver called back'],
+      ['07:34', 'Call home', '41 minutes, no drop'],
+      ['07:48', 'Boarding pass checked', 'for the flight back'],
+      ['07:55', 'Card payment approved', 'bank text arrived'],
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 220, 250, uid)}
+    ${label(96, 62, 'The first hour, uninterrupted', { size: 15, op: 0.5 })}
+    <line x1="126" y1="92" x2="126" y2="372" stroke="${G.line}" stroke-width="2.5"/>
+    <line x1="126" y1="92" x2="126" y2="372" stroke="${G.orange}" stroke-width="3"
+      stroke-dasharray="280" stroke-dashoffset="280">
+      <animate attributeName="stroke-dashoffset" values="280;0;0" keyTimes="0;0.66;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+    </line>
+    ${events.map(([t, nm, note], i) => {
+      const y = 100 + i * 66;
+      const on = (i / 5) * 0.66;
+      return `<g>
+        <circle cx="126" cy="${y}" r="7" fill="${G.white}" stroke="${G.line}" stroke-width="2.5"/>
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(4)};${(on + 0.05).toFixed(4)};1"
+            dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+          <circle cx="126" cy="${y}" r="7" fill="${G.orange}"/>
+          ${mono(150, y - 6, t, { size: 10.5, op: 0.55, fill: G.orange })}
+          ${label(150, y + 14, nm, { size: 13.5 })}
+          ${mono(536, y + 4, note, { size: 9, anchor: 'end', op: 0.4 })}
+        </g>
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.74;0.82;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(96, 396, 448, 44, { r: 11, fill: G.wash, stroke: G.orange, sw: 2 })}
+      ${label(120, 424, 'Nothing here needed thinking about', { size: 14, fill: G.orange })}
+    </g>`;
+    return { svg: gWrap(inner), pills: pillsB('Nothing to think about') };
+  },
+};
+
+/* ── registry ── */
 export const TRAVEL_VARIANTS = [travelCurrent, borderRun, oneCard, tripTape, theBill,
-  sevenBorders, drawerOfSims, twoMinutesBefore, theFamily, stillWorking];
+  sevenBorders, drawerOfSims, twoMinutesBefore, theFamily, stillWorking, travelTheMorning];

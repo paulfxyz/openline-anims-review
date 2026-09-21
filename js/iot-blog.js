@@ -1050,4 +1050,285 @@ export const destShuffle = {
   },
 };
 
-export const BLOG_VARIANTS = [blogCurrent, feedLive, topicOrbit, readingNow, destShuffle, weekly];
+/* ══ BLOG · 6–9 ═════════════════════════════════════════════════════ */
+
+export const blgAnswers = {
+  id: 'blg-answers',
+  name: 'Questions, Answered',
+  family: 'Utility',
+  tagline: 'The searches this blog exists to resolve',
+  desc:
+    'Nobody reads a travel blog for pleasure; they arrive with a question. Four real search queries — ' +
+    'does my phone support eSIM, can I keep my number, what happens on a cruise, is it legal in ' +
+    'China — appear and resolve into the article that answers each. It frames the blog as a utility ' +
+    'rather than a content marketing exercise.',
+  pros: [
+    'Matches the actual intent that brings people to the page',
+    'Each pairing demonstrates the blog\u2019s usefulness immediately',
+    'Doubles as an SEO signal about what the section covers',
+  ],
+  cons: ['Needs the articles to genuinely exist', 'A search box is a very familiar device'],
+  scores: { story: 5, motion: 4, perf: 5, mobile: 5, brand: 4, ease: 4 },
+  build: (uid) => {
+    const dur = 13;
+    const qs = [
+      ['does my phone support esim', 'Every eSIM-compatible phone, listed'],
+      ['can i keep my number abroad', 'Keeping your number while you travel'],
+      ['esim on a cruise ship', 'What actually works at sea'],
+      ['is an esim legal in china', 'China, Turkey and the other exceptions'],
+    ];
+    const B = mk('orange');
+    const inner = `
+    ${B.dots(uid)}
+    ${B.bloom(320, 200, 250, uid)}
+    ${B.mono(72, 54, 'WHAT PEOPLE ACTUALLY SEARCH FOR', { size: 9.5, op: 0.45 })}
+    ${qs.map(([q, a], i) => {
+      const on = i / 4, off = (i + 1) / 4;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1;0;0"
+          keyTimes="0;${on.toFixed(4)};${(on + 0.008).toFixed(4)};${off.toFixed(4)};${Math.min(off + 0.008, 1).toFixed(4)};1"
+          dur="${dur}s" repeatCount="indefinite" calcMode="discrete"/>
+        ${B.card(72, 100, 496, 64, { r: 16, fill: WHITE, stroke: LINE, sw: 2 })}
+        <g transform="translate(104 132)" fill="none" stroke="${GRAY}" stroke-width="2.2" stroke-linecap="round">
+          <circle r="7"/><path d="M 5.5 5.5 L 11 11"/>
+        </g>
+        ${B.label(130, 138, q, { size: 15, op: 0.75 })}
+        ${B.card(72, 186, 496, 132, { r: 16, fill: B.P.wash, stroke: B.P.main, sw: 2 })}
+        ${B.mono(100, 216, 'FROM THE BLOG', { size: 8.5, op: 0.5, fill: B.P.deep })}
+        ${B.label(100, 258, a, { size: 20, fill: INK })}
+        ${B.mono(100, 292, '6 MIN READ \u00b7 UPDATED THIS MONTH', { size: 8.5, op: 0.4 })}
+      </g>`;
+    }).join('')}
+    ${[0, 1, 2, 3].map((i) => `
+      <rect x="${72 + i * 126}" y="352" width="114" height="5" rx="2.5" fill="${LINE}"/>
+      <rect x="${72 + i * 126}" y="352" width="114" height="5" rx="2.5" fill="${B.P.main}" opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1;0;0"
+          keyTimes="0;${(i / 4).toFixed(4)};${(i / 4 + 0.008).toFixed(4)};${((i + 1) / 4).toFixed(4)};${Math.min((i + 1) / 4 + 0.008, 1).toFixed(4)};1"
+          dur="${dur}s" repeatCount="indefinite" calcMode="discrete"/>
+      </rect>`).join('')}
+    ${B.mono(72, 402, 'FORTY-ONE GUIDES \u00b7 EACH ONE ANSWERING A REAL QUESTION', { size: 9, op: 0.35 })}`;
+    return { svg: B.wrap(inner), pills: pBl('Answers, not articles') };
+  },
+};
+
+export const blgKeptCurrent = {
+  id: 'blg-current',
+  name: 'Kept Current',
+  family: 'Trust',
+  tagline: 'Rewritten when the facts change, and dated',
+  desc:
+    'Travel and device information rots, and every competitor blog is full of three-year-old posts ' +
+    'that are now wrong. Four guides show their last-revised date and what changed — a new iPhone ' +
+    'added, a carrier dropped, a rule updated. Maintenance is the only real differentiator a blog in ' +
+    'this category has.',
+  pros: [
+    'Freshness is the one quality readers can verify themselves',
+    'Naming what changed is far stronger than a date alone',
+    'Sets an editorial standard that is hard for a content farm to match',
+  ],
+  cons: ['Commits us to actually maintaining every guide', 'Visible dates expose neglect immediately'],
+  scores: { story: 5, motion: 3, perf: 5, mobile: 5, brand: 5, ease: 3 },
+  build: (uid) => {
+    const dur = 11;
+    const B = mk('orange');
+    const posts = [
+      ['Every eSIM-compatible phone', '4 days ago', 'Added the iPhone 18 range'],
+      ['Keeping your number abroad', '2 weeks ago', 'Rewrote the EU section'],
+      ['China, Turkey and the exceptions', '3 weeks ago', 'Turkey rules changed in June'],
+      ['What works at sea', 'last month', 'Two cruise lines added'],
+    ];
+    const inner = `
+    ${B.dots(uid)}
+    ${B.bloom(320, 210, 250, uid)}
+    ${B.mono(72, 54, 'LAST REVISED \u00b7 AND WHAT CHANGED', { size: 9.5, op: 0.45 })}
+    ${posts.map(([nm, when, what], i) => {
+      const y = 80 + i * 82;
+      const on = 0.06 + i * 0.15;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.06).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${B.card(72, y, 496, 68, { r: 13, fill: WHITE, stroke: LINE })}
+        <rect x="72" y="${y}" width="4" height="68" rx="2" fill="${B.P.main}"/>
+        ${B.label(100, y + 30, nm, { size: 15 })}
+        ${B.mono(100, y + 52, what, { size: 9, op: 0.42 })}
+        ${B.mono(544, y + 40, when, { size: 9.5, anchor: 'end', op: 0.55, fill: B.P.deep })}
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.74;0.82;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${B.card(72, 408, 496, 42, { r: 11, fill: B.P.wash, stroke: B.P.main, sw: 1.8 })}
+      ${B.label(96, 436, 'Nothing here is older than three months', { size: 13.5, fill: B.P.deep })}
+    </g>`;
+    return { svg: B.wrap(inner), pills: pBl('Kept current') };
+  },
+};
+
+export const blgWhoWrote = {
+  id: 'blg-who',
+  name: 'Who Wrote It',
+  family: 'Trust',
+  tagline: 'A named person who has actually been there',
+  desc:
+    'Travel content is drowning in anonymous AI copy, and a byline is now a differentiator. Each ' +
+    'guide carries an author, where they were when they tested it, and which device they used. ' +
+    'Provenance is the cheapest possible answer to a reader wondering whether a human checked any of ' +
+    'this.',
+  pros: [
+    'Directly counters the anonymous-content problem readers now assume',
+    'Device and location tested is a detail that signals real work',
+    'Makes the editorial team an asset rather than a cost',
+  ],
+  cons: ['Requires real named authors on the team', 'Personal bylines create a maintenance burden'],
+  scores: { story: 5, motion: 3, perf: 5, mobile: 5, brand: 5, ease: 3 },
+  build: (uid) => {
+    const dur = 11;
+    const B = mk('orange');
+    const items = [
+      ['Marta S.', 'Tested in Tokyo', 'iPhone 17 Pro \u00b7 NTT Docomo'],
+      ['Ahmed R.', 'Tested in Istanbul', 'Pixel 10 \u00b7 Turkcell'],
+      ['Ines F.', 'Tested at sea', 'Galaxy S26 \u00b7 maritime roaming'],
+    ];
+    const inner = `
+    ${B.dots(uid)}
+    ${B.bloom(320, 210, 250, uid)}
+    ${B.mono(72, 54, 'WRITTEN BY PEOPLE WHO WERE THERE', { size: 9.5, op: 0.45 })}
+    ${items.map(([nm, where, kit], i) => {
+      const y = 82 + i * 108;
+      const on = 0.06 + i * 0.2;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.07).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${B.card(72, y, 496, 92, { r: 14, fill: WHITE, stroke: LINE })}
+        <circle cx="122" cy="${y + 46}" r="24" fill="${B.P.wash}" stroke="${B.P.main}" stroke-width="2"/>
+        <text x="122" y="${y + 52}" font-size="15" font-weight="800" text-anchor="middle" fill="${B.P.deep}">${nm.slice(0, 1)}</text>
+        ${B.label(164, y + 38, nm, { size: 16 })}
+        ${B.mono(164, y + 60, where.toUpperCase(), { size: 9, op: 0.5, fill: B.P.deep })}
+        ${B.mono(544, y + 52, kit, { size: 9, anchor: 'end', op: 0.42 })}
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.74;0.82;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${B.card(72, 396, 496, 48, { r: 12, fill: B.P.wash, stroke: B.P.main, sw: 2 })}
+      ${B.label(96, 426, 'Every guide tested on a real device, in the country', { size: 13.5, fill: B.P.deep })}
+    </g>`;
+    return { svg: B.wrap(inner), pills: pBl('Named authors') };
+  },
+};
+
+export const blgOneGuide = {
+  id: 'blg-oneguide',
+  name: 'One Guide, Opened',
+  family: 'Editorial',
+  tagline: 'The inside of an article, not a grid of cards',
+  desc:
+    'Every blog hero shows a grid of cards, which tells the reader nothing about the writing. This ' +
+    'opens a single guide instead — headline, standfirst, a device-compatibility table and a caveat ' +
+    'box — so the reader can judge the quality before clicking. Showing the work is riskier and much ' +
+    'more convincing.',
+  pros: [
+    'Lets the writing sell itself, which a card grid cannot',
+    'The caveat box signals honesty rather than promotion',
+    'Distinct from every competitor blog hero',
+  ],
+  cons: ['Only as good as the article chosen to feature', 'Dense at a hero scale'],
+  scores: { story: 5, motion: 3, perf: 5, mobile: 4, brand: 5, ease: 4 },
+  build: (uid) => {
+    const dur = 11;
+    const B = mk('orange');
+    const rows = [
+      ['iPhone 12 and later', 'Yes', true],
+      ['Pixel 4 and later', 'Yes', true],
+      ['Galaxy S20 and later', 'Yes', true],
+      ['Most phones bought in Japan', 'Often locked', false],
+    ];
+    const inner = `
+    ${B.dots(uid)}
+    ${B.bloom(320, 200, 250, uid)}
+    ${B.mono(72, 50, 'GUIDE \u00b7 UPDATED 4 DAYS AGO \u00b7 6 MIN', { size: 9.5, op: 0.45 })}
+    ${B.label(72, 92, 'Does your phone support eSIM?', { size: 25 })}
+    ${B.label(72, 122, 'The short answer is probably. The long answer has four exceptions.', { size: 13, op: 0.55 })}
+    ${rows.map(([nm, ans, ok], i) => {
+      const y = 146 + i * 54;
+      const on = 0.08 + i * 0.13;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.05).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${B.card(72, y, 496, 44, { r: 10, fill: i % 2 ? '#FFFCFA' : WHITE, stroke: LINE })}
+        ${B.label(96, y + 28, nm, { size: 13 })}
+        ${ok
+          ? `<circle cx="474" cy="${y + 22}" r="10" fill="${GREEN_SOFT}"/>
+             <path d="M 469 ${y + 22} l 4 4 l 7 -8" fill="none" stroke="${GREEN_TEXT}" stroke-width="2.2" stroke-linecap="round"/>`
+          : `<circle cx="474" cy="${y + 22}" r="10" fill="#FFF4E5"/>
+             <path d="M 474 ${y + 16} v 7 M 474 ${y + 27} v 1" stroke="${AMBER}" stroke-width="2.2" stroke-linecap="round"/>`}
+        ${B.mono(544, y + 26, ans, { size: 9.5, anchor: 'end', op: 0.5, fill: ok ? GREEN_TEXT : AMBER })}
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.66;0.74;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${B.card(72, 366, 496, 76, { r: 12, fill: '#FFF4E5', stroke: AMBER, sw: 1.8 })}
+      ${B.mono(96, 394, 'ONE CAVEAT', { size: 8.5, op: 0.55, fill: '#B45309' })}
+      ${B.label(96, 424, 'A carrier-locked phone will refuse the profile. Check first.', { size: 13 })}
+    </g>`;
+    return { svg: B.wrap(inner), pills: pBl('Read the actual guide') };
+  },
+};
+
+/* ── registry ── */
+
+export const blgWhatItIsNot = {
+  id: 'blg-notfor',
+  name: 'What We Will Not Write',
+  family: 'Editorial',
+  tagline: 'The editorial line, stated out loud',
+  desc:
+    'The fastest way to be trusted in a category full of affiliate spam is to publish what you refuse ' +
+    'to do. Four rules appear — no affiliate links, no sponsored posts, no AI-written guides, and we ' +
+    'will tell you when a competitor is the better choice — with the last one shown as an actual ' +
+    'published article.',
+  pros: [
+    'A refusal list is rare and reads as genuine confidence',
+    'Recommending a competitor is the most credible line available',
+    'Positions the blog against exactly the content it competes with',
+  ],
+  cons: ['Every rule is a commitment marketing must keep', 'Naming a competitor favourably is a real decision'],
+  scores: { story: 5, motion: 3, perf: 5, mobile: 5, brand: 5, ease: 3 },
+  build: (uid) => {
+    const dur = 11;
+    const B = mk('orange');
+    const rules = [
+      ['No affiliate links', 'We are not paid per click'],
+      ['No sponsored posts', 'Nobody buys a paragraph'],
+      ['No AI-written guides', 'A named person tests every one'],
+      ['We name a better option', 'Even when it is not ours'],
+    ];
+    const inner = `
+    ${B.dots(uid)}
+    ${B.bloom(320, 200, 250, uid)}
+    ${B.mono(72, 54, 'THE EDITORIAL LINE', { size: 9.5, op: 0.45 })}
+    ${rules.map(([nm, note], i) => {
+      const y = 78 + i * 68;
+      const on = 0.06 + i * 0.12;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.05).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${B.card(72, y, 496, 56, { r: 12, fill: WHITE, stroke: LINE })}
+        <circle cx="102" cy="${y + 28}" r="11" fill="${B.P.wash}"/>
+        <path d="M 96 ${y + 28} l 4.5 4.5 l 8 -9" fill="none" stroke="${B.P.main}" stroke-width="2.4" stroke-linecap="round"/>
+        ${B.label(130, y + 26, nm, { size: 14 })}
+        ${B.mono(130, y + 44, note, { size: 9, op: 0.42 })}
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.66;0.74;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${B.card(72, 352, 496, 92, { r: 14, fill: B.P.wash, stroke: B.P.main, sw: 2 })}
+      ${B.mono(96, 380, 'PUBLISHED LAST MONTH', { size: 8.5, op: 0.55, fill: B.P.deep })}
+      ${B.label(96, 412, 'When a local SIM is still the better buy', { size: 17 })}
+      ${B.mono(96, 434, 'THREE COUNTRIES WHERE WE ARE NOT THE RIGHT ANSWER', { size: 8.5, op: 0.4 })}
+    </g>`;
+    return { svg: B.wrap(inner), pills: pBl('No affiliate links') };
+  },
+};
+
+/* ── registry ── */
+export const BLOG_VARIANTS = [blogCurrent, feedLive, topicOrbit, readingNow, destShuffle, weekly, blgAnswers, blgKeptCurrent, blgWhoWrote, blgOneGuide,
+  blgWhatItIsNot];

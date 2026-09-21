@@ -1399,7 +1399,117 @@ export const contractLine = {
   },
 };
 
+/* ── nethero 10 ── */
+export const netTheMap = {
+  id: 'net-themap',
+  name: 'Coverage, Honestly',
+  family: 'Transparency',
+  tagline: 'Where it is excellent, good, and thin',
+  desc:
+    'Every coverage map in this industry is a single flat colour over whole continents. This grades ' +
+    'it in three bands and admits the thin one — naming the regions where coverage is partial instead ' +
+    'of pretending otherwise. Publishing the weak band is what makes the strong band believable.',
+  pros: [
+    'Admitting a weakness makes every other claim on the page credible',
+    'Three honest bands are more useful than one flattering colour',
+    'Pre-empts the support ticket from somebody who trusted a flat map',
+  ],
+  cons: ['Exposes gaps a competitor can quote', 'Requires per-region data we must maintain'],
+  scores: { story: 5, motion: 4, perf: 5, mobile: 5, brand: 5, ease: 3 },
+  build: (uid) => {
+    const dur = 11;
+    const bands = [
+      ['Excellent', '5G, multiple carriers', 96, G.orange, 'Western Europe \u00b7 Japan \u00b7 Korea \u00b7 UAE'],
+      ['Good', 'LTE or better, two carriers', 61, G.amber, 'North America \u00b7 Brazil \u00b7 India \u00b7 Australia'],
+      ['Thin', 'One carrier, LTE only', 33, G.gray, 'Parts of Central Africa and Central Asia'],
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 210, 250, uid)}
+    ${label(96, 62, 'Coverage, graded honestly', { size: 15, op: 0.5 })}
+    ${bands.map(([nm, note, n, col, where], i) => {
+      const y = 92 + i * 104;
+      const on = 0.08 + i * 0.16;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.06).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${card(96, y, 448, 86, { r: 13, fill: G.white, stroke: G.line })}
+        <rect x="96" y="${y}" width="5" height="86" rx="2.5" fill="${col}"/>
+        ${label(124, y + 30, nm, { size: 15 })}
+        ${mono(124, y + 50, note, { size: 9, op: 0.4 })}
+        ${mono(124, y + 70, where, { size: 8.5, op: 0.32 })}
+        <text x="520" y="${y + 44}" font-size="24" font-weight="800" text-anchor="end" fill="${col}">${n}</text>
+        ${mono(520, y + 64, 'COUNTRIES', { size: 8, anchor: 'end', op: 0.35 })}
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.72;0.8;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${mono(96, 424, 'WE PUBLISH THE THIN BAND. NOBODY ELSE IN THIS CATEGORY DOES.', { size: 9.5, op: 0.5, fill: G.orange })}
+    </g>`;
+    return { svg: gWrap(inner), pills: pillsN('Graded, not flat', '190 countries') };
+  },
+};
+
+/* ── why 10 ── */
+export const whyTheIncident = {
+  id: 'why-incident',
+  name: 'The Incident Report',
+  family: 'Trust',
+  tagline: 'What happened last time something broke',
+  desc:
+    'Nothing proves an operations culture like a published post-mortem. One real incident is written ' +
+    'out — detected at 03:12, failover at 03:12, root cause in a carrier routing change, 41 customers ' +
+    'affected for under a minute, and the fix. Publishing a failure honestly is the strongest trust ' +
+    'signal on the whole page.',
+  pros: [
+    'Nothing else here proves an operations culture this convincingly',
+    'Naming a small blast radius turns an incident into evidence',
+    'Aligns with the audit and transparency language used elsewhere',
+  ],
+  cons: [
+    'Commits us to publishing the next one too, including a bad one',
+    'A marketing page showing an outage is a nerve-holding decision',
+  ],
+  scores: { story: 5, motion: 3, perf: 5, mobile: 5, brand: 5, ease: 3 },
+  build: (uid) => {
+    const dur = 11;
+    const lines = [
+      ['03:12:04', 'Carrier routing change detected', 'automated'],
+      ['03:12:04', 'Traffic moved to the next carrier', '38 ms'],
+      ['03:12:41', 'Engineer paged and acknowledged', 'on call'],
+      ['04:06:00', 'Root cause confirmed with the carrier', 'their change'],
+      ['09:00:00', 'Post-mortem published', 'public'],
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 210, 250, uid)}
+    ${label(96, 58, 'Incident 2026-031, in full', { size: 15, op: 0.5 })}
+    ${mono(96, 80, '41 CUSTOMERS AFFECTED \u00b7 LONGEST IMPACT 52 SECONDS', { size: 9, op: 0.42 })}
+    ${lines.map(([ts, nm, tag], i) => {
+      const y = 98 + i * 56;
+      const on = 0.06 + i * 0.12;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.05).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${card(96, y, 448, 46, { r: 11, fill: G.white, stroke: G.line })}
+        ${mono(120, y + 28, ts, { size: 10, op: 0.5, fill: G.orange })}
+        ${label(212, y + 28, nm, { size: 12.5 })}
+        ${mono(520, y + 28, tag, { size: 8.5, anchor: 'end', op: 0.35 })}
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.74;0.82;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(96, 386, 448, 56, { r: 12, fill: G.wash, stroke: G.orange, sw: 2 })}
+      ${label(120, 420, 'Every incident is published. This is the last one.', { size: 13.5, fill: G.orange })}
+    </g>`;
+    return { svg: gWrap(inner), pills: pillsN('Post-mortems published', null) };
+  },
+};
+
+/* ── registries ── */
 export const NET_HERO_VARIANTS = [netCurrent, handoff, uptime, arcs, race, mesh, hud,
-  theFloor, whoYoureOn, whatBreaksFirst];
+  theFloor, whoYoureOn, whatBreaksFirst,
+  netTheMap];
 export const WHY_VARIANTS = [whyCurrent, sweep, failGrid, stack, procurement, handoverSlow,
-  oneCarrierCost, theBands, nightShift, contractLine];
+  oneCarrierCost, theBands, nightShift, contractLine,
+  whyTheIncident];

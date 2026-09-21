@@ -515,4 +515,314 @@ export const controls = {
   },
 };
 
-export const BIZ_NEEDS_VARIANTS = [nCurrent, consoleTabs, alertResolve, scaleDial, orgTree, controls];
+/* ══ BIZ NEEDS · 6–9 ════════════════════════════════════════════════ */
+
+export const nEightThings = {
+  id: 'n-eight',
+  name: 'All Eight, Named',
+  family: 'Coverage',
+  tagline: 'The heading says everything; the panel should list it',
+  desc:
+    'The section promises everything a business needs and the current panel shows one console with ' +
+    'three bars. Here all eight capabilities are named and ticked in turn — central billing, policy ' +
+    'controls, SSO, an API, per-user limits, usage alerts, role permissions and an audit log. Least ' +
+    'clever option, best match to the heading.',
+  pros: [
+    'Actually delivers what the heading claims, which nothing else does',
+    'Doubles as a feature checklist for a procurement comparison',
+    'Trivial to keep current as capabilities ship',
+  ],
+  cons: ['A list, not a story', 'Duplicates the cards beside it'],
+  scores: { story: 4, motion: 3, perf: 5, mobile: 5, brand: 3, ease: 5 },
+  build: (uid) => {
+    const dur = 11;
+    const caps = [
+      ['Central billing', 'One invoice, every country'],
+      ['Policy controls', 'Hard caps per traveller'],
+      ['Single sign-on', 'SAML and SCIM'],
+      ['API access', 'Provision from your own systems'],
+      ['Per-user limits', 'Set once, applied everywhere'],
+      ['Usage alerts', 'Before the limit, not after'],
+      ['Role permissions', 'Finance sees spend, IT sees devices'],
+      ['Audit log', 'Every change, attributed'],
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 210, 250, uid)}
+    ${mono(72, 54, 'EIGHT CAPABILITIES, NAMED', { size: 9.5, op: 0.45 })}
+    ${caps.map(([nm, note], i) => {
+      const x = 72 + (i % 2) * 254, y = 76 + Math.floor(i / 2) * 84;
+      const on = 0.05 + i * 0.08;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.045).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${card(x, y, 242, 70, { r: 12, fill: WHITE, stroke: LINE })}
+        <circle cx="${x + 28}" cy="${y + 26}" r="11" fill="${P.wash}"/>
+        <path d="M ${x + 22} ${y + 26} l 4.5 4.5 l 8 -9" fill="none" stroke="${P.main}" stroke-width="2.4" stroke-linecap="round"/>
+        ${label(x + 50, y + 30, nm, { size: 13 })}
+        ${mono(x + 20, y + 56, note, { size: 8.5, op: 0.4 })}
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.74;0.82;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${mono(72, 436, 'ALL EIGHT INCLUDED \u2014 NONE OF THEM AN UPGRADE TIER', { size: 9.5, op: 0.55, fill: P.deep })}
+    </g>`;
+    return { svg: wrap(inner), pills: pN('All eight included') };
+  },
+};
+
+export const nInvoiceLine = {
+  id: 'n-invoice',
+  name: 'The Invoice',
+  family: 'Finance',
+  tagline: 'What finance receives, in full',
+  desc:
+    'Central billing is a phrase; an invoice is a document. This draws the actual artefact — cost ' +
+    'centre, three teams, forty-eight lines summarised, VAT handled, one total, one payment date. ' +
+    'Showing the deliverable is more convincing than describing the capability, and this is the ' +
+    'deliverable finance signs off on.',
+  pros: [
+    'Shows the artefact the buyer will actually receive',
+    'Cost-centre allocation is a real requirement nobody markets',
+    'Reassuring specificity — VAT, terms, a due date',
+  ],
+  cons: ['An invoice is not an exciting picture', 'Figures need to be realistic for the segment'],
+  scores: { story: 5, motion: 3, perf: 5, mobile: 4, brand: 4, ease: 5 },
+  build: (uid) => {
+    const dur = 10;
+    const lines = [
+      ['Sales team \u00b7 EU', '24 lines', 1184],
+      ['Field ops \u00b7 APAC', '16 lines', 742],
+      ['Executives \u00b7 US', '8 lines', 396],
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 210, 250, uid)}
+    ${card(72, 60, 496, 366, { r: 16, fill: WHITE, stroke: INK, sw: 2.5 })}
+    ${mono(100, 92, 'INVOICE 2026-0418 \u00b7 MARCH', { size: 9.5, op: 0.45 })}
+    ${label(100, 124, 'Acme International Ltd', { size: 17 })}
+    ${mono(540, 124, 'DUE 30 APRIL', { size: 9.5, anchor: 'end', op: 0.4 })}
+    <line x1="100" y1="144" x2="540" y2="144" stroke="${LINE}"/>
+    ${lines.map(([nm, n, amt], i) => {
+      const y = 172 + i * 56;
+      const on = 0.08 + i * 0.14;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.06).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${label(100, y, nm, { size: 13.5 })}
+        ${mono(100, y + 18, `${n} \u00b7 COST CENTRE ${['EU-01', 'AP-04', 'US-02'][i]}`, { size: 8.5, op: 0.38 })}
+        ${num(540, y + 2, `\u20ac${amt.toLocaleString('en-US')}`, { size: 15, anchor: 'end' })}
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.56;0.64;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      <line x1="100" y1="342" x2="540" y2="342" stroke="${LINE}"/>
+      ${mono(100, 366, 'SUBTOTAL', { size: 9, op: 0.4 })}
+      ${num(540, 366, '\u20ac2,322', { size: 13, anchor: 'end', op: 0.6 })}
+      ${mono(100, 390, 'VAT, REVERSE CHARGED', { size: 9, op: 0.4 })}
+      ${num(540, 390, '\u20ac0', { size: 13, anchor: 'end', op: 0.6 })}
+    </g>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.72;0.8;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(92, 402, 456, 0.1, { r: 0, fill: 'transparent', stroke: 'transparent', sw: 0 })}
+      ${label(100, 416, 'Total \u00b7 one payment', { size: 14 })}
+      ${num(540, 418, '\u20ac2,322', { size: 20, anchor: 'end', fill: P.deep })}
+    </g>
+    ${mono(72, 448, 'FORTY-EIGHT LINES \u00b7 SIX COUNTRIES \u00b7 ONE DOCUMENT', { size: 9, op: 0.35 })}`;
+    return { svg: wrap(inner), pills: pN('One document') };
+  },
+};
+
+export const nWhoCanDoWhat = {
+  id: 'n-roles',
+  name: 'Who Can Do What',
+  family: 'Governance',
+  tagline: 'Four roles, four different screens',
+  desc:
+    'In a company, the person who pays is not the person who provisions. Four roles cycle through — ' +
+    'finance, IT, team lead and traveller — and the console changes for each: finance sees spend and ' +
+    'no devices, the traveller sees their own usage and nothing else. Role separation is a hard ' +
+    'requirement in any security review.',
+  pros: [
+    'Answers a mandatory security-review question directly',
+    'Shows the product adapting rather than a static screen',
+    'Demonstrates least-privilege thinking, which builds trust',
+  ],
+  cons: ['Four states in one loop is a lot to absorb', 'Requires the roles to genuinely be this granular'],
+  scores: { story: 5, motion: 5, perf: 5, mobile: 4, brand: 4, ease: 3 },
+  build: (uid) => {
+    const dur = 12;
+    const roles = [
+      ['Finance', 'Spend, invoices, cost centres', ['Total spend', 'Per-team allocation', 'Invoice history'], 'Cannot see devices or identities'],
+      ['IT', 'Devices, profiles, policy', ['Active profiles', 'Policy enforcement', 'Audit log'], 'Cannot see spend'],
+      ['Team lead', 'Their own team only', ['Six travellers', 'Usage this month', 'Request a top-up'], 'Cannot change policy'],
+      ['Traveller', 'Their own line', ['My usage', 'My plan', 'Add data'], 'Cannot see anybody else'],
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 210, 250, uid)}
+    ${mono(72, 54, 'ROLE PERMISSIONS \u00b7 LEAST PRIVILEGE BY DEFAULT', { size: 9.5, op: 0.45 })}
+    ${roles.map(([nm, sub, items, cant], i) => {
+      const on = i / 4, off = (i + 1) / 4;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1;0;0"
+          keyTimes="0;${on.toFixed(4)};${(on + 0.006).toFixed(4)};${off.toFixed(4)};${Math.min(off + 0.006, 1).toFixed(4)};1"
+          dur="${dur}s" repeatCount="indefinite" calcMode="discrete"/>
+        ${card(72, 76, 496, 302, { r: 16, fill: WHITE, stroke: P.main, sw: 2 })}
+        ${badge(96, 100, nm.toUpperCase(), { fill: P.main })}
+        ${label(96, 158, sub, { size: 16 })}
+        ${items.map((it, k) => `
+          ${card(96, 182 + k * 54, 448, 44, { r: 10, fill: P.wash, stroke: 'transparent', sw: 0 })}
+          <circle cx="122" cy="${204 + k * 54}" r="9" fill="${P.main}" opacity="0.2"/>
+          <path d="M 117 ${204 + k * 54} l 4 4 l 7 -8" fill="none" stroke="${P.deep}" stroke-width="2.2" stroke-linecap="round"/>
+          ${label(144, 208 + k * 54, it, { size: 13 })}`).join('')}
+        ${mono(96, 404, cant.toUpperCase(), { size: 9, op: 0.45, fill: RED })}
+      </g>`;
+    }).join('')}
+    ${[0, 1, 2, 3].map((i) => `
+      <rect x="${72 + i * 126}" y="426" width="114" height="5" rx="2.5" fill="${LINE}"/>
+      <rect x="${72 + i * 126}" y="426" width="114" height="5" rx="2.5" fill="${P.main}" opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1;0;0"
+          keyTimes="0;${(i / 4).toFixed(4)};${(i / 4 + 0.006).toFixed(4)};${((i + 1) / 4).toFixed(4)};${Math.min((i + 1) / 4 + 0.006, 1).toFixed(4)};1"
+          dur="${dur}s" repeatCount="indefinite" calcMode="discrete"/>
+      </rect>`).join('')}`;
+    return { svg: wrap(inner), pills: pN('Role-separated') };
+  },
+};
+
+export const nItIntegrates = {
+  id: 'n-api',
+  name: 'It Integrates',
+  family: 'Engineering',
+  tagline: 'Provisioned from your own systems, not our dashboard',
+  desc:
+    'A console is somebody else\u2019s tool to log into; an API is a capability. A real request provisions ' +
+    'a line from an HR system when a starter record is created, and the response comes back with the ' +
+    'activation code. For any company above a hundred people, nobody will be adding users by hand.',
+  pros: [
+    'Speaks credibly to the engineer who evaluates the integration',
+    'HR-triggered provisioning is the real-world pattern this audience wants',
+    'Code on the page is a strong signal the API actually exists',
+  ],
+  cons: ['Loses a non-technical reader entirely', 'The endpoint must match the shipped API exactly'],
+  scores: { story: 4, motion: 4, perf: 5, mobile: 4, brand: 4, ease: 4 },
+  build: (uid) => {
+    const dur = 11;
+    const req = [
+      'POST /v1/lines',
+      '{',
+      '  "employee_id": "ACME-4471",',
+      '  "team": "field-ops-apac",',
+      '  "policy": "20gb-hard-cap",',
+      '  "countries": ["JP", "SG", "AU"]',
+      '}',
+    ];
+    const res = [
+      '201 Created',
+      '{',
+      '  "line_id": "ln_8f2a41",',
+      '  "status": "ready",',
+      '  "activation": "LPA:1$rsp.openline.com$K4F\u2026"',
+      '}',
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 210, 250, uid)}
+    ${mono(72, 54, 'TRIGGERED BY YOUR HR SYSTEM, NOT OUR DASHBOARD', { size: 9.5, op: 0.45 })}
+    ${card(72, 74, 240, 216, { r: 13, fill: '#0F1117', stroke: '#0F1117' })}
+    ${mono(94, 100, 'REQUEST', { size: 8.5, op: 0.5, fill: '#8B93A7' })}
+    ${req.map((ln, i) => `
+      <g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${(0.05 + i * 0.035).toFixed(3)};${(0.07 + i * 0.035).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        <text x="94" y="${128 + i * 22}" font-size="10" font-weight="600" fill="${i === 0 ? '#7DD3FC' : '#D6DBE6'}"
+          style="font-family:${MONO}">${ln.replace(/ /g, '\u00a0')}</text>
+      </g>`).join('')}
+
+    <path d="M 322 182 H 344" stroke="${P.main}" stroke-width="2.5"/>
+    <path d="M 350 182 l -9 -6 v 12 z" fill="${P.main}"/>
+
+    ${card(360, 74, 208, 216, { r: 13, fill: '#0F1117', stroke: '#0F1117' })}
+    ${mono(382, 100, 'RESPONSE \u00b7 340 ms', { size: 8.5, op: 0.5, fill: '#8B93A7' })}
+    ${res.map((ln, i) => `
+      <g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${(0.4 + i * 0.035).toFixed(3)};${(0.42 + i * 0.035).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        <text x="382" y="${128 + i * 22}" font-size="${i === 4 ? 8.5 : 10}" font-weight="600"
+          fill="${i === 0 ? '#86EFAC' : '#D6DBE6'}" style="font-family:${MONO}">${ln.replace(/ /g, '\u00a0')}</text>
+      </g>`).join('')}
+
+    ${[['SCIM PROVISIONING', 'supported'], ['WEBHOOKS', 'every state change'], ['RATE LIMIT', '600 / min']].map(([k, v], i) => `
+      <g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${(0.68 + i * 0.06).toFixed(3)};${(0.74 + i * 0.06).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${card(72 + i * 172, 316, 162, 74, { r: 12, fill: WHITE, stroke: LINE })}
+        ${mono(94 + i * 172, 342, k, { size: 8.5, op: 0.4 })}
+        ${label(94 + i * 172, 370, v, { size: 13, fill: P.deep })}
+      </g>`).join('')}
+    ${mono(72, 428, 'NOBODY ABOVE A HUNDRED PEOPLE ADDS USERS BY HAND', { size: 9, op: 0.35 })}`;
+    return { svg: wrap(inner), pills: pN('API and SCIM') };
+  },
+};
+
+/* ── registry ── */
+
+export const nTheAlert = {
+  id: 'n-alert',
+  name: 'Before, Not After',
+  family: 'Control',
+  tagline: 'The warning that arrives while it still matters',
+  desc:
+    'Every carrier sends a bill-shock warning after the money is gone. This fires at eighty percent, ' +
+    'to both the traveller and their team lead, with a one-tap approval to extend and the decision ' +
+    'logged. Arriving in time to act on is the entire difference between an alert and a notification.',
+  pros: [
+    'The timing is the feature, and it is easy to grasp',
+    'Notifying the lead as well as the traveller matches how approvals really work',
+    'The logged decision ties into the audit story',
+  ],
+  cons: ['Needs a real approval flow in the product', 'Overlaps with the policy option on the hero board'],
+  scores: { story: 5, motion: 5, perf: 5, mobile: 5, brand: 4, ease: 4 },
+  build: (uid) => {
+    const dur = 11;
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 200, 250, uid)}
+    ${mono(72, 54, 'JOHN D. \u00b7 TOKYO \u00b7 20 GB POLICY', { size: 9.5, op: 0.45 })}
+    ${card(72, 76, 496, 92, { r: 14, fill: WHITE, stroke: LINE })}
+    ${mono(96, 104, 'USAGE THIS MONTH', { size: 8.5, op: 0.4 })}
+    <rect x="96" y="120" width="448" height="18" rx="9" fill="#EEF0F3"/>
+    <rect x="96" y="120" width="0" height="18" rx="9" fill="${P.main}">
+      <animate attributeName="width" values="0;358;358" keyTimes="0;0.3;1" dur="${dur}s" repeatCount="indefinite"
+        calcMode="spline" keySplines="0.4 0 0.2 1;0 0 1 1"/>
+    </rect>
+    <line x1="454" y1="114" x2="454" y2="144" stroke="${INK}" stroke-width="2"/>
+    ${mono(454, 160, '20 GB LIMIT', { size: 8, anchor: 'middle', op: 0.4 })}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.3;0.34;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${mono(544, 104, '16.0 GB \u00b7 80%', { size: 9.5, anchor: 'end', op: 0.6, fill: AMBER })}
+    </g>
+
+    ${[[190, 'TO JOHN', 'You are at 80% of your data. Request more?', 0.4],
+       [268, 'TO SARAH, HIS LEAD', 'John is at 80%. Approve +10 GB?', 0.5]].map(([y, who, msg, on]) => `
+      <g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on};${(on + 0.05).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${card(72, y, 496, 66, { r: 13, fill: '#FFFBF3', stroke: AMBER, sw: 1.8 })}
+        ${mono(96, y + 26, who, { size: 8.5, op: 0.5, fill: '#B45309' })}
+        ${label(96, y + 50, msg, { size: 13.5 })}
+      </g>`).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.64;0.7;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(72, 350, 496, 94, { r: 14, fill: P.wash, stroke: P.main, sw: 2 })}
+      <circle cx="104" cy="384" r="12" fill="${P.main}"/>
+      <path d="M 97 384 l 5 5 l 9 -10" fill="none" stroke="${WHITE}" stroke-width="2.4" stroke-linecap="round"/>
+      ${label(132, 390, 'Approved by Sarah, 14:22 \u00b7 +10 GB', { size: 15 })}
+      ${mono(132, 420, 'LOGGED TO THE AUDIT TRAIL \u00b7 NO INTERRUPTION TO HIS DAY', { size: 8.5, op: 0.42 })}
+    </g>`;
+    return { svg: wrap(inner), pills: pN('Alerts at 80%') };
+  },
+};
+
+/* ── registry ── */
+export const BIZ_NEEDS_VARIANTS = [nCurrent, consoleTabs, alertResolve, scaleDial, orgTree, controls, nEightThings, nInvoiceLine, nWhoCanDoWhat, nItIntegrates, nTheAlert];

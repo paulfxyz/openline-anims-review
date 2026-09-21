@@ -1763,7 +1763,183 @@ export const kyRefused = {
 };
 
 /* ── registries (declared last: they reference every variant above) ── */
-export const LOUNGE_VARIANTS = [lgCurrent, lgTwoLanes, lgDoor, lgItinerary, lgCost, lgMap, lgUpgrade, lgDelay, lgQueue, lgNetwork];
-export const NOMAD_VARIANTS = [nmCurrent, nmCities, nmLockout, nmYear, nmDesk, nmPassport, nmClock, nmMonthEnd, nmCall, nmTaxHome];
+
+export const lgWhoIsIn = {
+  id: 'lg-whoisin',
+  name: 'Who Comes With You',
+  family: 'Value',
+  tagline: 'The guest allowance nobody else includes',
+  desc:
+    'Every lounge programme charges for the second person, and it is the detail that decides whether ' +
+    'the membership is used. This states it plainly — you, plus one guest, at no extra cost, on every ' +
+    'visit — set against what the same two seats cost at the door and under a competing card.',
+  pros: [
+    'The guest policy is the detail that decides real-world usage',
+    'Direct comparison against a door price is immediately legible',
+    'Applies to couples and colleagues alike, which is most travel',
+  ],
+  cons: ['Commits to a guest allowance with a real cost', 'Purely a terms comparison, not a scene'],
+  scores: { story: 4, motion: 3, perf: 5, mobile: 5, brand: 4, ease: 5 },
+  build: (uid) => {
+    const dur = 10;
+    const rows = [
+      ['At the door', 'US$52 each', 'US$104', false],
+      ['A competing card', 'guest US$32', 'US$32', false],
+      ['Openline Plus', 'guest included', 'US$0', true],
+    ];
+    const inner = `
+    ${bg(uid, 574, 642)}
+    ${glow(287, 240, 230, uid)}
+    ${m(34, 48, 'TWO PEOPLE, ONE VISIT', { size: 9.5, op: 0.5 })}
+    ${t(34, 84, 'Your guest comes free', { size: 21 })}
+    <g transform="translate(150 152)">
+      <circle r="34" fill="rgba(255,83,20,0.18)" stroke="${O}" stroke-width="2"/>
+      ${t(0, 6, 'YOU', { size: 13, anchor: 'middle', fill: O })}
+    </g>
+    <g transform="translate(250 152)">
+      <circle r="34" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.28)" stroke-width="2"/>
+      ${t(0, 6, '+1', { size: 15, anchor: 'middle' })}
+    </g>
+    ${gtick(400, 152, 'Both in, every visit', { fill: GRN_LIT, size: 12.5 })}
+    ${rows.map(([nm, note, price, ours], i) => {
+      const y = 232 + i * 116;
+      const on = 0.1 + i * 0.2;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.07).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${dcard(34, y, 506, 98, ours
+          ? { r: 14, fill: 'rgba(255,83,20,0.14)', stroke: O, sw: 2 }
+          : { r: 14 })}
+        ${t(58, y + 40, nm, { size: 16, op: ours ? 1 : 0.7 })}
+        ${m(58, y + 66, note.toUpperCase(), { size: 9, op: ours ? 0.6 : 0.4, fill: ours ? O : W })}
+        <text x="516" y="${y + 60}" font-size="30" font-weight="800" text-anchor="end"
+          fill="${ours ? GRN_LIT : RD}">${price}</text>
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.78;0.86;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${m(34, 612, 'THE ONE TERM THAT DECIDES WHETHER YOU ACTUALLY USE IT', { size: 9.5, op: 0.55, fill: O })}
+    </g>`;
+    return { svg: wL(inner), pills: noPills };
+  },
+};
+
+export const nmTwoNumbers = {
+  id: 'nm-twonumbers',
+  name: 'Two Numbers, One Phone',
+  family: 'Practical',
+  tagline: 'Work and home, on the same handset',
+  desc:
+    'A nomad carries one phone and two lives. Both profiles are active at once — a home number for the ' +
+    'bank and family, a local number for the landlord and the co-working space — with the work one ' +
+    'muted at nine in the evening. Dual-profile is the feature this audience asks for and nothing on ' +
+    'this page mentions.',
+  pros: [
+    'A genuinely requested capability that is currently invisible on the page',
+    'Muting one line in the evening is a small, human detail',
+    'Distinct from every other option on this board',
+  ],
+  cons: ['Depends on dual-SIM hardware support', 'Needs careful copy to avoid confusing people'],
+  scores: { story: 5, motion: 4, perf: 5, mobile: 5, brand: 5, ease: 4 },
+  build: (uid) => {
+    const dur = 11;
+    const lines = [
+      ['HOME', '+351 9\u2022\u2022 \u2022\u2022\u2022 412', 'Bank, family, government', O],
+      ['LOCAL', '+66 8\u2022 \u2022\u2022\u2022 7719', 'Landlord, co-working, delivery', GRN],
+    ];
+    const inner = `
+    ${bg(uid, 574, 656)}
+    ${glow(287, 260, 240, uid)}
+    ${m(34, 48, 'BOTH ACTIVE AT ONCE', { size: 9.5, op: 0.5 })}
+    ${t(34, 84, 'Two numbers, one handset', { size: 21 })}
+    ${lines.map(([tag, num, who, col], i) => {
+      const y = 114 + i * 152;
+      const on = 0.08 + i * 0.2;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.07).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${dcard(34, y, 506, 132, { r: 14 })}
+        <rect x="34" y="${y}" width="5" height="132" rx="2.5" fill="${col}"/>
+        ${m(62, y + 32, tag, { size: 9.5, op: 0.6, fill: col })}
+        ${t(62, y + 70, num, { size: 24 })}
+        ${m(62, y + 96, who.toUpperCase(), { size: 8.5, op: 0.4 })}
+        ${[0, 1, 2, 3].map((b) => `
+          <rect x="${452 + b * 17}" y="${y + 78 - b * 8}" width="11" height="${14 + b * 8}" rx="2" fill="${col}" opacity="0.9"/>`).join('')}
+        ${m(516, y + 110, 'CONNECTED', { size: 8.5, anchor: 'end', op: 0.5, fill: col })}
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.56;0.64;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${dcard(34, 430, 506, 90, { r: 14, fill: 'rgba(255,83,20,0.12)', stroke: O, sw: 2 })}
+      ${m(58, 460, 'AT 21:00', { size: 9, op: 0.6, fill: O })}
+      ${t(58, 492, 'Work line muted. Home line still rings.', { size: 15 })}
+    </g>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.74;0.82;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${m(34, 570, 'NO SECOND PHONE \u00b7 NO SWAPPING \u00b7 NO MISSED CODES', { size: 9.5, op: 0.55, fill: O })}
+      ${m(34, 596, 'THE THING THIS AUDIENCE ASKS FOR MOST', { size: 9, op: 0.35 })}
+    </g>`;
+    return { svg: wN(inner), pills: noPills };
+  },
+};
+
+export const kyNoSelfie = {
+  id: 'ky-noselfie',
+  name: 'Only When It Is Required',
+  family: 'Proportionality',
+  tagline: 'Most people are never asked for a document',
+  desc:
+    'Verification reads as a barrier because people assume everyone gets the full check. In practice ' +
+    'it is risk-tiered: a standard plan needs nothing, a high-value one needs a document, and only a ' +
+    'flagged case needs a selfie. Showing the tiers reassures the ninety-four percent who will never ' +
+    'be asked for anything.',
+  pros: [
+    'Removes the perceived barrier for the large majority of buyers',
+    'Risk-tiering is genuinely good practice and worth publicising',
+    'The percentage split does the reassuring on its own',
+  ],
+  cons: ['Discloses the thresholds that trigger a check', 'Compliance must sign off the tiers'],
+  scores: { story: 5, motion: 3, perf: 5, mobile: 5, brand: 5, ease: 3 },
+  build: (uid) => {
+    const dur = 11;
+    const tiers = [
+      ['Standard plan', 'Nothing asked for', '94%', GRN],
+      ['High-value plan', 'One document', '5%', AMB],
+      ['Flagged case', 'Document and liveness', '1%', RD],
+    ];
+    const inner = `
+    ${bg(uid, 574, 432, GRN)}
+    ${glow(287, 190, 210, uid)}
+    ${m(30, 44, 'RISK-TIERED, NOT BLANKET', { size: 9.5, op: 0.5 })}
+    ${t(30, 78, 'Most people are asked for nothing', { size: 19 })}
+    ${tiers.map(([nm, what, pct, col], i) => {
+      const y = 104 + i * 88;
+      const on = 0.08 + i * 0.18;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.07).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${dcard(30, y, 514, 74, { r: 12 })}
+        <rect x="30" y="${y}" width="4" height="74" rx="2" fill="${col}"/>
+        ${t(56, y + 32, nm, { size: 14.5 })}
+        ${m(56, y + 54, what.toUpperCase(), { size: 8.5, op: 0.42 })}
+        <rect x="300" y="${y + 32}" width="150" height="10" rx="5" fill="rgba(255,255,255,0.09)"/>
+        <rect x="300" y="${y + 32}" width="${Math.round(parseInt(pct, 10) / 94 * 150)}" height="10" rx="5" fill="${col}" opacity="0.8"/>
+        <text x="520" y="${y + 46}" font-size="21" font-weight="800" text-anchor="end" fill="${col}">${pct}</text>
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.74;0.82;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${m(30, 404, 'NINETY-FOUR PERCENT OF CUSTOMERS NEVER UPLOAD ANYTHING', { size: 9.5, op: 0.6, fill: GRN_LIT })}
+    </g>`;
+    return { svg: wK(inner), pills: noPills };
+  },
+};
+
+/* ── registries ── */
+export const LOUNGE_VARIANTS = [lgCurrent, lgTwoLanes, lgDoor, lgItinerary, lgCost, lgMap, lgUpgrade, lgDelay, lgQueue, lgNetwork,
+  lgWhoIsIn];
+export const NOMAD_VARIANTS = [nmCurrent, nmCities, nmLockout, nmYear, nmDesk, nmPassport, nmClock, nmMonthEnd, nmCall, nmTaxHome,
+  nmTwoNumbers];
 export const KYC_VARIANTS = [kyCurrent, kyFourChecks, kyTwoDoors, kyLiveness, kySealed,
-  kyRegistry, kyCommunity, kyWhatWeKeep, kyNinetySeconds, kyRefused];
+  kyRegistry, kyCommunity, kyWhatWeKeep, kyNinetySeconds, kyRefused,
+  kyNoSelfie];

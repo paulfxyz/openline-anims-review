@@ -531,4 +531,260 @@ export const ledger = {
   },
 };
 
-export const REFERRAL_VARIANTS = [refCurrent, chain, splitCoin, linkFlight, wallets, ledger];
+/* ══ REFERRAL · 6–9 ═════════════════════════════════════════════════ */
+
+export const refStack = {
+  id: 'ref-stack',
+  name: 'It Stacks',
+  family: 'Accumulation',
+  tagline: 'Five friends, and the next trip is free',
+  desc:
+    'The offer as told is a single five dollars, which is not a reason to do anything. Here the ' +
+    'credits stack: five friends join over a month and the balance climbs to twenty-five, which is ' +
+    'named as a plan rather than a number. The point of a referral scheme is the fifth one, and ' +
+    'nothing currently shows it.',
+  pros: [
+    'Gives a reason to refer more than once, which is the whole point',
+    'Naming the reward as a free plan is stronger than a dollar figure',
+    'Accumulation is inherently satisfying to watch',
+  ],
+  cons: ['Implies a stacking policy that must actually be uncapped', 'Slightly busier than the current panel'],
+  scores: { story: 5, motion: 5, perf: 5, mobile: 4, brand: 5, ease: 4 },
+  build: (uid) => {
+    const dur = 11;
+    const friends = ['AM', 'JL', 'SK', 'TR', 'NB'];
+    const inner = `
+    ${wdots(uid)}
+    ${label(320, 72, 'It stacks', { size: 22, fill: W, anchor: 'middle' })}
+    ${mono(320, 96, 'FIVE FRIENDS, ONE MONTH', { size: 9.5, anchor: 'middle', op: 0.6, fill: W })}
+    ${avatar(320, 154, 30, { fill: G.orange, text: 'YOU', size: 13 })}
+    ${friends.map((f, i) => {
+      const a = (-90 + (i - 2) * 34) * Math.PI / 180;
+      const x = 320 + Math.cos(a) * 128, y = 262 + Math.sin(a) * 40;
+      const on = 0.08 + i * 0.1;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.05).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        <line x1="320" y1="188" x2="${x.toFixed(0)}" y2="${(y - 22).toFixed(0)}" stroke="${W}" stroke-width="2" opacity="0.5"/>
+        ${avatar(x.toFixed(0), y.toFixed(0), 22, { fill: G.ink, text: f, size: 11 })}
+        ${creditBadge(x.toFixed(0), (y + 42).toFixed(0), '+US$5')}
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.66;0.74;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      <rect x="160" y="366" width="320" height="64" rx="16" fill="${W}"/>
+      ${mono(184, 392, 'YOUR BALANCE', { size: 9, op: 0.45, fill: G.ink })}
+      <text x="184" y="418" font-size="24" font-weight="800" fill="${G.deep}">US$25</text>
+      ${mono(456, 412, 'A FREE WEEK ABROAD', { size: 9, anchor: 'end', op: 0.5, fill: G.ink })}
+    </g>`;
+    return { svg: gWrap(inner), pills: pillsR('Uncapped') };
+  },
+};
+
+export const refBothWays = {
+  id: 'ref-bothways',
+  name: 'Both Sides, Named',
+  family: 'Clarity',
+  tagline: 'Who gets what, and exactly when',
+  desc:
+    'Referral offers fail on suspicion — people assume the credit never arrives. This states the ' +
+    'terms plainly as a two-column receipt: you get five dollars when they activate, they get five ' +
+    'dollars off their first plan, neither expires, and there is no minimum spend. Removing the ' +
+    'small print is the conversion lever.',
+  pros: [
+    'Answers the distrust that kills most referral programmes',
+    'No expiry and no minimum are genuinely persuasive terms',
+    'Doubles as the terms panel, so it earns its space twice',
+  ],
+  cons: ['Reads as legal copy rather than an animation', 'Every line commits us to a policy'],
+  scores: { story: 4, motion: 3, perf: 5, mobile: 5, brand: 4, ease: 5 },
+  build: (uid) => {
+    const dur = 10;
+    const rows = [
+      ['You get', 'US$5 credit', 'When they activate'],
+      ['They get', 'US$5 off', 'On their first plan'],
+      ['Expires', 'Never', 'Credit stays on the account'],
+      ['Minimum spend', 'None', 'Use it on any plan'],
+    ];
+    const inner = `
+    ${wdots(uid)}
+    ${label(320, 76, 'The whole of the small print', { size: 21, fill: W, anchor: 'middle' })}
+    ${rows.map(([k, v, note], i) => {
+      const y = 112 + i * 76;
+      const on = 0.06 + i * 0.16;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.06).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        <rect x="96" y="${y}" width="448" height="62" rx="14" fill="${W}"/>
+        ${mono(124, y + 26, k.toUpperCase(), { size: 9, op: 0.42, fill: G.ink })}
+        ${label(124, y + 48, v, { size: 17, fill: G.deep })}
+        ${mono(516, y + 38, note, { size: 9.5, anchor: 'end', op: 0.45, fill: G.ink })}
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.76;0.84;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${mono(320, 430, 'THAT IS ALL OF IT. THERE IS NO PAGE TWO.', { size: 10, anchor: 'middle', op: 0.7, fill: W })}
+    </g>`;
+    return { svg: gWrap(inner), pills: pillsR('No small print') };
+  },
+};
+
+export const refArrives = {
+  id: 'ref-arrives',
+  name: 'It Arrives',
+  family: 'Trust',
+  tagline: 'The credit landing, with a timestamp',
+  desc:
+    'The gap between referring and being paid is where trust dies. This closes it: a friend activates ' +
+    'at 14:22:08 and the credit appears on the balance at 14:22:11, three seconds later, with the ' +
+    'line written into the account history. Instant and visible beats generous and vague.',
+  pros: [
+    'Speed of payout is the single biggest driver of repeat referrals',
+    'An account-history line is more convincing than a badge',
+    'Three seconds is a claim we can hold ourselves to',
+  ],
+  cons: ['Payout must genuinely be this fast', 'Less warm than the people-based treatments'],
+  scores: { story: 5, motion: 5, perf: 5, mobile: 5, brand: 4, ease: 4 },
+  build: (uid) => {
+    const dur = 10;
+    const inner = `
+    ${wdots(uid)}
+    ${label(320, 72, 'Paid in three seconds', { size: 21, fill: W, anchor: 'middle' })}
+    <rect x="96" y="104" width="448" height="72" rx="16" fill="${W}" opacity="0.18"/>
+    ${mono(124, 132, 'YOUR FRIEND ACTIVATED', { size: 9, op: 0.75, fill: W })}
+    ${label(124, 158, 'Ana M. \u00b7 Lisbon \u00b7 7-day Europe plan', { size: 14, fill: W })}
+    ${mono(516, 148, '14:22:08', { size: 10, anchor: 'end', op: 0.7, fill: W })}
+
+    <line x1="320" y1="182" x2="320" y2="216" stroke="${W}" stroke-width="2.5" opacity="0.5"
+      stroke-dasharray="34" stroke-dashoffset="34">
+      <animate attributeName="stroke-dashoffset" values="34;0;0" keyTimes="0;0.32;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+    </line>
+
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.34;0.42;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      <rect x="96" y="222" width="448" height="88" rx="16" fill="${W}"/>
+      ${mono(124, 252, 'ACCOUNT HISTORY', { size: 9, op: 0.42, fill: G.ink })}
+      ${label(124, 282, 'Referral credit \u2014 Ana M.', { size: 15, fill: G.ink })}
+      ${mono(124, 300, 'POSTED 14:22:11 \u00b7 3 s AFTER ACTIVATION', { size: 8.5, op: 0.4, fill: G.ink })}
+      ${creditBadge(492, 272, '+US$5')}
+    </g>
+
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.56;0.64;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${chip(232, 348, 'They saved US$5 too', 208)}
+      ${mono(320, 412, 'NO REVIEW PERIOD \u00b7 NO PENDING STATE \u00b7 NO CHASING', { size: 9.5, anchor: 'middle', op: 0.7, fill: W })}
+    </g>`;
+    return { svg: gWrap(inner), pills: pillsR('Paid in seconds') };
+  },
+};
+
+export const refShare = {
+  id: 'ref-share',
+  name: 'One Tap to Send',
+  family: 'Mechanic',
+  tagline: 'The code, copied and sent',
+  desc:
+    'The reason people do not refer is friction, not motivation. This shows the whole act: the code ' +
+    'is copied with one tap, sent in a message, and the link previews with the offer already visible ' +
+    'to the person receiving it. Showing how little work it is does more than raising the reward.',
+  pros: [
+    'Reduces perceived effort, which is the real barrier',
+    'The link preview shows the offer doing its own selling',
+    'Maps exactly onto the form sitting next to the panel',
+  ],
+  cons: ['Depends on the sharing flow being this smooth in the app', 'Message mock-ups can look dated quickly'],
+  scores: { story: 4, motion: 5, perf: 5, mobile: 5, brand: 5, ease: 4 },
+  build: (uid) => {
+    const dur = 10;
+    const inner = `
+    ${wdots(uid)}
+    ${label(320, 72, 'One tap, then it sells itself', { size: 21, fill: W, anchor: 'middle' })}
+    <rect x="128" y="104" width="384" height="62" rx="14" fill="${W}"/>
+    ${mono(156, 142, 'OPENLINE5', { size: 19, op: 1, fill: G.ink, ls: 2 })}
+    <g>
+      <rect x="392" y="118" width="96" height="34" rx="10" fill="${G.orange}"/>
+      ${mono(440, 140, 'COPY', { size: 10, anchor: 'middle', op: 1, fill: W })}
+      <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.16;0.2;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+    </g>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.2;0.24;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      <rect x="392" y="118" width="96" height="34" rx="10" fill="${G.ink}"/>
+      ${mono(440, 140, 'COPIED', { size: 10, anchor: 'middle', op: 1, fill: W })}
+    </g>
+
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.34;0.42;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      <rect x="128" y="192" width="300" height="52" rx="16" fill="${W}" opacity="0.2"/>
+      ${label(152, 224, 'Use OPENLINE5 \u2014 we both get $5', { size: 13, fill: W })}
+      ${mono(512, 224, 'SENT', { size: 9, anchor: 'end', op: 0.6, fill: W })}
+    </g>
+
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.52;0.6;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      <rect x="128" y="264" width="384" height="126" rx="16" fill="${W}"/>
+      <rect x="128" y="264" width="384" height="52" rx="16" fill="${G.wash}"/>
+      ${mono(156, 296, 'OPENLINE.COM', { size: 9, op: 0.5, fill: G.ink })}
+      ${label(156, 342, 'US$5 off your first plan', { size: 17, fill: G.ink })}
+      ${mono(156, 366, 'DATA IN 190+ COUNTRIES \u00b7 NO CONTRACT', { size: 8.5, op: 0.42, fill: G.ink })}
+      ${creditBadge(468, 340, '\u2212US$5')}
+    </g>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.7;0.78;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${mono(320, 430, 'TWO TAPS FROM CODE TO SENT', { size: 10, anchor: 'middle', op: 0.7, fill: W })}
+    </g>`;
+    return { svg: gWrap(inner), pills: pillsR('Two taps') };
+  },
+};
+
+/* ── registry ── */
+
+export const refWhyItWorks = {
+  id: 'ref-whyworks',
+  name: 'Why It Is Worth Five Dollars',
+  family: 'Rationale',
+  tagline: 'The maths that makes the offer sustainable',
+  desc:
+    'Referral offers read as gimmicks until the maths is shown. A paid acquisition costs eighteen ' +
+    'dollars and a referred customer costs ten, so paying both sides is cheaper than an advert and ' +
+    'the referred customer stays longer. Publishing the reasoning makes the offer feel durable rather ' +
+    'than a promotion about to expire.',
+  pros: [
+    'Signals the offer is structural, not a limited-time trick',
+    'Referred-customer retention is a genuinely interesting fact to share',
+    'Unusual honesty, which fits the brand voice elsewhere on the site',
+  ],
+  cons: ['Discloses acquisition costs', 'Analytical register for a warm orange panel'],
+  scores: { story: 5, motion: 3, perf: 5, mobile: 5, brand: 5, ease: 4 },
+  build: (uid) => {
+    const dur = 10;
+    const rows = [
+      ['A customer from an advert', 'US$18', 'and they leave sooner'],
+      ['A customer from a friend', 'US$10', 'US$5 to each of you'],
+      ['How much longer they stay', '2.4\u00d7', 'measured over a year'],
+    ];
+    const inner = `
+    ${wdots(uid)}
+    ${label(320, 80, 'Why we can afford it', { size: 22, fill: W, anchor: 'middle' })}
+    ${mono(320, 106, 'THE WHOLE REASONING', { size: 9.5, anchor: 'middle', op: 0.55, fill: W })}
+    ${rows.map(([nm, v, note], i) => {
+      const y = 138 + i * 92;
+      const on = 0.08 + i * 0.2;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.07).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        <rect x="96" y="${y}" width="448" height="76" rx="15" fill="${W}"/>
+        ${label(124, y + 34, nm, { size: 14, fill: G.ink })}
+        ${mono(124, y + 56, note.toUpperCase(), { size: 8.5, op: 0.42, fill: G.ink })}
+        <text x="516" y="${y + 48}" font-size="26" font-weight="800" text-anchor="end" fill="${G.deep}">${v}</text>
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.76;0.84;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${mono(320, 428, 'SO IT IS NOT A PROMOTION. IT IS JUST CHEAPER THAN ADVERTISING.', { size: 9.5, anchor: 'middle', op: 0.7, fill: W })}
+    </g>`;
+    return { svg: gWrap(inner), pills: pillsR('Cheaper than ads') };
+  },
+};
+
+/* ── registry ── */
+export const REFERRAL_VARIANTS = [refCurrent, chain, splitCoin, linkFlight, wallets, ledger, refStack, refBothWays, refArrives, refShare, refWhyItWorks];

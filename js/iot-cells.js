@@ -375,7 +375,6 @@ export const c1Shelf = {
   },
 };
 
-export const C1_VARIANTS = [c1Current, c1Inventory, c1Conveyor, c1Strip, c1Ticks, c1Customs, c1Shelf];
 
 /* ═════════════════════════════════════════════════════════════════════
    CELL 2 · SMALL 360 × 234 — soldered eSIM / smaller form factor
@@ -686,7 +685,6 @@ export const c2Shake = {
   },
 };
 
-export const C2_VARIANTS = [c2Current, c2Tray, c2Space, c2Solder, c2Section, c2Pins, c2Shake];
 
 /* ═════════════════════════════════════════════════════════════════════
    CELL 3 · WIDE DARK 740 × 234 — instant activation at fleet scale
@@ -1000,4 +998,638 @@ export const c3Odometer = {
   },
 };
 
-export const C3_VARIANTS = [c3Current, c3NightSide, c3Wave, c3Ledger, c3Timeline, c3PowerOn, c3Odometer];
+/* ══ CELL 1 · 7–9 ═══════════════════════════════════════════════════ */
+
+export const c1OneSku = {
+  id: 'c1-onesku',
+  name: 'One SKU',
+  family: 'Operations',
+  tagline: 'Eleven part numbers collapsing into one',
+  desc:
+    'The hardware cost of regional SIMs is not the plastic, it is the catalogue. Eleven part numbers ' +
+    'for eleven regions collapse into a single SKU, and the line count drops with them. This is the ' +
+    'argument an operations director makes internally, and nothing else in this cell speaks to them.',
+  pros: [
+    'Speaks directly to the person who signs off on a BOM change',
+    'Catalogue complexity is a real cost nobody markets against',
+    'The collapse is a satisfying single movement',
+  ],
+  cons: ['Abstract if the reader has never managed inventory', 'Needs accurate regional SKU naming'],
+  scores: { story: 5, motion: 5, perf: 5, mobile: 4, brand: 4, ease: 4 },
+  build: (uid) => {
+    const dur = 10;
+    const skus = ['SIM-EU-01', 'SIM-EU-02', 'SIM-UK-01', 'SIM-US-01', 'SIM-CA-01', 'SIM-BR-01',
+      'SIM-IN-01', 'SIM-CN-01', 'SIM-JP-01', 'SIM-AU-01', 'SIM-ZA-01'];
+    const inner = `
+    ${dotsW(uid)}
+    ${bloomC(370, 117, 210, uid)}
+    ${mono(32, 34, 'BILL OF MATERIALS', { size: 9, op: 0.45 })}
+    ${skus.map((s, i) => {
+      const col = i % 4, row = Math.floor(i / 4);
+      const x = 32 + col * 86, y = 50 + row * 40;
+      return `<g>
+        <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;${(0.24 + i * 0.022).toFixed(3)};${(0.3 + i * 0.022).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${card(x, y, 78, 30, { r: 6, fill: WHITE, stroke: LINE })}
+        ${mono(x + 39, y + 19, s, { size: 7.5, anchor: 'middle', op: 0.5 })}
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.56;0.64;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(32, 74, 260, 84, { r: 12, fill: P.wash, stroke: P.main, sw: 2 })}
+      ${mono(56, 104, 'ONE PART NUMBER', { size: 9, op: 0.55, fill: P.main })}
+      ${label(56, 136, 'ESIM-GLOBAL', { size: 22, fill: P.main })}
+    </g>
+    ${card(380, 50, 328, 152, { r: 12, fill: WHITE, stroke: LINE })}
+    ${[['PART NUMBERS', '11', '1'], ['REGIONAL VARIANTS', '11', '0'], ['CUSTOMS CODES', '6', '1']].map(([k, a, b], i) => {
+      const y = 82 + i * 42;
+      return `<g>
+        ${mono(404, y, k, { size: 8.5, op: 0.4 })}
+        ${label(560, y + 4, a, { size: 17, anchor: 'end', op: 0.35 })}
+        ${mono(586, y + 2, '\u2192', { size: 12, op: 0.3 })}
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${(0.6 + i * 0.05).toFixed(3)};${(0.66 + i * 0.05).toFixed(3)};1"
+            dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+          ${label(686, y + 4, b, { size: 19, anchor: 'end', fill: P.main })}
+        </g>
+      </g>`;
+    }).join('')}
+    ${mono(32, 214, 'THE CATALOGUE IS THE COST, NOT THE CARD', { size: 8.5, op: 0.35 })}`;
+    return { svg: wrapW(inner), pills: noPills };
+  },
+};
+
+export const c1Truck = {
+  id: 'c1-truck',
+  name: 'It Ships Once',
+  family: 'Operations',
+  tagline: 'One shipment, eleven destinations, no re-kitting',
+  desc:
+    'A single pallet leaves the factory and lands in six countries without a warehouse stop, because ' +
+    'no unit needs a local SIM fitted on arrival. The re-kitting step — the one that costs weeks and ' +
+    'a partner in every market — is crossed out. It is the logistics version of the argument, which ' +
+    'is where the money actually is.',
+  pros: [
+    'Names the specific step that gets eliminated, rather than a vague saving',
+    'Re-kitting is the real pain for any hardware manufacturer',
+    'Reads as a supply-chain claim, which this audience trusts more than a feature',
+  ],
+  cons: ['Needs a defensible week figure', 'Logistics visuals are hard to keep elegant at this height'],
+  scores: { story: 5, motion: 4, perf: 5, mobile: 4, brand: 4, ease: 4 },
+  build: (uid) => {
+    const dur = 11;
+    const inner = `
+    ${dotsW(uid)}
+    ${bloomC(370, 117, 210, uid)}
+    ${mono(32, 34, 'FACTORY TO FIELD', { size: 9, op: 0.45 })}
+    <line x1="60" y1="118" x2="672" y2="118" stroke="${LINE}" stroke-width="2.5"/>
+    <line x1="60" y1="118" x2="672" y2="118" stroke="${P.main}" stroke-width="3"
+      stroke-dasharray="612" stroke-dashoffset="612">
+      <animate attributeName="stroke-dashoffset" values="612;0;0" keyTimes="0;0.6;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+    </line>
+    ${[['Factory', 'Shenzhen', 0], ['Re-kitting', 'removed', 0.34], ['Customs', 'one code', 0.62], ['Field', 'six countries', 1]].map(([nm, note, t], i) => {
+      const x = 60 + t * 612;
+      const dead = i === 1;
+      return `<g>
+        <circle cx="${x.toFixed(0)}" cy="118" r="7" fill="${WHITE}" stroke="${LINE}" stroke-width="2.5"/>
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${(t * 0.6).toFixed(4)};${(t * 0.6 + 0.05).toFixed(4)};1"
+            dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+          <circle cx="${x.toFixed(0)}" cy="118" r="7" fill="${dead ? RED : P.main}"/>
+          ${label(x.toFixed(0), i % 2 ? 158 : 92, nm, { size: 13, anchor: 'middle', op: dead ? 0.4 : 1 })}
+          ${dead ? `<line x1="${x - 34}" y1="${i % 2 ? 153 : 87}" x2="${x + 34}" y2="${i % 2 ? 153 : 87}"
+            stroke="${RED}" stroke-width="2" stroke-linecap="round"/>` : ''}
+          ${mono(x.toFixed(0), i % 2 ? 176 : 74, note, { size: 8.5, anchor: 'middle', op: 0.42, fill: dead ? RED : INK })}
+        </g>
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.68;0.76;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(32, 190, 300, 34, { r: 9, fill: P.wash, stroke: P.main, sw: 1.6 })}
+      ${label(48, 212, 'Six weeks and six partners removed', { size: 12, fill: P.main })}
+    </g>
+    ${mono(708, 214, 'ONE PALLET', { size: 8.5, anchor: 'end', op: 0.35 })}`;
+    return { svg: wrapW(inner), pills: noPills };
+  },
+};
+
+export const c1Coverage = {
+  id: 'c1-coverage',
+  name: 'On Arrival',
+  family: 'Proof',
+  tagline: 'Every unit online before it is unboxed',
+  desc:
+    'A batch of 240 devices reports in as it clears customs in each market, filling a grid cell by ' +
+    'cell until every one is green with no field engineer involved. Deployment success is the metric ' +
+    'an IoT buyer is judged on internally, and a grid that completes is the most direct way to ' +
+    'promise it.',
+  pros: [
+    'Deployment success rate is the number this buyer reports upward',
+    'A grid completing is inherently satisfying and scales to any batch size',
+    'No text needed to read the outcome',
+  ],
+  cons: ['240 cells is busy at 234px tall', 'Claims a completion rate we must be able to defend'],
+  scores: { story: 4, motion: 5, perf: 4, mobile: 4, brand: 4, ease: 4 },
+  build: (uid) => {
+    const dur = 10, cols = 40, rows = 6;
+    const inner = `
+    ${dotsW(uid)}
+    ${bloomC(370, 117, 210, uid)}
+    ${mono(32, 34, 'BATCH 4471 \u00b7 240 UNITS \u00b7 SIX MARKETS', { size: 9, op: 0.45 })}
+    ${Array.from({ length: cols * rows }, (_, i) => {
+      const on = 0.06 + (i / (cols * rows)) * 0.58;
+      return `<rect x="${32 + (i % cols) * 16}" y="${52 + Math.floor(i / cols) * 22}" width="12" height="16" rx="2.5"
+        fill="${LINE}">
+        <animate attributeName="fill" values="${LINE};${LINE};${P.main};${P.main}"
+          keyTimes="0;${on.toFixed(4)};${Math.min(on + 0.01, 1).toFixed(4)};1" dur="${dur}s"
+          repeatCount="indefinite" calcMode="discrete" fill="freeze"/>
+      </rect>`;
+    }).join('')}
+    ${[['ONLINE', '240'], ['FIELD VISITS', '0'], ['MEDIAN TIME', '38 s']].map(([k, v], i) => `
+      <g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${(0.68 + i * 0.05).toFixed(3)};${(0.74 + i * 0.05).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${mono(32 + i * 150, 206, k, { size: 8.5, op: 0.4 })}
+        ${label(32 + i * 150, 228, v, { size: 17, fill: P.main })}
+      </g>`).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.7;0.78;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${mono(708, 220, 'NOT ONE UNIT TOUCHED AFTER IT LEFT THE LINE', { size: 8.5, anchor: 'end', op: 0.4, fill: P.main })}
+    </g>`;
+    return { svg: wrapW(inner), pills: noPills };
+  },
+};
+
+/* ══ CELL 2 · 7–9 ═══════════════════════════════════════════════════ */
+
+export const c2Grain = {
+  id: 'c2-grain',
+  name: 'Grain of Rice',
+  family: 'Scale',
+  tagline: 'The only comparison anybody remembers',
+  desc:
+    'A nano-SIM, a grain of rice and an eSIM chip at true relative scale, measured. The rice is there ' +
+    'because a millimetre figure means nothing and a familiar object means everything. It is the ' +
+    'smallest idea in this cell and probably the most quoted.',
+  pros: [
+    'An everyday reference beats a measurement every time',
+    'Perfect fit for a 360px cell — one idea, no clutter',
+    'Instantly memorable and quotable',
+  ],
+  cons: ['Playful register may not suit an enterprise page', 'A grain of rice is not a precise standard'],
+  scores: { story: 5, motion: 3, perf: 5, mobile: 5, brand: 4, ease: 5 },
+  build: (uid) => {
+    const dur = 9;
+    const inner = `
+    ${dotsW(uid, 360, 234)}
+    ${bloomC(180, 117, 140, uid)}
+    ${mono(24, 32, 'TRUE SCALE', { size: 9, op: 0.45 })}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.06;0.16;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(28, 58, 86, 68, { r: 7, fill: WHITE, stroke: LINE, sw: 1.6 })}
+      <path d="M 100 58 l 0 14 l -14 0 z" fill="${LINE}"/>
+      ${mono(71, 144, 'NANO-SIM', { size: 8, anchor: 'middle', op: 0.45 })}
+      ${mono(71, 160, '12.3 \u00d7 8.8 mm', { size: 8, anchor: 'middle', op: 0.3 })}
+    </g>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.3;0.4;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      <ellipse cx="180" cy="98" rx="24" ry="9" fill="#EAE6F5" stroke="${LINE}" stroke-width="1.4"/>
+      ${mono(180, 144, 'A GRAIN OF RICE', { size: 8, anchor: 'middle', op: 0.45 })}
+      ${mono(180, 160, '6.5 \u00d7 2.2 mm', { size: 8, anchor: 'middle', op: 0.3 })}
+    </g>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.52;0.62;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(288, 92, 34, 26, { r: 3, fill: P.main, stroke: P.deep, sw: 1.4 })}
+      ${Array.from({ length: 4 }, (_, i) => `
+        <line x1="288" y1="${98 + i * 6}" x2="280" y2="${98 + i * 6}" stroke="${P.main}" stroke-width="1.4"/>
+        <line x1="322" y1="${98 + i * 6}" x2="330" y2="${98 + i * 6}" stroke="${P.main}" stroke-width="1.4"/>`).join('')}
+      ${mono(305, 144, 'eSIM', { size: 8, anchor: 'middle', op: 0.6, fill: P.main })}
+      ${mono(305, 160, '2.9 \u00d7 2.2 mm', { size: 8, anchor: 'middle', op: 0.4, fill: P.main })}
+    </g>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.7;0.8;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(24, 184, 312, 36, { r: 9, fill: P.wash, stroke: P.main, sw: 1.6 })}
+      ${label(180, 208, 'Smaller than the rice', { size: 13, anchor: 'middle', fill: P.main })}
+    </g>`;
+    return { svg: wrapS(inner), pills: noPills };
+  },
+};
+
+export const c2Sealed = {
+  id: 'c2-sealed',
+  name: 'Sealed Shut',
+  family: 'Durability',
+  tagline: 'No slot, no tray, no water in',
+  desc:
+    'The tray is the hole. A cross-section shows water and dust entering through a SIM slot, then the ' +
+    'same enclosure with the slot gone and the IP rating jumping from IP54 to IP68. For outdoor, ' +
+    'industrial and automotive devices, sealing is a harder requirement than size, and this cell is ' +
+    'the only place to say it.',
+  pros: [
+    'Ingress protection is a hard spec requirement, not a preference',
+    'The removed hole is a single, obvious visual change',
+    'Opens up outdoor and industrial buyers that a size argument misses',
+  ],
+  cons: ['IP ratings depend on the whole enclosure, not the SIM', 'Cross-sections are fiddly at this size'],
+  scores: { story: 5, motion: 4, perf: 5, mobile: 5, brand: 4, ease: 4 },
+  build: (uid) => {
+    const dur = 10;
+    const inner = `
+    ${dotsW(uid, 360, 234)}
+    ${bloomC(180, 117, 140, uid)}
+    ${mono(24, 32, 'ENCLOSURE, IN SECTION', { size: 9, op: 0.45 })}
+    ${card(30, 52, 132, 96, { r: 8, fill: WHITE, stroke: LINE, sw: 2 })}
+    <rect x="86" y="48" width="26" height="9" fill="#F3F0FA" stroke="${RED}" stroke-width="1.6"/>
+    ${Array.from({ length: 5 }, (_, i) => `
+      <circle cx="${92 + i * 5}" cy="46" r="2.2" fill="${RED}" opacity="0.7">
+        <animateTransform attributeName="transform" type="translate" values="0 0;0 44;0 44"
+          keyTimes="0;${(0.16 + i * 0.05).toFixed(3)};1" dur="${dur}s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.7;0.7;0;0" keyTimes="0;${(0.14 + i * 0.05).toFixed(3)};${(0.2 + i * 0.05).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite"/>
+      </circle>`).join('')}
+    ${mono(96, 168, 'WITH A TRAY', { size: 8, anchor: 'middle', op: 0.45 })}
+    ${mono(96, 184, 'IP54', { size: 11, anchor: 'middle', op: 0.75, fill: RED })}
+
+    ${mono(180, 104, '\u2192', { size: 15, anchor: 'middle', op: 0.3 })}
+
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.48;0.58;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(198, 52, 132, 96, { r: 8, fill: P.wash, stroke: P.main, sw: 2 })}
+      ${card(240, 86, 48, 30, { r: 4, fill: P.main })}
+      ${mono(264, 168, 'SEALED', { size: 8, anchor: 'middle', op: 0.5, fill: P.main })}
+      ${mono(264, 184, 'IP68', { size: 11, anchor: 'middle', op: 0.9, fill: P.main })}
+    </g>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.68;0.78;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${mono(180, 216, 'THE TRAY WAS THE WEAKEST POINT', { size: 8.5, anchor: 'middle', op: 0.45, fill: P.main })}
+    </g>`;
+    return { svg: wrapS(inner), pills: noPills };
+  },
+};
+
+export const c2Room = {
+  id: 'c2-room',
+  name: 'What Fits Instead',
+  family: 'Scale',
+  tagline: 'The space, spent on battery',
+  desc:
+    'Size only matters if something better goes in the space. The freed volume fills with battery ' +
+    'cell, and the runtime figure beside it moves from eleven months to sixteen. That is the answer ' +
+    'to "so what" — a smaller part is an engineering detail, five extra months in the field is a ' +
+    'product decision.',
+  pros: [
+    'Converts a size claim into a runtime claim, which is what the buyer specifies on',
+    'One clean fill animation, ideal for the small cell',
+    'Answers the only real objection to a size argument',
+  ],
+  cons: ['The runtime figure depends entirely on the device', 'Might over-promise for a mains-powered product'],
+  scores: { story: 5, motion: 4, perf: 5, mobile: 5, brand: 5, ease: 4 },
+  build: (uid) => {
+    const dur = 10;
+    const inner = `
+    ${dotsW(uid, 360, 234)}
+    ${bloomC(180, 117, 140, uid)}
+    ${mono(24, 32, 'THE SPACE, REALLOCATED', { size: 9, op: 0.45 })}
+    ${card(30, 52, 150, 120, { r: 10, fill: WHITE, stroke: LINE, sw: 2 })}
+    <rect x="46" y="68" width="118" height="42" rx="5" fill="#F1EDFA" stroke="${LINE}" stroke-width="1.4"
+      stroke-dasharray="4 4"/>
+    ${mono(105, 94, 'TRAY, REMOVED', { size: 7.5, anchor: 'middle', op: 0.4 })}
+    <rect x="46" y="68" width="118" height="42" rx="5" fill="${P.main}" opacity="0">
+      <animate attributeName="opacity" values="0;0;0.85;0.85" keyTimes="0;0.24;0.42;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+    </rect>
+    <rect x="46" y="120" width="118" height="36" rx="5" fill="${P.main}" opacity="0.28"/>
+    ${mono(105, 143, 'BATTERY', { size: 7.5, anchor: 'middle', op: 0.55, fill: P.main })}
+    ${mono(105, 190, 'SAME ENCLOSURE', { size: 8, anchor: 'middle', op: 0.4 })}
+
+    ${card(198, 52, 132, 120, { r: 10, fill: WHITE, stroke: LINE })}
+    ${mono(216, 78, 'FIELD RUNTIME', { size: 8, op: 0.4 })}
+    ${label(216, 112, '11', { size: 24, op: 0.3 })}
+    ${mono(252, 108, 'months', { size: 8.5, op: 0.3 })}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.46;0.56;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${mono(216, 132, '\u2193', { size: 11, op: 0.3 })}
+      ${label(216, 162, '16', { size: 30, fill: P.main })}
+      ${mono(258, 158, 'months', { size: 8.5, op: 0.5, fill: P.main })}
+    </g>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.68;0.78;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${mono(180, 216, 'FIVE MORE MONTHS BETWEEN SITE VISITS', { size: 8.5, anchor: 'middle', op: 0.45, fill: P.main })}
+    </g>`;
+    return { svg: wrapS(inner), pills: noPills };
+  },
+};
+
+/* ══ CELL 3 · 7–9 ═══════════════════════════════════════════════════ */
+
+export const c3Fleet = {
+  id: 'c3-fleet',
+  name: 'The Whole Fleet',
+  family: 'Scale',
+  tagline: 'Twelve thousand devices, one push',
+  desc:
+    'Activation at scale is the real claim, and a single device proves nothing. A fleet counter runs ' +
+    'from zero to 12,400 as a carrier change rolls out in waves, with the failure count staying at ' +
+    'zero and a rollback button that is never pressed. It is the only option in this cell that ' +
+    'operates at the size the buyer actually runs.',
+  pros: [
+    'Matches the scale the buyer runs at rather than a demo of one unit',
+    'The unpressed rollback control is a quiet, confident detail',
+    'Counters carry the whole story with almost no artwork',
+  ],
+  cons: ['Big numbers invite scrutiny', 'Risks looking like a generic dashboard'],
+  scores: { story: 5, motion: 5, perf: 5, mobile: 4, brand: 4, ease: 4 },
+  build: (uid) => {
+    const dur = 12, waves = 5;
+    const inner = `
+    ${darkBg(uid)}
+    ${bloomC(370, 117, 230, uid, '#B79CFF', 0.26)}
+    ${wMono(32, 34, 'CARRIER MIGRATION \u00b7 FLEET 12,400', { size: 9, op: 0.5 })}
+    ${Array.from({ length: waves }, (_, i) => {
+      const y = 56 + i * 30;
+      const on = 0.08 + i * 0.12;
+      return `<g>
+        ${wMono(32, y + 14, `WAVE ${i + 1}`, { size: 8.5, op: 0.4 })}
+        <rect x="104" y="${y + 3}" width="420" height="12" rx="6" fill="rgba(255,255,255,0.09)"/>
+        <rect x="104" y="${y + 3}" width="0" height="12" rx="6" fill="#B79CFF">
+          <animate attributeName="width" values="0;0;420;420" keyTimes="0;${on.toFixed(3)};${(on + 0.1).toFixed(3)};1"
+            dur="${dur}s" repeatCount="indefinite" calcMode="spline"
+            keySplines="0 0 1 1;0.4 0 0.2 1;0 0 1 1" fill="freeze"/>
+        </rect>
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${(on + 0.1).toFixed(3)};${(on + 0.13).toFixed(3)};1"
+            dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+          ${wMono(542, y + 14, `${2480 * (i + 1)} DONE`, { size: 8.5, op: 0.55, fill: '#B79CFF' })}
+        </g>
+      </g>`;
+    }).join('')}
+    ${[['ACTIVATED', '12,400', '#B79CFF'], ['FAILED', '0', '#4ADE80'], ['ROLLED BACK', '0', '#4ADE80']].map(([k, v, c], i) => `
+      <g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${(0.7 + i * 0.05).toFixed(3)};${(0.76 + i * 0.05).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${wMono(32 + i * 168, 210, k, { size: 8.5, op: 0.4 })}
+        <text x="${32 + i * 168}" y="230" font-size="19" font-weight="800" fill="${c}">${v}</text>
+      </g>`).join('')}
+    ${wMono(708, 226, 'NO TRUCK ROLL', { size: 8.5, anchor: 'end', op: 0.4 })}`;
+    return { svg: wrapW(inner), pills: noPills };
+  },
+};
+
+export const c3TheSwitch = {
+  id: 'c3-switch',
+  name: 'Mid-Contract',
+  family: 'Commercial',
+  tagline: 'Change carrier without touching the hardware',
+  desc:
+    'The commercial case, not the technical one: a carrier is renegotiated and the whole fleet moves ' +
+    'to the cheaper contract in an afternoon, with the per-device rate dropping on screen. Any ' +
+    'operator locked to one carrier by soldered plastic will recognise the trap immediately, which ' +
+    'makes this the highest-value message in the cell.',
+  pros: [
+    'Carrier lock-in is the most expensive problem this audience has',
+    'Puts a monetary figure on a technical capability',
+    'Nothing in this cell currently makes a commercial argument',
+  ],
+  cons: ['Carriers may not love seeing this on a marketing page', 'Rate figures must be plausible'],
+  scores: { story: 5, motion: 4, perf: 5, mobile: 4, brand: 5, ease: 4 },
+  build: (uid) => {
+    const dur = 11;
+    const inner = `
+    ${darkBg(uid)}
+    ${bloomC(370, 117, 230, uid, '#B79CFF', 0.26)}
+    ${wMono(32, 34, 'CONTRACT RENEGOTIATED \u00b7 TUESDAY, 14:20', { size: 9, op: 0.5 })}
+    ${card(32, 54, 300, 96, { r: 12, fill: 'rgba(255,255,255,0.05)', stroke: 'rgba(255,255,255,0.14)', sw: 1.5 })}
+    ${wMono(56, 82, 'CARRIER, BEFORE', { size: 8.5, op: 0.4 })}
+    <text x="56" y="114" font-size="20" font-weight="800" fill="#FFFFFF" opacity="0.5">Carrier A</text>
+    ${wMono(56, 136, '\u20ac0.84 PER DEVICE, PER MONTH', { size: 8.5, op: 0.4, fill: '#F87171' })}
+
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.34;0.44;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(408, 54, 300, 96, { r: 12, fill: 'rgba(183,156,255,0.14)', stroke: '#B79CFF', sw: 2 })}
+      ${wMono(432, 82, 'CARRIER, AFTER', { size: 8.5, op: 0.55, fill: '#B79CFF' })}
+      <text x="432" y="114" font-size="20" font-weight="800" fill="#FFFFFF">Carrier C</text>
+      ${wMono(432, 136, '\u20ac0.51 PER DEVICE, PER MONTH', { size: 8.5, op: 0.7, fill: '#4ADE80' })}
+    </g>
+    <path d="M 344 102 H 396" stroke="#B79CFF" stroke-width="2" opacity="0.5"/>
+    <path d="M 400 102 l -9 -6 v 12 z" fill="#B79CFF" opacity="0.7"/>
+
+    ${[['HARDWARE CHANGED', 'nothing'], ['SITE VISITS', 'none'], ['ANNUAL SAVING', '\u20ac49,104']].map(([k, v], i) => `
+      <g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${(0.56 + i * 0.07).toFixed(3)};${(0.64 + i * 0.07).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${wMono(32 + i * 232, 186, k, { size: 8.5, op: 0.4 })}
+        <text x="${32 + i * 232}" y="210" font-size="${i === 2 ? 20 : 15}" font-weight="800"
+          fill="${i === 2 ? '#4ADE80' : '#FFFFFF'}">${v}</text>
+      </g>`).join('')}
+    ${wMono(32, 228, 'SOLDERED PLASTIC IS A THREE-YEAR CONTRACT YOU CANNOT LEAVE', { size: 8.5, op: 0.35 })}`;
+    return { svg: wrapW(inner), pills: noPills };
+  },
+};
+
+export const c3ColdStart = {
+  id: 'c3-coldstart',
+  name: 'Cold Start',
+  family: 'Proof',
+  tagline: 'Power on to first packet, timed',
+  desc:
+    'One device, one boot, four stages timed to the millisecond: power, radio scan, profile ' +
+    'activation, first packet — ending under nine seconds, with no provisioning step in between. ' +
+    'Activation latency is what an integrator measures on the bench, and this is the number they will ' +
+    'come back and check.',
+  pros: [
+    'Exactly what an integrator benchmarks, expressed in their units',
+    'A single boot is easier to verify than a fleet claim',
+    'Timings give engineering something to hold the product to',
+  ],
+  cons: ['Depends on module and network conditions', 'A stopwatch is the least imaginative device here'],
+  scores: { story: 4, motion: 5, perf: 5, mobile: 5, brand: 4, ease: 4 },
+  build: (uid) => {
+    const dur = 10;
+    const st = [['Power on', '0.0 s'], ['Radio scan', '2.4 s'], ['Profile active', '6.1 s'], ['First packet', '8.7 s']];
+    const inner = `
+    ${darkBg(uid)}
+    ${bloomC(370, 117, 230, uid, '#B79CFF', 0.26)}
+    ${wMono(32, 34, 'BENCH TEST \u00b7 COLD BOOT', { size: 9, op: 0.5 })}
+    <line x1="60" y1="120" x2="672" y2="120" stroke="rgba(255,255,255,0.12)" stroke-width="2.5"/>
+    <line x1="60" y1="120" x2="672" y2="120" stroke="#B79CFF" stroke-width="3"
+      stroke-dasharray="612" stroke-dashoffset="612">
+      <animate attributeName="stroke-dashoffset" values="612;0;0" keyTimes="0;0.66;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+    </line>
+    ${st.map(([nm, tm], i) => {
+      const x = 60 + (i / 3) * 612;
+      const on = (i / 3) * 0.66;
+      const up = i % 2 === 0;
+      return `<g>
+        <circle cx="${x.toFixed(0)}" cy="120" r="7" fill="#0D0B14" stroke="rgba(255,255,255,0.22)" stroke-width="2.5"/>
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(4)};${(on + 0.05).toFixed(4)};1"
+            dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+          <circle cx="${x.toFixed(0)}" cy="120" r="7" fill="#B79CFF"/>
+          <text x="${x.toFixed(0)}" y="${up ? 92 : 164}" font-size="13.5" font-weight="700" fill="#FFFFFF"
+            text-anchor="middle">${nm}</text>
+          ${wMono(x.toFixed(0), up ? 72 : 184, tm, { size: 10, anchor: 'middle', op: 0.7, fill: '#B79CFF' })}
+        </g>
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.72;0.8;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${wMono(32, 218, 'NO PROVISIONING STEP \u00b7 NO TECHNICIAN \u00b7 8.7 s POWER TO PACKET', { size: 9, op: 0.6, fill: '#B79CFF' })}
+    </g>`;
+    return { svg: wrapW(inner), pills: noPills };
+  },
+};
+
+/* ── registries ── */
+
+export const c1Recall = {
+  id: 'c1-recall',
+  name: 'No Recall',
+  family: 'Risk',
+  tagline: 'A carrier change that does not need the devices back',
+  desc:
+    'The worst sentence in hardware is "we need the units returned". A regional carrier withdraws and, ' +
+    'with soldered plastic, 2,400 devices come back; with an eSIM the profile changes where they are. ' +
+    'Recall exposure is the risk a hardware programme manager loses sleep over, and this is the only ' +
+    'cell that names it.',
+  pros: [
+    'Names the catastrophic-risk scenario this buyer is actually insuring against',
+    'The two outcomes are starkly different and need no captions',
+    'Very strong argument for the design decision at the BOM stage',
+  ],
+  cons: ['Leads with a frightening scenario', 'Recall cost figures must be plausible'],
+  scores: { story: 5, motion: 4, perf: 5, mobile: 4, brand: 5, ease: 4 },
+  build: (uid) => {
+    const dur = 11;
+    const inner = `
+    ${dotsW(uid)}
+    ${bloomC(370, 117, 210, uid)}
+    ${mono(32, 30, 'A REGIONAL CARRIER WITHDRAWS \u00b7 2,400 DEVICES IN THE FIELD', { size: 9, op: 0.45 })}
+    ${card(32, 46, 332, 150, { r: 12, fill: WHITE, stroke: RED, sw: 2 })}
+    ${mono(56, 74, 'WITH A SOLDERED SIM', { size: 8.5, op: 0.5, fill: RED })}
+    ${label(56, 112, 'Every unit comes back', { size: 17 })}
+    ${mono(56, 136, '2,400 TRUCK ROLLS \u00b7 14 WEEKS \u00b7 \u20ac186,000', { size: 8.5, op: 0.45 })}
+    ${mono(56, 170, 'AND THE FLEET IS OFFLINE MEANWHILE', { size: 8.5, op: 0.32 })}
+    ${card(388, 46, 320, 150, { r: 12, fill: P.wash, stroke: P.main, sw: 2 })}
+    ${mono(412, 74, 'WITH AN eSIM', { size: 8.5, op: 0.55, fill: P.main })}
+    ${label(412, 112, 'Nothing moves', { size: 17 })}
+    ${mono(412, 136, '2,400 PROFILES REWRITTEN \u00b7 ONE AFTERNOON \u00b7 \u20ac0', { size: 8.5, op: 0.45 })}
+    ${mono(412, 170, 'THE FLEET NEVER LEAVES THE FIELD', { size: 8.5, op: 0.32 })}
+    ${Array.from({ length: 48 }, (_, i) => {
+      const x = 36 + (i % 24) * 13.6, y = 206 + Math.floor(i / 24) * 14;
+      return `<rect x="${x.toFixed(0)}" y="${y}" width="10" height="10" rx="2" fill="${LINE}">
+        <animate attributeName="fill" values="${LINE};${LINE};${P.main};${P.main}"
+          keyTimes="0;${(0.46 + (i / 48) * 0.3).toFixed(4)};${Math.min(0.47 + (i / 48) * 0.3, 1).toFixed(4)};1"
+          dur="${dur}s" repeatCount="indefinite" calcMode="discrete" fill="freeze"/>
+      </rect>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.8;0.88;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${mono(708, 224, '2,400 UPDATED WITHOUT A SINGLE SITE VISIT', { size: 8.5, anchor: 'end', op: 0.5, fill: P.main })}
+    </g>`;
+    return { svg: wrapW(inner), pills: noPills };
+  },
+};
+
+export const c2Vibration = {
+  id: 'c2-vibration',
+  name: 'It Cannot Shake Loose',
+  family: 'Durability',
+  tagline: 'The failure mode a tray always has',
+  desc:
+    'In any vehicle, machine or outdoor cabinet, the commonest connectivity failure is a SIM that has ' +
+    'worked its way out of a spring contact. The tray is shaken until the contact intermittently opens; ' +
+    'the soldered part cannot. It is a field-reliability argument that a size comparison never makes.',
+  pros: [
+    'The most common real-world failure mode, and nobody markets against it',
+    'Applies to automotive, industrial and outdoor buyers alike',
+    'A dropout counter makes the difference measurable',
+  ],
+  cons: ['Very similar in spirit to the sealing option', 'Vibration is hard to draw convincingly'],
+  scores: { story: 4, motion: 5, perf: 5, mobile: 5, brand: 4, ease: 4 },
+  build: (uid) => {
+    const dur = 9;
+    const inner = `
+    ${dotsW(uid, 360, 234)}
+    ${bloomC(180, 117, 140, uid)}
+    ${mono(24, 30, 'VIBRATION, 8 HOURS', { size: 9, op: 0.45 })}
+    <g>
+      ${card(30, 48, 132, 74, { r: 8, fill: WHITE, stroke: LINE, sw: 1.8 })}
+      ${card(48, 64, 96, 42, { r: 4, fill: '#EDEEF0', stroke: '#D8DADE' })}
+      <animateTransform attributeName="transform" type="translate" values="0 0;2.5 -1.5;-2 1.5;1.5 1;0 0"
+        keyTimes="0;0.25;0.5;0.75;1" dur="0.28s" repeatCount="indefinite"/>
+    </g>
+    ${mono(96, 140, 'SPRING CONTACT', { size: 8, anchor: 'middle', op: 0.42 })}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;1;0;1;0;1;0" keyTimes="0;0.1;0.16;0.36;0.42;0.68;1"
+        dur="${dur}s" repeatCount="indefinite"/>
+      ${mono(96, 164, 'CONTACT OPEN', { size: 8.5, anchor: 'middle', op: 0.9, fill: RED })}
+    </g>
+    ${mono(96, 192, '3 DROPOUTS', { size: 11, anchor: 'middle', op: 0.8, fill: RED })}
+
+    ${card(198, 48, 132, 74, { r: 8, fill: P.wash, stroke: P.main, sw: 1.8 })}
+    ${card(240, 64, 48, 42, { r: 4, fill: P.main })}
+    ${mono(264, 140, 'SOLDERED', { size: 8, anchor: 'middle', op: 0.5, fill: P.main })}
+    ${mono(264, 164, 'NOTHING TO MOVE', { size: 8.5, anchor: 'middle', op: 0.5, fill: P.main })}
+    ${mono(264, 192, '0 DROPOUTS', { size: 11, anchor: 'middle', op: 0.9, fill: P.main })}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.7;0.8;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${mono(180, 220, 'THE COMMONEST FIELD FAILURE, REMOVED', { size: 8.5, anchor: 'middle', op: 0.45, fill: P.main })}
+    </g>`;
+    return { svg: wrapS(inner), pills: noPills };
+  },
+};
+
+export const c3TheDay = {
+  id: 'c3-theday',
+  name: 'Day Zero',
+  family: 'Commercial',
+  tagline: 'Revenue starting the day the box lands',
+  desc:
+    'For a connected product, every day between shipping and activation is deferred revenue. Two ' +
+    'timelines run from despatch: with a local SIM the subscription starts on day nineteen after a ' +
+    'field visit, with an eSIM it starts on day one. The shaded eighteen days are the cost, and it is ' +
+    'a number a CFO will recognise.',
+  pros: [
+    'Turns activation speed into a revenue-recognition argument',
+    'The shaded dead period is a cost nobody currently quantifies',
+    'Aimed at the commercial decision-maker rather than the engineer',
+  ],
+  cons: ['Only relevant to subscription hardware', 'Nineteen days must be defensible'],
+  scores: { story: 5, motion: 4, perf: 5, mobile: 4, brand: 5, ease: 4 },
+  build: (uid) => {
+    const dur = 11, days = 30;
+    const x0 = 96, x1 = 684;
+    const px = (d) => x0 + (d / days) * (x1 - x0);
+    const inner = `
+    ${darkBg(uid)}
+    ${bloomC(370, 117, 230, uid, '#B79CFF', 0.26)}
+    ${wMono(32, 30, 'THIRTY DAYS FROM DESPATCH', { size: 9, op: 0.5 })}
+    ${wMono(32, 66, 'LOCAL SIM', { size: 8.5, op: 0.45 })}
+    <rect x="${x0}" y="56" width="${(px(19) - x0).toFixed(0)}" height="20" rx="4" fill="#F87171" opacity="0.22"/>
+    <rect x="${px(19).toFixed(0)}" y="56" width="${(x1 - px(19)).toFixed(0)}" height="20" rx="4" fill="#B79CFF" opacity="0.5"/>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.16;0.26;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${wMono((x0 + 8).toFixed(0), 100, 'NOT EARNING \u00b7 19 DAYS \u00b7 FIELD VISIT PENDING', { size: 8.5, op: 0.6, fill: '#F87171' })}
+    </g>
+    ${wMono(32, 150, 'eSIM', { size: 8.5, op: 0.5, fill: '#B79CFF' })}
+    <rect x="${x0}" y="140" width="${(x1 - x0).toFixed(0)}" height="20" rx="4" fill="#B79CFF" opacity="0.5"/>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.4;0.5;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${wMono((x0 + 8).toFixed(0), 184, 'EARNING FROM DAY ONE \u00b7 NO VISIT', { size: 8.5, op: 0.7, fill: '#4ADE80' })}
+    </g>
+    ${[0, 10, 19, 30].map((d) => `
+      ${wMono(px(d).toFixed(0), 214, `DAY ${d}`, { size: 8, anchor: 'middle', op: 0.32 })}`).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.66;0.76;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      <text x="684" y="184" font-size="19" font-weight="800" text-anchor="end" fill="#4ADE80">+18 earning days per unit</text>
+    </g>`;
+    return { svg: wrapW(inner), pills: noPills };
+  },
+};
+
+/* ── registries ── */
+export const C1_VARIANTS = [c1Current, c1Inventory, c1Conveyor, c1Strip, c1Ticks, c1Customs, c1Shelf, c1OneSku, c1Truck, c1Coverage,
+  c1Recall];
+export const C2_VARIANTS = [c2Current, c2Tray, c2Space, c2Solder, c2Section, c2Pins, c2Shake, c2Grain, c2Sealed, c2Room,
+  c2Vibration];
+export const C3_VARIANTS = [c3Current, c3NightSide, c3Wave, c3Ledger, c3Timeline, c3PowerOn, c3Odometer, c3Fleet, c3TheSwitch, c3ColdStart,
+  c3TheDay];

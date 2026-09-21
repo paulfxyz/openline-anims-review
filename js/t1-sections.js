@@ -505,4 +505,304 @@ export const aiTicker = {
   },
 };
 
-export const AI_VARIANTS = [aiCurrent, aiTrace, aiBoard, aiNeural, aiRadar, aiTicker];
+/* ══ AI · 6–9 ═══════════════════════════════════════════════════════ */
+
+export const aiWhyThisOne = {
+  id: 'ai-whythis',
+  name: 'Why This One',
+  family: 'Explainability',
+  tagline: 'The decision, with its reasons printed',
+  desc:
+    'Every "AI-powered" claim on the internet is a black box. This one opens it: four candidate ' +
+    'carriers are scored on latency, throughput, congestion and cost, the winner is picked, and the ' +
+    'reason is written out in a sentence a human can check. Showing the working is the only way this ' +
+    'claim stops sounding like decoration.',
+  pros: [
+    'Turns an unverifiable buzzword into an auditable decision',
+    'The written reason is quotable in sales conversations',
+    'Scoring rows give the panel real information density',
+  ],
+  cons: ['Commits to a scoring model we must keep honest', 'Four rows of numbers is a lot to read at a glance'],
+  scores: { story: 5, motion: 4, perf: 5, mobile: 4, brand: 5, ease: 3 },
+  build: (uid) => {
+    const dur = 11;
+    const rows = OPS.map((o, i) => ({ ...o, score: [92, 78, 71, 64][i] }));
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 200, 250, uid)}
+    ${mono(72, 56, 'DECISION LOG \u00b7 14:22:08', { size: 9.5, op: 0.45 })}
+    ${label(72, 84, 'Why this carrier, and not the others', { size: 15, op: 0.75 })}
+    ${mono(388, 112, 'LATENCY', { size: 8.5, anchor: 'middle', op: 0.4 })}
+    ${mono(452, 112, 'SPEED', { size: 8.5, anchor: 'middle', op: 0.4 })}
+    ${mono(514, 112, 'LOAD', { size: 8.5, anchor: 'middle', op: 0.4 })}
+    ${mono(566, 112, 'SCORE', { size: 8.5, anchor: 'end', op: 0.4 })}
+    ${rows.map((o, i) => {
+      const y = 122 + i * 54;
+      const on = 0.06 + i * 0.1;
+      const win = i === 0;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.05).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${card(72, y, 496, 44, { r: 11, fill: WHITE, stroke: LINE })}
+        ${label(96, y + 27, o.n, { size: 13 })}
+        ${mono(96, y + 40, o.g, { size: 8, op: 0.3 })}
+        ${mono(388, y + 28, `${[18, 24, 21, 27][i]} ms`, { size: 10, anchor: 'middle', op: 0.6 })}
+        ${mono(452, y + 28, `${o.s}`, { size: 10, anchor: 'middle', op: 0.6 })}
+        ${mono(514, y + 28, `${Math.round(o.p * 100)}%`, { size: 10, anchor: 'middle', op: 0.6 })}
+        ${num(566, y + 30, `${o.score}`, { size: 15, anchor: 'end', fill: win ? P.deep : GRAY })}
+        ${win ? `<g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.52;0.6;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+          ${card(72, y, 496, 44, { r: 11, fill: P.wash, stroke: P.main, sw: 2 })}
+          ${label(96, y + 27, o.n, { size: 13 })}
+          ${mono(96, y + 40, 'SELECTED', { size: 8, op: 0.6, fill: P.deep })}
+          ${num(566, y + 30, `${o.score}`, { size: 15, anchor: 'end', fill: P.deep })}
+        </g>` : ''}
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.66;0.74;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(72, 352, 496, 72, { r: 12, fill: WHITE, stroke: LINE })}
+      ${mono(96, 378, 'REASON', { size: 8.5, op: 0.4 })}
+      ${label(96, 404, 'Lowest latency and the least loaded cell within range.', { size: 13, fill: P.deep })}
+    </g>`;
+    return { svg: wrap(inner), pills: pAI('Decision shown') };
+  },
+};
+
+export const aiBeforeYouNotice = {
+  id: 'ai-before',
+  name: 'Before You Notice',
+  family: 'Proof',
+  tagline: 'The switch happens mid-stream, and nothing stutters',
+  desc:
+    'A video stream plays while the carrier underneath it changes twice. The bitrate line dips for ' +
+    'two frames and recovers; the buffer never empties. Selection only matters if the switching is ' +
+    'invisible, and this is the single most convincing way to say so — by showing the seam and how ' +
+    'small it is.',
+  pros: [
+    'Shows the seam rather than hiding it, which is more credible',
+    'Buffer health is the metric a user actually experiences',
+    'Two switches in one loop proves it is routine, not a one-off',
+  ],
+  cons: ['Admitting a dip at all is a choice', 'Needs real telemetry to stay honest'],
+  scores: { story: 5, motion: 5, perf: 5, mobile: 4, brand: 4, ease: 3 },
+  build: (uid) => {
+    const dur = 12;
+    const pts = Array.from({ length: 52 }, (_, i) => {
+      const base = 3200 + 180 * Math.sin(i * 0.6);
+      if (i === 17 || i === 18) return base - 620;
+      if (i === 35 || i === 36) return base - 540;
+      return base;
+    });
+    const x0 = 80, x1 = 560, y0 = 322, yTop = 168;
+    const px = (i) => x0 + (i / 51) * (x1 - x0);
+    const py = (v) => y0 - ((v - 2400) / 1200) * (y0 - yTop);
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 220, 250, uid)}
+    ${mono(72, 54, 'ONE STREAM \u00b7 TWO CARRIER CHANGES', { size: 9.5, op: 0.45 })}
+    ${card(72, 74, 496, 62, { r: 12, fill: WHITE, stroke: LINE })}
+    ${label(96, 104, 'Playing, uninterrupted', { size: 15 })}
+    ${mono(96, 124, 'BUFFER NEVER BELOW 4.2 s', { size: 8.5, op: 0.4 })}
+    ${[0, 1, 2, 3, 4, 5].map((i) => `
+      <rect x="${446 + i * 19}" y="${118 - i * 7}" width="13" height="${8 + i * 7}" rx="2" fill="${P.main}" opacity="0.85"/>`).join('')}
+
+    ${card(72, 152, 496, 196, { r: 14, fill: WHITE, stroke: LINE })}
+    ${mono(88, 172, 'BITRATE \u00b7 kbps', { size: 8.5, op: 0.4 })}
+    <polyline points="${pts.map((v, i) => `${px(i).toFixed(0)} ${py(v).toFixed(0)}`).join(' ')}"
+      fill="none" stroke="${P.main}" stroke-width="2.6" stroke-dasharray="900" stroke-dashoffset="900">
+      <animate attributeName="stroke-dashoffset" values="900;0;0" keyTimes="0;0.72;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+    </polyline>
+    ${[[17, 'Vodafone \u2192 Orange', 0.26], [35, 'Orange \u2192 T-Mobile', 0.52]].map(([i, txt, on]) => `
+      <g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on};${(on + 0.05).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        <line x1="${px(i).toFixed(0)}" y1="${yTop}" x2="${px(i).toFixed(0)}" y2="${y0}"
+          stroke="${AMBER}" stroke-width="1.6" stroke-dasharray="4 5"/>
+        ${mono(px(i).toFixed(0), yTop - 6, txt, { size: 8.5, anchor: 'middle', op: 0.6, fill: AMBER })}
+      </g>`).join('')}
+    ${[['DROPPED FRAMES', '0'], ['REBUFFERS', '0'], ['SWITCH TIME', '38 ms']].map(([k, v], i) => `
+      <g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${(0.76 + i * 0.05).toFixed(3)};${(0.82 + i * 0.05).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${mono(72 + i * 172, 380, k, { size: 8.5, op: 0.4 })}
+        ${num(72 + i * 172, 408, v, { size: 20, fill: P.deep })}
+      </g>`).join('')}`;
+    return { svg: wrap(inner), pills: pAI('Invisible switching') };
+  },
+};
+
+export const aiLearns = {
+  id: 'ai-learns',
+  name: 'It Learns The Route',
+  family: 'Intelligence',
+  tagline: 'The same commute, four weeks apart',
+  desc:
+    'Intelligence means the second run is better than the first. The same journey is plotted in week ' +
+    'one and week four: the dead spot the first run hit is pre-empted in the fourth, because the ' +
+    'carrier is switched before the gap rather than after it. That is a real definition of learning, ' +
+    'and it is checkable.',
+  pros: [
+    'Gives "AI" a concrete, falsifiable meaning',
+    'Pre-emption rather than reaction is a genuinely strong claim',
+    'The two-run comparison carries itself',
+  ],
+  cons: ['Needs the model to actually behave this way', 'Two overlaid routes is the busiest option here'],
+  scores: { story: 5, motion: 5, perf: 4, mobile: 3, brand: 5, ease: 2 },
+  build: (uid) => {
+    const dur = 13;
+    const x0 = 80, x1 = 566;
+    const px = (t) => x0 + t * (x1 - x0);
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 210, 250, uid)}
+    ${mono(72, 52, 'SAME COMMUTE \u00b7 WEEK 1 vs WEEK 4', { size: 9.5, op: 0.45 })}
+
+    ${mono(72, 96, 'WEEK 1', { size: 9, op: 0.45 })}
+    <line x1="${x0}" y1="132" x2="${x1}" y2="132" stroke="${LINE}" stroke-width="2.5"/>
+    <line x1="${x0}" y1="132" x2="${x1}" y2="132" stroke="${P.main}" stroke-width="3"
+      stroke-dasharray="486" stroke-dashoffset="486">
+      <animate attributeName="stroke-dashoffset" values="486;0;0" keyTimes="0;0.4;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+    </line>
+    <rect x="${px(0.52).toFixed(0)}" y="124" width="${(px(0.62) - px(0.52)).toFixed(0)}" height="16" rx="8" fill="${RED}" opacity="0"/>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.24;0.3;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      <rect x="${px(0.52).toFixed(0)}" y="124" width="${(px(0.62) - px(0.52)).toFixed(0)}" height="16" rx="8" fill="${RED}" opacity="0.8"/>
+      ${mono(px(0.57).toFixed(0), 116, 'DEAD SPOT \u00b7 9 s OFFLINE', { size: 8.5, anchor: 'middle', op: 0.7, fill: RED })}
+      ${mono(px(0.7).toFixed(0), 158, 'switched after the gap', { size: 8.5, op: 0.4 })}
+    </g>
+
+    ${mono(72, 232, 'WEEK 4', { size: 9, op: 0.45, fill: P.deep })}
+    <line x1="${x0}" y1="268" x2="${x1}" y2="268" stroke="${LINE}" stroke-width="2.5"/>
+    <line x1="${x0}" y1="268" x2="${x1}" y2="268" stroke="${P.main}" stroke-width="3.5"
+      stroke-dasharray="486" stroke-dashoffset="486">
+      <animate attributeName="stroke-dashoffset" values="486;486;0;0" keyTimes="0;0.44;0.82;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+    </line>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.56;0.62;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      <line x1="${px(0.46).toFixed(0)}" y1="248" x2="${px(0.46).toFixed(0)}" y2="288" stroke="${GREEN}" stroke-width="2"/>
+      ${mono(px(0.46).toFixed(0), 240, 'SWITCHED HERE, BEFORE THE GAP', { size: 8.5, anchor: 'middle', op: 0.7, fill: GREEN_TEXT })}
+      ${tick(px(0.6).toFixed(0), 300, 'No outage', { size: 11.5 })}
+    </g>
+
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.82;0.9;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(72, 348, 496, 76, { r: 13, fill: P.wash, stroke: P.main, sw: 2 })}
+      ${label(96, 380, 'Nine seconds offline in week one.', { size: 14 })}
+      ${label(96, 406, 'None in week four, on the same train.', { size: 14, fill: P.deep })}
+    </g>`;
+    return { svg: wrap(inner), pills: pAI('Learns your routes') };
+  },
+};
+
+export const aiOffSwitch = {
+  id: 'ai-off',
+  name: 'The Off Switch',
+  family: 'Control',
+  tagline: 'Automatic, until you say otherwise',
+  desc:
+    'Automation makes people nervous when they cannot override it. Three modes — automatic, ' +
+    'preferred carrier, and pinned — with the selection moving between them and the consequence shown ' +
+    'each time. It converts the AI claim from something done to the user into something they hold the ' +
+    'controls for, which is the more mature position.',
+  pros: [
+    'Addresses the trust objection that every automation claim creates',
+    'Pinning a carrier is a genuine enterprise requirement',
+    'Reads as a product surface rather than a marketing animation',
+  ],
+  cons: ['Undercuts the automatic story slightly', 'Requires the modes to actually exist in the app'],
+  scores: { story: 4, motion: 4, perf: 5, mobile: 5, brand: 4, ease: 4 },
+  build: (uid) => {
+    const dur = 12;
+    const modes = [
+      ['Automatic', 'We choose, every few seconds', 'Best available, always'],
+      ['Preferred', 'Your carrier first, if it is usable', 'Falls back only when it must'],
+      ['Pinned', 'This carrier, or nothing', 'For compliance and testing'],
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 210, 250, uid)}
+    ${mono(72, 56, 'SELECTION MODE', { size: 9.5, op: 0.45 })}
+    ${label(72, 84, 'Automatic, until you say otherwise', { size: 15, op: 0.75 })}
+    ${modes.map(([nm, note, out], i) => {
+      const y = 112 + i * 86;
+      const on = i / 3, off = (i + 1) / 3;
+      return `<g>
+        ${card(72, y, 496, 74, { r: 13, fill: WHITE, stroke: LINE })}
+        <circle cx="104" cy="${y + 37}" r="11" fill="none" stroke="${LINE}" stroke-width="2"/>
+        ${label(132, y + 33, nm, { size: 14 })}
+        ${mono(132, y + 54, note, { size: 9, op: 0.4 })}
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1;0;0"
+            keyTimes="0;${on.toFixed(4)};${(on + 0.008).toFixed(4)};${off.toFixed(4)};${Math.min(off + 0.008, 1).toFixed(4)};1"
+            dur="${dur}s" repeatCount="indefinite" calcMode="discrete"/>
+          ${card(72, y, 496, 74, { r: 13, fill: P.wash, stroke: P.main, sw: 2 })}
+          <circle cx="104" cy="${y + 37}" r="11" fill="${P.main}"/>
+          <path d="M 98 ${y + 37} l 4.5 4.5 l 8 -9" fill="none" stroke="${WHITE}" stroke-width="2.4" stroke-linecap="round"/>
+          ${label(132, y + 33, nm, { size: 14 })}
+          ${mono(132, y + 54, note, { size: 9, op: 0.45 })}
+          ${mono(544, y + 40, out, { size: 9, anchor: 'end', op: 0.6, fill: P.deep })}
+        </g>
+      </g>`;
+    }).join('')}
+    ${mono(72, 402, 'THE MODEL DECIDES BY DEFAULT. IT NEVER DECIDES OVER YOU.', { size: 9, op: 0.38 })}`;
+    return { svg: wrap(inner), pills: pAI('You keep control') };
+  },
+};
+
+/* ── registry ── */
+
+export const aiTheCost = {
+  id: 'ai-cost',
+  name: 'What The Choice Costs',
+  family: 'Outcome',
+  tagline: 'The same hour, priced two ways',
+  desc:
+    'Selection is usually sold as a quality story, but it is also a price one. An hour of traffic is ' +
+    'priced twice: routed to whichever carrier is cheapest-and-good-enough, and pinned to a single ' +
+    'carrier throughout. The gap is the argument, and it is the only version of this panel that a ' +
+    'finance reader will care about.',
+  pros: [
+    'Adds a commercial argument to a panel that is currently purely technical',
+    'The two totals are impossible to misread',
+    'Works for both the consumer and the business audience',
+  ],
+  cons: ['Needs real wholesale pricing to be honest', 'Overlaps with the market panel below it'],
+  scores: { story: 5, motion: 4, perf: 5, mobile: 5, brand: 4, ease: 4 },
+  build: (uid) => {
+    const dur = 11;
+    const slots = [['14:00', 'Vodafone', 0.61], ['14:15', 'Orange', 0.58], ['14:30', 'Telef\u00f3nica', 0.54],
+      ['14:45', 'T-Mobile', 0.57]];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 210, 250, uid)}
+    ${mono(72, 54, 'ONE HOUR OF TRAFFIC, PRICED TWICE', { size: 9.5, op: 0.45 })}
+    ${slots.map(([t, c, p], i) => {
+      const y = 82 + i * 62;
+      const on = 0.06 + i * 0.12;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.05).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${card(72, y, 496, 50, { r: 11, fill: WHITE, stroke: LINE })}
+        ${mono(96, y + 30, t, { size: 11, op: 0.5 })}
+        ${label(164, y + 30, c, { size: 13.5 })}
+        ${mono(360, y + 30, 'cheapest available, still Tier-1', { size: 8.5, op: 0.38 })}
+        ${num(544, y + 32, `\u20ac${p.toFixed(2)}`, { size: 14, anchor: 'end', fill: P.deep })}
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.66;0.74;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(72, 340, 240, 88, { r: 12, fill: WHITE, stroke: LINE })}
+      ${mono(96, 368, 'PINNED TO ONE CARRIER', { size: 8.5, op: 0.4 })}
+      ${num(96, 406, '\u20ac0.74 / GB', { size: 19, fill: GRAY })}
+      ${card(328, 340, 240, 88, { r: 12, fill: P.wash, stroke: P.main, sw: 2 })}
+      ${mono(352, 368, 'CHOSEN EVERY 15 MINUTES', { size: 8.5, op: 0.5, fill: P.deep })}
+      ${num(352, 406, '\u20ac0.58 / GB', { size: 19, fill: P.deep })}
+    </g>
+    ${mono(72, 448, 'TWENTY-TWO PERCENT, WITHOUT DROPPING A TIER', { size: 9, op: 0.35 })}`;
+    return { svg: wrap(inner), pills: pAI('22% cheaper per GB') };
+  },
+};
+
+/* ── registry ── */
+export const AI_VARIANTS = [aiCurrent, aiTrace, aiBoard, aiNeural, aiRadar, aiTicker, aiWhyThisOne, aiBeforeYouNotice, aiLearns, aiOffSwitch, aiTheCost];
