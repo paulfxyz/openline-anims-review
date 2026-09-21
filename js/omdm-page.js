@@ -1,21 +1,20 @@
 /* ─────────────────────────────────────────────────────────────────────────
    /omdm-market — page assembly. Fintech-clean surface only.
 
-   The venue and book animations are purpose-built for this page at their own
-   boxes (omdm-anims2.js). Hero, participants and controls reuse the
-   fintech-clean variants from the review boards so a decision made there
-   carries straight through to the page.
+   All five animations are purpose-built for this page, at the box each slot
+   actually occupies, and each one argues the point made by the copy beside it.
    ───────────────────────────────────────────────────────────────────────── */
-import { finBoard, bothSidesVerified } from './omdm-hero.js';
-import { reconciled } from './omdm-ctrl.js';
-import { venueCost, bookFlow } from './omdm-anims2.js';
+import { venueCost, bookFlow, heroBook, depthNarrows, auditTrail } from './omdm-anims2.js';
 
+/* every slot is now drawn for this page and for the copy beside it — the
+   review-board variants were argued for a different frame and contradicted
+   their own captions here */
 const PLAN = {
-  hero: finBoard,
+  hero: heroBook,
   venue: venueCost,
   book: bookFlow,
-  parts: bothSidesVerified,
-  ctrl: reconciled,
+  parts: depthNarrows,
+  ctrl: auditTrail,
 };
 
 /* the six families, in the same order as the waterfall steps above them */

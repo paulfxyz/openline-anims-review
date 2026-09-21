@@ -3,8 +3,11 @@
    Fintech-clean surface only — light ground, one blue accent, mono numerals.
    Self-contained: no kit import, so the page cannot be broken by a board edit.
 
-   venueCost  704 × 420   the cost of holding a rate card for a year
-   bookFlow  1280 × 420   base rate in, six families applied, quote out
+   heroBook       576 × 460   five routes repricing on one clock
+   venueCost      704 × 420   the cost of holding a rate card for a year
+   bookFlow      1280 × 420   base rate in, six families applied, quote out
+   depthNarrows   576 × 460   each counterparty that joins closes the spread
+   auditTrail     624 × 440   each entry seals the one before it
    ───────────────────────────────────────────────────────────────────────── */
 
 const MO = 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace';
@@ -305,3 +308,382 @@ export const bookFlow = {
 
 export const VENUE_BOX = { w: VW, h: VH };
 export const BOOK_BOX = { w: BW, h: BH };
+
+/* ════════════════════════════════════════════════════════════════════════
+   Hero — the live book, made internally consistent.
+
+   The board variant reused here previously coloured the whole bid column
+   green and the whole ask column red, which is not what those colours mean
+   in a book; its rows flashed "repriced" on one clock while the numbers
+   changed on another, so a row could flash without moving; its change column
+   was a fixed string unrelated to the prices above it; and its "repriced 4s
+   ago / 1s ago / 2s ago" readout counted backwards. All four are fixed here:
+   one clock, ten reprices per loop, and every cell derived from the move.
+   ════════════════════════════════════════════════════════════════════════ */
+const HW = 576, HH = 460;
+
+/* each route carries two quote states and alternates between them; the change
+   cell is computed from the move that just happened, never asserted */
+const BOOK_ROWS = [
+  ['JP · Tier-1', [0.83, 0.90, 12.4], [0.82, 0.89, 11.8]],
+  ['DE · Tier-1', [0.62, 0.67, 8.1], [0.63, 0.68, 8.6]],
+  ['US · Tier-1', [0.71, 0.78, 15.2], [0.70, 0.77, 14.4]],
+  ['SG · Tier-1', [0.59, 0.64, 6.4], [0.60, 0.65, 6.9]],
+  ['BR · Tier-2', [1.16, 1.27, 3.2], [1.14, 1.25, 3.0]],
+];
+
+export const heroBook = {
+  id: 'omh-book',
+  name: 'The Live Book',
+  family: 'Hero',
+  tagline: 'One clock, and every cell derived from the move',
+  desc:
+    'The order book the page is describing, quoting on a single clock. Ten reprices per loop, ' +
+    'one route at a time: the row lights, its bid and ask move, the change cell is computed from ' +
+    'that move rather than asserted, depth adjusts with it, and the footer names the route that ' +
+    'just repriced and what it did. Bid and ask are set in neutral text — green and red carry ' +
+    'direction of movement, which is what they mean in a book.',
+  pros: [
+    'Every cell is derived from one event, so nothing can contradict anything else',
+    'The footer makes each reprice legible instead of leaving it to be noticed',
+    'Colour is used the way a trading surface actually uses it',
+  ],
+  cons: ['Five routes is a small book', 'Requires a real feed to stay truthful in production'],
+  scores: { story: 5, motion: 5, perf: 5, mobile: 4, brand: 5, ease: 4 },
+  build: (uid = 'h') => {
+    const dur = 20, eps = 0.004;
+    const X = { route: 58, bid: 286, ask: 356, chg: 428, depth: HW - 58 };
+
+    const cell = (x, y, v, o = {}) => num(x, y, v, { a: 'end', size: 12.5, w: 600, ...o });
+
+    const rows = BOOK_ROWS.map(([route, A, B], i) => {
+      const t1 = (1 + i * 2) / dur;            // moves to state B
+      const t2 = (11 + i * 2) / dur;           // moves back to state A
+      const y = 138 + i * 46;
+      const pct = (from, to) => (((to - from) / from) * 100).toFixed(1);
+      const upB = B[1] > A[1], upA = A[1] > B[1];
+
+      /* one state's cells, shown only while that state is current */
+      const state = (S, on, off, up, delta) => `
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1;0;0"
+            keyTimes="0;${on.toFixed(4)};${(on + eps).toFixed(4)};${off.toFixed(4)};${(off + eps).toFixed(4)};1"
+            dur="${dur}s" repeatCount="indefinite" calcMode="discrete"/>
+          ${cell(X.bid, y + 25, S[0].toFixed(2))}
+          ${cell(X.ask, y + 25, S[1].toFixed(2))}
+          ${cell(X.chg, y + 25, `${up ? '+' : '−'}${Math.abs(delta)}%`, { fill: up ? C.up : C.down, size: 11, w: 700 })}
+          ${num(X.depth, y + 25, `${S[2].toFixed(1)} TB`, { a: 'end', size: 11, fill: C.dim, w: 500 })}
+        </g>`;
+
+      return `
+      <g>
+        ${i % 2 ? `<rect x="44" y="${y}" width="${HW - 88}" height="40" rx="8" fill="${C.rise}"/>` : ''}
+        ${[t1, t2].map((tt) => `
+          <rect x="44" y="${y}" width="${HW - 88}" height="40" rx="8" fill="${C.accentSoft}" opacity="0">
+            <animate attributeName="opacity" values="0;0;1;0;0"
+              keyTimes="0;${tt.toFixed(4)};${(tt + eps).toFixed(4)};${(tt + 0.05).toFixed(4)};1"
+              dur="${dur}s" repeatCount="indefinite"/></rect>`).join('')}
+        ${txt(X.route, y + 25, route, { size: 12, w: 600 })}
+        ${state(B, t1, t2, upB, pct(A[1], B[1]))}
+        ${state(A, t2, 1 - eps * 2, upA, pct(B[1], A[1]))}
+        <g opacity="1">
+          <animate attributeName="opacity" values="1;1;0;0;1;1"
+            keyTimes="0;${t1.toFixed(4)};${(t1 + eps).toFixed(4)};${t2.toFixed(4)};${(t2 + eps).toFixed(4)};1"
+            dur="${dur}s" repeatCount="indefinite" calcMode="discrete"/>
+          ${cell(X.bid, y + 25, A[0].toFixed(2))}
+          ${cell(X.ask, y + 25, A[1].toFixed(2))}
+          ${cell(X.chg, y + 25, `${upA ? '+' : '−'}${Math.abs(pct(B[1], A[1]))}%`,
+            { fill: upA ? C.up : C.down, size: 11, w: 700 })}
+          ${num(X.depth, y + 25, `${A[2].toFixed(1)} TB`, { a: 'end', size: 11, fill: C.dim, w: 500 })}
+        </g>
+      </g>`;
+    }).join('');
+
+    /* the footer names the reprice that just happened, on the same clock */
+    const events = [];
+    BOOK_ROWS.forEach(([route, A, B], i) => {
+      events.push({ at: (1 + i * 2) / dur, route, from: A[1], to: B[1] });
+    });
+    BOOK_ROWS.forEach(([route, A, B], i) => {
+      events.push({ at: (11 + i * 2) / dur, route, from: B[1], to: A[1] });
+    });
+    events.sort((a, b) => a.at - b.at);
+
+    const footer = events.map((e, k) => {
+      const on = e.at, off = k === events.length - 1 ? null : events[k + 1].at;
+      const up = e.to > e.from;
+      const body = `
+        ${txt(58, HH - 26, 'Last reprice', { size: 11, fill: C.faint })}
+        ${txt(138, HH - 26, e.route, { size: 11.5, w: 600 })}
+        ${num(258, HH - 26, `ask ${e.from.toFixed(2)}`, { size: 11, fill: C.dim, w: 500 })}
+        ${txt(340, HH - 26, '→', { size: 11, fill: C.faint })}
+        ${num(360, HH - 26, e.to.toFixed(2), { size: 11.5, w: 700, fill: up ? C.up : C.down })}
+        ${lab(HW - 58, HH - 26, up ? 'ASK ROSE' : 'ASK FELL', { a: 'end', fill: up ? C.up : C.down, size: 8.5 })}`;
+      /* the last event wraps around the loop seam, so it holds at both ends */
+      return off == null
+        ? `<g opacity="0"><animate attributeName="opacity" values="1;1;0;0;1;1"
+             keyTimes="0;${events[0].at.toFixed(4)};${(events[0].at + eps).toFixed(4)};${on.toFixed(4)};${(on + eps).toFixed(4)};1"
+             dur="${dur}s" repeatCount="indefinite" calcMode="discrete"/>${body}</g>`
+        : `<g opacity="0"><animate attributeName="opacity" values="0;0;1;1;0;0"
+             keyTimes="0;${on.toFixed(4)};${(on + eps).toFixed(4)};${off.toFixed(4)};${(off + eps).toFixed(4)};1"
+             dur="${dur}s" repeatCount="indefinite" calcMode="discrete"/>${body}</g>`;
+    }).join('');
+
+    return {
+      pills: [],
+      svg: `<svg viewBox="0 0 ${HW} ${HH}" xmlns="http://www.w3.org/2000/svg" role="img"
+        aria-label="Five Tier-1 routes repricing one at a time on a live book">
+        <rect width="${HW}" height="${HH}" fill="${C.ground}"/>
+        ${card(32, 56, HW - 64, 348, { r: 16 })}
+        <circle cx="58" cy="88" r="4" fill="${C.up}">
+          <animate attributeName="opacity" values="0.35;1;0.35" keyTimes="0;0.5;1" dur="2.2s" repeatCount="indefinite"/>
+        </circle>
+        ${lab(70, 92, 'OMDM · LIVE BOOK', { fill: C.text, size: 9.5 })}
+        ${lab(HW - 58, 92, 'USD / GB', { a: 'end' })}
+        <line x1="58" y1="106" x2="${HW - 58}" y2="106" stroke="${C.line}"/>
+        ${lab(X.route, 126, 'ROUTE')}
+        ${lab(X.bid, 126, 'BID', { a: 'end' })}
+        ${lab(X.ask, 126, 'ASK', { a: 'end' })}
+        ${lab(X.chg, 126, 'CHANGE', { a: 'end' })}
+        ${lab(X.depth, 126, 'DEPTH', { a: 'end' })}
+        ${rows}
+        ${footer}
+      </svg>`,
+    };
+  },
+};
+
+/* ════════════════════════════════════════════════════════════════════════
+   Who trades — depth narrows the spread.
+
+   The block's copy argues that a deeper book prices better for everyone in
+   it, including competitors. The variant previously mounted here listed four
+   participant types and showed them clearing KYC, which is the controls
+   argument, not this one — and one of its four ("Aggregator") appears nowhere
+   in the page copy. This shows the actual claim: each counterparty that joins
+   narrows the spread, and the improvement accrues to everybody.
+   ════════════════════════════════════════════════════════════════════════ */
+const PW = 576, PH = 460;
+
+/* best bid rises and best ask falls as each counterparty joins; every spread
+   lands on a clean two decimals so the readout never changes precision */
+const JOINERS = [
+  ['Openline', 'MVNO · seeding the book', 'Sells', 0.56, 0.67],
+  ['Tier-1 operator', 'Idle overnight capacity', 'Sells', 0.575, 0.665],
+  ['Regional MVNO', 'Buying at market, not a rate card', 'Buys', 0.59, 0.66],
+  ['Competing aggregator', 'Quoting both ways', 'Both', 0.60, 0.66],
+  ['Enterprise fleet', 'IoT across 41 countries', 'Buys', 0.605, 0.655],
+  ['Reseller group', 'Reselling into 9 markets', 'Both', 0.61, 0.65],
+];
+
+export const depthNarrows = {
+  id: 'omp-depth',
+  name: 'Depth Narrows the Spread',
+  family: 'Who trades',
+  tagline: 'Including the competitor who just joined',
+  desc:
+    'The one claim this block makes is that a deeper book prices better for everyone standing in ' +
+    'it. So that is what this draws: six counterparties arriving one at a time — a Tier-1 ' +
+    'operator, a buyer, a competing aggregator, an enterprise fleet — with the best bid rising ' +
+    'and the best ask falling as each joins. The spread closes from 0.11 to 0.04, and the final ' +
+    'line makes the point explicit: that improvement belongs to everyone, including the ' +
+    'competitor who caused it.',
+  pros: [
+    'Demonstrates the block\u2019s argument rather than restating the participant list',
+    'The converging spread is legible without a legend',
+    'Names a competitor joining, which is the uncomfortable part of the claim',
+  ],
+  cons: ['Spread figures are illustrative', 'Six rows is tight at this height'],
+  scores: { story: 5, motion: 4, perf: 5, mobile: 4, brand: 5, ease: 4 },
+  build: (uid = 'p') => {
+    const dur = 18;
+    const railX0 = 56, railX1 = PW - 56;
+    const vLo = 0.535, vHi = 0.695;
+    const PX = (v) => railX0 + ((v - vLo) / (vHi - vLo)) * (railX1 - railX0);
+    /* all six arrive inside the first 60%, so the closed spread holds */
+    const at = (i) => 0.04 + i * 0.11;
+
+    /* keyTimes must open at 0, so the first position is held from the start of
+       the loop until the first counterparty actually arrives */
+    const bidKeys = JOINERS.map((j) => PX(j[3]).toFixed(1));
+    const askKeys = JOINERS.map((j) => PX(j[4]).toFixed(1));
+    const widths = JOINERS.map((j) => (PX(j[4]) - PX(j[3])).toFixed(1));
+    const times = ['0', ...JOINERS.map((_, i) => at(i).toFixed(4)), '1'];
+    const pad = (k) => [k[0], ...k, k[k.length - 1]];
+    const splines = times.slice(1).map(() => '0.4 0 0.2 1').join(';');
+
+    const track = (attr, keys) =>
+      `<animate attributeName="${attr}" values="${pad(keys).join(';')}" keyTimes="${times.join(';')}"` +
+      ` dur="${dur}s" repeatCount="indefinite" calcMode="spline" keySplines="${splines}"/>`;
+
+    /* a transform list needs animateTransform — plain <animate> is silently
+       ignored, which left both markers pinned at their opening positions */
+    const slide = (keys) =>
+      `<animateTransform attributeName="transform" type="translate"` +
+      ` values="${pad(keys).map((k) => `${k} 404`).join(';')}" keyTimes="${times.join(';')}"` +
+      ` dur="${dur}s" repeatCount="indefinite" calcMode="spline" keySplines="${splines}"/>`;
+
+    return {
+      pills: [],
+      svg: `<svg viewBox="0 0 ${PW} ${PH}" xmlns="http://www.w3.org/2000/svg" role="img"
+        aria-label="Six counterparties joining a book and narrowing its spread">
+        <rect width="${PW}" height="${PH}" fill="${C.ground}"/>
+        ${lab(40, 36, 'COUNTERPARTIES QUOTING DE · TIER-1')}
+
+        ${JOINERS.map(([nm, sub, side], i) => {
+          const y = 44 + i * 48;
+          const on = at(i);
+          const sideCol = side === 'Sells' ? C.up : side === 'Buys' ? C.accent : C.text;
+          return `<g opacity="0">
+            <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(4)};${(on + 0.03).toFixed(4)};1"
+              dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+            <animateTransform attributeName="transform" type="translate" values="18 0;0 0;0 0"
+              keyTimes="0;${(on + 0.03).toFixed(4)};1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+            ${card(40, y, PW - 80, 40, { fill: i === 3 ? C.accentSoft : C.ground, stroke: i === 3 ? C.accent : C.line, r: 10 })}
+            <circle cx="62" cy="${y + 20}" r="3.5" fill="${sideCol}"/>
+            ${txt(78, y + 24, nm, { size: 12.5, w: i === 3 ? 700 : 600 })}
+            ${txt(228, y + 24, sub, { size: 11, fill: C.dim })}
+            ${lab(PW - 58, y + 24, side.toUpperCase(), { a: 'end', fill: sideCol, size: 8.5 })}
+          </g>`;
+        }).join('')}
+
+        <!-- the spread, closing as the book deepens -->
+        ${card(32, 336, PW - 64, 98, { fill: C.rise, stroke: null, r: 14 })}
+        ${lab(56, 362, 'BEST BID \u2014 BEST ASK, USD / GB')}
+        <line x1="${railX0}" y1="404" x2="${railX1}" y2="404" stroke="${C.lineHard}" stroke-width="2"/>
+        ${num(railX0, 390, vLo.toFixed(2), { size: 9.5, fill: C.faint, w: 500 })}
+        ${num(railX1, 390, vHi.toFixed(2), { size: 9.5, a: 'end', fill: C.faint, w: 500 })}
+
+        <rect x="${bidKeys[0]}" y="400" width="${widths[0]}" height="8" rx="4" fill="${C.accent}" opacity="0.2">
+          ${track('x', bidKeys)}
+          ${track('width', widths)}
+        </rect>
+
+        <polygon points="0,-7 6,0 0,7 -6,0" fill="${C.up}" transform="translate(${bidKeys[0]} 404)">
+          ${slide(bidKeys)}
+        </polygon>
+        <polygon points="0,-7 6,0 0,7 -6,0" fill="${C.down}" transform="translate(${askKeys[0]} 404)">
+          ${slide(askKeys)}
+        </polygon>
+        <g transform="translate(${bidKeys[0]} 404)">${slide(bidKeys)}
+          ${lab(0, 22, 'BID', { a: 'middle', fill: C.up, size: 8 })}</g>
+        <g transform="translate(${askKeys[0]} 404)">${slide(askKeys)}
+          ${lab(0, 22, 'ASK', { a: 'middle', fill: C.down, size: 8 })}</g>
+
+        ${JOINERS.map((j, i) => {
+          const on = at(i), off = i === JOINERS.length - 1 ? 1 : at(i + 1);
+          const spread = (j[4] - j[3]).toFixed(2);
+          return `<g opacity="0">
+            <animate attributeName="opacity" values="0;0;1;1;0;0"
+              keyTimes="0;${on.toFixed(4)};${(on + 0.012).toFixed(4)};${Math.min(off, 0.994).toFixed(4)};${Math.min(off + 0.006, 0.999).toFixed(4)};1"
+              dur="${dur}s" repeatCount="indefinite" calcMode="discrete"/>
+            ${num(PW - 56, 362, `spread ${spread}`, { a: 'end', size: 12.5, w: 700, fill: i === 5 ? C.up : C.text })}
+            ${num(56, 426, `${i + 1} of 6 quoting`, { size: 11, fill: C.dim, w: 500 })}
+          </g>`;
+        }).join('')}
+
+        <g opacity="0">
+          ${showAt(0.78, dur)}
+          ${txt(PW - 56, 454, 'Narrower for everyone in the book', { size: 12, a: 'end', w: 600, fill: C.up })}
+        </g>
+      </svg>`,
+    };
+  },
+};
+
+/* ════════════════════════════════════════════════════════════════════════
+   Controls — the append-only trail, matching its own caption.
+
+   The caption under this slot says "append-only, each line seals the one
+   before it". The variant previously mounted here showed three columns whose
+   reconciliation payoff was a difference of 0.00 between two figures that
+   were printed identically — a tautology, not a reconciliation — and it
+   repeated two of the four control statements already listed beside it. This
+   shows the sealing the caption promises, and includes the one thing the
+   section claims but never demonstrates: a match refused for standing.
+   ════════════════════════════════════════════════════════════════════════ */
+const KW = 624, KH = 440;
+
+const TRAIL = [
+  ['10428', 'Quote published', 'Tier-1 operator · DE', '9f2c', null],
+  ['10429', 'KYB re-verified', 'Regional MVNO', '4a71', null],
+  ['10430', 'Match refused', 'Reseller group', 'c0d8', 'Below the minimum standing this route requires'],
+  ['10431', 'Matched · 4.0 TB', 'Competing aggregator', '71be', null],
+  ['10432', 'Settled · T+0', 'Competing aggregator', 'e35a', null],
+];
+
+export const auditTrail = {
+  id: 'omc-trail',
+  name: 'The Append-Only Trail',
+  family: 'Controls',
+  tagline: 'Each line carries the hash of the line before it',
+  desc:
+    'The trail the caption describes, doing what the caption says. Five entries append in ' +
+    'sequence, and each one shows the previous entry\u2019s seal as its own input, with a link drawn ' +
+    'between them — so removing a line visibly breaks every line after it. The third entry is a ' +
+    'match refused because the counterparty sits below the minimum standing the route requires, ' +
+    'which is the one control the page asserts and never shows.',
+  pros: [
+    'Shows the sealing the caption promises instead of a generic ledger',
+    'The refused match demonstrates enforcement, not just a policy statement',
+    'Adds nothing that duplicates the four control statements beside it',
+  ],
+  cons: ['Hash chaining needs a plain-language gloss for non-technical readers', 'Five lines is a small sample'],
+  scores: { story: 5, motion: 4, perf: 5, mobile: 4, brand: 5, ease: 4 },
+  build: (uid = 'k') => {
+    const dur = 16;
+    const at = (i) => 0.06 + i * 0.15;
+    return {
+      pills: [],
+      svg: `<svg viewBox="0 0 ${KW} ${KH}" xmlns="http://www.w3.org/2000/svg" role="img"
+        aria-label="An append-only audit trail in which each entry seals the one before it">
+        <rect width="${KW}" height="${KH}" fill="${C.ground}"/>
+        ${lab(32, 34, 'AUDIT TRAIL \u00b7 JP \u00b7 TIER-1')}
+        ${lab(KW - 32, 34, 'APPEND-ONLY', { a: 'end', fill: C.accent })}
+
+        ${TRAIL.map(([seq, event, party, seal, refusal], i) => {
+          const y = 48 + i * 68;
+          const on = at(i);
+          const refused = !!refusal;
+          const prev = i > 0 ? TRAIL[i - 1][3] : null;
+          return `<g opacity="0">
+            <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(4)};${(on + 0.035).toFixed(4)};1"
+              dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+            <animateTransform attributeName="transform" type="translate" values="0 -8;0 0;0 0"
+              keyTimes="0;${(on + 0.035).toFixed(4)};1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+
+            ${card(32, y, KW - 64, 58, { fill: refused ? C.downSoft : C.ground, stroke: refused ? C.down : C.line, r: 11 })}
+            <rect x="32" y="${y}" width="3.5" height="58" rx="2" fill="${refused ? C.down : C.accent}"/>
+
+            ${num(54, y + 24, `#${seq}`, { size: 11, fill: C.faint, w: 500 })}
+            ${txt(124, y + 24, event, { size: 13, w: 700, fill: refused ? C.down : C.text })}
+            ${refused
+              /* the reason needs a full line of its own, clear of the seal chip */
+              ? `${txt(258, y + 24, party, { size: 11.5, fill: C.dim })}
+                 ${txt(124, y + 43, refusal, { size: 11, fill: C.down })}`
+              : txt(124, y + 43, party, { size: 11, fill: C.dim })}
+
+            ${prev ? `
+              <!-- the chain, drawn: the previous seal descends into this entry -->
+              <path d="M ${KW - 102} ${y - 10} L ${KW - 102} ${y - 2}" stroke="${C.lineHard}"
+                stroke-width="1.6" stroke-linecap="round"/>
+              <path d="M ${KW - 106} ${y - 6} l 4 4 l 4 -4" fill="none" stroke="${C.lineHard}"
+                stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              ${num(KW - 158, y + 23, `carries ${prev}`, { a: 'end', size: 9.5, fill: C.faint, w: 500 })}` : ''}
+            ${card(KW - 148, y + 16, 92, 26, { fill: refused ? '#FAD9D9' : C.accentSoft, stroke: null, r: 8 })}
+            ${num(KW - 102, y + 34, seal, { a: 'middle', size: 12, w: 700, fill: refused ? C.down : C.accent })}
+          </g>`;
+        }).join('')}
+
+        <g opacity="0">${showAt(0.82, dur)}
+          ${txt(32, KH - 16, 'Each entry carries the hash of the entry before it \u2014 removing one breaks every line after.',
+            { size: 12.5, fill: C.dim })}
+        </g>
+      </svg>`,
+    };
+  },
+};
+
+export const HERO_BOX = { w: HW, h: HH };
+export const PARTS_BOX = { w: PW, h: PH };
+export const CTRL_BOX = { w: KW, h: KH };

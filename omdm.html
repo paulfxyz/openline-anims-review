@@ -159,20 +159,50 @@
       <div class="ctrl-list" data-ctrls></div>
       <div>
         <div class="stage stage-ctrl" data-mount="ctrl"></div>
-        <p class="stage-cap">Append-only. Each line seals the one before it. <span>624 × 440</span></p>
+        <p class="stage-cap">Append-only — each entry seals the one before it, and one match is
+          refused for standing. <span>624 × 440</span></p>
       </div>
     </div>
   </section>
 
   <!-- ══ 6 · Access ══════════════════════════════════════════════════════ -->
+  <!-- deliberately quiet: no wash, no display type, no uppercase. The page has
+       already made its argument by here — this only needs to be easy to act on. -->
   <section class="access" id="access">
-    <div class="wrap access-in">
-      <h2>Access is by request,<br>and by <em>verification</em></h2>
-      <p>Tell us who you are and what you would bring to the book. We verify every counterparty —
-        the business and the people behind it — before they see a price.</p>
-      <a class="btn btn-solid btn-lg" href="#access">Request access <span aria-hidden="true">→</span></a>
-      <p class="access-note">Each route carries a minimum counterparty standing, and the book will
-        not match below it.</p>
+    <div class="wrap access-grid">
+      <div class="access-ask">
+        <h2>Access is by request, and by verification</h2>
+        <p>Tell us who you are and what you would bring to the book. We verify every
+          counterparty — the business and the people behind it — before they see a price.</p>
+        <a class="btn btn-solid btn-lg" href="#access">Request access <span aria-hidden="true">→</span></a>
+        <p class="access-fine">Usually two working days. Nothing is committed, and no price is
+          shown until verification completes.</p>
+      </div>
+
+      <ol class="access-steps">
+        <li>
+          <div class="as-n">1</div>
+          <div>
+            <h3>Tell us about your volume</h3>
+            <p>Which routes, roughly how much, and whether you expect to buy, sell, or both.</p>
+          </div>
+        </li>
+        <li>
+          <div class="as-n">2</div>
+          <div>
+            <h3>We verify both sides</h3>
+            <p>KYC on the people, KYB on the business. Each route carries a minimum standing,
+              and we will tell you where you sit against it.</p>
+          </div>
+        </li>
+        <li>
+          <div class="as-n">3</div>
+          <div>
+            <h3>You see live prices</h3>
+            <p>Credentials for the book, with quoting limits set to the standing you cleared.</p>
+          </div>
+        </li>
+      </ol>
     </div>
   </section>
 </main>
@@ -180,7 +210,7 @@
 <footer class="ft">
   <div class="wrap ft-row">
     <span>OMDM™ — Openline Mobile Data Market</span>
-    <span>Redesign concept · tokens documented in STYLE-OMDM.md</span>
+    <span>Redesign concept — tokens documented in STYLE-OMDM.md</span>
   </div>
 </footer>
 
