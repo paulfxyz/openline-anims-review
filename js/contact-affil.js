@@ -829,7 +829,9 @@ export const oneLink = {
         ${bg(AW, AH, GR)}
         ${lab(46, 42, 'ONE LINK, EVERY DESTINATION', GRAY, { size: 9 })}
         ${dests.map(([x, y, cc, amt], i) => {
-          const beg = (i * dur / dests.length).toFixed(2);
+          /* all six land inside the first half of the loop, so the finished
+             map holds instead of completing just as it restarts */
+          const beg = ((i * dur * 0.5) / dests.length).toFixed(2);
           const d = `M ${sx} ${sy} Q ${((sx + x) / 2).toFixed(0)} ${(y + 40).toFixed(0)}, ${x} ${y}`;
           return `<g>
             <path d="${d}" fill="none" stroke="${GR}" stroke-width="1.4" opacity="0.18"/>
@@ -839,11 +841,13 @@ export const oneLink = {
               <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.02;0.15;0.18;1"
                 dur="${dur}s" begin="${beg}s" repeatCount="indefinite"/></circle>
             <g opacity="0">
-              <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.16;0.2;0.42;0.46;1"
+              <!-- each commission stays on screen once it lands, so the map fills
+                   up rather than showing one lonely pill at a time -->
+              <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.16;0.2;1"
                 dur="${dur}s" begin="${beg}s" repeatCount="indefinite"/>
-              ${rect(x - 34, y - 16, 68, 32, { fill: WHITE, stroke: GR, r: 8 })}
-              ${lab(x, y - 4, cc, GRAY, { size: 7.5, a: 'middle' })}
-              ${t(x, y + 11, amt, { m: true, size: 11.5, w: 700, a: 'middle', fill: GREEN_TEXT })}
+              ${rect(x - 38, y - 19, 76, 38, { fill: WHITE, stroke: GR, r: 9 })}
+              ${lab(x, y - 5, cc, GRAY, { size: 7.5, a: 'middle' })}
+              ${t(x, y + 12, amt, { m: true, size: 12, w: 700, a: 'middle', fill: GREEN_TEXT })}
             </g>
             <circle cx="${x}" cy="${y}" r="3.5" fill="${GR}" opacity="0.4"/>
           </g>`;

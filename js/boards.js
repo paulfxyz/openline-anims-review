@@ -22,6 +22,8 @@ import { OMDM_HERO_VARIANTS } from './omdm-hero.js';
 import { OMDM_BOOK_VARIANTS } from './omdm-book.js';
 import { OMDM_CTRL_VARIANTS } from './omdm-ctrl.js';
 import { OMDM_HERO, OMDM_BOOK, OMDM_CTRL } from './kit.js';
+import { CONTACT_VARIANTS, AFFIL_VARIANTS, CONTACT_BOX, AFFIL_BOX } from './contact-affil.js';
+import { BLOGV_VARIANTS, BLOGV_BOX } from './blogvideo.js';
 import { ICONS } from './icons.js';
 import { buildIconBoard } from './iconboard.js';
 
@@ -754,7 +756,7 @@ export const BOARDS = [
   /* ── /blog ──────────────────────────────────────────────────── */
   {
     key: 'blog', page: 'Blog', path: '/blog', section: 'Hero',
-    count: 5, accent: TONES.orange, variants: BLOG_VARIANTS,
+    short: 'Hero', count: 5, accent: TONES.orange, variants: BLOG_VARIANTS,
     problem: 'Three fixed cards under a claim of 350+ articles and something new every week.',
     cfg: {
       kicker: 'Openline Blog', heading: 'Travel Smarter,', headingAccent: 'Stay Connected',
@@ -778,9 +780,112 @@ export const BOARDS = [
       ],
     },
   },
+  {
+    key: 'blogv', page: 'Blog', path: '/blog', section: 'Article panel as a video cover',
+    short: 'Video cover', count: 10, accent: TONES.orange,
+    variants: BLOGV_VARIANTS, embed: BLOGV_BOX,
+    problem: 'The right-hand panel is a still stack of three cards, on a page promising stories from 190 countries.',
+    cfg: {
+      kicker: 'Openline Blog', heading: 'Travel Smarter,', headingAccent: 'Stay Connected',
+      lead: 'The right-hand article panel, treated as a video cover rather than a list. Same three real posts — Tokyo on 5GB, Europe by rail, Working from Lisbon — presented as something playing instead of something sitting still.',
+      bullets: ['<b>Real box</b> — 576 × 540, measured on the live panel',
+        '<b>Same three posts</b> — titles, categories and reading times unchanged',
+        '<b>No photography</b> — every cover is drawn, so nothing needs licensing',
+        '<b>Job</b> — make a travel blog look like it is worth reading'],
+      keptIdentical: kept('#FF5314', '#E23D00', ['The three post titles, categories and reading times',
+        'The panel\u2019s position and size beside the hero copy']),
+      embed: BLOGV_BOX,
+      thinking: {
+        title: 'A list of titles, beside a promise of stories',
+        lead: 'The panel is not broken — it is just the least evocative possible presentation of travel writing. Three titles in three boxes, next to a headline about exploring the world and a stat row claiming 350 articles across 190 countries. Treating it as a cover is the brief, and the real question underneath is what the cover should be about: the video affordance, the place, or the writing itself.',
+        jobs: [
+          { t: 'Look playable', d: 'That is the brief. A cover, a play mark, a progress rail — the visual language that says there is something here rather than a link to somewhere else.' },
+          { t: 'Keep all three posts if possible', d: 'The current panel shows three. Most full-cover treatments show one at a time, which is a real loss. Two options here deliberately keep all three.' },
+          { t: 'Sell the writing, not the format', d: 'A cover with nothing behind it is a broken promise. The strongest options here use the actual prose — a pull quote or the body text — as the cover.' },
+          { t: 'Do not imply video we do not have', d: 'A play triangle is a commitment. If there is no video, the options that avoid the play mark are the honest ones.' },
+        ],
+      },
+      pick: [
+        { k: 'My pick', h: '10 · The Split', d: 'It is the only option that satisfies the brief without giving anything up: the lead story gets a real atmospheric cover with a play mark and a progress bar, and the other two stay visible as tiles. Everything else on this board trades one of those away.' },
+        { k: 'If you literally want a player', h: '1 · Now Playing', d: 'The whole panel becomes a cover that cuts between the three stories with a timecode and a filling rail. The boldest change on the board — and a promise you then have to keep with real video.' },
+        { k: 'If the goal is credibility', h: '6 · The Long Read', d: 'Leads with a sentence from the piece instead of its title. It is how a real publication sells an article, it needs no artwork at all, and it proves the writing is good rather than asserting that guides exist.' },
+        { k: 'If the goal is brand', h: '4 · Postcard', d: 'Covers built from the destinations themselves — a Tokyo skyline, a European rail line, a Lisbon coastline — drawn flat in the brand palette. Nothing in the eSIM category looks like this.' },
+        { k: 'If the goal is list growth', h: '8 · Subscribe', d: 'The page asks for an email and the panel currently ignores that. This one assembles a sample issue and puts the field right there.' },
+      ],
+    },
+  },
+
+  /* ── /contact ─────────────────────────────────────── */
+  {
+    key: 'contact', page: 'Contact', path: '/contact', section: 'Hero — support status',
+    short: 'Hero', count: 10, accent: TONES.orange,
+    variants: CONTACT_VARIANTS, embed: CONTACT_BOX,
+    problem: 'A card reading “Chat Support Active” and “3 Agents Online”, in which nothing is active and nothing is online.',
+    cfg: {
+      kicker: 'Customer Support', heading: 'We’re Here', headingAccent: 'to Help You',
+      lead: 'Get instant support through our live chat widget. Our customer service team is ready to assist you with any questions about eSIMs, connectivity, billing, or technical issues.',
+      bullets: ['<b>&lt; 2m</b> response time', '<b>24/7</b> available', '<b>98%</b> satisfaction',
+        '<b>Four topics</b> — eSIMs, connectivity, billing, technical'],
+      keptIdentical: kept('#FF5314', '#E23D00', ['The four stated facts: response time, availability, agent count, satisfaction',
+        'The two buttons — Open Live Chat and View FAQ']),
+      embed: CONTACT_BOX,
+      thinking: {
+        title: 'A live status panel with no live status',
+        lead: 'The panel restates the four numbers already sitting in the stat row directly beside it, and every one of them is a claim about something happening right now — active chat, agents online, a two-minute response time — rendered completely still. A support page is where a visitor decides whether contacting you will be pleasant or painful, and a frozen “Active” badge argues the wrong way.',
+        jobs: [
+          { t: 'Stop duplicating the stat row', d: 'Response time, availability, agent count and satisfaction are already displayed twice on this page. The panel should show something the numbers cannot.' },
+          { t: 'Make “live” mean live', d: 'If the panel says Active and Online, something has to move. This is the one non-negotiable on the board.' },
+          { t: 'Convey tone', d: 'What a visitor is really judging is whether support will be human and quick. Metrics cannot carry tone — a transcript can.' },
+          { t: 'Resolve the two buttons', d: 'Chat and FAQ sit side by side with no guidance on which to use, so readers pick wrong and blame the outcome on support.' },
+        ],
+      },
+      pick: [
+        { k: 'My pick', h: '5 · One Reply', d: 'It replaces a response-time metric with a much harder and much better promise — how often a problem is fixed on the first reply, with no ticket number and no escalation. It quietly attacks every support experience the reader has had elsewhere.' },
+        { k: 'If the goal is proving the headline', h: '1 · Under Two Minutes', d: 'Times the claim the page makes most loudly. A question goes in, a clock runs, an agent picks up, the clock stops under two minutes. Direct and impossible to misread.' },
+        { k: 'If the goal is warmth', h: '9 · The Transcript', d: 'One real conversation at real pace. It is the only option that conveys tone, which is what the visitor is actually assessing.' },
+        { k: 'If the goal is trust', h: '7 · Ninety-Eight', d: 'Builds the 98% from a hundred individual ratings and leaves the two failures visible. Showing the two is exactly what makes the ninety-eight believable.' },
+        { k: 'If the goal is fewer tickets', h: '8 · Before You Ask', d: 'The answer surfaces as the question is typed. The only option that is a product suggestion as much as an animation.' },
+      ],
+    },
+  },
+
+  /* ── /affiliate ──────────────────────────────────── */
+  {
+    key: 'affil', page: 'Affiliate', path: '/affiliate', section: 'Hero — earnings card',
+    short: 'Hero', count: 10, accent: TONES.green,
+    variants: AFFIL_VARIANTS, embed: AFFIL_BOX,
+    problem: 'A screenshot of somebody else’s $3,247 dashboard, with no indication of where the money came from.',
+    cfg: {
+      kicker: 'Affiliate Program', heading: 'Earn 30-40%', headingAccent: 'Per Sale',
+      lead: 'Join thousands of affiliates earning generous commissions by recommending the world’s best eSIM service. Simple setup, high conversions, monthly payouts.',
+      bullets: ['<b>30%+</b> commission', '<b>90d</b> cookie life', '<b>$50</b> minimum payout',
+        '<b>Monthly</b> payouts via PayPal'],
+      keptIdentical: kept('#16A34A', '#15803D', ['The earnings framing and the real figures on the live card',
+        'The three stated terms: commission, cookie life, minimum payout',
+        'The two buttons — Join and See How It Works']),
+      embed: AFFIL_BOX,
+      thinking: {
+        title: 'The right information, frozen — and the range never explained',
+        lead: 'Showing money is the correct instinct for this audience. But the figure belongs to nobody, it never moves, and the headline promises “30-40%” without ever saying what separates the two. Experienced affiliates compare programmes on exactly the terms this page leaves vague: how you reach the top rate, how long attribution lasts, whether renewals pay, and whether payouts actually arrive.',
+        jobs: [
+          { t: 'Explain the range', d: '30-40% is the headline and the gap is unexplained, which makes the top number read as marketing rather than a rate anyone gets.' },
+          { t: 'Convert percentages into money', d: 'Nobody can feel a percentage. Real plan prices beside the commission they pay removes the arithmetic and the doubt.' },
+          { t: 'Answer the renewal question', d: 'Every serious affiliate asks whether commission is paid once or on every renewal. Silence on this page reads as a no.' },
+          { t: 'Prove payouts happen', d: 'Plenty of programmes do not pay. A threshold being crossed and a transfer completing is worth more than the word “monthly”.' },
+        ],
+      },
+      pick: [
+        { k: 'My pick', h: '3 · What You Actually Get', d: 'Real plan prices in one column, the commission at 30% and at 40% beside them. It removes every bit of mental arithmetic between reading the page and deciding to sign up, and it is fully checkable against the pricing page.' },
+        { k: 'If the goal is explaining the range', h: '1 · The Ladder', d: 'Draws the volume thresholds and climbs from 30 to 40 as sales accumulate. Answers the question the headline raises — at the cost of publishing the structure.' },
+        { k: 'If the goal is credibility', h: '5 · The Honest Funnel', d: '847 clicks, 96 checkouts, 42 sales, 4.96% — a modest true number. Experienced affiliates trust this far more than a big total.' },
+        { k: 'If renewals are commissioned', h: '9 · Paid on Renewals', d: 'Then this is the strongest thing the page can possibly say, and it is currently not said at all. Only shippable if the answer is genuinely yes.' },
+        { k: 'If the goal is reassurance', h: '6 · Payout Day', d: 'The balance crosses $50, the date arrives, the transfer completes with a reference. Answers “do they actually pay”.' },
+      ],
+    },
+  },
 ];
 
-/* ══════════════════════════ NAV + ROUTING ══════════════════════════ */
+/* ═════════════════════════ NAV + ROUTING ══════════════════════ */
 const PAGES = [...new Set(BOARDS.map(b => b.page))];
 const boardsHost = document.getElementById('boards');
 const overview = document.getElementById('overview');
