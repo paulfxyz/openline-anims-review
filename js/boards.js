@@ -24,6 +24,7 @@ import { OMDM_CTRL_VARIANTS } from './omdm-ctrl.js';
 import { OMDM_HERO, OMDM_BOOK, OMDM_CTRL } from './kit.js';
 import { CONTACT_VARIANTS, AFFIL_VARIANTS, CONTACT_BOX, AFFIL_BOX } from './contact-affil.js';
 import { BLOGV_VARIANTS, BLOGV_BOX } from './blogvideo.js';
+import { INSTALL_VARIANTS, INSTALL_BOX } from './install-cta.js';
 import { ICONS } from './icons.js';
 import { buildIconBoard } from './iconboard.js';
 
@@ -811,6 +812,44 @@ export const BOARDS = [
         { k: 'If the goal is credibility', h: '6 · The Long Read', d: 'Leads with a sentence from the piece instead of its title. It is how a real publication sells an article, it needs no artwork at all, and it proves the writing is good rather than asserting that guides exist.' },
         { k: 'If the goal is brand', h: '4 · Postcard', d: 'Covers built from the destinations themselves — a Tokyo skyline, a European rail line, a Lisbon coastline — drawn flat in the brand palette. Nothing in the eSIM category looks like this.' },
         { k: 'If the goal is list growth', h: '8 · Subscribe', d: 'The page asks for an email and the panel currently ignores that. This one assembles a sample issue and puts the field right there.' },
+      ],
+    },
+  },
+
+  /* ── /installation-guide ──────────────────────────── */
+  {
+    key: 'install', page: 'Installation Guide', path: '/installation-guide',
+    section: 'Hero video placeholder \u2014 whole-surface CTA',
+    short: 'Video CTA', count: 10, accent: TONES.orange,
+    variants: INSTALL_VARIANTS, embed: INSTALL_BOX,
+    problem: 'An 80px play button dropped on top of the three step tiles, covering the middle one \u2014 and nothing saying the card is clickable.',
+    cfg: {
+      kicker: 'Get Connected Fast', heading: 'Install and activate', headingAccent: 'your Openline eSIM',
+      lead: 'The hero video placeholder, rebuilt as a single call to action. Every option below is one button: the entire 576 \u00D7 324 surface is the hit area, it lifts on hover, presses on click and takes a keyboard focus ring \u2014 and the artwork never sits under the play mark.',
+      bullets: ['<b>Real box</b> \u2014 576 \u00D7 324, measured on the live placeholder',
+        '<b>Whole surface</b> \u2014 one button, one action, no nested targets',
+        '<b>Same promise</b> \u2014 3:24 runtime, iPhone and Android, three steps',
+        '<b>Job</b> \u2014 make the card obviously tappable and worth tapping'],
+      keptIdentical: kept('#FF5314', '#E23D00', ['The 3:24 runtime and the iPhone / Android promise',
+        'The video\u2019s three-step structure: scan, add, online',
+        'The placeholder\u2019s position and size in the hero grid']),
+      embed: INSTALL_BOX,
+      thinking: {
+        title: 'A play button dropped on top of an animation',
+        lead: 'Two separate designs are fighting inside one rectangle. Someone built a nice three-step animation, then someone else layered a standard video overlay on top of it \u2014 a 20% black scrim, an 80px play circle and a caption gradient. The circle lands exactly over the middle step tile and hides it, the scrim mutes the orange, and the only thing that looks clickable is the circle, even though the whole card already is. Paul\u2019s brief resolves it: stop layering, and make the card itself the button.',
+        jobs: [
+          { t: 'One target, not two', d: 'If the whole surface is clickable it must look like one object. Every option here puts the call to action in its own space rather than on top of the artwork.' },
+          { t: 'Say it, do not imply it', d: 'A bare play glyph is a guess. A pill that reads \u201CWatch the 3:24 walkthrough\u201D plus a \u201Ctap anywhere\u201D line removes the guess, and gives screen readers something to announce.' },
+          { t: 'Earn the click', d: 'The strongest options say what is in the video \u2014 chapters, captions, the install itself \u2014 rather than only that a video exists.' },
+          { t: 'Survive the page around it', d: 'This sits in a white, orange-accented hero. One option is deliberately light for that reason; the dark ones drop the scrim so the brand orange stays saturated.' },
+        ],
+      },
+      pick: [
+        { k: 'My pick', h: '2 \u00B7 Three Steps, Sequenced', d: 'It keeps the three-step story that is already there and simply stops burying it: tiles on a rail with legible labels, the play affordance in its own bottom bar. The smallest change that fixes every real defect, so it is also the easiest to ship.' },
+        { k: 'If you want it unmissable', h: '1 \u00B7 One Big Button', d: 'A calm ground and a single orange pill naming the action and the runtime. Nothing to misread, nothing to maintain, and it is the best of the ten on a phone.' },
+        { k: 'If the goal is conversion', h: '4 \u00B7 Phone Screen Live', d: 'The placeholder performs the install \u2014 QR, add-eSIM sheet, signal bars, tick. It proves the three-taps claim instead of asserting it, which is what an anxious buyer on this page actually needs.' },
+        { k: 'If the goal is support load', h: '3 \u00B7 Chapter Deck', d: 'Real timecodes for the four chapters. Someone stuck on one step can see the video covers it, which a play button can never communicate.' },
+        { k: 'If the goal is fitting the page', h: '9 \u00B7 Daylight', d: 'The only light option. The hero is white and orange; every other treatment punches a dark hole in it. This one sits inside the design instead.' },
       ],
     },
   },

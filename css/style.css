@@ -522,3 +522,36 @@ svg .marker { transition: transform .5s cubic-bezier(.2,.7,.3,1); }
   .head-zone-pages { margin-left: 0; width: 100%; }
   .head-page-link { font-size: 12px; padding: 6px 12px; }
 }
+
+/* ── /installation-guide: the whole-surface video CTA ──────────────────────
+   Every option on the install board is ONE button covering the full 576×324
+   embed box, so the affordance has to live on the element, not in the art.  */
+.igc { position: relative; display: block; width: 100%; height: 100%; padding: 0; border: 0;
+  background: none; cursor: pointer; border-radius: 16px; overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  /* the stage wrapper is pointer-events:none for the decorative boards — opt back in,
+     because on this board the surface IS the control */
+  pointer-events: auto;
+  transition: transform .24s cubic-bezier(.2,.7,.3,1), box-shadow .24s ease; }
+.igc > svg { display: block; width: 100%; height: 100%; }
+.igc:hover { transform: translateY(-3px); box-shadow: 0 24px 48px rgba(11,11,15,.28); }
+.igc:active { transform: translateY(-1px) scale(.995); }
+.igc:focus-visible { outline: 3px solid var(--acc, #FF5314); outline-offset: 3px; }
+/* the current design is clickable but gives no whole-surface cue — replicate that */
+.igc-flat:hover { transform: none; box-shadow: none; }
+
+/* click confirmation, so the real hit area is provable in review */
+.igc-flash { position: absolute; inset: 0; display: grid; place-items: center;
+  background: rgba(11,11,15,.88); opacity: 0; pointer-events: none;
+  transition: opacity .18s ease; }
+.igc-flash > span { font-family: ui-monospace, Menlo, monospace; font-size: 12px; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase; color: #fff;
+  border: 1.5px solid rgba(255,255,255,.3); border-radius: 999px; padding: 11px 20px;
+  background: rgba(255,255,255,.08); transform: scale(.94); transition: transform .18s ease; }
+.igc-on .igc-flash { opacity: 1; }
+.igc-on .igc-flash > span { transform: scale(1); }
+
+@media (prefers-reduced-motion: reduce) {
+  .igc, .igc-flash, .igc-flash > span { transition: none; }
+  .igc:hover { transform: none; }
+}
