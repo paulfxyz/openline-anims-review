@@ -200,6 +200,101 @@ invented "104 signals" and wrong family names; these are the correct figures.
 **Four controls:** KYC and KYB before quoting · Minimum level enforcement ·
 Immutable audit trail · Segregated settlement.
 
+### Arithmetic check, 2026-09-21
+
+Every figure the five stages display was recomputed from the source arrays. All
+of it foots:
+
+- **`venueCost`** — `MARKET` averages `0.6817`, shown as `0.68`. Exactly 11 of 12
+  months sit below the `0.79` card, matching `11 OF 12 OVERPAID`. `0.79 − 0.6817
+  = 0.1083/GB × 1000 = $108.33/TB`, shown as `$108/TB`.
+- **`bookFlow`** — the six counts are `31/18/24/12/15/9 = 109`, matching the real
+  figures above, in the documented order. `0.79 + 0.04 + 0.02 − 0.06 − 0.03 +
+  0.01 − 0.02 = 0.75`, matching `YOUR QUOTE`. Base and quote both sit inside the
+  declared `0.70–0.87` axis.
+- **`heroBook`** — every `CHANGE` cell is the actual percentage move of that
+  row's ask, so the claim that the cell is derived rather than asserted holds.
+- **`auditTrail`** — the hash chain `9f2c → 4a71 → c0d8 → 71be → e35a` is
+  consistent, each entry carrying the previous seal.
+- **Cross-stage** — `DE · Tier-1` agrees across three stages: the hero asks
+  `0.67–0.68`, the venue says the market averaged `0.68`, and the parts band
+  `0.54–0.69` contains both. That consistency is deliberate; keep it.
+
+### Two content problems
+
+1. **`JP · Tier-1` contradicts itself across two adjacent sections.** The hero's
+   live book shows JP · Tier-1 asking `0.89–0.90` USD/GB. `bookFlow` then prices
+   the same route in the same unit and lands on `YOUR QUOTE 0.75` — 19% apart. A
+   reader who reads the hero and the book in order sees one route quoted two
+   ways. Cheapest fix is to move `bookFlow` onto a route the hero does not list;
+   the alternative is to reconcile the numbers. **Unresolved — needs a decision.**
+2. **`Segregated settlement` is never demonstrated.** Three of the four
+   documented controls appear in `auditTrail` (KYB re-verification, minimum-level
+   enforcement via the refused match, and the immutable trail itself). The fourth
+   shows only as `Settled · T+0`, which is settlement *timing*, not segregation.
+
+The `venueCost` tagline previously read "23% too high by September". The card is
+29.5% above the September market and the market is 22.8% below the card; the
+tagline used the second base to describe the first thing. Corrected to "29% above
+market by September", which names its base.
+
+---
+
+## 5b · Localisation status — read before promising a translated page
+
+Audited 2026-09-21 by pseudo-localising every string in a browser and measuring,
+not by reading the code. **The layout survives translation; the plumbing does not
+exist.** Treat this section as the work item, not as a caveat.
+
+### What the five stages put on screen
+
+267 SVG `<text>` nodes, of which **154 are translatable prose or labels** (the
+rest are numerals, route codes and hashes). None of it goes through any
+translation layer — there is no `i18n`, no message catalogue and no `Intl` use
+anywhere in `js/omdm-anims2.js`. The English sits inline in `build()` template
+literals (21 call sites) and in three module-level data arrays (`STEPS`, `TRAIL`,
+and the parties list). **Extracting those into a catalogue is the whole job**;
+nothing else about these animations resists translation.
+
+### Layout headroom, measured
+
+Every string was expanded with accented pseudo-text and the frozen end-state
+re-measured for overflow past the frame and for label collisions:
+
+| String growth | Overflow | Collisions |
+| --- | --- | --- |
+| +15% | 0 | 0 |
+| +30% (typical de/fr) | 1 | 0 |
+| +40% | 1 | 0 |
+| +60% | 1 | 1 |
+
+That is far better than expected, because most labels are short mono uppercase in
+generous panels. The two that do break:
+
+- **`auditTrail` footer** — as one line it left the 624 box at +30%. **Fixed:**
+  split into two lines at the em dash, which raises its headroom past +100%.
+- **`depthNarrows` row description** — `Buying at market, not a rate card` runs
+  into the right-hand `BUYS` badge at +60%. Not fixed; it needs either a shorter
+  source string or the badge moved onto its own line. Only bites for the longest
+  compounding languages.
+
+### What will still be wrong after the strings are translated
+
+These are not layout problems, so the table above does not catch them:
+
+| Issue | Count | Why it matters |
+| --- | --- | --- |
+| `.toFixed()` for every numeral | 97 | Hard-codes `.` as the decimal separator. `0.79` must render `0,79` in fr/de/pt — the three markets this page is most likely to need. |
+| Hard-coded month abbreviations | 25 | `OCT NOV DEC` is already wrong in German (`OKT`, `DEZ`). Needs `Intl.DateTimeFormat`. |
+| Hard-coded `USD` and `$` | 4 + the `$108/TB` readout | Currency code, symbol and symbol *position* are all locale-dependent. |
+| English `aria-label` on each stage | 5 | A translated page would still announce every chart in English to a screen reader. |
+| `.toUpperCase()` | 3 | Locale-unsafe: Turkish dotted/dotless `i`, German `ß` → `SS`. Needs `toLocaleUpperCase(locale)`. |
+| Absolute `x`/`y` with `text-anchor` | throughout | Nothing mirrors for RTL. An Arabic or Hebrew rendering needs a mirrored layout per stage, not a translated catalogue. |
+
+`$108/TB` also assumes **1 TB = 1000 GB** (it is `0.1083 × 1000`). That is the
+correct decimal convention for wholesale data, but it should be stated rather
+than inferred, and a binary-TB reading would give `$110.93`.
+
 ---
 
 ## 6 · Structural changes from the live page

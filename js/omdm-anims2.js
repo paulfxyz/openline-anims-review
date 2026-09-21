@@ -65,7 +65,10 @@ export const venueCost = {
   id: 'omv-cost',
   name: 'The Cost of a Rate Card',
   family: 'The venue',
-  tagline: 'Fair in October, 23% too high by September',
+  /* 0.79 card vs 0.61 September market: the card is 29.5% above market, and the
+     market is 22.8% below the card. "23% too high" silently used the second base
+     to describe the first thing, so it stated the wrong number. Say which. */
+  tagline: 'Fair in October, 29% above market by September',
   desc:
     'One route over twelve months. The rate card is a flat line, agreed once. The market line ' +
     'below it is what the same capacity was actually worth each month. The shaded gap between ' +
@@ -676,8 +679,10 @@ export const auditTrail = {
         }).join('')}
 
         <g opacity="0">${showAt(0.82, dur)}
-          ${txt(32, KH - 16, 'Each entry carries the hash of the entry before it \u2014 removing one breaks every line after.',
-            { size: 12.5, fill: C.dim })}
+          ${/* two lines, split at the em dash: as one line this ran out of the 624 box
+               as soon as the copy grew ~30%, which any translation of it will. */ ''}
+          ${txt(32, KH - 34, 'Each entry carries the hash of the entry before it', { size: 12.5, fill: C.dim })}
+          ${txt(32, KH - 16, '\u2014 removing one breaks every line after.', { size: 12.5, fill: C.dim })}
         </g>
       </svg>`,
     };
