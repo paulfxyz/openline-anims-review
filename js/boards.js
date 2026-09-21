@@ -19,7 +19,8 @@ import { LOUNGE_VARIANTS, NOMAD_VARIANTS, KYC_VARIANTS, LOUNGE_BOX, NOMAD_BOX, K
 import { PRIN_VARIANTS, TEAM_VARIANTS } from './about.js';
 import { PRIN_EXTRA, TEAM_EXTRA } from './about2.js';
 import { OMDM_HERO_VARIANTS } from './omdm-hero.js';
-import { OMDM_HERO } from './kit.js';
+import { OMDM_BOOK_VARIANTS } from './omdm-book.js';
+import { OMDM_HERO, OMDM_BOOK } from './kit.js';
 import { ICONS } from './icons.js';
 import { buildIconBoard } from './iconboard.js';
 
@@ -663,6 +664,47 @@ export const BOARDS = [
         { k: 'If the goal is credibility', h: '3 · The Tape', d: 'Prints rather than quotes. Evidence instead of a promise, and it proves the audit claim for free.' },
         { k: 'If the goal is sales', h: '5 · A Guess and an Answer', d: 'Draws the best line of copy on the site and puts a number on what the rate card costs. Screenshot-ready for a deck.' },
         { k: 'If the page stays light', h: '7 · The Board', d: 'Same information as option 1 on white. Worth loading back to back with it — that comparison is the whole surface decision.' },
+      ],
+    },
+  },
+
+
+  {
+    key: 'ombook', page: 'OMDM Market', path: '/omdm-market', section: 'What moves a price',
+    short: 'What moves a price', count: 10, accent: TONES.market,
+    variants: OMDM_BOOK_VARIANTS, embed: OMDM_BOOK,
+    problem: 'The section that explains a live pricing engine is six static cards, and no price appears in it at all.',
+    cfg: {
+      kicker: 'The book', heading: 'What moves a price on', headingAccent: 'OMDM',
+      lead: 'Over a hundred signals feed every quote, in six families. A representative slice of each is below.',
+      bullets: ['<b>Box</b> — 1280 × 420, the page container width',
+        '<b>Net-new</b> — the live section has no visual of any kind',
+        '<b>Two characters</b> — options 1–5 institutional, 6–10 fintech-clean',
+        '<b>Job</b> — show a hundred signals becoming one number'],
+      keptIdentical: [
+        'All six family names, exactly as written',
+        'All six signal counts — 31, 18, 24, 12, 15, 9',
+        'The twenty-four named signals inside them',
+        'The kicker, heading and lead paragraph',
+        'The claim "over a hundred signals" — 109 in total',
+      ],
+      embed: OMDM_BOOK, layout: 'wide',
+      thinking: {
+        title: 'Six paragraphs asking the reader to do the assembly',
+        lead: 'The copy here is the best-researched on the page — the signal names are specific, plausible and checkable, which is rare. But the section makes a mechanical claim, that a hundred inputs resolve into one continuously updated price, and then asks the reader to imagine the mechanism from six static paragraphs. No price is shown anywhere in the section at all.',
+        jobs: [
+          { t: 'Show the output', d: 'A section about pricing that never displays a price is leaving its own punchline off the page. Every option here ends on a number.' },
+          { t: 'Keep the specificity', d: 'The twenty-four named signals are the credibility. Options that drop them for a prettier abstraction lose more than they gain, and that trade-off is noted per option.' },
+          { t: 'Use the width', d: 'A 1280-wide band is the natural shape for six things converging on one, and a poor shape for six paragraphs.' },
+          { t: 'Do not overclaim', d: 'Attribution and weighting are strong claims. The options that make them are flagged as needing real data behind them.' },
+        ],
+      },
+      pick: [
+        { k: 'My pick', h: '3 · The Waterfall', d: 'A wholesale base rate, six signed adjustments, a final quote. The target buyer already knows how to read this shape, and it is the only option that shows the direction and size of each family rather than merely that it exists.' },
+        { k: 'If the goal is credibility', h: '1 · The Signal Floor', d: 'Keeps all twenty-four signal names live and still lands on a composed mid. The densest option and the most defensible.' },
+        { k: 'If the goal is persuasion', h: '7 · The Composer', d: 'Switches families off and lets the price degrade to a rate card. Proof by subtraction, which lands harder than proof by addition.' },
+        { k: 'If the goal is shipping this week', h: '6 · Cards, Alive', d: 'The existing grid with a pulse and a live value per card. No layout change, no copy change, no risk.' },
+        { k: 'If the audience is non-technical', h: '10 · One Input or a Hundred', d: 'One field on the left, 109 cells populating on the right. No chart literacy required.' },
       ],
     },
   },

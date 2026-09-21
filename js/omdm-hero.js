@@ -190,7 +190,7 @@ export const theBook = {
       ${rect(26, H - 44, W - 52, 1, { fill: INST.line, r: 0 })}
       ${lab(40, H - 22, 'REPRICED', INST.faint)}
       ${repricing(120, H - 21, ['4s AGO', '1s AGO', '2s AGO', '0s AGO'], { fill: INST.dim, size: 10, a: 'start', dur: 8 })}
-      ${lab(W - 26, H - 22, '104 SIGNALS FEEDING', INST.gold, { a: 'end', op: 0.85 })}`),
+      ${lab(W - 26, H - 22, '109 SIGNALS FEEDING', INST.gold, { a: 'end', op: 0.85 })}`),
   }),
 };
 
@@ -359,8 +359,8 @@ export const repricingClock = {
   scores: { story: 5, motion: 4, perf: 4, mobile: 4, brand: 4, ease: 4 },
   build: () => {
     const fams = [
-      ['QUALITY OF SERVICE', 31], ['RISK', 18], ['LIQUIDITY', 22],
-      ['TERMS', 14], ['COVERAGE', 12], ['COUNTERPARTY', 9],
+      ['QUALITY OF SERVICE', 31], ['GEOPOLITICAL RISK', 18], ['PRICING & SPREAD', 24],
+      ['LIQUIDITY', 12], ['COMPLIANCE', 15], ['TIER & STANDING', 9],
     ];
     const cx = W / 2, cy = 236, R = 148;
     return {
@@ -406,7 +406,7 @@ export const repricingClock = {
           { fill: INST.gold, size: 30, w: 600, dur: 9 })}
         ${lab(cx, cy + 30, 'RECOMPUTED CONTINUOUSLY', INST.faint, { a: 'middle', size: 7.5 })}
 
-        ${lab(W / 2, H - 20, '104 SIGNALS IN SIX FAMILIES FEED EVERY QUOTE', INST.dim, { a: 'middle', size: 9 })}`),
+        ${lab(W / 2, H - 20, '109 SIGNALS IN SIX FAMILIES FEED EVERY QUOTE', INST.dim, { a: 'middle', size: 9 })}`),
     };
   },
 };
@@ -540,7 +540,7 @@ export const quoteCard = {
 
         ${rect(76, 350, 148, 32, { fill: FIN.accent, r: 8 })}
         ${t(150, 371, 'Request access', { size: 12, w: 600, a: 'middle', fill: '#FFFFFF' })}
-        ${lab(W / 2, H - 22, '104 SIGNALS FEED THIS QUOTE', FIN.faint, { a: 'middle', size: 9 })}`),
+        ${lab(W / 2, H - 22, '109 SIGNALS FEED THIS QUOTE', FIN.faint, { a: 'middle', size: 9 })}`),
     };
   },
 };
@@ -598,7 +598,7 @@ export const finBoard = {
 
       ${lab(58, H - 28, 'REPRICED', FIN.faint, { size: 9 })}
       ${repricing(132, H - 27, ['4s AGO', '1s AGO', '2s AGO', '0s AGO'], { fill: FIN.dim, size: 10, a: 'start', dur: 8 })}
-      ${lab(W - 58, H - 28, '104 SIGNALS FEEDING', FIN.accent, { size: 9, a: 'end' })}`),
+      ${lab(W - 58, H - 28, '109 SIGNALS FEEDING', FIN.accent, { size: 9, a: 'end' })}`),
   }),
 };
 
@@ -676,8 +676,9 @@ export const sixFamilies = {
   cons: ['Less atmospheric than the radial version', 'Bar charts are a familiar shape'],
   scores: { story: 4, motion: 4, perf: 5, mobile: 5, brand: 3, ease: 4 },
   build: () => {
-    const fams = [['Quality of service', 31, 0.9], ['Risk', 18, 0.62], ['Liquidity', 22, 0.74],
-      ['Terms', 14, 0.5], ['Coverage', 12, 0.44], ['Counterparty', 9, 0.34]];
+    const fams = [['Quality of service', 31, 0.9], ['Geopolitical & climate risk', 18, 0.56],
+      ['Pricing & spread', 24, 0.74], ['Liquidity arrangements', 12, 0.44],
+      ['Compliance & counterparty', 15, 0.5], ['Tier & standing', 9, 0.34]];
     return {
       pills: noPills,
       svg: wB(`
@@ -685,7 +686,7 @@ export const sixFamilies = {
         ${finShadow}
         <g filter="url(#om-fs)">${rect(40, 48, W - 80, 364, { fill: FIN.panel, r: 16, stroke: FIN.line })}</g>
         ${lab(66, 80, 'WHAT MOVES A PRICE', FIN.faint, { size: 9 })}
-        ${lab(W - 66, 80, '104 SIGNALS · SIX FAMILIES', FIN.accent, { size: 9, a: 'end' })}
+        ${lab(W - 66, 80, '109 SIGNALS · SIX FAMILIES', FIN.accent, { size: 9, a: 'end' })}
 
         ${fams.map(([nm, n, frac], i) => {
           const y = 104 + i * 44;
