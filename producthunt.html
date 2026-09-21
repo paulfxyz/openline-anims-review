@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Product Hunt launch — Openline</title>
+<link rel="stylesheet" href="css/producthunt.css" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23FF5314'/%3E%3Ccircle cx='16' cy='16' r='7' fill='none' stroke='%23fff' stroke-width='4'/%3E%3C/svg%3E" />
+</head>
+<body>
+
+<!-- ══ Review bar — not part of the page design ═══════════════════════════ -->
+<div class="rev-bar">
+  <a class="rev-back" href="index.html">← Animation review</a>
+  <span class="rev-note">/producthunt redesign · hero kept exactly as it ships · everything below rebuilt · the claim is now a working mechanism</span>
+</div>
+
+<!-- ══ Site header ════════════════════════════════════════════════════════ -->
+<header class="hd">
+  <div class="wrap hd-row">
+    <a class="hd-brand" href="#top">
+      <svg viewBox="0 0 32 32" aria-label="Openline"><path d="M16 5a11 11 0 1 0 11 11" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/><circle cx="25.5" cy="6.5" r="4" fill="var(--orange)"/></svg>
+      <span>Openline</span>
+    </a>
+    <nav class="hd-nav">
+      <a href="#lanes">Two lanes</a>
+      <a href="#ladder">What it pays</a>
+      <a href="#steps">How it works</a>
+      <a href="#counts">What counts</a>
+      <a href="#claim">Claim</a>
+    </nav>
+    <button class="btn btn-solid hd-cta" data-open-claim>Claim your reward</button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ══ 1 · HERO — preserved exactly as it ships today ═══════════════════ -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="ph-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+          We're launching on Product Hunt
+        </span>
+        <h1>Help us launch. <span>Get rewarded for it.</span></h1>
+        <p class="lead">When Openline goes live on Product Hunt, every upvote and every laugh matters.
+          Support the launch and we'll say thanks with a discount on your next purchase — anywhere
+          from 10% to the whole thing.</p>
+        <div class="hero-btns">
+          <button class="btn btn-solid btn-lg" data-open-claim>Claim your reward
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+          </button>
+          <a class="btn btn-ghost btn-lg" href="#steps">How it works</a>
+        </div>
+        <span class="launch-chip">
+          <span class="pulse"><i></i><b></b></span>
+          Launching this September
+        </span>
+      </div>
+      <div class="kitty">
+        <div class="kitty-ring"><img src="img/kitty-ph.png" alt="Kitty, the Product Hunt cat" width="584" height="584" /></div>
+        <span class="k-pill k-1">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m13 2-3 7h5l-4 13 2-9H8z"/></svg>
+          Upvote &amp; win
+        </span>
+        <span class="k-pill k-2">Meet Kitty 👋</span>
+        <span class="k-pill k-3">Up to <b>100% off</b></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 2 · THE GUARANTEE BAND ═══════════════════════════════════════════ -->
+  <section class="guar">
+    <div class="wrap guar-row">
+      <div class="guar-fig"><strong>10%</strong><span>minimum,<br>guaranteed</span></div>
+      <p class="guar-txt">Nobody leaves empty-handed. <b>Send one link and a 10% code is issued
+        immediately</b> — before a human has read anything. The judged uplift, up to a free year,
+        is decided afterwards and only ever goes up.</p>
+      <span class="guar-tick">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+        Never reviewed down
+      </span>
+    </div>
+  </section>
+
+  <!-- ══ 3 · TWO LANES ════════════════════════════════════════════════════ -->
+  <section class="lanes" id="lanes">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h7M14 12h7M7 8v8M17 8v8"/></svg>
+          Two ways in
+        </span>
+        <h2>Two lanes in. <em>Both pay.</em></h2>
+        <p class="lead">One is guaranteed and takes half a minute. The other is judged and has a
+          ceiling of a free year. You can take both, and most people should — the guaranteed lane
+          costs you nothing but time.</p>
+      </div>
+
+      <div class="lane-grid">
+        <article class="lane lane-guaranteed">
+          <span class="lane-tag">Lane 1 · Guaranteed</span>
+          <h3>Thirty seconds, paid</h3>
+          <p class="lane-effort">UPVOTE · COMMENT · REVIEW</p>
+          <p>Upvote us on Product Hunt, leave a comment, or write a review. Every single one earns
+            a discount. There is nothing to win and nothing to wait for.</p>
+          <ul class="lane-list">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> No lottery, no shortlist, no cap on how many people qualify</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> The code arrives the moment your link lands</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> A one-word comment still counts</li>
+          </ul>
+          <div class="lane-pay">
+            <div>
+              <div class="lane-pay-k">What it pays</div>
+              <div class="lane-pay-v">10% off</div>
+            </div>
+            <p class="lane-pay-note">Issued on the spot, no review</p>
+          </div>
+        </article>
+
+        <article class="lane lane-judged">
+          <span class="lane-tag">Lane 2 · Judged</span>
+          <h3>Post something good</h3>
+          <p class="lane-effort">X · LINKEDIN · TIKTOK · A BLOG</p>
+          <p>Post about Openline anywhere you already post. It does not have to be funny — it has
+            to be worth reading. The more it is worth, the further up the ladder it goes.</p>
+          <ul class="lane-list">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Judged on usefulness and reach, not on follower count</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> A critical post is still eligible, provided it is honest</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Starts from the guaranteed 10% and only moves upward</li>
+          </ul>
+          <div class="lane-pay">
+            <div>
+              <div class="lane-pay-k">What it pays</div>
+              <div class="lane-pay-v">up to 100%</div>
+            </div>
+            <p class="lane-pay-note">Worth up to $1,000 on a year</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 4 · THE LADDER ═══════════════════════════════════════════════════ -->
+  <section class="ladder" id="ladder">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h4V11H3zM10 21h4V7h-4zM17 21h4V3h-4z"/></svg>
+          What it actually pays
+        </span>
+        <h2>Four rungs, in <em>money</em></h2>
+        <p class="lead">A percentage is hard to feel. These are the same four tiers priced against
+          an Openline+ annual plan at $1,000, so you can see what each one is worth before you
+          decide how much effort to spend.</p>
+      </div>
+
+      <div class="lad-grid">
+        <div class="rung rung-1">
+          <div class="rung-pct">10%</div>
+          <div class="rung-copy">
+            <h4>You showed up</h4>
+            <p>An upvote, a comment, a review. Issued automatically.</p>
+          </div>
+          <div class="rung-bar"><i></i></div>
+          <div class="rung-money"><strong>$100</strong><span>off a year</span></div>
+        </div>
+        <div class="rung rung-2">
+          <div class="rung-pct">30%</div>
+          <div class="rung-copy">
+            <h4>You wrote something real</h4>
+            <p>A considered post that explains what Openline does, to an audience that is yours.</p>
+          </div>
+          <div class="rung-bar"><i></i></div>
+          <div class="rung-money"><strong>$300</strong><span>off a year</span></div>
+        </div>
+        <div class="rung rung-3">
+          <div class="rung-pct">60%</div>
+          <div class="rung-copy">
+            <h4>You made something people shared</h4>
+            <p>A thread, a video, a teardown — something that travelled beyond your own timeline.</p>
+          </div>
+          <div class="rung-bar"><i></i></div>
+          <div class="rung-money"><strong>$600</strong><span>off a year</span></div>
+        </div>
+        <div class="rung rung-4">
+          <div class="rung-pct">100%</div>
+          <div class="rung-copy">
+            <h4>You moved the launch</h4>
+            <p>The post that sent us real signups. A handful of these exist and we will know them.</p>
+          </div>
+          <div class="rung-bar"><i></i></div>
+          <div class="rung-money"><strong>A free year</strong><span>worth up to $1,000</span></div>
+        </div>
+      </div>
+
+      <p class="lad-foot">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 16v-5M12 8h.01"/></svg>
+        Rungs are a guide, not a grid. Your 10% is fixed the moment you claim; a person decides
+        whether it moves up, and the decision is sent to you with a reason attached.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══ 5 · HOW IT WORKS ═════════════════════════════════════════════════ -->
+  <section class="steps" id="steps">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+          Three steps, one paste
+        </span>
+        <h2>One link is the <em>whole claim</em></h2>
+        <p class="lead">There is no form to fill in, no screenshot to attach and no account to
+          create. Paste the URL of the thing you did and the rest happens on our side.</p>
+      </div>
+
+      <div class="step-grid">
+        <article class="step">
+          <span class="step-n num">1</span>
+          <h3>Do the thing</h3>
+          <p>Upvote on Product Hunt, comment, review, or post about Openline wherever you normally
+            post. Any of them qualifies on its own.</p>
+          <span class="step-time">30 seconds</span>
+        </article>
+        <article class="step">
+          <span class="step-n num">2</span>
+          <h3>Paste the link</h3>
+          <p>Copy the URL of your comment, review or post and drop it in the claim box. That is the
+            entire submission — we read the link ourselves.</p>
+          <span class="step-time">10 seconds</span>
+        </article>
+        <article class="step">
+          <span class="step-n num">3</span>
+          <h3>Get the code immediately</h3>
+          <p>Your guaranteed 10% code is issued on the spot and works straight away. If your post
+            earns more, we replace the code with a larger one.</p>
+          <span class="step-time">Instant, then under 2 hours</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 6 · WHAT COUNTS ══════════════════════════════════════════════════ -->
+  <section class="counts" id="counts">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          Before you spend an hour on it
+        </span>
+        <h2>What counts, and what <em>doesn't</em></h2>
+        <p class="lead">The live page asks for something "funny" and leaves the rest to guesswork.
+          Here is the actual brief, including the three things that will not be paid.</p>
+      </div>
+
+      <div class="ct-table">
+        <div class="ct-head"><span>What you did</span><span>Typically pays</span><span>Lane</span></div>
+        <div class="ct-row"><b>An upvote on Product Hunt</b><span class="ct-pay">10%</span><span class="ct-lane">Guaranteed</span></div>
+        <div class="ct-row"><b>A comment, however short</b><span class="ct-pay">10%</span><span class="ct-lane">Guaranteed</span></div>
+        <div class="ct-row"><b>A written review with a reason</b><span class="ct-pay">10–30%</span><span class="ct-lane">Judged</span></div>
+        <div class="ct-row"><b>A post to your own audience</b><span class="ct-pay">30%</span><span class="ct-lane">Judged</span></div>
+        <div class="ct-row"><b>A thread, video or teardown that travelled</b><span class="ct-pay">60%</span><span class="ct-lane">Judged</span></div>
+        <div class="ct-row"><b>A post that sent us signups</b><span class="ct-pay">100%</span><span class="ct-lane">Judged</span></div>
+        <div class="ct-row ct-no"><b>A bought or incentivised post</b><span class="ct-pay">Nothing</span><span class="ct-lane">Not eligible</span></div>
+        <div class="ct-row ct-no"><b>A second account, or a second claim</b><span class="ct-pay">Nothing</span><span class="ct-lane">One per person</span></div>
+        <div class="ct-row ct-no"><b>Anything we cannot open and read</b><span class="ct-pay">Nothing</span><span class="ct-lane">Link must be public</span></div>
+      </div>
+      <p class="ct-note">Critical posts are eligible. We would rather be argued with honestly than
+        praised on order.</p>
+    </div>
+  </section>
+
+  <!-- ══ 7 · THE CLAIM ════════════════════════════════════════════════════ -->
+  <section class="claim" id="claim">
+    <div class="wrap">
+      <div class="claim-shell">
+        <div class="claim-left">
+          <span class="eyebrow eyebrow-green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            10% is already yours
+          </span>
+          <h2>Send us the link. <em>We set the discount.</em></h2>
+          <p class="lead">One paste is the whole claim. Ten per cent is guaranteed before anyone
+            reads it, and a person decides whether it goes higher.</p>
+          <ul class="claim-facts">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> <span><b>Your code works immediately</b> — it is issued before review, not after launch day.</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> <span><b>A person reads every claim</b>, usually within two hours, and replies with a reason.</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> <span><b>A review can only raise it.</b> The 10% you were issued is never taken back.</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> <span><b>One reward per person</b>, checked against the Product Hunt account on the link.</span></li>
+          </ul>
+        </div>
+        <div class="claim-right">
+          <label class="cf-label" for="inlineLink">Paste your link</label>
+          <div class="cf-field">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>
+            <input id="inlineLink" type="url" inputmode="url" placeholder="producthunt.com/posts/openline#comment-…" autocomplete="off" />
+          </div>
+          <p class="cf-hint">A Product Hunt comment, a review, or a post on X, LinkedIn, TikTok or a
+            blog. It only needs to be publicly readable.</p>
+          <p class="cf-err" id="inlineErr">That doesn't look like a link yet — it needs to start with http.</p>
+          <button class="btn btn-solid btn-lg cf-btn" id="inlineGo">Get my code now
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+          <p class="cf-fine"><b>No account needed.</b> We ask for an email only so we can send the
+            larger code if your post earns one. Nothing else is stored.</p>
+
+          <div class="cf-next">
+            <div class="cf-next-k">What happens after you press it</div>
+            <ol class="cf-next-list">
+              <li><span class="num">00:00</span> Three automatic checks run on the link</li>
+              <li><span class="num">00:02</span> A working 10% code appears on screen</li>
+              <li><span class="num">&lt;2h</span> A person replies with the final tier and a reason</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 8 · FINE PRINT ═══════════════════════════════════════════════════ -->
+  <section class="fine">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Questions we were going to be asked anyway</span>
+        <h2>The fine print, <em>up front</em></h2>
+        <p class="lead">All of it, rather than two lines under a button.</p>
+      </div>
+      <div class="fq-grid">
+        <div class="fq">
+          <h4>When can I use the code?</h4>
+          <p><b>Straight away.</b> The guaranteed 10% is live the moment it is issued and does not
+            wait for launch day. Only the judged uplift is decided later.</p>
+        </div>
+        <div class="fq">
+          <h4>What is the 100% actually worth?</h4>
+          <p>A free year of Openline+, <b>up to $1,000</b>. If your plan costs less, the discount
+            covers the plan; it is not paid out as the difference.</p>
+        </div>
+        <div class="fq">
+          <h4>Can I claim more than once?</h4>
+          <p>One reward per person. If you do several things, <b>send the best link</b> — we will
+            look at the account behind it and judge the whole contribution.</p>
+        </div>
+        <div class="fq">
+          <h4>What if my post is critical?</h4>
+          <p>It is still eligible. <b>Honest criticism is judged on the same ladder</b> as praise.
+            Bought or incentivised posts are the only thing we refuse.</p>
+        </div>
+        <div class="fq">
+          <h4>How long does the review take?</h4>
+          <p>A person reads every claim, <b>usually within two hours</b> during launch week. You get
+            a reply either way, with the reason for the tier.</p>
+        </div>
+        <div class="fq">
+          <h4>Can the discount be taken away?</h4>
+          <p>No. <b>Review can only raise it.</b> The code you were issued keeps working even if we
+            decide the post does not earn an uplift.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="ft">
+  <div class="wrap ft-row">
+    <svg viewBox="0 0 32 32" aria-label="Openline"><path d="M16 5a11 11 0 1 0 11 11" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/><circle cx="25.5" cy="6.5" r="4" fill="#FF5314"/></svg>
+    <span>© 2026 Openline, Inc.</span>
+    <span class="ft-sep">
+      <a href="#claim">Claim</a><a href="#steps">How it works</a><a href="index.html">Animation review</a>
+    </span>
+  </div>
+</footer>
+
+<!-- ══ 9 · THE MODAL ═════════════════════════════════════════════════════ -->
+<div class="mk" id="mk" role="dialog" aria-modal="true" aria-labelledby="mkTitle">
+  <div class="mk-veil" data-close-claim></div>
+  <div class="mk-card">
+    <button class="mk-x" data-close-claim aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="mk-rail"><i class="on" data-rail="1"></i><i data-rail="2"></i><i data-rail="3"></i></div>
+
+    <!-- step 1 · paste -->
+    <div class="mk-body mk-step on" data-step="1">
+      <span class="mk-eye">Step 1 of 3 · Your link</span>
+      <h3 id="mkTitle">Send us the link</h3>
+      <p>Pick what you did and paste the URL. Your guaranteed 10% is issued as soon as this is
+        submitted — you will not be waiting for it.</p>
+
+      <div class="mk-lanes">
+        <button class="mk-lane sel" data-lane="ph">
+          <strong>Product Hunt</strong><span>Upvote, comment or review</span>
+        </button>
+        <button class="mk-lane" data-lane="post">
+          <strong>A post elsewhere</strong><span>X, LinkedIn, TikTok, blog</span>
+        </button>
+      </div>
+
+      <div class="mk-f">
+        <label class="cf-label" for="mkLink">Link to your comment or post</label>
+        <div class="cf-field">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>
+          <input id="mkLink" type="url" inputmode="url" placeholder="https://" autocomplete="off" />
+        </div>
+        <p class="cf-err" id="mkLinkErr">Needs to be a full public link, starting with http.</p>
+      </div>
+
+      <div class="mk-f">
+        <label class="cf-label" for="mkMail">Email for the code</label>
+        <div class="cf-field">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+          <input id="mkMail" type="email" inputmode="email" placeholder="you@example.com" autocomplete="email" />
+        </div>
+        <p class="cf-err" id="mkMailErr">We need somewhere to send the code.</p>
+      </div>
+
+      <div class="mk-note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+        <span>Your 10% code is issued on submit, before anyone reviews the link. Review can only
+          raise it.</span>
+      </div>
+
+      <div class="mk-actions">
+        <button class="btn btn-ghost" data-close-claim>Not yet</button>
+        <button class="btn btn-solid" id="mkSubmit">Issue my code</button>
+      </div>
+    </div>
+
+    <!-- step 2 · working -->
+    <div class="mk-body mk-step" data-step="2">
+      <span class="mk-eye">Step 2 of 3 · Checking</span>
+      <h3>Reading your link</h3>
+      <p>Three automatic checks, then the code. Nothing here is a person waiting — the human read
+        happens after you have your code.</p>
+      <div class="mk-work">
+        <div class="mk-work-row" data-w="1"><span class="dot"></span> Link opens and is publicly readable <span class="t">—</span></div>
+        <div class="mk-work-row" data-w="2"><span class="dot"></span> Mentions Openline <span class="t">—</span></div>
+        <div class="mk-work-row" data-w="3"><span class="dot"></span> First claim from this account <span class="t">—</span></div>
+      </div>
+    </div>
+
+    <!-- step 3 · issued -->
+    <div class="mk-body mk-step" data-step="3">
+      <span class="mk-eye">Step 3 of 3 · Issued</span>
+      <h3>Your 10% is live</h3>
+      <p>Use it now, on any plan. We have emailed a copy to <b id="mkMailEcho">your inbox</b>.</p>
+      <div class="mk-code">
+        <div class="mk-code-k">Working now</div>
+        <div class="mk-code-v" id="mkCode">PH-10-XXXXXX</div>
+        <button class="mk-copy" id="mkCopy">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+          Copy code
+        </button>
+      </div>
+      <div class="mk-pend">
+        <div class="mk-pend-k">Under review · uplift only</div>
+        <p>A person is reading your link now. If it earns more than 10%, <b>we email a replacement
+          code</b> — usually within two hours. <b>This one keeps working either way.</b></p>
+      </div>
+      <div class="mk-actions">
+        <button class="btn btn-ghost" id="mkAnother">Claim another link</button>
+        <button class="btn btn-solid" data-close-claim>Done</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/producthunt-page.js"></script>
+</body>
+</html>
