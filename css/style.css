@@ -477,3 +477,13 @@ svg .marker { transition: transform .5s cubic-bezier(.2,.7,.3,1); }
   background: linear-gradient(180deg, #F7F9FC 0%, #FFFFFF 78%);
 }
 .bd-stage.tone-fin { box-shadow: inset 0 0 0 1px #E2E8F2; }
+
+/* link from the review shell to the standalone OMDM page redesign */
+.head-page-link {
+  margin-left: auto; flex-shrink: 0; align-self: center;
+  font-size: 12.5px; font-weight: 700; letter-spacing: 0.01em;
+  color: #1B2A4A; background: #EEF1F7; border: 1px solid #DCE3F0;
+  border-radius: 999px; padding: 7px 14px; text-decoration: none; white-space: nowrap;
+}
+.head-page-link:hover { background: #1B2A4A; color: #fff; border-color: #1B2A4A; }
+@media (max-width: 900px) { .head-page-link { display: none; } }

@@ -13,6 +13,17 @@ const H = 420;
 const wB = boxWrap(W, H);
 const MO = 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace';
 const noPills = [];
+/* soft ambient lift — a flat circle shows its edge when the stage crops it */
+let _gid = 0;
+const glow = (cx, cy, r, op = 0.5) => {
+  const id = `gl${_gid++}`;
+  return `<defs><radialGradient id="${id}" cx="50%" cy="50%" r="50%">` +
+    `<stop offset="0" stop-color="${INST.rise}" stop-opacity="${op}"/>` +
+    `<stop offset="0.55" stop-color="${INST.rise}" stop-opacity="${(op * 0.45).toFixed(3)}"/>` +
+    `<stop offset="1" stop-color="${INST.rise}" stop-opacity="0"/></radialGradient></defs>` +
+    `<circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#${id})"/>`;
+};
+
 
 const t = (x, y, s, o = {}) =>
   `<text x="${x}" y="${y}"${o.m ? ` font-family="${MO}"` : ''} font-size="${o.size || 13}"` +
@@ -127,7 +138,7 @@ export const signalFloor = {
       pills: noPills,
       svg: wB(`
         ${rect(0, 0, W, H, { fill: INST.ground, r: 0 })}
-        <circle cx="200" cy="0" r="300" fill="${INST.rise}" opacity="0.5"/>
+        ${glow(`200`, `0`, `300`, 0.5)}
         ${lab(24, 28, 'THE BOOK · 109 SIGNALS IN SIX FAMILIES', INST.text, { size: 10 })}
         ${lab(W - 24, 28, 'JP · TIER-1 · USD / GB', INST.faint, { a: 'end' })}
 
@@ -195,7 +206,7 @@ export const sixLanes = {
       pills: noPills,
       svg: wB(`
         ${rect(0, 0, W, H, { fill: INST.ground, r: 0 })}
-        <circle cx="${W - 200}" cy="${H / 2}" r="260" fill="${INST.rise}" opacity="0.45"/>
+        ${glow(`${W - 200}`, `${H / 2}`, `260`, 0.45)}
         ${lab(24, 28, 'THE BOOK · SIGNAL ARRIVAL', INST.text, { size: 10 })}
         ${lab(W - 24, 28, 'EVERY QUOTE IS THE OUTPUT, NEVER AN INPUT', INST.faint, { a: 'end' })}
 
@@ -268,7 +279,7 @@ export const waterfall = {
       pills: noPills,
       svg: wB(`
         ${rect(0, 0, W, H, { fill: INST.ground, r: 0 })}
-        <circle cx="120" cy="0" r="280" fill="${INST.rise}" opacity="0.45"/>
+        ${glow(`120`, `0`, `280`, 0.45)}
         ${lab(24, 28, 'HOW A QUOTE IS BUILT · JP · TIER-1', INST.text, { size: 10 })}
         ${lab(W - 24, 28, 'USD / GB', INST.faint, { a: 'end' })}
 
@@ -329,7 +340,7 @@ export const signalMatrix = {
       pills: noPills,
       svg: wB(`
         ${rect(0, 0, W, H, { fill: INST.ground, r: 0 })}
-        <circle cx="${W / 2}" cy="0" r="340" fill="${INST.rise}" opacity="0.4"/>
+        ${glow(`${W / 2}`, `0`, `340`, 0.4)}
         ${lab(24, 28, 'THE BOOK · ALL 109 SIGNALS', INST.text, { size: 10 })}
         ${lab(W - 24, 28, 'CELL LIGHTS WHEN THE SIGNAL RESAMPLES', INST.faint, { a: 'end' })}
 
@@ -392,7 +403,7 @@ export const contribution = {
       pills: noPills,
       svg: wB(`
         ${rect(0, 0, W, H, { fill: INST.ground, r: 0 })}
-        <circle cx="300" cy="0" r="300" fill="${INST.rise}" opacity="0.45"/>
+        ${glow(`300`, `0`, `300`, 0.45)}
         ${lab(24, 28, 'WHAT MOVED JP · TIER-1 IN THE LAST 24 HOURS', INST.text, { size: 10 })}
         ${lab(W - 24, 28, 'ATTRIBUTION BY FAMILY', INST.faint, { a: 'end' })}
 

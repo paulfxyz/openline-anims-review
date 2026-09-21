@@ -13,6 +13,17 @@ const H = 460;
 const wB = boxWrap(W, H);
 const MO = 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace';
 const noPills = [];
+/* soft ambient lift — a flat circle shows its edge when the stage crops it */
+let _gid = 0;
+const glow = (cx, cy, r, op = 0.5) => {
+  const id = `gl${_gid++}`;
+  return `<defs><radialGradient id="${id}" cx="50%" cy="50%" r="50%">` +
+    `<stop offset="0" stop-color="${INST.rise}" stop-opacity="${op}"/>` +
+    `<stop offset="0.55" stop-color="${INST.rise}" stop-opacity="${(op * 0.45).toFixed(3)}"/>` +
+    `<stop offset="1" stop-color="${INST.rise}" stop-opacity="0"/></radialGradient></defs>` +
+    `<circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#${id})"/>`;
+};
+
 
 /* text helper — `m` for monospace, `a` for anchor, `ls` for letter-spacing */
 const t = (x, y, s, o = {}) =>
@@ -149,7 +160,7 @@ export const theBook = {
     pills: noPills,
     svg: wB(`
       ${rect(0, 0, W, H, { fill: INST.ground, r: 0 })}
-      <circle cx="90" cy="20" r="180" fill="${INST.rise}" opacity="0.8"/>
+      ${glow(`90`, `20`, `180`, 0.8)}
       <circle cx="30" cy="40" r="4" fill="${INST.up}">${pulse(2.4, 0.4, 1)}</circle>
       ${lab(42, 44, 'OMDM · LIVE BOOK', INST.text, { size: 10 })}
       ${lab(W - 26, 44, 'USD / GB', INST.faint, { a: 'end' })}
@@ -216,7 +227,7 @@ export const twoSides = {
       pills: noPills,
       svg: wB(`
         ${rect(0, 0, W, H, { fill: INST.ground, r: 0 })}
-        <circle cx="${W / 2}" cy="${H / 2}" r="150" fill="${INST.rise}" opacity="0.55"/>
+        ${glow(`${W / 2}`, `${H / 2}`, `150`, 0.55)}
         ${lab(30, 40, 'JP · TIER-1 · THE CROSS', INST.text, { size: 10 })}
         ${lab(W - 26, 40, 'USD / GB', INST.faint, { a: 'end' })}
 
@@ -296,7 +307,7 @@ export const theTape = {
       pills: noPills,
       svg: wB(`
         ${rect(0, 0, W, H, { fill: INST.ground, r: 0 })}
-        <circle cx="${W - 40}" cy="30" r="150" fill="${INST.rise}" opacity="0.5"/>
+        ${glow(`${W - 40}`, `30`, `150`, 0.5)}
         <circle cx="30" cy="40" r="4" fill="${INST.up}">${pulse(2.2, 0.35, 1)}</circle>
         ${lab(42, 44, 'OMDM · THE TAPE', INST.text, { size: 10 })}
         ${lab(W - 26, 44, 'SETTLED PRINTS', INST.faint, { a: 'end' })}
@@ -367,7 +378,7 @@ export const repricingClock = {
       pills: noPills,
       svg: wB(`
         ${rect(0, 0, W, H, { fill: INST.ground, r: 0 })}
-        <circle cx="${cx}" cy="${cy}" r="${R + 30}" fill="${INST.rise}" opacity="0.4"/>
+        ${glow(`${cx}`, `${cy}`, `${R + 30}`, 0.4)}
         ${lab(30, 40, 'JP · TIER-1 · CONTINUOUS REPRICING', INST.text, { size: 10 })}
         ${lab(W - 26, 40, 'USD / GB', INST.faint, { a: 'end' })}
 
@@ -438,7 +449,7 @@ export const rateCardVsMarket = {
       pills: noPills,
       svg: wB(`
         ${rect(0, 0, W, H, { fill: INST.ground, r: 0 })}
-        <circle cx="120" cy="30" r="170" fill="${INST.rise}" opacity="0.45"/>
+        ${glow(`120`, `30`, `170`, 0.45)}
         ${lab(30, 40, 'DE · TIER-1 · TWELVE MONTHS', INST.text, { size: 10 })}
         ${lab(W - 26, 40, 'USD / GB', INST.faint, { a: 'end' })}
 

@@ -13,6 +13,17 @@ const H = 440;
 const wB = boxWrap(W, H);
 const MO = 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace';
 const noPills = [];
+/* soft ambient lift — a flat circle shows its edge when the stage crops it */
+let _gid = 0;
+const glow = (cx, cy, r, op = 0.5) => {
+  const id = `gl${_gid++}`;
+  return `<defs><radialGradient id="${id}" cx="50%" cy="50%" r="50%">` +
+    `<stop offset="0" stop-color="${INST.rise}" stop-opacity="${op}"/>` +
+    `<stop offset="0.55" stop-color="${INST.rise}" stop-opacity="${(op * 0.45).toFixed(3)}"/>` +
+    `<stop offset="1" stop-color="${INST.rise}" stop-opacity="0"/></radialGradient></defs>` +
+    `<circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#${id})"/>`;
+};
+
 
 const t = (x, y, s, o = {}) =>
   `<text x="${x}" y="${y}"${o.m ? ` font-family="${MO}"` : ''} font-size="${o.size || 12}"` +
@@ -109,7 +120,7 @@ export const theGate = {
       pills: noPills,
       svg: wB(`
         ${rect(0, 0, W, H, { fill: INST.ground, r: 0 })}
-        <circle cx="80" cy="0" r="220" fill="${INST.rise}" opacity="0.5"/>
+        ${glow(`80`, `0`, `220`, 0.5)}
         ${lab(28, 32, 'VERIFIED BEFORE QUOTING', INST.text, { size: 9.5 })}
         ${lab(W - 28, 32, 'LIVE', INST.up, { a: 'end' })}
 
@@ -190,7 +201,7 @@ export const theBar = {
       pills: noPills,
       svg: wB(`
         ${rect(0, 0, W, H, { fill: INST.ground, r: 0 })}
-        <circle cx="${W / 2}" cy="60" r="230" fill="${INST.rise}" opacity="0.45"/>
+        ${glow(`${W / 2}`, `60`, `230`, 0.45)}
         ${lab(28, 32, 'JP · TIER-1 · MINIMUM STANDING: FULL MVNO', INST.text, { size: 9.5 })}
         ${lab(W - 28, 32, 'ENFORCED AT MATCH', INST.faint, { a: 'end' })}
 
@@ -255,7 +266,7 @@ export const theChain = {
       pills: noPills,
       svg: wB(`
         ${rect(0, 0, W, H, { fill: INST.ground, r: 0 })}
-        <circle cx="${W - 60}" cy="20" r="200" fill="${INST.rise}" opacity="0.45"/>
+        ${glow(`${W - 60}`, `20`, `200`, 0.45)}
         ${lab(28, 32, 'IMMUTABLE AUDIT TRAIL', INST.text, { size: 9.5 })}
         ${lab(W - 28, 32, 'APPEND ONLY', INST.faint, { a: 'end' })}
 
@@ -322,7 +333,7 @@ export const twoPots = {
       pills: noPills,
       svg: wB(`
         ${rect(0, 0, W, H, { fill: INST.ground, r: 0 })}
-        <circle cx="${W / 2}" cy="0" r="240" fill="${INST.rise}" opacity="0.4"/>
+        ${glow(`${W / 2}`, `0`, `240`, 0.4)}
         ${lab(28, 32, 'SEGREGATED SETTLEMENT', INST.text, { size: 9.5 })}
         ${lab(W - 28, 32, 'TRACKED APART', INST.faint, { a: 'end' })}
 
@@ -381,7 +392,7 @@ export const fourStamps = {
       pills: noPills,
       svg: wB(`
         ${rect(0, 0, W, H, { fill: INST.ground, r: 0 })}
-        <circle cx="70" cy="0" r="220" fill="${INST.rise}" opacity="0.45"/>
+        ${glow(`70`, `0`, `220`, 0.45)}
         ${lab(28, 32, 'ONE TRADE, FOUR CONTROLS', INST.text, { size: 9.5 })}
         ${lab(W - 28, 32, 'JP · T1 · 2.4 TB @ 0.83', INST.faint, { a: 'end' })}
 

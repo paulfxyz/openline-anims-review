@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>OMDM — Openline Mobile Data Market</title>
+<link rel="stylesheet" href="css/omdm.css" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230A1122'/%3E%3Ccircle cx='16' cy='16' r='7' fill='none' stroke='%23C8A24A' stroke-width='4'/%3E%3C/svg%3E" />
+</head>
+<body data-surface="inst">
+
+<!-- ══ Review bar — not part of the page design ═══════════════════════════ -->
+<div class="rev-bar">
+  <a class="rev-back" href="index.html">← Animation review</a>
+  <span class="rev-note">Full page redesign · every animation embedded at its real size</span>
+  <div class="rev-toggle" role="group" aria-label="Surface">
+    <button data-surface-btn="inst" class="is-on">Institutional</button>
+    <button data-surface-btn="fin">Fintech-clean</button>
+  </div>
+</div>
+
+<!-- ══ Site header ════════════════════════════════════════════════════════ -->
+<header class="hd">
+  <div class="wrap hd-row">
+    <a class="hd-brand" href="#top">
+      <svg viewBox="0 0 32 32" aria-label="Openline"><path d="M16 5a11 11 0 1 0 11 11" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/><circle cx="25.5" cy="6.5" r="4" fill="var(--gold)"/></svg>
+      <span>Openline</span>
+    </a>
+    <nav class="hd-nav">
+      <a href="#venue">The venue</a>
+      <a href="#book">The book</a>
+      <a href="#participants">Participants</a>
+      <a href="#controls">Controls</a>
+    </nav>
+    <a class="btn btn-solid hd-cta" href="#access">Request access</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ══ 1 · Hero ═════════════════════════════════════════════════════════ -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow eyebrow-mark">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1 9h3l2-5 3 9 2-4h4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          OMDM™ — Openline Mobile Data Market
+        </span>
+        <h1>Mobile data,<br>priced like <em>a market</em></h1>
+        <p class="lead">Connectivity is still bought on an annual rate card and forgotten about.
+          OMDM runs wholesale data as a continuous market — every route quoted, repriced and
+          settled against more than a hundred live signals.</p>
+        <div class="hero-btns">
+          <a class="btn btn-solid" href="#access">Request access <span aria-hidden="true">→</span></a>
+          <a class="btn btn-ghost" href="#book">What moves a price</a>
+        </div>
+        <dl class="stats">
+          <div><dt>109</dt><dd>Signals per route</dd></div>
+          <div><dt>190+</dt><dd>Countries covered</dd></div>
+          <div><dt>Live</dt><dd>Repricing</dd></div>
+          <div><dt>Verified</dt><dd>KYC + KYB</dd></div>
+        </dl>
+      </div>
+      <div class="hero-stage">
+        <div class="stage" data-mount="hero"></div>
+        <p class="stage-cap">The book, quoting continuously. <span>576 × 460</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 2 · The argument — promoted out of "the venue" ═══════════════════ -->
+  <section class="band" id="venue">
+    <div class="wrap">
+      <span class="eyebrow">The venue</span>
+      <h2 class="band-h">A rate card is a guess.<br><em>A market is an answer.</em></h2>
+      <p class="band-lead">Pricing that reflects what capacity is actually worth right now, on this
+        route, from this counterparty, under these terms.</p>
+    </div>
+    <div class="wrap">
+      <div class="stage stage-wide" data-mount="gap"></div>
+      <p class="stage-cap">Twelve months of DE · Tier-1, against the rate card that was set once. <span>576 × 460</span></p>
+    </div>
+    <div class="wrap claims">
+      <article><h3>Quoted continuously</h3><p>Every route carries a live bid and ask. Prices move when the underlying conditions move, not when a contract comes up for renewal.</p></article>
+      <article><h3>Matched on more than price</h3><p>The cheapest quote is not always the best fill. Quality, risk and settlement terms are part of the match.</p></article>
+      <article><h3>Settled with an audit trail</h3><p>Every quote, match and settlement is recorded against a verified counterparty. Nothing trades anonymously.</p></article>
+    </div>
+  </section>
+
+  <!-- ══ 3 · The book ════════════════════════════════════════════════════ -->
+  <section class="band band-alt" id="book">
+    <div class="wrap">
+      <span class="eyebrow">The book</span>
+      <h2 class="band-h">What moves a price on <em>OMDM</em></h2>
+      <p class="band-lead">109 signals feed every quote, in six families. A wholesale base rate goes
+        in; six families of live signal move it; a quote comes out.</p>
+    </div>
+    <div class="wrap">
+      <div class="stage stage-band" data-mount="book"></div>
+      <p class="stage-cap">Representative adjustments — the book recomputes all six continuously. <span>1280 × 420</span></p>
+    </div>
+    <div class="wrap fams" data-fams></div>
+  </section>
+
+  <!-- ══ 4 · Participants ════════════════════════════════════════════════ -->
+  <section class="band" id="participants">
+    <div class="wrap">
+      <span class="eyebrow">Participants</span>
+      <h2 class="band-h">A market only works if<br><em>someone is on the other side</em></h2>
+      <p class="band-lead">OMDM is open to anyone who passes the checks — including the people we
+        compete with.</p>
+    </div>
+    <div class="wrap parts">
+      <article><h3>Operators &amp; MNOs</h3><p>Monetise spare capacity on routes that would otherwise sit idle overnight.</p></article>
+      <article><h3>MVNOs &amp; resellers</h3><p>Buy at a market rate rather than whatever a single upstream happens to quote.</p></article>
+      <article><h3>Enterprises</h3><p>Fleet and IoT connectivity priced continuously instead of renegotiated once a year.</p></article>
+    </div>
+    <div class="wrap">
+      <div class="compete">
+        <div>
+          <span class="eyebrow">And yes</span>
+          <h3>Our competitors are welcome in the book</h3>
+          <p>Bring your own volume into the pool, resell it, or buy from it. A deeper book prices
+            better for everyone standing in it — which is the entire point of running a market
+            instead of a price list.</p>
+        </div>
+        <div class="stage stage-tall" data-mount="parts"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 5 · Controls ════════════════════════════════════════════════════ -->
+  <section class="band band-alt" id="controls">
+    <div class="wrap">
+      <span class="eyebrow">Controls</span>
+      <h2 class="band-h">Built to be <em>audited</em></h2>
+      <p class="band-lead">A market moving real money has to be able to show its working. Every
+        participant is verified before they can quote, and every action leaves a record.</p>
+    </div>
+    <div class="wrap ctrl-grid">
+      <div class="ctrl-list" data-ctrls></div>
+      <div>
+        <div class="stage stage-ctrl" data-mount="ctrl"></div>
+        <p class="stage-cap">Append-only. Each line seals the one before it. <span>624 × 440</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 6 · Access ══════════════════════════════════════════════════════ -->
+  <section class="access" id="access">
+    <div class="wrap access-in">
+      <h2>Access is by request,<br>and by <em>verification</em></h2>
+      <p>Tell us who you are and what you would bring to the book. We verify every counterparty
+        before they see a price.</p>
+      <a class="btn btn-solid btn-lg" href="#access">Request access <span aria-hidden="true">→</span></a>
+      <p class="access-note">KYC and KYB on every participant. Routes carry a minimum counterparty
+        standing, and the book will not match below it.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="ft">
+  <div class="wrap ft-row">
+    <span>OMDM™ — Openline Mobile Data Market</span>
+    <span>Redesign concept · surfaces and tokens documented in STYLE-OMDM.md</span>
+  </div>
+</footer>
+
+<script type="module" src="js/omdm-page.js"></script>
+</body>
+</html>
