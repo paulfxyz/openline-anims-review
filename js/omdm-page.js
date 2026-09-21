@@ -1,51 +1,54 @@
 /* ─────────────────────────────────────────────────────────────────────────
-   /omdm-market — page assembly.
+   /omdm-market — page assembly. Fintech-clean surface only.
 
-   Mounts the chosen animation into each slot and rebuilds the whole page when
-   the surface is switched, because the artwork carries its own palette: the
-   institutional variants are drawn on navy and the fintech-clean ones on
-   white, so switching surface means switching variant, not just CSS.
+   The venue and book animations are purpose-built for this page at their own
+   boxes (omdm-anims2.js). Hero, participants and controls reuse the
+   fintech-clean variants from the review boards so a decision made there
+   carries straight through to the page.
    ───────────────────────────────────────────────────────────────────────── */
-import { theBook, twoSides, rateCardVsMarket, theGap, finBoard, bothSidesVerified } from './omdm-hero.js';
-import { waterfall, oneOrHundred } from './omdm-book.js';
-import { theChain, reconciled } from './omdm-ctrl.js';
+import { finBoard, bothSidesVerified } from './omdm-hero.js';
+import { reconciled } from './omdm-ctrl.js';
+import { venueCost, bookFlow } from './omdm-anims2.js';
 
-/* which variant fills which slot, per surface */
 const PLAN = {
-  inst: { hero: theBook, gap: rateCardVsMarket, book: waterfall, parts: twoSides, ctrl: theChain },
-  fin: { hero: finBoard, gap: theGap, book: oneOrHundred, parts: bothSidesVerified, ctrl: reconciled },
+  hero: finBoard,
+  venue: venueCost,
+  book: bookFlow,
+  parts: bothSidesVerified,
+  ctrl: reconciled,
 };
 
+/* the six families, in the same order as the waterfall steps above them */
 const FAMS = [
-  ['Quality of service', 31,
-    'Measured on the ground, not promised on a rate card. Throughput, latency, packet loss and attach success, sampled continuously from real sessions.',
-    [['Live throughput', '412 Mbps'], ['Attach success', '98.7%'], ['Latency p95', '31 ms'], ['Congestion', 'Low']]],
-  ['Geopolitical &amp; climate risk', 18,
-    'Routes are priced for the world they run through. Sanctions exposure, regulatory change, grid stability and severe-weather risk all move the book.',
-    [['Sanctions exposure', 'None'], ['Regulatory change', 'Stable'], ['Grid stability', 'Nominal'], ['Severe weather', 'Watch']]],
-  ['Pricing &amp; spread', 24,
-    'Wholesale rates, competing quotes, historical volatility, and the spread between bid and ask across every counterparty quoting a route.',
+  ['Quality of service', 31, +0.04,
+    'What the route actually delivers, sampled from live sessions instead of promised on a rate card. A route that performs better is worth more, and the book pays for it.',
+    [['Live throughput', '412 Mbps'], ['Attach success', '98.7%'], ['Latency p95', '31 ms'], ['Congestion window', 'Low']]],
+  ['Geopolitical &amp; climate risk', 18, +0.02,
+    'Routes run through real places. Sanctions exposure, regulatory change, grid stability and severe weather all change what capacity on a route is worth holding.',
+    [['Sanctions exposure', 'None'], ['Regulatory change', 'Stable'], ['Grid stability', 'Degraded'], ['Severe weather', 'Watch']]],
+  ['Pricing &amp; spread', 24, -0.06,
+    'What everyone else is quoting. Wholesale rates, competing quotes on the same route, thirty-day volatility, and the gap between the best bid and the best ask.',
     [['Wholesale rate', '0.79'], ['Competing quotes', '4'], ['Volatility 30d', '2.1%'], ['Bid-ask spread', '0.07']]],
-  ['Liquidity arrangements', 12,
-    'Who pays when. Paid upfront and paid later are different instruments and price differently, so settlement terms are part of the quote, not a footnote.',
-    [['Upfront vs deferred', 'Both'], ['Settlement window', 'T+30'], ['Commitment size', '12 TB'], ['Credit terms', 'Approved']]],
-  ['Compliance &amp; counterparty', 15,
-    'KYC and KYB on every participant, plus the minimum level a counterparty must hold before it is allowed to quote a given route.',
+  ['Liquidity arrangements', 12, -0.03,
+    'Who pays when. Paid today and paid in thirty days are different instruments and price differently, so settlement terms sit inside the quote rather than in a footnote.',
+    [['Upfront vs deferred', 'Upfront'], ['Settlement window', 'T+0'], ['Commitment size', '12 TB'], ['Credit terms', 'Approved']]],
+  ['Compliance &amp; counterparty', 15, +0.01,
+    'Whether the other side clears. KYC and KYB status, the minimum standing this particular route demands, the jurisdictions involved, and a complete audit trail.',
     [['KYC / KYB status', 'Cleared'], ['Minimum level held', 'MVNO'], ['Jurisdiction', 'JP / SG'], ['Audit trail', 'Complete']]],
-  ['Tier &amp; standing', 9,
-    'What a counterparty actually is — MNO, full MVNO, MVNO-reseller or simple reseller — and the delivery record sitting behind it.',
+  ['Tier &amp; standing', 9, -0.02,
+    'What a counterparty actually is — MNO, full MVNO, MVNO-reseller or reseller — and the delivery record sitting behind that claim.',
     [['MNO', '14 live'], ['Full MVNO', '9 live'], ['MVNO-reseller', '22 live'], ['Reseller', '31 live']]],
 ];
 
 const CTRLS = [
   ['shield', 'KYC and KYB before quoting',
-    'No counterparty reaches the book without verification of both the individual and the business behind them.'],
+    'No counterparty reaches the book without verification of the business and of the people behind it. There is no observer tier.'],
   ['bar', 'Minimum level enforcement',
-    'Routes carry a minimum counterparty standing. The book will not match below it.'],
+    'Each route carries a minimum counterparty standing. The book will not match below it, whatever the price on offer.'],
   ['chain', 'Immutable audit trail',
-    'Quote, match and settlement are recorded and reconcilable, per counterparty and per route.'],
+    'Quote, match and settlement are recorded append-only and reconcile per counterparty and per route, at any point in the past.'],
   ['split', 'Segregated settlement',
-    'Upfront and deferred arrangements are tracked apart, so exposure is always known.'],
+    'Upfront and deferred arrangements are tracked apart, so exposure on either side is always a known number rather than an estimate.'],
 ];
 
 const GLYPH = {
@@ -58,13 +61,20 @@ const GLYPH = {
 function renderStatic() {
   const fams = document.querySelector('[data-fams]');
   if (fams) {
-    fams.innerHTML = FAMS.map(([name, n, blurb, sigs]) => `
-      <article class="fam">
-        <span class="fam-n">${n} signals</span>
+    fams.innerHTML = FAMS.map(([name, n, d, blurb, sigs]) => {
+      const dir = d > 0 ? 'up' : 'down';
+      const col = d > 0 ? 'var(--up)' : 'var(--accent)';
+      return `
+      <article class="fam" style="--fam-col:${col}">
+        <div class="fam-top">
+          <span class="fam-n">${n} signals</span>
+          <span class="fam-d" data-dir="${dir}">${d > 0 ? '+' : '\u2212'}${Math.abs(d).toFixed(2)}</span>
+        </div>
         <h3>${name}</h3>
         <p>${blurb}</p>
         <ul>${sigs.map(([k, v]) => `<li><span>${k}</span><b>${v}</b></li>`).join('')}</ul>
-      </article>`).join('');
+      </article>`;
+    }).join('');
   }
   const ctrls = document.querySelector('[data-ctrls]');
   if (ctrls) {
@@ -78,35 +88,20 @@ function renderStatic() {
 
 let uid = 0;
 
-function mount(surface) {
-  const plan = PLAN[surface] || PLAN.inst;
-  for (const [slot, variant] of Object.entries(plan)) {
+function mount() {
+  for (const [slot, variant] of Object.entries(PLAN)) {
     const host = document.querySelector(`[data-mount="${slot}"]`);
     if (!host) continue;
-    let out;
     try {
-      out = variant.build(`p${uid++}`);
+      const out = variant.build(`p${uid++}`);
+      host.innerHTML = (out && out.svg) || '';
+      if (out && typeof out.init === 'function') out.init(host);
     } catch (err) {
       console.error('mount failed for', slot, err);
       host.innerHTML = '';
-      continue;
     }
-    host.innerHTML = (out && out.svg) || '';
-    if (out && typeof out.init === 'function') out.init(host);
   }
 }
 
-function setSurface(surface) {
-  document.body.dataset.surface = surface;
-  document.querySelectorAll('[data-surface-btn]').forEach((b) => {
-    b.classList.toggle('is-on', b.dataset.surfaceBtn === surface);
-  });
-  mount(surface);
-}
-
-document.querySelectorAll('[data-surface-btn]').forEach((b) => {
-  b.addEventListener('click', () => setSurface(b.dataset.surfaceBtn));
-});
-
 renderStatic();
-setSurface(document.body.dataset.surface || 'inst');
+mount();
