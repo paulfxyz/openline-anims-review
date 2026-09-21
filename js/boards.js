@@ -1002,6 +1002,15 @@ function renderOverview() {
   </section>
 
   <section class="bd-wrap ov-body">
+    <div class="ov-sec">
+      <span class="ov-secn">01</span>
+      <h2 class="ov-seck">Animation boards</h2>
+      <span class="ov-secline"></span>
+      <span class="ov-secm">${BOARDS.length} sections · ${PAGES.length} pages · ${totalOpts} options</span>
+    </div>
+    <p class="ov-secd">One board per animated block. Each opens on a replica of what ships today,
+      followed by the proposals for that slot.</p>
+
     ${PAGES.map(p => {
       const items = BOARDS.filter(x => x.page === p);
       const tone = items[0].accent;
@@ -1026,6 +1035,39 @@ function renderOverview() {
         </div>
       </div>`;
     }).join('')}
+
+    <div class="ov-sec ov-sec-2">
+      <span class="ov-secn">02</span>
+      <h2 class="ov-seck">Full page redesigns</h2>
+      <span class="ov-secline"></span>
+      <span class="ov-secm">2 pages · standalone</span>
+    </div>
+    <p class="ov-secd">Not animation options — complete rebuilds of two pages, each on its own URL,
+      with written handover notes. These open outside the review shell.</p>
+
+    <div class="ov-grid ov-grid-pages">
+      <a class="ov-card ov-card-page" href="omdm.html" style="--c:#3B5BDB;--cd:#2B44AB;--cw:#E7EBFC">
+        <div class="ov-cardtop">
+          <span class="ov-badge">Full page</span>
+          <span class="ov-open">Open →</span>
+        </div>
+        <div class="ov-cardt">OMDM Market — /omdm-market</div>
+        <p class="ov-cardp"><span class="ov-prob">Direction:</span> Fintech-clean. Light ground, a single
+          blue accent, monospaced numerals. Rewritten end to end so the copy matches a wholesale venue
+          rather than a holiday data plan.</p>
+      </a>
+      <a class="ov-card ov-card-page" href="producthunt.html" style="--c:#FF5314;--cd:#E23D00;--cw:#FFF3EE">
+        <div class="ov-cardtop">
+          <span class="ov-badge">Full page</span>
+          <span class="ov-open">Open →</span>
+        </div>
+        <div class="ov-cardt">Product Hunt — /producthunt</div>
+        <p class="ov-cardp"><span class="ov-prob">Direction:</span> Hero kept exactly as it ships,
+          everything below rebuilt. The claim button stops scrolling to itself and becomes a working
+          three-step modal that issues a code on the spot.</p>
+      </a>
+    </div>
+
     <p class="ov-foot">
       Every proposal is inline SVG plus SMIL and CSS — no new dependency, nothing to install, and each one
       drops straight into the existing React component. Section copy, palettes and panel dimensions are
