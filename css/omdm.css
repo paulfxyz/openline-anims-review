@@ -299,6 +299,9 @@ h1 em, .band-h em { font-style: normal; color: var(--accent); }
   text-transform: uppercase; color: var(--faint);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .stage svg animate, .stage svg animateTransform, .stage svg animateMotion { display: none; }
-}
+/* Reduced motion is handled in js/omdm-page.js (freezeAtEnd), NOT here.
+   `display: none` on the animation elements does stop the motion, but it
+   reverts every animated attribute to its base value — the state each stage
+   starts in — so the reader got a half-drawn chart with its conclusion missing.
+   The JS seeks each stage to the end of its loop and pauses it instead.
+   Re-adding a rule here would override that and bring the bug back. */

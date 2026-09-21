@@ -78,9 +78,11 @@ Three states inside one modal, 560px wide, with a progress rail:
 1. **Paste** — lane picker (Product Hunt / a post elsewhere), link field, email
    field, and the guarantee restated in a green note. Both fields validate
    inline.
-2. **Checking** — three automatic checks tick through in about two seconds: the
+2. **Checking** — three rows tick through in about two seconds, captioned as: the
    link opens publicly, it mentions Openline, it is the first claim from that
-   account. No human is in this loop.
+   account. No human is in this loop. **In this build nothing is actually
+   checked** — the three rows are a fixed 430ms cadence and their `0.3s / 0.6s /
+   0.9s` timings are captions, not measurements.
 3. **Issued** — a working `PH-10-XXXXXX` code in a dashed green panel with a copy
    button, plus an orange *under review, uplift only* panel explaining that a
    larger code may replace it and that this one keeps working either way.
@@ -98,9 +100,28 @@ and the sheet slides from the bottom below 560px.
 | `POST /api/ph-claim` | takes `{ link, email, lane }`, runs the three checks, issues and returns a 10% code, queues the claim for human review |
 | `POST /api/ph-uplift` | internal — sets the final tier, emails the replacement code, never lowers the issued one |
 
-Codes are generated client-side in this build so the flow can be reviewed end to
-end without a backend. That is the only piece of the interaction that is not
-production-shaped.
+### What is not real in this build
+
+The flow can be driven end to end without a backend, which is what makes it
+reviewable. Be precise about the cost of that, because the page states things to
+the visitor that are not true yet:
+
+| Claim the page makes | Reality in this build |
+| --- | --- |
+| A working `PH-10-XXXXXX` code | `Math.random()` in `js/producthunt-page.js`. Not recorded anywhere, so it cannot be redeemed. |
+| "We have emailed a copy to …" | No email is sent. Nothing leaves the browser. |
+| Three automatic checks on the link | Nothing is fetched or validated. A fixed timer. |
+| "Nothing else is stored" | Technically true — nothing is stored at all, including the claim. |
+
+**Validation only checks URL shape.** `isLink()` is
+`/^https?:\/\/[^\s.]+\.[^\s]{2,}$/i`, so `https://example.com` is accepted while
+the Product Hunt lane is selected and issues a code. The lane picker changes
+nothing about validation. If the lanes are meant to mean different things, the
+Product Hunt lane should at minimum require a `producthunt.com` host — a product
+decision, not an oversight to paper over in the prototype.
+
+Nothing here blocks a design review. All of it blocks putting the page in front
+of real claimants.
 
 ---
 
@@ -148,3 +169,15 @@ Checked at 1440px and 390px: no horizontal overflow, no console errors, both
 field validations fire, the three modal states advance, the code copies, Escape
 closes, and focus is trapped and returned. `prefers-reduced-motion` collapses
 every transition.
+
+Re-verified 2026-09-21, in a browser rather than by reading the code — all of the
+above still holds. Measured this round: focus stays inside the dialog across 12
+`Tab` presses and 8 `Shift+Tab` presses, focus returns to the exact trigger
+button on Escape, the inline field hands the link to the modal, both validation
+messages block submission, and the mobile sheet fits the 844px viewport exactly
+(390 × 750, flush to the bottom).
+
+**Fixed this round:** the rung headings and the six FAQ headings were `<h4>`
+directly under an `<h2>`, skipping a level twice. They are now `<h3>`, with
+`.rung h3` / `.fq h3` in the stylesheet; computed size and weight are unchanged
+(16.5px/700 and 16px/700), so the fix is structural only.

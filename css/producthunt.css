@@ -276,7 +276,7 @@ section { scroll-margin-top: 80px; }
 .rung-1 .rung-pct { color: var(--green); }
 .rung-2 .rung-pct, .rung-3 .rung-pct { color: var(--orange); }
 .rung-4 .rung-pct { color: var(--orange-deep); }
-.rung h4 { margin: 0; font-size: 16.5px; font-weight: 700; letter-spacing: -0.01em; }
+.rung h3 { margin: 0; font-size: 16.5px; font-weight: 700; letter-spacing: -0.01em; }
 .rung p { margin: 5px 0 0; font-size: 13.5px; color: var(--dim); line-height: 1.5; }
 .rung-bar { height: 12px; border-radius: 999px; background: var(--line-soft); overflow: hidden; }
 .rung-bar i { display: block; height: 100%; border-radius: 999px; }
@@ -422,7 +422,7 @@ section { scroll-margin-top: 80px; }
 .fine .lead { color: rgba(255, 255, 255, 0.6); }
 .fq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 40px; margin-top: 44px; }
 .fq { border-top: 1px solid rgba(255, 255, 255, 0.14); padding: 22px 0; }
-.fq h4 { margin: 0; font-size: 16px; font-weight: 700; letter-spacing: -0.01em; }
+.fq h3 { margin: 0; font-size: 16px; font-weight: 700; letter-spacing: -0.01em; }
 .fq p { margin: 9px 0 0; font-size: 14.5px; line-height: 1.62; color: rgba(255, 255, 255, 0.62); }
 .fq p b { color: #fff; font-weight: 600; }
 @media (max-width: 860px) { .fq-grid { grid-template-columns: 1fr; } .fine { padding: 56px 0; } }

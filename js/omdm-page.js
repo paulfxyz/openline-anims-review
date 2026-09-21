@@ -87,6 +87,32 @@ function renderStatic() {
 
 let uid = 0;
 
+/* Reduced motion: show the FINISHED composition, not the first frame.
+
+   Hiding the <animate> elements with CSS does stop the motion, but it reverts
+   every animated attribute to its base value — which is the state each stage
+   STARTS in. That left three of the five stages showing a half-drawn argument:
+   the venue chart ended at July with none of its readouts, the depth stage
+   showed two of six counterparties and the opening spread, and the audit trail
+   showed two of five entries, omitting the refused match that is the only
+   control the page actually demonstrates.
+
+   Instead, seek each stage to the end of its longest loop and freeze it there,
+   which is the same held end-state a visitor sees when the loop completes. */
+function freezeAtEnd(host) {
+  const svg = host.querySelector('svg');
+  if (!svg || typeof svg.pauseAnimations !== 'function') return;
+  const durs = [...svg.querySelectorAll('animate, animateTransform, animateMotion')]
+    .map(a => parseFloat(a.getAttribute('dur') || '0'))
+    .filter(d => d > 0);
+  const loop = durs.length ? Math.max(...durs) : 0;
+  if (!loop) return;
+  svg.setCurrentTime(loop * 0.995);
+  svg.pauseAnimations();
+}
+
+const REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 function mount() {
   for (const [slot, variant] of Object.entries(PLAN)) {
     const host = document.querySelector(`[data-mount="${slot}"]`);
@@ -95,6 +121,7 @@ function mount() {
       const out = variant.build(`p${uid++}`);
       host.innerHTML = (out && out.svg) || '';
       if (out && typeof out.init === 'function') out.init(host);
+      if (REDUCED) freezeAtEnd(host);
     } catch (err) {
       console.error('mount failed for', slot, err);
       host.innerHTML = '';

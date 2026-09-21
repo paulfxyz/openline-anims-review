@@ -5,8 +5,17 @@ live page ships with no animations at all (only a 361px pulsing blob), so every
 moving element here is new and every token below needs adding to the design
 system before this goes to production.
 
-Surface decision: **fintech-clean only.** The institutional / navy direction was
-explored and dropped. Nothing in this document describes a second surface.
+Surface decision: **the page is fintech-clean only.** Light ground, one blue
+accent, no navy and no gold. Everything in this document describes that surface.
+
+This is a decision about *the page*, not about the review. The three OMDM review
+boards deliberately carry both directions so the choice stays arguable — in
+`js/omdm-book.js`, `js/omdm-hero.js` and `js/omdm-ctrl.js`, options 1–5 are
+institutional (`INST` — navy ground, gold accent) and options 6–10 are
+fintech-clean (`FIN`), with options 11–15 added later across both registers.
+An earlier version of this document said the institutional direction had been
+"explored and dropped", which contradicted the code and is corrected here: it is
+not used *on the page*, and it is still on the boards for comparison.
 
 ---
 
@@ -68,10 +77,17 @@ so the artwork is resolution-independent but never reflows.
 
 ---
 
-## 3 · The two purpose-built animations
+## 3 · The five purpose-built animations
 
-Both live in `js/omdm-anims2.js` and are used only by the page, not by the
-review boards.
+All five live in `js/omdm-anims2.js` and are used only by the page, never by the
+review boards. Every slot on the page is drawn for the box it occupies and for
+the copy beside it.
+
+**None of the five carries production data.** Each one's figures are literal
+arrays or hard-coded constants chosen to make the argument legible, and each
+states this in its own `cons`. Before this page ships, every number below needs
+replacing with a real series, and the claim each animation makes needs to be
+defensible on that real data.
 
 ### `venueCost` — 704 × 420 · 10s loop
 
@@ -106,20 +122,62 @@ in the other** — that one-to-one mapping is the whole point of the block.
 Y axis runs `0.70`–`0.87` and the bars are truncated to it. The minimum is
 labelled on the axis and the range is stated in the top-right header.
 
+### `heroBook` — 576 × 460 · hero
+
+The order book the page describes, quoting on a single clock. Ten reprices per
+loop, one route at a time: the row lights, its bid and ask move, the change cell
+is **computed from that move rather than asserted**, depth adjusts with it, and
+the footer names the route that just repriced and what it did. Bid and ask are
+set in neutral text — green and red carry direction of movement, which is what
+they mean in a book.
+
+Because every cell derives from one event, nothing on the stage can contradict
+anything else. Five routes is a small book; a real feed is needed to keep it
+truthful in production.
+
+### `depthNarrows` — 576 × 460 · who trades
+
+The block makes one claim — a deeper book prices better for everyone standing in
+it — so that is what this draws. Six counterparties arrive one at a time (a
+Tier-1 operator, a buyer, a competing aggregator, an enterprise fleet), with the
+best bid rising and the best ask falling as each joins. The spread closes from
+`0.11` to `0.04`, and the closing line makes the point explicit: the improvement
+belongs to everyone, **including the competitor who caused it**.
+
+Spread figures are illustrative. Six rows is tight at this height.
+
+### `auditTrail` — 624 × 440 · controls
+
+The trail the caption describes, doing what the caption says. Five entries
+append in sequence, and each shows the previous entry's seal as its own input,
+with a link drawn between them — so removing a line visibly breaks every line
+after it. The third entry is a **match refused** because the counterparty sits
+below the minimum standing the route requires, which is the one control the page
+asserts and otherwise never shows.
+
+Five lines is a small sample, and hash chaining needs a plain-language gloss for
+non-technical readers.
+
 ---
 
-## 4 · Reused board variants
+## 4 · Why the page reuses no board variants
 
-Three slots pull the fintech-clean variant straight from the review boards, so a
-decision made in the review carries through to the page with no re-drawing:
+An earlier draft mounted three review-board variants directly (`finBoard`,
+`bothSidesVerified`, `reconciled`) so a decision made in the review would carry
+through without re-drawing. **That is no longer true and the approach was
+abandoned.** Every slot is now purpose-built in `js/omdm-anims2.js`.
 
-| Slot | Variant | Board file |
-| --- | --- | --- |
-| Hero | `finBoard` | `js/omdm-hero.js` |
-| Who trades | `bothSidesVerified` | `js/omdm-hero.js` |
-| Controls | `reconciled` | `js/omdm-ctrl.js` |
+The reason is recorded in `js/omdm-page.js`: the board variants were argued for a
+different frame, and next to this page's copy they contradicted their own
+captions. A board variant is built to win an argument about *how to animate a
+section*; a page slot has to demonstrate the specific sentence printed beside it.
+The two briefs pull apart, and when they did, the caption lost.
 
-Swap a slot by changing `PLAN` in `js/omdm-page.js`. Nothing else needs touching.
+The practical consequence for handover: **choosing a variant on an OMDM review
+board does not change the page.** The boards decide the direction; the page
+slots are then drawn to match it. Swapping a slot still means editing `PLAN` in
+`js/omdm-page.js`, but the thing you swap in has to be built for that box and
+that copy first.
 
 ---
 
@@ -165,9 +223,22 @@ Immutable audit trail · Segregated settlement.
 
 - All motion is declarative SMIL inside inline SVG. No JS animation loop, no
   `requestAnimationFrame`, nothing to clean up on unmount.
-- `@media (prefers-reduced-motion: reduce)` disables every `animate`,
-  `animateTransform` and `animateMotion` inside a stage, leaving the final
-  composition legible as a still.
+- **Reduced motion is handled in JS, not CSS.** `freezeAtEnd()` in
+  `js/omdm-page.js` seeks each stage to the end of its longest loop with
+  `setCurrentTime()` and then calls `pauseAnimations()`, so a reader who prefers
+  reduced motion gets the same held end-state a visitor sees when the loop
+  completes.
+
+  The obvious CSS approach — `display: none` on the animation elements — was
+  tried first and is wrong. It stops the motion, but it reverts every animated
+  attribute to its **base** value, which is the state each stage *starts* in.
+  Three of the five stages lost their argument that way: the venue chart ended
+  at July with none of its three readouts, `depthNarrows` showed two of six
+  counterparties and the opening `0.11` spread instead of the closing `0.04`,
+  and `auditTrail` showed two of five entries, omitting the refused match that
+  is the only control the page actually demonstrates. **Do not re-add a
+  `prefers-reduced-motion` rule to `css/omdm.css`** — `display: none` wins over
+  the freeze and reinstates the bug.
 - Each stage SVG carries `role="img"` and an `aria-label` describing what it
   shows.
 - Every `keyTimes` sequence ends at `1` and matches its `values` length — Chrome
