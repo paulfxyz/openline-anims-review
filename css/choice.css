@@ -1,0 +1,584 @@
+/* ══════════════════════════════════════════════════════════════════════
+   /choice — the selection walkthrough.
+   Self-contained: no Tailwind, no style.css. The only thing it borrows from
+   the review boards is the four stage-tone gradients, repeated below so a
+   dark option never renders on white.
+   ══════════════════════════════════════════════════════════════════════ */
+
+:root {
+  --ink: #0B0B0F;
+  --acc: #0B0B0F;
+  --acc-deep: #0B0B0F;
+  --line: rgba(11, 11, 15, .10);
+  --line2: rgba(11, 11, 15, .06);
+  --dim: rgba(11, 11, 15, .52);
+  --faint: rgba(11, 11, 15, .38);
+  --good: #16A34A;
+  --rail: 280px;
+  --head: 62px;
+  --foot: 72px;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: #fff;
+  color: var(--ink);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+button { font: inherit; color: inherit; }
+
+/* boards.js runs `show('overview')` as an import side effect, which strips
+   the `hidden` attribute off its own host and rendered ~5000px of unstyled
+   review overview below this page. The attribute cannot hold it, so pin the
+   four hosts shut from here instead. */
+#overview, #boards, #nav-pages, #nav-sections { display: none !important; }
+
+/* ══ Header ══════════════════════════════════════════════════════════ */
+
+.ch-head-bar {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: var(--head);
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  padding: 0 26px;
+  background: rgba(255, 255, 255, .92);
+  backdrop-filter: saturate(150%) blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+
+.ch-brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  text-decoration: none;
+  color: inherit;
+  flex: none;
+}
+
+.ch-brand svg { width: 27px; height: 27px; flex: none; }
+
+.ch-b1 { font-size: 15px; font-weight: 800; letter-spacing: -.01em; display: block; }
+.ch-b2 { font-size: 11.5px; font-weight: 600; color: var(--faint); display: block; margin-top: -2px; }
+
+.ch-prog { flex: 1; display: flex; align-items: center; gap: 14px; min-width: 0; }
+
+.ch-track {
+  flex: 1;
+  height: 6px;
+  min-width: 60px;
+  background: var(--line2);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.ch-barfill {
+  height: 100%;
+  width: 0;
+  background: var(--good);
+  border-radius: 99px;
+  transition: width .35s cubic-bezier(.22, 1, .36, 1);
+}
+
+.ch-count {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--dim);
+  font-variant-numeric: tabular-nums;
+  flex: none;
+}
+
+.ch-back {
+  flex: none;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--dim);
+  text-decoration: none;
+  padding: 7px 13px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+}
+
+.ch-back:hover { color: var(--ink); border-color: rgba(11, 11, 15, .26); }
+
+/* ══ Rail ════════════════════════════════════════════════════════════ */
+
+.ch-rail {
+  position: fixed;
+  top: var(--head);
+  bottom: 0;
+  left: 0;
+  width: var(--rail);
+  overflow-y: auto;
+  border-right: 1px solid var(--line);
+  padding: 16px 12px 40px;
+  background: #FCFCFD;
+  z-index: 30;
+}
+
+.ch-railpage {
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--faint);
+  padding: 15px 10px 6px;
+}
+
+.ch-railrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: 0;
+  border-radius: 9px;
+  padding: 8px 10px;
+  cursor: pointer;
+  line-height: 1.3;
+}
+
+.ch-railrow:hover { background: rgba(11, 11, 15, .045); }
+.ch-railrow.is-at { background: var(--ink); }
+.ch-railrow.is-at .ch-rails { color: #fff; }
+
+.ch-railn {
+  flex: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 7px;
+  display: grid;
+  place-items: center;
+  font-size: 11.5px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  background: var(--line2);
+  color: var(--faint);
+}
+
+.ch-railrow.is-at .ch-railn { background: rgba(255, 255, 255, .2); color: #fff; }
+.ch-railrow.is-done .ch-railn { background: var(--good); color: #fff; }
+.ch-railrow.is-skip .ch-railn { background: rgba(11, 11, 15, .3); color: #fff; }
+.ch-railrow.is-at.is-done .ch-railn { background: var(--good); color: #fff; }
+
+.ch-rails {
+  font-size: 13px;
+  font-weight: 650;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ch-railsum { margin-top: 20px; border-top: 1px solid var(--line); border-radius: 0 0 9px 9px; padding-top: 16px; }
+
+/* ══ Main ════════════════════════════════════════════════════════════ */
+
+.ch-main {
+  margin: var(--head) 0 0 var(--rail);
+  padding: 34px 40px calc(var(--foot) + 56px);
+  max-width: 1500px;
+}
+
+.ch-head { margin-bottom: 26px; }
+
+.ch-crumbrow { display: flex; align-items: center; gap: 12px; margin-bottom: 9px; }
+
+.ch-step {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--acc-deep);
+  background: color-mix(in srgb, var(--acc) 11%, transparent);
+  padding: 5px 10px;
+  border-radius: 6px;
+  display: inline-block;
+}
+
+.ch-path {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--faint);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.ch-title {
+  font-size: clamp(27px, 3.4vw, 40px);
+  font-weight: 800;
+  letter-spacing: -.025em;
+  line-height: 1.12;
+  margin: 8px 0 0;
+}
+
+.ch-tpage { color: var(--faint); font-weight: 750; }
+.ch-tsep { color: var(--faint); margin: 0 .34em; font-weight: 400; }
+
+.ch-prob {
+  margin: 18px 0 0;
+  max-width: 78ch;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--dim);
+  border-left: 3px solid color-mix(in srgb, var(--acc) 55%, transparent);
+  padding: 2px 0 2px 15px;
+}
+
+.ch-prob span {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--acc-deep);
+  margin-bottom: 3px;
+}
+
+.ch-ask {
+  margin: 20px 0 0;
+  max-width: 80ch;
+  font-size: 15.5px;
+  line-height: 1.62;
+  color: var(--dim);
+}
+
+.ch-ask b { color: var(--ink); font-weight: 750; }
+
+/* ══ Option grid ═════════════════════════════════════════════════════ */
+
+.ch-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+  gap: 20px;
+}
+
+.ch-card {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  background: #fff;
+  border: 1.5px solid var(--line);
+  border-radius: 15px;
+  padding: 0;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color .16s, box-shadow .16s, transform .16s;
+}
+
+.ch-card:hover {
+  border-color: color-mix(in srgb, var(--acc) 50%, transparent);
+  box-shadow: 0 10px 30px -14px rgba(11, 11, 15, .18);
+  transform: translateY(-2px);
+}
+
+.ch-card:focus-visible { outline: 3px solid var(--acc); outline-offset: 2px; }
+
+.ch-card.is-picked {
+  border-color: var(--good);
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, .18);
+}
+
+/* The frame keeps every option on one footprint so they stay comparable —
+   the SVGs inside have wildly different aspect ratios. */
+.ch-frame {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 10;
+  background: #F6F7F9;
+  border-bottom: 1px solid var(--line2);
+  overflow: hidden;
+}
+
+.ch-frame > svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+/* Stage tones, mirrored from css/style.css so dark options read correctly. */
+.ch-frame.tone-dark { background: linear-gradient(135deg, #1A1526, #0D0B14 50%, #241A38); }
+.ch-frame.tone-plus { background: linear-gradient(160deg, #2A1A18, #131826 45%, #241A16); }
+.ch-frame.tone-orange { background: linear-gradient(135deg, #FF5314, #F0651F 55%, #FF8A4C); }
+.ch-frame.tone-plusgreen { background: linear-gradient(160deg, #122A1F, #131826 45%, #102A20); }
+
+/* Aloha icons are 56px badges in production, not full-bleed artwork. The
+   icon svg sits inside .ch-ic, so it must be targeted through that wrapper
+   — addressing `.ch-frame > svg` here would miss and let the rule above
+   stretch each badge across the whole frame. Shown at 104px: large enough
+   to judge, close enough to the real thing that detail loss still shows. */
+.ch-frame.is-ic { display: grid; place-items: center; aspect-ratio: 16 / 10; background: #F6F7F9; }
+.ch-ic { display: grid; place-items: center; }
+.ch-frame.is-ic .ch-ic > svg { position: static; inset: auto; width: 104px; height: 104px; }
+
+.ch-meta { display: block; padding: 15px 17px 17px; }
+
+.ch-metatop { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+.ch-num {
+  display: grid;
+  place-items: center;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 7px;
+  border-radius: 7px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 12.5px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.ch-num.is-live { background: var(--line2); color: var(--dim); font-size: 10px; letter-spacing: .08em; }
+
+.ch-fam {
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.ch-flag {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  background: var(--good);
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 5px;
+}
+
+.ch-name { display: block; margin-top: 9px; font-size: 16.5px; font-weight: 750; letter-spacing: -.012em; }
+.ch-tag { display: block; font-size: 13px; font-weight: 650; color: var(--dim); margin-top: 1px; }
+.ch-desc {
+  display: block;
+  margin-top: 8px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--dim);
+}
+
+/* ══ Note ════════════════════════════════════════════════════════════ */
+
+.ch-notewrap { margin-top: 30px; max-width: 760px; }
+
+.ch-notelab { display: block; font-size: 13px; font-weight: 750; margin-bottom: 7px; }
+.ch-notelab span { color: var(--faint); font-weight: 600; }
+
+.ch-note {
+  width: 100%;
+  font: inherit;
+  font-size: 14.5px;
+  padding: 12px 14px;
+  border: 1.5px solid var(--line);
+  border-radius: 11px;
+  resize: vertical;
+  background: #fff;
+  color: var(--ink);
+}
+
+.ch-note:focus { outline: none; border-color: var(--acc); box-shadow: 0 0 0 3px color-mix(in srgb, var(--acc) 15%, transparent); }
+
+/* ══ Footer bar ══════════════════════════════════════════════════════ */
+
+/* A class setting `display` beats the UA rule for [hidden], so the summary
+   screen could not hide this bar without saying so explicitly. */
+.ch-foot[hidden] { display: none; }
+
+.ch-foot {
+  position: fixed;
+  bottom: 0;
+  left: var(--rail);
+  right: 0;
+  height: var(--foot);
+  z-index: 35;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 0 40px;
+  background: rgba(255, 255, 255, .94);
+  backdrop-filter: saturate(150%) blur(12px);
+  border-top: 1px solid var(--line);
+}
+
+.ch-sel {
+  font-size: 14.5px;
+  font-weight: 750;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ch-sel.is-empty { color: var(--faint); font-weight: 600; }
+
+.ch-footbtns { display: flex; gap: 9px; flex: none; }
+
+.ch-btn {
+  border: 1.5px solid var(--line);
+  background: #fff;
+  border-radius: 10px;
+  padding: 9px 16px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.ch-btn:hover:not(:disabled) { border-color: rgba(11, 11, 15, .3); }
+.ch-btn:disabled { opacity: .4; cursor: default; }
+
+.ch-btn.is-primary { background: var(--ink); color: #fff; border-color: var(--ink); }
+.ch-btn.is-primary:hover { background: #22222B; }
+.ch-btn.is-danger { color: #B42318; border-color: rgba(180, 35, 24, .3); }
+.ch-btn.is-danger:hover { background: #FEF3F2; }
+
+/* ══ Summary ═════════════════════════════════════════════════════════ */
+
+.ch-sumtable {
+  border: 1.5px solid var(--line);
+  border-radius: 13px;
+  overflow: hidden;
+  margin-bottom: 30px;
+}
+
+.ch-sumrow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 16px;
+  align-items: baseline;
+  width: 100%;
+  text-align: left;
+  background: #fff;
+  border: 0;
+  border-bottom: 1px solid var(--line2);
+  padding: 13px 18px;
+  cursor: pointer;
+}
+
+.ch-sumrow:last-child { border-bottom: 0; }
+.ch-sumrow:hover { background: #FAFAFB; }
+.ch-sumrow.is-open { background: #FFFBEB; }
+
+.ch-sumsec { font-size: 14.5px; font-weight: 700; min-width: 0; }
+.ch-sumsec span { color: var(--faint); font-weight: 650; }
+.ch-sumsec span::after { content: ' › '; }
+
+.ch-sumval { font-size: 14.5px; color: var(--dim); min-width: 0; }
+.ch-sumval b { color: var(--ink); font-variant-numeric: tabular-nums; }
+.ch-sumval em { color: var(--faint); font-style: normal; }
+
+.ch-sumnote {
+  grid-column: 1 / -1;
+  font-size: 13px;
+  color: var(--dim);
+  border-left: 2px solid var(--line);
+  padding-left: 10px;
+  margin-top: 3px;
+}
+
+/* ══ Export ══════════════════════════════════════════════════════════ */
+
+.ch-exp { border: 1.5px solid var(--line); border-radius: 13px; overflow: hidden; }
+
+.ch-exphead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 14px 18px;
+  background: #FAFAFB;
+  border-bottom: 1px solid var(--line);
+}
+
+.ch-expk { font-size: 13px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: var(--dim); }
+.ch-expbtns { display: flex; gap: 9px; }
+
+.ch-pre {
+  margin: 0;
+  padding: 18px;
+  overflow-x: auto;
+  max-height: 460px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12.5px;
+  line-height: 1.65;
+  white-space: pre;
+  background: #fff;
+  color: #1F2430;
+}
+
+.ch-reset {
+  margin-top: 26px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  color: var(--faint);
+}
+
+/* ══ Responsive ══════════════════════════════════════════════════════ */
+
+@media (max-width: 1080px) {
+  :root { --rail: 0px; }
+
+  .ch-rail {
+    position: static;
+    width: auto;
+    height: auto;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+    padding: 10px 14px 14px;
+    display: flex;
+    gap: 7px;
+    overflow-x: auto;
+    margin-top: var(--head);
+  }
+
+  .ch-railpage { display: none; }
+  .ch-railrow { width: auto; flex: none; padding: 7px 11px; }
+  .ch-rails { max-width: 130px; }
+  .ch-railsum { margin-top: 0; border-top: 0; padding-top: 7px; }
+  .ch-main { margin-top: 0; padding: 26px 20px calc(var(--foot) + 46px); }
+  .ch-foot { left: 0; padding: 0 20px; }
+}
+
+/* Under ~560px the brand, the progress track, the count and the back link
+   cannot all fit on one 62px row — the link was being clipped at the right
+   edge. Drop the track; "N of 29 decided" already carries the same fact. */
+@media (max-width: 560px) {
+  .ch-head-bar { gap: 12px; padding: 0 16px; }
+  .ch-track { display: none; }
+  .ch-prog { flex: none; min-width: 0; }
+  /* Wordmark goes, logo mark stays: the page title is in the tab and the
+     progress count is the thing you actually need on this row. */
+  .ch-brand > span { display: none; }
+  .ch-back { padding: 6px 10px; font-size: 12px; }
+  .ch-count { font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+}
+
+@media (max-width: 720px) {
+  .ch-grid { grid-template-columns: 1fr; }
+  .ch-sumrow { grid-template-columns: 1fr; gap: 4px; }
+  .ch-foot { height: auto; padding: 11px 16px; flex-direction: column; align-items: stretch; gap: 9px; }
+  :root { --foot: 118px; }
+  .ch-footbtns { display: grid; grid-template-columns: 1fr 1fr 1fr; }
+  .ch-btn { padding: 10px 8px; font-size: 13px; }
+  .ch-sel { white-space: normal; }
+}
+
+/* Options animate continuously; honour a reduced-motion preference by
+   letting the browser's own SMIL handling stand and only calming the UI. */
+@media (prefers-reduced-motion: reduce) {
+  .ch-card, .ch-barfill { transition: none; }
+  .ch-card:hover { transform: none; }
+}

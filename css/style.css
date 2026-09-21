@@ -518,8 +518,15 @@ svg .marker { transition: transform .5s cubic-bezier(.2,.7,.3,1); }
 .head-page-link:hover { background: #1B2A4A; color: #fff; border-color: #1B2A4A; }
 .head-page-link-ph { border-color: #FFD2C0; color: #E23D00; }
 .head-page-link-ph:hover { background: #FF5314; color: #fff; border-color: #FF5314; }
+
+/* The selection walkthrough — green, so it reads as the "decide" action
+   rather than another thing to review. */
+.head-page-link-choose { border-color: #16A34A; color: #15803D; font-weight: 800; }
+.head-page-link-choose:hover { background: #16A34A; color: #fff; border-color: #16A34A; }
+
 @media (max-width: 900px) {
   .head-zone-pages { margin-left: 0; width: 100%; }
+  .head-zone-choose { margin-left: 0; }
   .head-page-link { font-size: 12px; padding: 6px 12px; }
 }
 
