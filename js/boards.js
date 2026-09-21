@@ -20,7 +20,8 @@ import { PRIN_VARIANTS, TEAM_VARIANTS } from './about.js';
 import { PRIN_EXTRA, TEAM_EXTRA } from './about2.js';
 import { OMDM_HERO_VARIANTS } from './omdm-hero.js';
 import { OMDM_BOOK_VARIANTS } from './omdm-book.js';
-import { OMDM_HERO, OMDM_BOOK } from './kit.js';
+import { OMDM_CTRL_VARIANTS } from './omdm-ctrl.js';
+import { OMDM_HERO, OMDM_BOOK, OMDM_CTRL } from './kit.js';
 import { ICONS } from './icons.js';
 import { buildIconBoard } from './iconboard.js';
 
@@ -705,6 +706,47 @@ export const BOARDS = [
         { k: 'If the goal is persuasion', h: '7 · The Composer', d: 'Switches families off and lets the price degrade to a rate card. Proof by subtraction, which lands harder than proof by addition.' },
         { k: 'If the goal is shipping this week', h: '6 · Cards, Alive', d: 'The existing grid with a pulse and a live value per card. No layout change, no copy change, no risk.' },
         { k: 'If the audience is non-technical', h: '10 · One Input or a Hundred', d: 'One field on the left, 109 cells populating on the right. No chart literacy required.' },
+      ],
+    },
+  },
+
+
+  {
+    key: 'omctrl', page: 'OMDM Market', path: '/omdm-market', section: 'Built to be audited',
+    short: 'Built to be audited', count: 10, accent: TONES.market,
+    variants: OMDM_CTRL_VARIANTS, embed: OMDM_CTRL,
+    problem: 'A section promising it can show its working, which shows none of it.',
+    cfg: {
+      kicker: 'Controls', heading: 'Built to be', headingAccent: 'audited',
+      lead: 'A market moving real money has to be able to show its working. Every participant is verified before they can quote, and every action leaves a record.',
+      bullets: ['<b>Box</b> — 624 × 440, beside the existing list',
+        '<b>Net-new</b> — the live section is four sentences and nothing else',
+        '<b>Two characters</b> — options 1–5 institutional, 6–10 fintech-clean',
+        '<b>Job</b> — show the working, since that is what the heading promises'],
+      keptIdentical: [
+        'All four control names, exactly as written',
+        'The kicker, heading and lead paragraph',
+        'The order the controls appear in',
+        'The distinction between upfront and deferred',
+        '"Nothing trades anonymously" from the venue section',
+      ],
+      embed: OMDM_CTRL,
+      thinking: {
+        title: 'The one section where an assertion is worth the least',
+        lead: 'Every other section on this page can reasonably state a fact and be believed. This one cannot, because its entire subject is verifiability — and it currently consists of four sentences claiming that things are verified, recorded and segregated, with nothing beside them. A reader who is deciding whether to route real money through the book is exactly the reader least likely to take that on trust.',
+        jobs: [
+          { t: 'Show a rejection', d: 'A control that never refuses anything is indistinguishable from no control. The options that include a refusal are stronger for it, and they need sign-off before shipping.' },
+          { t: 'Turn adjectives into artefacts', d: '"Immutable" and "reconcilable" are claims. A chained record and a difference of zero are artefacts. Prefer the artefact.' },
+          { t: 'Promote segregated settlement', d: 'It is listed last and it is the control a treasury team asks about first. Two of the options lead with it.' },
+          { t: 'Do not invent fields', d: 'Every field drawn here should be one the real system can produce, or it becomes a liability at the first technical due-diligence call.' },
+        ],
+      },
+      pick: [
+        { k: 'My pick', h: '3 · The Chain', d: 'An append-only record where each line seals the one before it, and an attempted alteration is visibly rejected. It demonstrates immutability instead of asserting it, which is the only thing this section can usefully do.' },
+        { k: 'If the goal is rigour', h: '1 · The Gate', d: 'Four counterparties approach and one is refused for failing business verification. The refusal is what makes the other three mean anything.' },
+        { k: 'If the audience is treasury', h: '4 · Two Pots', d: 'Upfront and deferred filling separately with a live exposure figure. The objection a finance team actually raises, answered with a number.' },
+        { k: 'If the goal is completeness', h: '10 · Show the Working', d: 'One settled trade opened up into its full record — both counterparties, the standing check, the price snapshot, the settlement arrangement and the reference. All four controls as a single artefact.' },
+        { k: 'If the page stays light', h: '7 · Reconciled', d: 'Quoted, matched, settled, difference 0.00. Uses the section\u2019s own word literally and costs almost nothing to build.' },
       ],
     },
   },
