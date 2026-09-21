@@ -451,7 +451,6 @@ export const lgUpgrade = {
   }),
 };
 
-export const LOUNGE_VARIANTS = [lgCurrent, lgTwoLanes, lgDoor, lgItinerary, lgCost, lgMap, lgUpgrade];
 
 /* ═════════════════════════════════════════════════════════════════════
    2 · BUILT FOR DIGITAL NOMADS  ·  574 × 656
@@ -833,7 +832,6 @@ export const nmClock = {
   },
 };
 
-export const NOMAD_VARIANTS = [nmCurrent, nmCities, nmLockout, nmYear, nmDesk, nmPassport, nmClock];
 
 /* ═════════════════════════════════════════════════════════════════════
    3 · VERIFIED & SECURE  ·  574 × 432  (green on dark)
@@ -1234,4 +1232,538 @@ export const kyCommunity = {
   },
 };
 
-export const KYC_VARIANTS = [kyCurrent, kyFourChecks, kyTwoDoors, kyLiveness, kySealed, kyRegistry, kyCommunity];
+
+/* ══ LOUNGE · 7–9 ═══════════════════════════════════════════════════ */
+
+export const lgDelay = {
+  id: 'lg-delay',
+  name: 'The Four-Hour Delay',
+  family: 'Value',
+  tagline: 'The day the membership pays for itself',
+  desc:
+    'Lounge access is worth nothing on a smooth day and everything on a bad one. This runs a delay: ' +
+    'the gate slips from 14:20 to 18:35 in four announcements, and each slip adds what the terminal ' +
+    'would have charged for a seat, a meal and wifi. By the third announcement the membership has ' +
+    'paid for itself, and the figure is on screen.',
+  pros: [
+    'Frames the benefit around the moment it is actually used',
+    'The running total is the most concrete argument for the tier',
+    'Every traveller has had this exact day',
+  ],
+  cons: ['Leads with an unpleasant scenario', 'Terminal prices vary by airport'],
+  scores: { story: 5, motion: 5, perf: 5, mobile: 4, brand: 5, ease: 4 },
+  build: (uid) => {
+    const dur = 12;
+    const slips = [
+      ['14:20', 'On time', 0, 'Boarding as scheduled'],
+      ['15:40', 'Delayed 80 min', 14, 'A seat, and somewhere to put a laptop'],
+      ['17:05', 'Delayed 2h 45', 32, 'A hot meal instead of a terminal sandwich'],
+      ['18:35', 'Delayed 4h 15', 58, 'Wifi that holds a call'],
+    ];
+    const inner = `
+    ${bg(uid, 574, 642)}
+    ${glow(287, 200, 230, uid)}
+    ${m(34, 48, 'LIS \u2192 SIN \u00b7 GATE 24', { size: 9.5, op: 0.5 })}
+    ${t(34, 84, 'The day it pays for itself', { size: 21 })}
+    ${slips.map(([time, status, cost, note], i) => {
+      const y = 116 + i * 104;
+      const on = 0.06 + i * 0.17;
+      const bad = i > 0;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.05).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${dcard(34, y, 506, 86, { r: 13 })}
+        <rect x="34" y="${y}" width="4" height="86" rx="2" fill="${bad ? RD : GRN}"/>
+        ${t(58, y + 34, time, { size: 22 })}
+        ${m(58, y + 58, status, { size: 9.5, op: 0.55, fill: bad ? RD : GRN })}
+        ${t(168, y + 32, note, { size: 12.5, op: 0.8 })}
+        ${cost ? `${m(168, y + 56, 'WOULD HAVE COST', { size: 8.5, op: 0.4 })}
+          ${t(516, y + 52, `$${cost}`, { size: 24, anchor: 'end', fill: O })}` : `
+          ${m(516, y + 52, 'NO COST', { size: 9.5, anchor: 'end', op: 0.4 })}`}
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.76;0.84;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${dcard(34, 542, 506, 74, { r: 14, fill: 'rgba(255,83,20,0.14)', stroke: O, sw: 2 })}
+      ${m(58, 572, 'ONE DELAYED FLIGHT', { size: 9, op: 0.6 })}
+      ${t(58, 600, 'covered the membership, twice over', { size: 14 })}
+      ${t(516, 592, '$104', { size: 28, anchor: 'end', fill: O })}
+    </g>`;
+    return { svg: wL(inner), pills: noPills };
+  },
+};
+
+export const lgQueue = {
+  id: 'lg-queue',
+  name: 'The Queue You Skip',
+  family: 'Comparison',
+  tagline: 'Two lines, one clock, forty minutes apart',
+  desc:
+    'Two security lanes side by side with the same clock running on both. The general lane advances ' +
+    'one traveller at a time and stalls; the fast-track lane clears in four. It is the least abstract ' +
+    'possible statement of the benefit, and the stalled lane is doing all the work.',
+  pros: [
+    'Zero explanation needed — the two lanes say everything',
+    'Time, not money, which is the currency this tier actually sells',
+    'Holds up as a still frame',
+  ],
+  cons: ['A very literal treatment', 'Queue metaphors are common in travel marketing'],
+  scores: { story: 4, motion: 5, perf: 5, mobile: 4, brand: 4, ease: 5 },
+  build: (uid) => {
+    const dur = 11;
+    const person = (x, y, col, op = 1) => `
+      <g transform="translate(${x} ${y})" opacity="${op}">
+        <circle cy="-9" r="6" fill="${col}"/>
+        <path d="M -7 8 q 0 -12 7 -12 q 7 0 7 12 z" fill="${col}"/>
+      </g>`;
+    const inner = `
+    ${bg(uid, 574, 642)}
+    ${glow(287, 220, 230, uid)}
+    ${m(34, 48, 'SECURITY \u00b7 TERMINAL 1', { size: 9.5, op: 0.5 })}
+    ${t(34, 84, 'Same clock, two lanes', { size: 21 })}
+
+    ${dcard(34, 112, 240, 420, { r: 14 })}
+    ${m(54, 140, 'GENERAL', { size: 9, op: 0.5 })}
+    ${Array.from({ length: 11 }, (_, i) => person(154, 180 + i * 32, 'rgba(255,255,255,0.35)')).join('')}
+    <g>
+      ${person(154, 180, O_SOFT)}
+      <animateTransform attributeName="transform" type="translate" values="0 0;0 -44;0 -44"
+        keyTimes="0;0.34;1" dur="${dur}s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0 0 1 1"/>
+    </g>
+    ${m(154, 560, '38 MIN', { size: 13, anchor: 'middle', op: 0.75, fill: RD })}
+    ${m(154, 582, 'and still queuing', { size: 9, anchor: 'middle', op: 0.4 })}
+
+    ${dcard(300, 112, 240, 420, { r: 14, fill: 'rgba(255,83,20,0.1)', stroke: O, sw: 2 })}
+    ${m(320, 140, 'FAST TRACK', { size: 9, op: 0.7, fill: O })}
+    ${Array.from({ length: 4 }, (_, i) => `
+      <g opacity="1">
+        ${person(420, 180 + i * 32, O)}
+        <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;${(0.1 + i * 0.08).toFixed(3)};${(0.14 + i * 0.08).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      </g>`).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.42;0.48;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${gtick(420, 300, '', { fill: GRN_LIT })}
+      ${t(420, 340, 'Through', { size: 15, anchor: 'middle', fill: GRN_LIT })}
+    </g>
+    ${m(420, 560, '4 MIN', { size: 13, anchor: 'middle', op: 0.9, fill: GRN_LIT })}
+    ${m(420, 582, 'airside, coffee in hand', { size: 9, anchor: 'middle', op: 0.4 })}
+
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.6;0.68;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${dcard(34, 596, 506, 22, { r: 11, fill: 'transparent', stroke: 'transparent', sw: 0 })}
+      ${m(287, 612, '34 MINUTES, EVERY DEPARTURE', { size: 10, anchor: 'middle', op: 0.6, fill: O })}
+    </g>`;
+    return { svg: wL(inner), pills: noPills };
+  },
+};
+
+export const lgNetwork = {
+  id: 'lg-network',
+  name: 'Where It Works',
+  family: 'Coverage',
+  tagline: 'Named airports, not a count',
+  desc:
+    'Every lounge programme quotes a number of locations and none of them tell you whether your ' +
+    'airport is in it. This names them — Lisbon, Madrid, Heathrow, Changi, Dubai, Narita — with the ' +
+    'terminal and the lounge, arriving one at a time. A named list is checkable; a count is not.',
+  pros: [
+    'Checkable against the reader\u2019s own route, which a count never is',
+    'Terminal-level detail signals a real programme rather than a rebadged one',
+    'Easy to extend as the network grows',
+  ],
+  cons: ['Needs the real lounge list to stay accurate', 'Invites the question about airports not listed'],
+  scores: { story: 4, motion: 4, perf: 5, mobile: 5, brand: 4, ease: 4 },
+  build: (uid) => {
+    const dur = 12;
+    const ports = [
+      ['LIS', 'Lisbon', 'T1 \u00b7 ANA Lounge'],
+      ['MAD', 'Madrid', 'T4S \u00b7 Sala VIP'],
+      ['LHR', 'Heathrow', 'T5 \u00b7 Aspire'],
+      ['SIN', 'Changi', 'T3 \u00b7 SATS Premier'],
+      ['DXB', 'Dubai', 'T3 \u00b7 Marhaba'],
+      ['NRT', 'Narita', 'T1 \u00b7 IASS'],
+    ];
+    const inner = `
+    ${bg(uid, 574, 642)}
+    ${glow(287, 240, 240, uid)}
+    ${m(34, 48, 'LOUNGE NETWORK', { size: 9.5, op: 0.5 })}
+    ${t(34, 84, 'Named, not counted', { size: 21 })}
+    ${ports.map(([cc, city, lounge], i) => {
+      const y = 116 + i * 74;
+      const on = 0.05 + i * 0.12;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.045).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        <animateTransform attributeName="transform" type="translate" values="16 0;0 0;0 0"
+          keyTimes="0;${(on + 0.045).toFixed(3)};1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${dcard(34, y, 506, 58, { r: 12 })}
+        ${dcard(50, y + 11, 56, 36, { r: 9, fill: 'rgba(255,83,20,0.16)', stroke: 'rgba(255,83,20,0.4)' })}
+        ${t(78, y + 35, cc, { size: 15, anchor: 'middle', fill: O })}
+        ${t(124, y + 27, city, { size: 14 })}
+        ${m(124, y + 45, lounge, { size: 9.5, op: 0.45 })}
+        ${gtick(508, y + 29, '', { fill: GRN_LIT })}
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.8;0.88;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${m(34, 586, 'AND 1,200 MORE \u2014 THE FULL LIST IS PUBLISHED, NOT SUMMARISED', { size: 9.5, op: 0.55, fill: O })}
+      ${m(34, 610, 'SEARCH YOUR AIRPORT BEFORE YOU BUY', { size: 9, op: 0.35 })}
+    </g>`;
+    return { svg: wL(inner), pills: noPills };
+  },
+};
+
+/* ══ NOMAD · 7–9 ════════════════════════════════════════════════════ */
+
+export const nmMonthEnd = {
+  id: 'nm-monthend',
+  name: 'The Month That Does Not End',
+  family: 'Value',
+  tagline: 'Data rolling forward instead of expiring',
+  desc:
+    'The quiet cruelty of travel data is the expiry date. Three months run side by side: unused ' +
+    'gigabytes roll forward instead of vanishing, and the balance grows through a quiet month rather ' +
+    'than resetting to zero. For somebody living out of a bag this is the difference between a plan ' +
+    'and a subscription they resent.',
+  pros: [
+    'Attacks expiry, which is the most disliked mechanic in the category',
+    'The growing balance is a genuinely pleasant thing to watch',
+    'Directly relevant to a nomad rather than a holiday traveller',
+  ],
+  cons: ['Only works if rollover is actually the policy', 'Three-month timeline is a lot of structure'],
+  scores: { story: 5, motion: 4, perf: 5, mobile: 4, brand: 5, ease: 3 },
+  build: (uid) => {
+    const dur = 12;
+    const months = [
+      ['MARCH', 'Bangkok, mostly wifi', 20, 6, 14],
+      ['APRIL', 'Lisbon, working from cafés', 20, 23, 11],
+      ['MAY', 'Split, tethering a laptop', 20, 28, 3],
+    ];
+    const inner = `
+    ${bg(uid, 574, 656)}
+    ${glow(287, 240, 240, uid)}
+    ${m(34, 48, 'ROLLING BALANCE', { size: 9.5, op: 0.5 })}
+    ${t(34, 84, 'Nothing expires', { size: 21 })}
+    ${months.map(([mo, note, add, used, left], i) => {
+      const y = 116 + i * 152;
+      const on = 0.06 + i * 0.22;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.06).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${dcard(34, y, 506, 132, { r: 14 })}
+        ${m(58, y + 30, mo, { size: 10, op: 0.55, fill: O })}
+        ${m(58, y + 50, note, { size: 9.5, op: 0.38 })}
+        ${t(516, y + 44, `${left} GB`, { size: 28, anchor: 'end', fill: O })}
+        ${m(516, y + 62, 'CARRIED FORWARD', { size: 8.5, anchor: 'end', op: 0.4 })}
+        <rect x="58" y="${y + 80}" width="458" height="10" rx="5" fill="rgba(255,255,255,0.08)"/>
+        <rect x="58" y="${y + 80}" width="0" height="10" rx="5" fill="${O}">
+          <animate attributeName="width" values="0;${Math.round((used / (add + left)) * 458)};${Math.round((used / (add + left)) * 458)}"
+            keyTimes="0;${(on + 0.14).toFixed(3)};1" dur="${dur}s" repeatCount="indefinite"
+            calcMode="spline" keySplines="0.4 0 0.2 1;0 0 1 1"/>
+        </rect>
+        ${m(58, y + 112, `+${add} GB ADDED \u00b7 ${used} GB USED`, { size: 9, op: 0.42 })}
+        ${m(516, y + 112, 'NO RESET', { size: 9, anchor: 'end', op: 0.55, fill: GRN_LIT })}
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.8;0.88;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${m(34, 600, 'A QUIET MONTH IS NOT A WASTED ONE', { size: 10, op: 0.6, fill: O })}
+      ${m(34, 624, 'THE BALANCE KEEPS GOING WHERE YOU DO', { size: 9, op: 0.35 })}
+    </g>`;
+    return { svg: wN(inner), pills: noPills };
+  },
+};
+
+export const nmCall = {
+  id: 'nm-call',
+  name: 'The Call That Holds',
+  family: 'Proof',
+  tagline: 'Ninety minutes of video, across two cities',
+  desc:
+    'A nomad is judged by whether the call drops. This runs a ninety-minute video call with the ' +
+    'jitter and bitrate plotted, straight through a move from an apartment to a café and a carrier ' +
+    'handover in the middle. The line never breaks. It is the one proof this audience actually cares ' +
+    'about.',
+  pros: [
+    'Targets the exact failure that loses this customer their work',
+    'A handover mid-call and no drop is a strong, specific claim',
+    'Bitrate and jitter are the right metrics for this audience',
+  ],
+  cons: ['Needs a real captured session to be honest', 'Charts are less warm than the rest of this page'],
+  scores: { story: 5, motion: 5, perf: 5, mobile: 4, brand: 4, ease: 3 },
+  build: (uid) => {
+    const dur = 12;
+    const pts = Array.from({ length: 46 }, (_, i) =>
+      2100 + Math.round(240 * Math.sin(i * 0.7)) + (i === 22 ? -160 : 0));
+    const x0 = 46, x1 = 528, y0 = 400, yTop = 200;
+    const px = (i) => x0 + (i / 45) * (x1 - x0);
+    const py = (v) => y0 - ((v - 1600) / 900) * (y0 - yTop);
+    const inner = `
+    ${bg(uid, 574, 656)}
+    ${glow(287, 300, 240, uid)}
+    ${m(34, 48, 'ONE CALL \u00b7 91 MINUTES', { size: 9.5, op: 0.5 })}
+    ${t(34, 84, 'It did not drop', { size: 21 })}
+    ${dcard(34, 108, 506, 52, { r: 12 })}
+    ${gtick(62, 134, 'Apartment, Lisbon \u2014 then a caf\u00e9, same call', { fill: GRN_LIT, size: 12 })}
+
+    ${dcard(34, 176, 506, 258, { r: 14 })}
+    ${m(46, 198, 'BITRATE \u00b7 kbps', { size: 8.5, op: 0.4 })}
+    ${[1800, 2100, 2400].map((v) => `
+      <line x1="${x0}" y1="${py(v).toFixed(0)}" x2="${x1}" y2="${py(v).toFixed(0)}"
+        stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      ${m(x1 + 4, py(v) + 3.5, `${v}`, { size: 8, op: 0.3 })}`).join('')}
+    <polyline points="${pts.map((v, i) => `${px(i).toFixed(0)} ${py(v).toFixed(0)}`).join(' ')}"
+      fill="none" stroke="${O}" stroke-width="2.6" stroke-dasharray="1000" stroke-dashoffset="1000">
+      <animate attributeName="stroke-dashoffset" values="1000;0;0" keyTimes="0;0.66;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+    </polyline>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.34;0.4;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      <line x1="${px(22).toFixed(0)}" y1="${yTop}" x2="${px(22).toFixed(0)}" y2="${y0}"
+        stroke="${AMB}" stroke-width="1.6" stroke-dasharray="4 5"/>
+      ${m(px(22).toFixed(0), yTop - 8, 'CARRIER HANDOVER', { size: 8.5, anchor: 'middle', op: 0.7, fill: AMB })}
+      ${m(px(22).toFixed(0) - 4, py(1700) + 4, '38 ms, no frame lost', { size: 8.5, anchor: 'end', op: 0.5 })}
+    </g>
+
+    ${[['DROPS', '0', GRN_LIT], ['AVG JITTER', '6 ms', W], ['HANDOVERS', '1', AMB]].map(([k, v, c], i) => `
+      <g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${(0.7 + i * 0.06).toFixed(3)};${(0.76 + i * 0.06).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${dcard(34 + i * 172, 452, 162, 82, { r: 12 })}
+        ${m(50 + i * 172, 478, k, { size: 8.5, op: 0.42 })}
+        ${t(50 + i * 172, 514, v, { size: 26, fill: c })}
+      </g>`).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.88;0.94;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${m(34, 578, 'THE ONLY METRIC THIS AUDIENCE ACTUALLY CHECKS', { size: 9.5, op: 0.55, fill: O })}
+    </g>`;
+    return { svg: wN(inner), pills: noPills };
+  },
+};
+
+export const nmTaxHome = {
+  id: 'nm-numbers',
+  name: 'Your Number, Everywhere',
+  family: 'Identity',
+  tagline: 'The bank still recognises you',
+  desc:
+    'The practical nightmare of long-term travel is not data — it is a bank that texts a code to a ' +
+    'number you can no longer receive. Four accounts are shown still reaching the same number across ' +
+    'four countries: bank, government portal, work SSO, and a delivery service. Nothing else on this ' +
+    'page addresses it.',
+  pros: [
+    'Names a real, badly-served problem that genuinely traps long-term travellers',
+    'Turns identity continuity into a product benefit',
+    'Zero overlap with any other option on the board',
+  ],
+  cons: ['Depends on keeping a home number reachable, which needs explaining', 'Least visual idea on the board'],
+  scores: { story: 5, motion: 3, perf: 5, mobile: 5, brand: 4, ease: 3 },
+  build: (uid) => {
+    const dur = 11;
+    const accts = [
+      ['Bank', 'Two-factor code', 'Delivered in Bangkok'],
+      ['Government portal', 'Identity confirmation', 'Delivered in Lisbon'],
+      ['Work sign-on', 'Device approval', 'Delivered in Split'],
+      ['Delivery service', 'Courier verification', 'Delivered in Mexico City'],
+    ];
+    const inner = `
+    ${bg(uid, 574, 656)}
+    ${glow(287, 260, 240, uid)}
+    ${m(34, 48, 'IDENTITY CONTINUITY', { size: 9.5, op: 0.5 })}
+    ${t(34, 84, 'The bank still finds you', { size: 21 })}
+    ${dcard(34, 110, 506, 66, { r: 13, fill: 'rgba(255,83,20,0.1)', stroke: O, sw: 2 })}
+    ${m(58, 138, 'YOUR NUMBER, UNCHANGED', { size: 9, op: 0.6 })}
+    ${t(58, 164, '+351 9\u2022\u2022 \u2022\u2022\u2022 412', { size: 18, fill: O })}
+    ${m(516, 156, 'KEPT', { size: 10, anchor: 'end', op: 0.7, fill: GRN_LIT })}
+    ${accts.map(([nm, what, where], i) => {
+      const y = 198 + i * 92;
+      const on = 0.08 + i * 0.15;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.05).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${dcard(34, y, 506, 74, { r: 12 })}
+        ${t(58, y + 30, nm, { size: 14 })}
+        ${m(58, y + 50, what, { size: 9.5, op: 0.42 })}
+        ${gtick(370, y + 38, '', { fill: GRN_LIT })}
+        ${m(516, y + 42, where, { size: 9.5, anchor: 'end', op: 0.55, fill: GRN_LIT })}
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.8;0.88;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${m(34, 596, 'FOUR COUNTRIES. NOT ONE LOCKED ACCOUNT.', { size: 10, op: 0.6, fill: O })}
+      ${m(34, 620, 'THE FAILURE THAT ACTUALLY SENDS PEOPLE HOME', { size: 9, op: 0.35 })}
+    </g>`;
+    return { svg: wN(inner), pills: noPills };
+  },
+};
+
+/* ══ KYC · 7–9 ══════════════════════════════════════════════════════ */
+
+export const kyWhatWeKeep = {
+  id: 'ky-keep',
+  name: 'What We Keep',
+  family: 'Transparency',
+  tagline: 'And, more usefully, what we delete',
+  desc:
+    'A verification page that lists what is checked is ordinary. This lists what is retained and for ' +
+    'how long, with the discarded items visibly struck out — the selfie, the document scan, the ' +
+    'liveness video, all gone within minutes, leaving a pass or fail and a date. Publishing the ' +
+    'deletion side is the only part a privacy-conscious buyer will believe.',
+  pros: [
+    'Answers the question a privacy-minded buyer actually has',
+    'The struck-out items are more persuasive than any assurance',
+    'Sets a retention policy in public, which is hard to walk back',
+  ],
+  cons: ['Legal and compliance must agree to every line', 'Naming a selfie reminds people one was taken'],
+  scores: { story: 5, motion: 4, perf: 5, mobile: 5, brand: 5, ease: 3 },
+  build: (uid) => {
+    const dur = 11;
+    const rows = [
+      ['Selfie image', 'Deleted after 4 minutes', false],
+      ['Document scan', 'Deleted after 4 minutes', false],
+      ['Liveness video', 'Never stored at all', false],
+      ['Pass or fail', 'Kept \u2014 required by law', true],
+      ['Verification date', 'Kept \u2014 required by law', true],
+    ];
+    const inner = `
+    ${bg(uid, 574, 432, GRN)}
+    ${glow(287, 190, 210, uid)}
+    ${m(30, 44, 'DATA RETENTION', { size: 9.5, op: 0.5 })}
+    ${t(30, 78, 'What we keep, and what goes', { size: 19 })}
+    ${rows.map(([nm, note, kept], i) => {
+      const y = 102 + i * 56;
+      const on = 0.06 + i * 0.12;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.05).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${dcard(30, y, 514, 44, { r: 11 })}
+        <rect x="30" y="${y}" width="3.5" height="44" rx="2" fill="${kept ? GRN : 'rgba(255,255,255,0.2)'}"/>
+        ${t(54, y + 27, nm, { size: 13, op: kept ? 1 : 0.5 })}
+        ${!kept ? `<line x1="52" y1="${y + 22}" x2="${54 + nm.length * 7.4}" y2="${y + 22}"
+          stroke="${RD}" stroke-width="2" stroke-linecap="round"/>` : ''}
+        ${m(520, y + 27, note, { size: 9.5, anchor: 'end', op: kept ? 0.6 : 0.45, fill: kept ? GRN_LIT : RD })}
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.72;0.8;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${m(30, 404, 'THREE OF FIVE ARE GONE BEFORE YOU CLOSE THE TAB', { size: 9.5, op: 0.6, fill: GRN_LIT })}
+    </g>`;
+    return { svg: wK(inner), pills: noPills };
+  },
+};
+
+export const kyNinetySeconds = {
+  id: 'ky-ninety',
+  name: 'Ninety Seconds',
+  family: 'Speed',
+  tagline: 'The whole check, timed',
+  desc:
+    'Verification is the step people abandon, and the reason is that it feels open-ended. This ' +
+    'removes the uncertainty by timing it: document, face, liveness, decision — four stages with real ' +
+    'seconds against each, ending under ninety. The only thing this audience wants to know is how ' +
+    'long it takes, and nothing else on the board tells them.',
+  pros: [
+    'Answers the abandonment question directly',
+    'A running total is the cheapest possible reassurance',
+    'Sets an internal target the funnel can be measured against',
+  ],
+  cons: ['A slow day makes the claim false', 'No privacy argument at all'],
+  scores: { story: 4, motion: 5, perf: 5, mobile: 5, brand: 4, ease: 4 },
+  build: (uid) => {
+    const dur = 10;
+    const stages = [['Document', 22], ['Face match', 18], ['Liveness', 26], ['Decision', 19]];
+    let acc = 0;
+    const cum = stages.map(([, s]) => (acc += s));
+    const inner = `
+    ${bg(uid, 574, 432, GRN)}
+    ${glow(287, 190, 210, uid)}
+    ${m(30, 44, 'MEASURED, NOT ESTIMATED', { size: 9.5, op: 0.5 })}
+    ${t(30, 78, 'Eighty-five seconds', { size: 19 })}
+    ${stages.map(([nm, secs], i) => {
+      const y = 104 + i * 62;
+      const on = 0.06 + i * 0.16;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.05).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${dcard(30, y, 514, 50, { r: 11 })}
+        ${gtick(56, y + 25, '', { fill: GRN_LIT })}
+        ${t(82, y + 30, nm, { size: 13.5 })}
+        <rect x="250" y="${y + 21}" width="200" height="8" rx="4" fill="rgba(255,255,255,0.09)"/>
+        <rect x="250" y="${y + 21}" width="0" height="8" rx="4" fill="${GRN}">
+          <animate attributeName="width" values="0;${Math.round((secs / 30) * 200)};${Math.round((secs / 30) * 200)}"
+            keyTimes="0;${(on + 0.1).toFixed(3)};1" dur="${dur}s" repeatCount="indefinite"
+            calcMode="spline" keySplines="0.4 0 0.2 1;0 0 1 1"/>
+        </rect>
+        ${m(520, y + 30, `${secs}s`, { size: 11, anchor: 'end', op: 0.7 })}
+        ${m(250, y + 44, `${cum[i]}s elapsed`, { size: 8.5, op: 0.32 })}
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.76;0.84;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${m(30, 404, 'MEDIAN ACROSS 4,100 VERIFICATIONS \u2014 NOT A BEST CASE', { size: 9.5, op: 0.6, fill: GRN_LIT })}
+    </g>`;
+    return { svg: wK(inner), pills: noPills };
+  },
+};
+
+export const kyRefused = {
+  id: 'ky-refused',
+  name: 'Who We Turn Away',
+  family: 'Transparency',
+  tagline: 'The check has teeth, and here is the evidence',
+  desc:
+    'A verification badge is only worth something if it is ever withheld. This publishes the refusal ' +
+    'rate and the reasons — sanctions match, document failure, duplicate identity, liveness failure — ' +
+    'with the count beside each. It is the only option on the board that proves the check is real ' +
+    'rather than decorative.',
+  pros: [
+    'Proves the check is enforced, which every competitor asserts and none demonstrates',
+    'Refusal reasons make the process legible',
+    'The strongest trust signal available on this page',
+  ],
+  cons: [
+    'Publishing a refusal rate is a commitment to keep publishing it',
+    'A high rate reads badly; a low one reads as a rubber stamp',
+  ],
+  scores: { story: 5, motion: 3, perf: 5, mobile: 5, brand: 5, ease: 2 },
+  build: (uid) => {
+    const dur = 11;
+    const reasons = [
+      ['Document could not be verified', 142],
+      ['Liveness check failed', 96],
+      ['Duplicate identity', 51],
+      ['Sanctions or watchlist match', 18],
+    ];
+    const total = 307;
+    const inner = `
+    ${bg(uid, 574, 432, GRN)}
+    ${glow(287, 190, 210, uid)}
+    ${m(30, 44, 'LAST 90 DAYS', { size: 9.5, op: 0.5 })}
+    ${t(30, 78, 'We refused 307 applications', { size: 19 })}
+    ${reasons.map(([nm, n], i) => {
+      const y = 104 + i * 58;
+      const on = 0.06 + i * 0.14;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.05).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${dcard(30, y, 514, 46, { r: 11 })}
+        <rect x="30" y="${y}" width="3.5" height="46" rx="2" fill="${RD}"/>
+        ${t(54, y + 28, nm, { size: 13, op: 0.85 })}
+        <rect x="360" y="${y + 19}" width="${Math.round((n / 150) * 110)}" height="8" rx="4" fill="${RD}" opacity="0.6"/>
+        ${m(520, y + 28, `${n}`, { size: 12, anchor: 'end', op: 0.75, fill: RD })}
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.72;0.8;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${m(30, 386, `${total} REFUSED OF 9,420 \u00b7 3.3%`, { size: 10, op: 0.6, fill: GRN_LIT })}
+      ${m(30, 408, 'A BADGE NOBODY IS EVER REFUSED IS NOT A CHECK', { size: 9, op: 0.35 })}
+    </g>`;
+    return { svg: wK(inner), pills: noPills };
+  },
+};
+
+/* ── registries (declared last: they reference every variant above) ── */
+export const LOUNGE_VARIANTS = [lgCurrent, lgTwoLanes, lgDoor, lgItinerary, lgCost, lgMap, lgUpgrade, lgDelay, lgQueue, lgNetwork];
+export const NOMAD_VARIANTS = [nmCurrent, nmCities, nmLockout, nmYear, nmDesk, nmPassport, nmClock, nmMonthEnd, nmCall, nmTaxHome];
+export const KYC_VARIANTS = [kyCurrent, kyFourChecks, kyTwoDoors, kyLiveness, kySealed,
+  kyRegistry, kyCommunity, kyWhatWeKeep, kyNinetySeconds, kyRefused];

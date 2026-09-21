@@ -421,4 +421,368 @@ export const drawer = {
   },
 };
 
-export const WHAT_VARIANTS = [whatCurrent, etch, twoWays, drawer];
+
+/* ══════════════════════════════════════════════════════════════════
+   4–9 · six further directions for "What is an eSIM?"
+   Same 640 × 460 box, same orange system, same two floating pills.
+   ══════════════════════════════════════════════════════════════════ */
+
+/* a small reusable ticket/QR block */
+const qrBlock = (x, y, s, col = G.ink) => {
+  const cells = [
+    '1110111', '1000101', '1011101', '0001000',
+    '1101011', '1000001', '1110111',
+  ];
+  return `<g transform="translate(${x} ${y}) scale(${s})">${cells.map((row, r) =>
+    row.split('').map((c, i) => (c === '1'
+      ? `<rect x="${i * 7}" y="${r * 7}" width="6" height="6" fill="${col}"/>` : '')).join('')).join('')}</g>`;
+};
+
+/* ─── 4 · NO POST OFFICE ─────────────────────────────────────────── */
+export const noPostOffice = {
+  id: 'what-nopost',
+  name: 'No Post Office',
+  family: 'Comparison, honestly',
+  tagline: 'Four days of plastic against thirty seconds of eSIM',
+  desc:
+    'The live panel puts a plastic SIM beside a phone and leaves the viewer to infer the point. ' +
+    'This makes the comparison the point: the plastic lane runs through order, ship, wait, collect, ' +
+    'swap — five stations and a four-day clock — while the eSIM lane finishes one station in before ' +
+    'the plastic lane has left the building. The idea is the same as today, argued rather than implied.',
+  pros: [
+    'Keeps the live comparison but gives it a cost the viewer can feel',
+    'The two clocks running at different speeds do the persuading, not the copy',
+    'Explains why an eSIM matters to somebody who does not care what one is',
+  ],
+  cons: ['Busiest option on the board', 'Two-lane layouts compress badly under 400px'],
+  scores: { story: 5, motion: 5, perf: 4, mobile: 3, brand: 4, ease: 3 },
+  build: (uid) => {
+    const dur = 12;
+    const plastic = ['Order', 'Ship', 'Wait', 'Collect', 'Swap'];
+    const x0 = 96, x1 = 552;
+    const px = (i, n) => x0 + (i / (n - 1)) * (x1 - x0);
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 150, 250, uid)}
+    ${label(96, 62, 'A plastic SIM, end to end', { size: 15, op: 0.5 })}
+    <line x1="${x0}" y1="128" x2="${x1}" y2="128" stroke="${G.line}" stroke-width="2.5"/>
+    ${plastic.map((s, i) => `
+      <g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${(0.04 + i * 0.13).toFixed(3)};${(0.08 + i * 0.13).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        <circle cx="${px(i, 5)}" cy="128" r="7" fill="${G.white}" stroke="${G.gray}" stroke-width="2.5"/>
+        ${mono(px(i, 5), 112, s, { size: 10, anchor: 'middle', op: 0.5 })}
+      </g>`).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.56;0.6;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${label(x1 + 14, 134, '4 days', { size: 16, fill: G.red })}
+    </g>
+
+    ${label(96, 250, 'An eSIM, end to end', { size: 15, fill: G.orange })}
+    <line x1="${x0}" y1="316" x2="${x1}" y2="316" stroke="${G.line}" stroke-width="2.5"/>
+    <line x1="${x0}" y1="316" x2="${px(1, 5)}" y2="316" stroke="${G.orange}" stroke-width="4"/>
+    ${['Scan', 'Live'].map((s, i) => `
+      <g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${(0.04 + i * 0.06).toFixed(3)};${(0.07 + i * 0.06).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        <circle cx="${px(i, 5)}" cy="316" r="8" fill="${G.orange}"/>
+        ${mono(px(i, 5), 300, s, { size: 10, anchor: 'middle', op: 0.6, fill: G.orange })}
+      </g>`).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.14;0.18;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${label(px(1, 5) + 22, 322, '30 seconds', { size: 16, fill: G.orange })}
+      ${mono(px(1, 5) + 22, 342, 'and the plastic lane has not shipped yet', { size: 10, op: 0.4 })}
+    </g>
+    ${qrBlock(486, 372, 1.1, G.ink)}
+    ${mono(552, 424, 'the whole supply chain', { size: 10, anchor: 'end', op: 0.32 })}`;
+    return { svg: gWrap(inner), pills: pillsA('30s, not 4 days') };
+  },
+};
+
+/* ─── 5 · THE PROFILE ────────────────────────────────────────────── */
+export const theProfile = {
+  id: 'what-profile',
+  name: 'The Profile',
+  family: 'Product truth',
+  tagline: 'What actually arrives, and where it goes',
+  desc:
+    'An eSIM is a file written to a chip that is already soldered into the phone. This says exactly ' +
+    'that: a profile descends into the device, lands on the embedded chip, and the carrier details ' +
+    'fill in field by field — operator, ICCID, APN, status. It is the most literal option on the ' +
+    'board and the only one that would satisfy somebody technical.',
+  pros: [
+    'Accurate — this is genuinely what an eSIM is',
+    'The filling fields give it a real sense of completion',
+    'Earns credibility with the buyer who reads specifications',
+  ],
+  cons: ['Least emotional option here', 'Field names mean nothing to a holiday traveller'],
+  scores: { story: 4, motion: 4, perf: 5, mobile: 4, brand: 4, ease: 4 },
+  build: (uid) => {
+    const dur = 10;
+    const fields = [
+      ['OPERATOR', 'Openline · Tier-1'],
+      ['ICCID', '8944 4771 0293 8841'],
+      ['APN', 'internet.openline'],
+      ['STATUS', 'Enabled'],
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 230, 260, uid)}
+    ${label(96, 70, 'A profile, written to a chip already in the phone', { size: 15, op: 0.5 })}
+
+    <!-- the descending profile -->
+    <g>
+      ${card(232, 104, 176, 62, { r: 12, fill: G.white, stroke: G.orange, sw: 2 })}
+      ${mono(252, 130, 'PROFILE', { size: 9.5, op: 0.5 })}
+      ${label(252, 152, 'openline.esim', { size: 14 })}
+      <animateTransform attributeName="transform" type="translate" values="0 -40;0 0;0 0;0 14;0 14"
+        keyTimes="0;0.16;0.3;0.38;1" dur="${dur}s" repeatCount="indefinite" calcMode="spline"
+        keySplines="0.4 0 0.2 1;0 0 1 1;0.4 0 0.2 1;0 0 1 1"/>
+      <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.12;0.32;0.4;1"
+        dur="${dur}s" repeatCount="indefinite"/>
+    </g>
+
+    <!-- the embedded chip -->
+    ${card(240, 196, 160, 116, { r: 16, fill: G.ink, stroke: G.ink })}
+    ${mono(320, 222, 'eUICC', { size: 9.5, anchor: 'middle', fill: G.white, op: 0.55 })}
+    <g transform="translate(320 262)">
+      <rect x="-30" y="-22" width="60" height="44" rx="9" fill="${G.orange}" opacity="0.25"/>
+      <rect x="-30" y="-22" width="60" height="44" rx="9" fill="none" stroke="${G.orange}" stroke-width="2"/>
+      <rect x="-14" y="-9" width="28" height="18" rx="4" fill="none" stroke="${G.orange}" stroke-width="2" opacity="0.8"/>
+      <rect x="-30" y="-22" width="60" height="44" rx="9" fill="${G.orange}" opacity="0">
+        <animate attributeName="opacity" values="0;0;0.55;0;0" keyTimes="0;0.3;0.38;0.5;1" dur="${dur}s" repeatCount="indefinite"/>
+      </rect>
+    </g>
+    ${mono(320, 300, 'soldered in at the factory', { size: 9.5, anchor: 'middle', fill: G.white, op: 0.4 })}
+
+    <!-- the fields filling in -->
+    ${fields.map(([k, v], i) => `
+      <g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${(0.42 + i * 0.09).toFixed(3)};${(0.46 + i * 0.09).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${mono(430, 214 + i * 30, k, { size: 9, op: 0.42 })}
+        ${label(430, 232 + i * 30, v, { size: 12.5, fill: i === 3 ? G.orange : G.ink })}
+      </g>`).join('')}
+    ${mono(96, 424, 'nothing arrives in the post', { size: 10, op: 0.3 })}`;
+    return { svg: gWrap(inner), pills: pillsA('Written, not posted') };
+  },
+};
+
+/* ─── 6 · SHELF OF COUNTRIES ─────────────────────────────────────── */
+export const shelfOfCountries = {
+  id: 'what-shelf',
+  name: 'A Shelf of Countries',
+  family: 'Why it matters',
+  tagline: 'Plans stacked in the phone, none of them plastic',
+  desc:
+    'The strongest argument for an eSIM is not that it is digital — it is that you can hold many at ' +
+    'once. Six country plans sit stacked inside the phone and the active one lifts to the front as ' +
+    'the traveller moves: Portugal, then Japan, then Brazil. No swapping, nothing to lose, and the ' +
+    'previous plan is still there when you go back.',
+  pros: [
+    'Argues the benefit rather than defining the technology',
+    'Multiple simultaneous plans is the thing a plastic SIM genuinely cannot do',
+    'The stack is legible even as a still frame',
+  ],
+  cons: ['Does not explain what an eSIM is, which is the section heading', 'Card stacks are a familiar device'],
+  scores: { story: 5, motion: 5, perf: 4, mobile: 4, brand: 5, ease: 3 },
+  build: (uid) => {
+    const dur = 12;
+    const plans = [
+      ['Portugal', '5 GB · 30 days', G.orange],
+      ['Japan', '10 GB · 14 days', '#7C3AED'],
+      ['Brazil', '3 GB · 7 days', '#0EA5E9'],
+      ['Germany', '8 GB · 30 days', '#16A34A'],
+      ['Kenya', '2 GB · 14 days', G.amber],
+      ['Global', '20 GB · 90 days', G.ink],
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 240, 250, uid)}
+    ${label(96, 62, 'Six plans, one phone, nothing to swap', { size: 15, op: 0.5 })}
+    ${plans.map(([nm, meta, col], i) => {
+      const on = i / plans.length, off = (i + 1) / plans.length;
+      return `<g>
+        ${card(150 + i * 12, 300 - i * 34, 300, 56, { r: 12, fill: G.white, stroke: G.line })}
+        <rect x="${150 + i * 12}" y="${300 - i * 34}" width="5" height="56" rx="2.5" fill="${col}"/>
+        ${label(176 + i * 12, 326 - i * 34, nm, { size: 14 })}
+        ${mono(176 + i * 12, 344 - i * 34, meta, { size: 10, op: 0.42 })}
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1;0;0"
+            keyTimes="0;${on.toFixed(4)};${(on + 0.005).toFixed(4)};${off.toFixed(4)};${Math.min(off + 0.005, 1).toFixed(4)};1"
+            dur="${dur}s" repeatCount="indefinite" calcMode="discrete"/>
+          ${card(150 + i * 12, 300 - i * 34, 300, 56, { r: 12, fill: col, stroke: col })}
+          ${label(176 + i * 12, 326 - i * 34, nm, { size: 14, fill: G.white })}
+          ${mono(176 + i * 12, 344 - i * 34, meta, { size: 10, op: 0.8, fill: G.white })}
+          ${mono(420 + i * 12, 332 - i * 34, 'LIVE', { size: 9, anchor: 'end', fill: G.white, op: 0.9 })}
+        </g>
+      </g>`;
+    }).join('')}
+    ${mono(96, 424, 'the one you need is already installed', { size: 10, op: 0.32 })}`;
+    return { svg: gWrap(inner), pills: pillsA('Six at once') };
+  },
+};
+
+/* ─── 7 · SCAN IT ────────────────────────────────────────────────── */
+export const scanIt = {
+  id: 'what-scan',
+  name: 'Scan It',
+  family: 'Product truth',
+  tagline: 'The single gesture the whole product needs',
+  desc:
+    'One QR code, one camera frame, one confirmation. No comparison, no explanation, no plastic — ' +
+    'just the gesture, at the size it happens. It is the most confident option on the board because ' +
+    'it assumes the reader already knows what an eSIM is and only wants to know what they have to do.',
+  pros: [
+    'Answers the practical question instead of the definitional one',
+    'One idea, held at full size — easily the clearest option here',
+    'Works at any width, so mobile loses nothing',
+  ],
+  cons: ['Says nothing about what an eSIM is, under a heading that asks', 'Least informative option on the board'],
+  scores: { story: 4, motion: 4, perf: 5, mobile: 5, brand: 4, ease: 5 },
+  build: (uid) => {
+    const dur = 8;
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 230, 240, uid)}
+    ${card(180, 118, 280, 224, { r: 20, fill: G.white, stroke: G.line })}
+    ${qrBlock(258, 158, 3.3, G.ink)}
+    <!-- the scan sweep -->
+    <g>
+      <rect x="196" y="160" width="248" height="3" fill="${G.orange}" opacity="0.9"/>
+      <animateTransform attributeName="transform" type="translate" values="0 0;0 140;0 0;0 0"
+        keyTimes="0;0.45;0.9;1" dur="${dur}s" repeatCount="indefinite" calcMode="spline"
+        keySplines="0.4 0 0.2 1;0.4 0 0.2 1;0 0 1 1"/>
+      <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.45;0.52;1" dur="${dur}s" repeatCount="indefinite"/>
+    </g>
+    ${[[196, 160], [412, 160], [196, 300], [412, 300]].map(([x, y], i) => {
+      const sx = i % 2 ? -1 : 1, sy = i > 1 ? -1 : 1;
+      return `<path d="M ${x} ${y + 26 * sy} L ${x} ${y} L ${x + 26 * sx} ${y}" fill="none"
+        stroke="${G.orange}" stroke-width="3.5" stroke-linecap="round"/>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.52;0.58;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(180, 358, 280, 54, { r: 14, fill: G.orange, stroke: G.orange })}
+      <path d="M 212 385 l 7 7 l 13 -15" fill="none" stroke="${G.white}" stroke-width="3" stroke-linecap="round"/>
+      ${label(246, 391, 'Connected in Portugal', { size: 15, fill: G.white })}
+    </g>
+    ${label(320, 100, 'This is the entire install', { size: 15, anchor: 'middle', op: 0.5 })}`;
+    return { svg: gWrap(inner), pills: pillsA('One scan') };
+  },
+};
+
+/* ─── 8 · LANDED ─────────────────────────────────────────────────── */
+export const landed = {
+  id: 'what-landed',
+  name: 'Landed',
+  family: 'Why it matters',
+  tagline: 'The first ninety seconds in a new country',
+  desc:
+    'The moment the product is actually for: wheels down, airplane mode off, and a choice between ' +
+    'finding a shop, paying roaming, or the plan already sitting in the phone. Two lanes stall and ' +
+    'the third connects. It never defines an eSIM and does not need to — it shows the exact minute ' +
+    'the reader will remember.',
+  pros: [
+    'Anchored in a real moment rather than a technology',
+    'Names the two alternatives explicitly, which the live panel never does',
+    'The strongest emotional option on the board',
+  ],
+  cons: ['Three lanes is a lot of reading', 'Overlaps the Travel board directly above it'],
+  scores: { story: 5, motion: 4, perf: 4, mobile: 3, brand: 5, ease: 3 },
+  build: (uid) => {
+    const dur = 11;
+    const lanes = [
+      ['Find a shop', 'Queue, passport, 40 minutes', G.gray, 0.34, 'Still queuing'],
+      ['Turn on roaming', '$12 a day, no warning', G.red, 0.52, '$84 by Friday'],
+      ['Openline, already installed', 'Nothing to do', G.orange, 0.2, 'Online'],
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 120, 250, uid)}
+    <g transform="translate(96 74)">
+      <path d="M 0 0 l 22 -8 l 6 10 l 18 -4 l -4 12 l -20 6 z" fill="${G.ink}" opacity="0.7"/>
+    </g>
+    ${label(156, 78, 'Wheels down. Airplane mode off.', { size: 16 })}
+    ${mono(156, 98, 'THREE WAYS TO GET ONLINE', { size: 9.5, op: 0.4 })}
+
+    ${lanes.map(([nm, note, col, end, out], i) => {
+      const y = 152 + i * 84;
+      const last = i === 2;
+      return `<g>
+        ${card(96, y, 448, 66, { r: 14, fill: last ? G.wash : G.white, stroke: last ? G.orange : G.line, sw: last ? 2 : 1.5 })}
+        ${label(120, y + 28, nm, { size: 14 })}
+        ${mono(120, y + 48, note, { size: 10, op: 0.45 })}
+        <rect x="320" y="${y + 30}" width="140" height="6" rx="3" fill="${G.line}"/>
+        <rect x="320" y="${y + 30}" width="6" height="6" rx="3" fill="${col}">
+          <animate attributeName="width" values="6;${(140 * end).toFixed(0)};${(140 * end).toFixed(0)}"
+            keyTimes="0;${last ? '0.2' : '0.62'};1" dur="${dur}s" repeatCount="indefinite"
+            calcMode="spline" keySplines="0.4 0 0.2 1;0 0 1 1"/>
+        </rect>
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${last ? '0.22' : '0.64'};${last ? '0.27' : '0.69'};1"
+            dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+          ${label(520, y + 38, out, { size: 12, anchor: 'end', fill: col })}
+        </g>
+      </g>`;
+    }).join('')}
+    ${mono(96, 424, 'the third lane needed no shop, no forms and no roaming bill', { size: 10, op: 0.32 })}`;
+    return { svg: gWrap(inner), pills: pillsA('Online on landing') };
+  },
+};
+
+/* ─── 9 · NOTHING TO LOSE ────────────────────────────────────────── */
+export const nothingToLose = {
+  id: 'what-nolose',
+  name: 'Nothing To Lose',
+  family: 'Comparison, honestly',
+  tagline: 'The failure modes a plastic SIM has and an eSIM does not',
+  desc:
+    'Four things that go wrong with plastic — lost in a hotel room, snapped in an adapter, wrong ' +
+    'size for the phone, stuck in a drawer at home — struck through one at a time, against a single ' +
+    'line that cannot fail because there is no object. It argues by elimination, which is unusual ' +
+    'for this category and very hard to disagree with.',
+  pros: [
+    'Every item is a real experience the reader has had',
+    'Argues by elimination, so it never has to make a claim about itself',
+    'Cheapest option on the board to build',
+  ],
+  cons: ['Negative framing throughout', 'Does not show the product at all'],
+  scores: { story: 4, motion: 3, perf: 5, mobile: 5, brand: 4, ease: 5 },
+  build: (uid) => {
+    const dur = 10;
+    const fails = [
+      'Lost behind a hotel bed',
+      'Snapped in a cheap adapter',
+      'Wrong size for the new phone',
+      'Left in a drawer at home',
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 220, 250, uid)}
+    ${label(96, 66, 'Four ways a plastic SIM fails', { size: 15, op: 0.5 })}
+    ${fails.map((f, i) => {
+      const y = 118 + i * 52;
+      const on = 0.1 + i * 0.13;
+      return `<g>
+        ${card(96, y, 356, 40, { r: 10, fill: G.white, stroke: G.line })}
+        ${label(120, y + 26, f, { size: 13.5, op: 0.8 })}
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.04).toFixed(3)};1"
+            dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+          <line x1="112" y1="${y + 21}" x2="436" y2="${y + 21}" stroke="${G.red}" stroke-width="2.5" stroke-linecap="round"/>
+        </g>
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.62;0.68;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(96, 336, 448, 72, { r: 14, fill: G.wash, stroke: G.orange, sw: 2 })}
+      ${label(124, 368, 'An eSIM has none of these failure modes', { size: 15, fill: G.orange })}
+      ${mono(124, 390, 'BECAUSE THERE IS NO OBJECT', { size: 9.5, op: 0.45 })}
+    </g>
+    ${mono(480, 128, 'plastic', { size: 10, anchor: 'end', op: 0.35, fill: G.red })}`;
+    return { svg: gWrap(inner), pills: pillsA('No object to lose') };
+  },
+};
+
+export const WHAT_VARIANTS = [whatCurrent, etch, twoWays, drawer, noPostOffice,
+  theProfile, shelfOfCountries, scanIt, landed, nothingToLose];

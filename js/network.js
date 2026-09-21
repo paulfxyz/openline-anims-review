@@ -878,5 +878,528 @@ export const stack = {
   },
 };
 
-export const NET_HERO_VARIANTS = [netCurrent, handoff, uptime, arcs, race, mesh, hud];
-export const WHY_VARIANTS = [whyCurrent, sweep, failGrid, stack];
+
+/* ══ HERO · 7–9 · three further directions ═══════════════════════════ */
+
+/* ─── 7 · THE FLOOR ─────────────────────────────────────────────── */
+export const theFloor = {
+  id: 'net-floor',
+  name: 'The Floor',
+  family: 'Guarantee',
+  tagline: 'Not the best case — the worst one',
+  desc:
+    'Every network page on the internet shows a peak figure. This shows the floor: the slowest ' +
+    'measurement taken across a week, per carrier, with the guaranteed minimum drawn as a line ' +
+    'nothing drops below. It is the only claim on this board that a buyer can hold us to, which is ' +
+    'exactly why it is worth making.',
+  pros: [
+    'A floor is a promise; a peak is an advertisement',
+    'Differentiates immediately from every competitor hero',
+    'The line nothing crosses is legible without a legend',
+  ],
+  cons: ['Commits publicly to a number operations must hold', 'Lower headline figures than a peak claim'],
+  scores: { story: 5, motion: 4, perf: 5, mobile: 4, brand: 5, ease: 3 },
+  build: (uid) => {
+    const dur = 12, floor = 96;
+    const series = CARRIERS.map((c, ci) => ({
+      n: c.n,
+      pts: Array.from({ length: 14 }, (_, i) => floor + 22 + Math.round(58 * Math.abs(Math.sin(i * 0.9 + ci * 1.7))) ),
+    }));
+    const x0 = 106, x1 = 560, y0 = 340, yTop = 108, vMax = 260;
+    const px = (i) => x0 + (i / 13) * (x1 - x0);
+    const py = (v) => y0 - (v / vMax) * (y0 - yTop);
+    const cols = [G.orange, '#7C3AED', '#0EA5E9', G.amber];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(330, 210, 250, uid)}
+    ${label(106, 62, 'The slowest reading of the week, not the fastest', { size: 15, op: 0.5 })}
+    <line x1="${x0}" y1="${y0}" x2="${x1}" y2="${y0}" stroke="${G.line}" stroke-width="2"/>
+    ${[100, 160, 220].map((v) => `
+      <line x1="${x0}" y1="${py(v)}" x2="${x1}" y2="${py(v)}" stroke="${G.line}" stroke-width="1" opacity="0.55"/>
+      ${mono(x0 - 12, py(v) + 4, `${v}`, { size: 9, anchor: 'end', op: 0.35 })}`).join('')}
+    ${series.map((s, i) => `
+      <polyline points="${s.pts.map((v, k) => `${px(k).toFixed(0)} ${py(v).toFixed(0)}`).join(' ')}"
+        fill="none" stroke="${cols[i]}" stroke-width="2.2" opacity="0.75"
+        stroke-dasharray="900" stroke-dashoffset="900">
+        <animate attributeName="stroke-dashoffset" values="900;0;0" keyTimes="0;${(0.24 + i * 0.1).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      </polyline>`).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.66;0.74;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      <line x1="${x0}" y1="${py(floor)}" x2="${x1}" y2="${py(floor)}" stroke="${G.ink}" stroke-width="3"/>
+      ${label(x0 + 8, py(floor) + 24, 'Guaranteed floor — 96 Mbps', { size: 13 })}
+      ${mono(x1, py(floor) + 24, 'NOTHING CROSSED IT', { size: 9.5, anchor: 'end', op: 0.45 })}
+    </g>
+    ${series.map((s, i) => `
+      ${mono(x1 + 6, py(s.pts[13]) + 4, s.n, { size: 9, op: 0.5, fill: cols[i] })}`).join('')}
+    ${mono(106, 424, 'FOUR TIER-1 CARRIERS \u00b7 14 DAYS \u00b7 WORST READING PER DAY', { size: 9.5, op: 0.35 })}`;
+    return { svg: gWrap(inner), pills: pillsN('Floor, not peak', '96 Mbps minimum') };
+  },
+};
+
+/* ─── 8 · WHO YOU ARE ON ────────────────────────────────────────── */
+export const whoYoureOn = {
+  id: 'net-whoson',
+  name: 'Who You Are On',
+  family: 'Transparency',
+  tagline: 'The carrier named, in real time',
+  desc:
+    'Most providers refuse to say whose network you are actually using. This names it — carrier, ' +
+    'country, band, and the moment it hands over — as a live readout that keeps updating. ' +
+    'Transparency is the cheapest differentiator available here, because the only reason not to show ' +
+    'this is that the answer is embarrassing.',
+  pros: [
+    'Names what competitors deliberately hide',
+    'Turns a technical readout into a trust argument',
+    'Reads as a product feature as much as an animation',
+  ],
+  cons: ['Commits to disclosing carrier relationships', 'A handover mid-session can look like instability'],
+  scores: { story: 5, motion: 5, perf: 5, mobile: 5, brand: 5, ease: 4 },
+  build: (uid) => {
+    const dur = 12;
+    const rows = [
+      ['Lisbon, PT', 'MEO', 'n78 · 3500 MHz', '18 ms'],
+      ['Madrid, ES', 'Movistar', 'n78 · 3500 MHz', '21 ms'],
+      ['Paris, FR', 'Orange', 'n1 · 2100 MHz', '24 ms'],
+      ['Berlin, DE', 'Telekom', 'n78 · 3600 MHz', '19 ms'],
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 220, 250, uid)}
+    ${label(96, 62, 'We will always tell you whose network you are on', { size: 15, op: 0.5 })}
+    ${card(96, 92, 448, 252, { r: 16, fill: G.white, stroke: G.line })}
+    ${mono(120, 122, 'LIVE CONNECTION', { size: 9.5, op: 0.45 })}
+    <circle cx="524" cy="117" r="4.5" fill="${G.orange}">
+      <animate attributeName="opacity" values="0.35;1;0.35" keyTimes="0;0.5;1" dur="2.2s" repeatCount="indefinite"/>
+    </circle>
+    <line x1="120" y1="138" x2="520" y2="138" stroke="${G.line}"/>
+    ${rows.map((r, i) => {
+      const on = i / rows.length, off = (i + 1) / rows.length;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1;0;0"
+          keyTimes="0;${on.toFixed(4)};${(on + 0.006).toFixed(4)};${off.toFixed(4)};${Math.min(off + 0.006, 1).toFixed(4)};1"
+          dur="${dur}s" repeatCount="indefinite" calcMode="discrete"/>
+        ${mono(120, 176, 'WHERE', { size: 9, op: 0.4 })}
+        ${label(120, 200, r[0], { size: 15 })}
+        ${mono(120, 232, 'CARRIER', { size: 9, op: 0.4 })}
+        ${label(120, 258, r[1], { size: 20, fill: G.orange })}
+        ${mono(120, 292, 'BAND', { size: 9, op: 0.4 })}
+        ${label(120, 314, r[2], { size: 13, op: 0.75 })}
+        ${mono(520, 176, 'LATENCY', { size: 9, anchor: 'end', op: 0.4 })}
+        ${label(520, 204, r[3], { size: 22, anchor: 'end' })}
+        ${[0, 1, 2, 3].map((b) => `
+          <rect x="${472 + b * 13}" y="${262 - b * 7}" width="9" height="${14 + b * 7}" rx="2" fill="${G.orange}" opacity="0.9"/>`).join('')}
+        ${mono(520, 314, 'TIER-1, DIRECT', { size: 9, anchor: 'end', op: 0.45, fill: G.orange })}
+      </g>`;
+    }).join('')}
+    ${mono(96, 396, 'HANDOVER IS AUTOMATIC AND NAMED \u2014 NO SILENT DOWNGRADE TO A CHEAPER PARTNER', { size: 9.5, op: 0.38 })}`;
+    return { svg: gWrap(inner), pills: pillsN('Carrier named', 'No silent downgrade') };
+  },
+};
+
+/* ─── 9 · WHAT BREAKS FIRST ─────────────────────────────────────── */
+export const whatBreaksFirst = {
+  id: 'net-breaks',
+  name: 'What Breaks First',
+  family: 'Guarantee',
+  tagline: 'One carrier fails and nothing above it notices',
+  desc:
+    'A carrier is pulled out mid-session and the traffic it was carrying moves to the next one ' +
+    'inside a frame, with the session counter never resetting. It is the single most enterprise-' +
+    'relevant thing this hero can say, and it is the argument for multiple Tier-1 relationships ' +
+    'rather than an assertion that they exist.',
+  pros: [
+    'Demonstrates redundancy instead of claiming uptime',
+    'The unbroken session counter is the proof, and it needs no words',
+    'Directly answers the procurement question about single-carrier risk',
+  ],
+  cons: ['Showing a failure on a hero is a nerve-holding decision', 'Needs the failover to genuinely be this fast'],
+  scores: { story: 5, motion: 5, perf: 4, mobile: 4, brand: 5, ease: 3 },
+  build: (uid) => {
+    const dur = 12;
+    const cs = CARRIERS.map((c) => c.n);
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 200, 250, uid)}
+    ${label(96, 62, 'Pull one carrier out. Nothing above it notices.', { size: 15, op: 0.5 })}
+    ${cs.map((n, i) => {
+      const x = 104 + i * 112;
+      const dead = i === 1;
+      return `<g>
+        ${card(x, 104, 96, 104, { r: 12, fill: G.white, stroke: G.line })}
+        ${mast(x + 48, 168, 0.62, false)}
+        ${mono(x + 48, 228, n, { size: 9.5, anchor: 'middle', op: 0.5 })}
+        ${dead ? `
+          <g opacity="0">
+            <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.34;0.37;0.72;0.76;1"
+              dur="${dur}s" repeatCount="indefinite"/>
+            ${card(x, 104, 96, 104, { r: 12, fill: '#FEF2F2', stroke: G.red, sw: 2 })}
+            <path d="M ${x + 34} 150 l 28 28 M ${x + 62} 150 l -28 28" stroke="${G.red}" stroke-width="3" stroke-linecap="round"/>
+            ${mono(x + 48, 200, 'DOWN', { size: 9.5, anchor: 'middle', op: 0.9, fill: G.red })}
+          </g>` : ''}
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${(0.04 + i * 0.05).toFixed(3)};${(0.08 + i * 0.05).toFixed(3)};1"
+            dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+          <rect x="${x + 22}" y="118" width="52" height="5" rx="2.5" fill="${G.orange}" opacity="${dead ? 0.35 : 0.9}"/>
+        </g>
+      </g>`;
+    }).join('')}
+
+    <!-- the traffic path, rerouting -->
+    <path d="M 152 240 Q 320 286, 320 300" fill="none" stroke="${G.orange}" stroke-width="2.4" opacity="0.6"/>
+    <path d="M 264 240 Q 320 286, 320 300" fill="none" stroke="${G.red}" stroke-width="2.4" opacity="0">
+      <animate attributeName="opacity" values="0.6;0.6;0;0;0.6;0.6" keyTimes="0;0.34;0.37;0.72;0.76;1"
+        dur="${dur}s" repeatCount="indefinite"/>
+    </path>
+    <path d="M 376 240 Q 320 286, 320 300" fill="none" stroke="${G.orange}" stroke-width="2.4" opacity="0.6">
+      <animate attributeName="stroke-width" values="2.4;2.4;4.4;4.4;2.4;2.4" keyTimes="0;0.34;0.4;0.72;0.78;1"
+        dur="${dur}s" repeatCount="indefinite"/>
+    </path>
+    <path d="M 488 240 Q 320 286, 320 300" fill="none" stroke="${G.orange}" stroke-width="2.4" opacity="0.6"/>
+
+    ${card(160, 300, 320, 104, { r: 14, fill: G.ink, stroke: G.ink })}
+    ${mono(320, 330, 'SESSIONS CARRIED', { size: 9.5, anchor: 'middle', fill: G.white, op: 0.5 })}
+    ${label(320, 372, '41,208', { size: 34, anchor: 'middle', fill: G.white })}
+    ${mono(320, 394, 'never reset, never dropped', { size: 9.5, anchor: 'middle', fill: G.orange, op: 0.9 })}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.4;0.44;0.7;0.74;1"
+        dur="${dur}s" repeatCount="indefinite"/>
+      ${mono(500, 268, 'REROUTED IN 40 ms', { size: 9.5, anchor: 'end', op: 0.8, fill: G.orange })}
+    </g>`;
+    return { svg: gWrap(inner), pills: pillsN('Carrier-level failover', 'No session dropped') };
+  },
+};
+
+/* ══ WHY · 4–9 · six further directions ═════════════════════════════ */
+
+/* ─── 4 · THE PROCUREMENT ANSWER ────────────────────────────────── */
+export const procurement = {
+  id: 'why-proc',
+  name: 'The Procurement Answer',
+  family: 'Enterprise',
+  tagline: 'The four questions a buyer actually asks',
+  desc:
+    'Written for the person who has to justify the purchase internally. Four questions — who carries ' +
+    'the traffic, what happens when one fails, what is the contractual floor, who is accountable — ' +
+    'each answered in one line with a figure. It is the least decorative option on the board and ' +
+    'probably the most useful.',
+  pros: [
+    'Answers the questions that actually block an enterprise deal',
+    'Every answer is a specific, checkable commitment',
+    'Extremely cheap to build and to keep accurate',
+  ],
+  cons: ['Dry — no visual idea at all', 'Reads as a table rather than an animation'],
+  scores: { story: 5, motion: 2, perf: 5, mobile: 5, brand: 3, ease: 5 },
+  build: (uid) => {
+    const dur = 11;
+    const qs = [
+      ['Whose network carries my traffic?', 'Four named Tier-1 carriers, disclosed per country'],
+      ['What happens when one fails?', 'Automatic handover in under 40 ms, session preserved'],
+      ['What is the contractual floor?', '96 Mbps and 99.9% availability, per month'],
+      ['Who is accountable when it breaks?', 'One contract with us, not four with carriers'],
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 210, 250, uid)}
+    ${label(96, 60, 'The four questions procurement asks', { size: 15, op: 0.5 })}
+    ${qs.map(([q, a], i) => {
+      const y = 92 + i * 80;
+      const on = 0.06 + i * 0.14;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.05).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${card(96, y, 448, 66, { r: 12, fill: G.white, stroke: G.line })}
+        <rect x="96" y="${y}" width="4" height="66" rx="2" fill="${G.orange}"/>
+        ${mono(120, y + 26, `Q${i + 1}`, { size: 9.5, op: 0.4 })}
+        ${label(154, y + 26, q, { size: 13.5 })}
+        ${label(120, y + 50, a, { size: 12.5, fill: G.orange })}
+      </g>`;
+    }).join('')}
+    ${mono(96, 428, 'NO PEAK FIGURES ON THIS SLIDE \u2014 EVERY NUMBER IS A FLOOR', { size: 9.5, op: 0.35 })}`;
+    return { svg: gWrap(inner), pills: pillsN('Enterprise Grade', 'One contract') };
+  },
+};
+
+/* ─── 5 · THE HANDOVER, SLOWED DOWN ─────────────────────────────── */
+export const handoverSlow = {
+  id: 'why-handover',
+  name: 'Forty Milliseconds',
+  family: 'Proof',
+  tagline: 'The failover, at a speed you can watch',
+  desc:
+    'One event, expanded: a carrier drops and the session moves. Four stages — detection, decision, ' +
+    'attach, resume — each with its own millisecond cost, adding to forty. Slowing a claim down until ' +
+    'it can be inspected is more persuasive than repeating it, and it is the only option here that ' +
+    'shows the mechanism rather than the outcome.',
+  pros: [
+    'Turns a number into a mechanism, which is much harder to dismiss',
+    'The running total adding to 40 ms is a satisfying payoff',
+    'Gives engineering something accurate to sign off on',
+  ],
+  cons: ['Requires the real stage timings', 'Technical framing may lose a non-specialist reader'],
+  scores: { story: 5, motion: 5, perf: 5, mobile: 4, brand: 4, ease: 3 },
+  build: (uid) => {
+    const dur = 10;
+    const stages = [
+      ['Detection', 'Carrier stops answering', 12],
+      ['Decision', 'Next-best carrier selected', 9],
+      ['Attach', 'Profile activates on the new carrier', 14],
+      ['Resume', 'Session continues, same IP', 5],
+    ];
+    let acc = 0;
+    const totals = stages.map(([, , ms]) => (acc += ms));
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 200, 250, uid)}
+    ${label(96, 62, 'One failover, slowed down', { size: 15, op: 0.5 })}
+    ${stages.map(([nm, note, ms], i) => {
+      const y = 100 + i * 62;
+      const on = 0.06 + i * 0.13;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.05).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${card(96, y, 448, 50, { r: 11, fill: G.white, stroke: G.line })}
+        <circle cx="122" cy="${y + 25}" r="10" fill="${G.wash}"/>
+        ${mono(122, y + 29, `${i + 1}`, { size: 10, anchor: 'middle', op: 0.8, fill: G.orange })}
+        ${label(148, y + 22, nm, { size: 13.5 })}
+        ${mono(148, y + 38, note, { size: 9.5, op: 0.42 })}
+        <rect x="392" y="${y + 21}" width="${ms * 5}" height="8" rx="4" fill="${G.orange}" opacity="0.8"/>
+        ${mono(524, y + 30, `${ms} ms`, { size: 11, anchor: 'end', op: 0.75 })}
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.62;0.7;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(96, 356, 448, 60, { r: 12, fill: G.wash, stroke: G.orange, sw: 2 })}
+      ${label(124, 392, 'Total, detection to resume', { size: 13.5 })}
+      ${label(516, 394, `${totals[3]} ms`, { size: 24, anchor: 'end', fill: G.orange })}
+    </g>`;
+    return { svg: gWrap(inner), pills: pillsN('40 ms failover', 'Session preserved') };
+  },
+};
+
+/* ─── 6 · WHAT ONE CARRIER COSTS YOU ────────────────────────────── */
+export const oneCarrierCost = {
+  id: 'why-onecarrier',
+  name: 'What One Carrier Costs',
+  family: 'Comparison',
+  tagline: 'The single-carrier provider, on the same week',
+  desc:
+    'Two availability strips for the same seven days: a single-carrier provider, with three visible ' +
+    'outages, and four carriers combined, with none. The comparison is the argument — every provider ' +
+    'claims high availability, and almost none of them can claim it without a single point of ' +
+    'failure behind the number.',
+  pros: [
+    'The two strips make the difference visible in one glance',
+    'Attacks the specific weakness of the cheap competitor',
+    'Availability is the metric enterprise buyers actually contract on',
+  ],
+  cons: ['Comparative claims about competitors need care', 'Outage figures must be defensible'],
+  scores: { story: 5, motion: 4, perf: 5, mobile: 5, brand: 4, ease: 4 },
+  build: (uid) => {
+    const dur = 11, cells = 56;
+    const outages = [11, 12, 31, 44, 45, 46];
+    const strip = (y, bad, labelTxt, sub, col) => `
+      ${mono(96, y - 14, labelTxt, { size: 9.5, op: 0.45 })}
+      ${Array.from({ length: cells }, (_, i) => {
+        const down = bad && outages.includes(i);
+        return `<rect x="${96 + i * 8}" y="${y}" width="6" height="34" rx="1.5"
+          fill="${down ? G.red : col}" opacity="${down ? 0.95 : 0.8}"/>`;
+      }).join('')}
+      ${label(548, y + 24, sub, { size: 13, anchor: 'end', fill: bad ? G.red : G.orange })}`;
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 200, 250, uid)}
+    ${label(96, 62, 'The same seven days, two networks', { size: 15, op: 0.5 })}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.06;0.16;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${strip(120, true, 'A SINGLE-CARRIER PROVIDER', '3 outages', G.gray)}
+      ${mono(96, 176, 'SIX HOURS OFFLINE \u00b7 99.6%', { size: 9.5, op: 0.45, fill: G.red })}
+    </g>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.36;0.46;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${strip(230, false, 'FOUR TIER-1 CARRIERS, COMBINED', 'none', G.orange)}
+      ${mono(96, 286, 'ZERO MINUTES OFFLINE \u00b7 100% THIS WEEK', { size: 9.5, op: 0.5, fill: G.orange })}
+    </g>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.62;0.72;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(96, 322, 452, 88, { r: 14, fill: G.white, stroke: G.line })}
+      ${label(124, 356, 'Every provider quotes availability.', { size: 14 })}
+      ${label(124, 382, 'Ask how many carriers are behind the number.', { size: 14, fill: G.orange })}
+    </g>`;
+    return { svg: gWrap(inner), pills: pillsN('Four carriers', 'No single point of failure') };
+  },
+};
+
+/* ─── 7 · THE BANDS ─────────────────────────────────────────────── */
+export const theBands = {
+  id: 'why-bands',
+  name: 'The Bands',
+  family: 'Proof',
+  tagline: 'Why a cheap eSIM is slow in the same place',
+  desc:
+    'The reason two eSIMs perform differently in the same street is band access, and nobody explains ' +
+    'it. Here the bands a Tier-1 agreement reaches are drawn against the ones a wholesale reseller ' +
+    'is limited to — the fast mid-band is simply missing from the cheap lane. It converts a price ' +
+    'difference into a technical one.',
+  pros: [
+    'Explains the performance gap instead of asserting it',
+    'Gives a salesperson a concrete answer to "why are you more expensive"',
+    'Nothing else in the category explains band access at all',
+  ],
+  cons: ['Needs a technical reviewer to keep it honest', 'Band names mean nothing to most readers'],
+  scores: { story: 4, motion: 4, perf: 5, mobile: 4, brand: 4, ease: 3 },
+  build: (uid) => {
+    const dur = 10;
+    const bands = [
+      ['n78 · 3500 MHz', 'Fast mid-band', true, false],
+      ['n1 · 2100 MHz', 'Wide coverage', true, true],
+      ['n28 · 700 MHz', 'Indoors and rural', true, false],
+      ['B3 · 1800 MHz', 'LTE fallback', true, true],
+      ['B20 · 800 MHz', 'Deep indoor LTE', true, false],
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 210, 250, uid)}
+    ${label(96, 60, 'Same street, different bands', { size: 15, op: 0.5 })}
+    ${mono(330, 92, 'OPENLINE', { size: 9.5, anchor: 'middle', op: 0.6, fill: G.orange })}
+    ${mono(478, 92, 'CHEAP RESELLER', { size: 9.5, anchor: 'middle', op: 0.45 })}
+    ${bands.map(([nm, note, ours, theirs], i) => {
+      const y = 108 + i * 58;
+      const on = 0.06 + i * 0.11;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.05).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${card(96, y, 448, 46, { r: 11, fill: G.white, stroke: G.line })}
+        ${label(120, y + 22, nm, { size: 13 })}
+        ${mono(120, y + 38, note, { size: 9.5, op: 0.4 })}
+        <circle cx="330" cy="${y + 23}" r="11" fill="${G.wash}"/>
+        <path d="M 324 ${y + 23} l 4.5 4.5 l 8 -9" fill="none" stroke="${G.orange}" stroke-width="2.4" stroke-linecap="round"/>
+        ${theirs
+          ? `<circle cx="478" cy="${y + 23}" r="11" fill="#F3F4F6"/>
+             <path d="M 472 ${y + 23} l 4.5 4.5 l 8 -9" fill="none" stroke="${G.gray}" stroke-width="2.4" stroke-linecap="round"/>`
+          : `<circle cx="478" cy="${y + 23}" r="11" fill="#FEF2F2"/>
+             <path d="M 473 ${y + 18} l 10 10 M 483 ${y + 18} l -10 10" stroke="${G.red}" stroke-width="2.2" stroke-linecap="round"/>`}
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.66;0.74;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${mono(96, 424, 'THE MISSING ROWS ARE WHY A CHEAP eSIM IS SLOW IN THE SAME PLACE', { size: 9.5, op: 0.42, fill: G.orange })}
+    </g>`;
+    return { svg: gWrap(inner), pills: pillsN('Full band access', 'Tier-1 direct') };
+  },
+};
+
+/* ─── 8 · THE NIGHT SHIFT ───────────────────────────────────────── */
+export const nightShift = {
+  id: 'why-night',
+  name: 'The Night Shift',
+  family: 'Proof',
+  tagline: 'Performance at the hour everyone else degrades',
+  desc:
+    'Congestion is when a network actually gets tested, and every provider quotes figures from ' +
+    'quiet hours. This plots twenty-four hours: the reseller line collapses through the evening peak ' +
+    'while the multi-carrier line stays inside its band, because traffic moves to whichever carrier ' +
+    'is least loaded. It is the most honest performance claim on the board.',
+  pros: [
+    'Tests the claim at the only hour that matters',
+    'Load-balancing across carriers is a real advantage that nothing else here shows',
+    'The diverging lines need no explanation',
+  ],
+  cons: ['Needs genuine hourly data', 'A 24-hour axis is dense at this size'],
+  scores: { story: 5, motion: 4, perf: 5, mobile: 4, brand: 4, ease: 3 },
+  build: (uid) => {
+    const dur = 12;
+    const ours = [186, 190, 192, 188, 184, 180, 176, 178, 182, 186, 184, 180,
+      176, 172, 170, 168, 166, 162, 158, 156, 160, 168, 176, 184];
+    const theirs = [176, 182, 184, 180, 174, 168, 158, 146, 138, 132, 128, 124,
+      118, 112, 104, 96, 84, 68, 54, 48, 62, 92, 128, 158];
+    const x0 = 106, x1 = 560, y0 = 350, yTop = 104, vMax = 210;
+    const px = (i) => x0 + (i / 23) * (x1 - x0);
+    const py = (v) => y0 - (v / vMax) * (y0 - yTop);
+    const path = (arr) => arr.map((v, i) => `${px(i).toFixed(0)} ${py(v).toFixed(0)}`).join(' ');
+    const inner = `
+    ${dots(uid)}
+    ${bloom(330, 210, 250, uid)}
+    ${label(106, 60, 'Twenty-four hours, including the evening peak', { size: 15, op: 0.5 })}
+    <rect x="${px(17).toFixed(0)}" y="${yTop}" width="${(px(21) - px(17)).toFixed(0)}" height="${y0 - yTop}"
+      fill="${G.red}" opacity="0.06"/>
+    ${mono(((px(17) + px(21)) / 2).toFixed(0), yTop - 8, 'PEAK', { size: 9, anchor: 'middle', op: 0.4, fill: G.red })}
+    <line x1="${x0}" y1="${y0}" x2="${x1}" y2="${y0}" stroke="${G.line}" stroke-width="2"/>
+    ${[0, 6, 12, 18, 23].map((h) => `
+      ${mono(px(h).toFixed(0), y0 + 20, `${String(h).padStart(2, '0')}:00`, { size: 9, anchor: 'middle', op: 0.35 })}`).join('')}
+    <polyline points="${path(theirs)}" fill="none" stroke="${G.gray}" stroke-width="2.6"
+      stroke-dasharray="1000" stroke-dashoffset="1000">
+      <animate attributeName="stroke-dashoffset" values="1000;0;0" keyTimes="0;0.6;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+    </polyline>
+    <polyline points="${path(ours)}" fill="none" stroke="${G.orange}" stroke-width="3.4"
+      stroke-dasharray="1000" stroke-dashoffset="1000">
+      <animate attributeName="stroke-dashoffset" values="1000;0;0" keyTimes="0;0.6;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+    </polyline>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.64;0.72;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${label(x0 + 8, py(ours[2]) - 14, 'Openline — four carriers', { size: 12.5, fill: G.orange })}
+      ${label(px(19).toFixed(0), py(theirs[19]) + 24, 'Single carrier — 48 Mbps at 19:00', { size: 12, fill: G.gray })}
+      ${card(372, 388, 176, 44, { r: 11, fill: G.wash, stroke: G.orange, sw: 2 })}
+      ${label(388, 416, '3.2× at peak', { size: 15, fill: G.orange })}
+    </g>`;
+    return { svg: gWrap(inner), pills: pillsN('Load-balanced', '3.2× at peak') };
+  },
+};
+
+/* ─── 9 · THE CONTRACT LINE ─────────────────────────────────────── */
+export const contractLine = {
+  id: 'why-contract',
+  name: 'The Contract Line',
+  family: 'Enterprise',
+  tagline: 'What is written down, versus what is advertised',
+  desc:
+    'Two columns: the figures a network page advertises, and the figures that appear in the contract. ' +
+    'Everyone has the first column. Filling in the second — a floor, a credit, a named remedy — is ' +
+    'the actual differentiator, and printing it on the marketing page is a statement of confidence ' +
+    'no competitor will copy quickly.',
+  pros: [
+    'The empty competitor column is the most persuasive element available',
+    'Moves the conversation from marketing claims to contractual ones',
+    'Gives sales a page to point at during a negotiation',
+  ],
+  cons: ['Only works if legal will actually sign these terms', 'Invites a buyer to hold us to every line'],
+  scores: { story: 5, motion: 3, perf: 5, mobile: 4, brand: 5, ease: 2 },
+  build: (uid) => {
+    const bits = [
+      ['Throughput floor', '96 Mbps', 'peak figures only'],
+      ['Availability', '99.9% monthly', 'best effort'],
+      ['Failover time', 'under 40 ms', 'unspecified'],
+      ['Service credit', 'automatic', 'on request'],
+      ['Carriers disclosed', 'per country', 'never'],
+    ];
+    const dur = 11;
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 210, 250, uid)}
+    ${label(96, 60, 'Advertised, and written down', { size: 15, op: 0.5 })}
+    ${mono(352, 94, 'IN OUR CONTRACT', { size: 9.5, anchor: 'middle', op: 0.6, fill: G.orange })}
+    ${mono(486, 94, 'TYPICAL ELSEWHERE', { size: 9.5, anchor: 'middle', op: 0.42 })}
+    ${bits.map(([nm, ours, theirs], i) => {
+      const y = 110 + i * 56;
+      const on = 0.06 + i * 0.12;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.05).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${card(96, y, 448, 44, { r: 10, fill: i % 2 ? '#FAFAFB' : G.white, stroke: G.line })}
+        ${label(120, y + 28, nm, { size: 13 })}
+        ${label(352, y + 28, ours, { size: 13, anchor: 'middle', fill: G.orange })}
+        ${mono(486, y + 28, theirs, { size: 9.5, anchor: 'middle', op: 0.4 })}
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.7;0.78;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${mono(96, 424, 'THE LEFT COLUMN IS THE PRODUCT. THE RIGHT COLUMN IS WHY IT COSTS MORE.', { size: 9.5, op: 0.42, fill: G.orange })}
+    </g>`;
+    return { svg: gWrap(inner), pills: pillsN('Contractual floors', null) };
+  },
+};
+
+export const NET_HERO_VARIANTS = [netCurrent, handoff, uptime, arcs, race, mesh, hud,
+  theFloor, whoYoureOn, whatBreaksFirst];
+export const WHY_VARIANTS = [whyCurrent, sweep, failGrid, stack, procurement, handoverSlow,
+  oneCarrierCost, theBands, nightShift, contractLine];

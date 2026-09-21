@@ -386,4 +386,374 @@ export const tripTape = {
   },
 };
 
-export const TRAVEL_VARIANTS = [travelCurrent, borderRun, oneCard, tripTape];
+
+/* ══════════════════════════════════════════════════════════════════
+   4–9 · six further directions for "Everything You Need for
+   Seamless Travel". Same 640 × 460 box, same orange system.
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ─── 4 · THE BILL ───────────────────────────────────────────────── */
+export const theBill = {
+  id: 'travel-bill',
+  name: 'The Bill',
+  family: 'Cost',
+  tagline: 'A roaming invoice building against a flat line',
+  desc:
+    'Two weeks of a trip drawn as money. The roaming line steps up every day and never comes back ' +
+    'down — $12, $24, $36 — while the Openline line is paid once on day one and stays flat. The gap ' +
+    'between them shades in, and the total is named at the end. Nothing else on this board makes the ' +
+    'reader wince.',
+  pros: [
+    'Money is the only unit that makes roaming feel dangerous',
+    'The shaded gap needs no legend and no explanation',
+    'Fourteen daily steps give it a real sense of accumulation',
+  ],
+  cons: ['Depends on a roaming figure we should be able to cite', 'Purely financial — no product, no place'],
+  scores: { story: 5, motion: 5, perf: 5, mobile: 4, brand: 4, ease: 4 },
+  build: (uid) => {
+    const dur = 12, days = 14, per = 12, flat = 19;
+    const x0 = 110, x1 = 560, y0 = 372, yTop = 110;
+    const maxV = per * days;
+    const px = (d) => x0 + (d / days) * (x1 - x0);
+    const py = (v) => y0 - (v / maxV) * (y0 - yTop);
+    const roam = Array.from({ length: days + 1 }, (_, d) => `${px(d).toFixed(0)} ${py(d * per).toFixed(0)}`);
+    const inner = `
+    ${dots(uid)}
+    ${bloom(340, 210, 250, uid)}
+    ${label(110, 62, 'Fourteen days abroad, in money', { size: 15, op: 0.5 })}
+    <line x1="${x0}" y1="${y0}" x2="${x1}" y2="${y0}" stroke="${G.line}" stroke-width="2"/>
+    ${[0, 42, 84, 126, 168].map((v) => `
+      <line x1="${x0}" y1="${py(v)}" x2="${x1}" y2="${py(v)}" stroke="${G.line}" stroke-width="1" opacity="0.6"/>
+      ${mono(x0 - 12, py(v) + 4, `$${v}`, { size: 9.5, anchor: 'end', op: 0.4 })}`).join('')}
+
+    <!-- the gap between the two lines -->
+    <path d="M ${roam.join(' L ')} L ${px(days).toFixed(0)} ${py(flat).toFixed(0)} L ${x0} ${py(flat).toFixed(0)} Z"
+      fill="${G.red}" opacity="0">
+      <animate attributeName="opacity" values="0;0;0.1;0.1" keyTimes="0;0.6;0.72;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+    </path>
+
+    <!-- roaming, stepping up daily -->
+    <polyline points="${roam.join(' ')}" fill="none" stroke="${G.red}" stroke-width="3"
+      stroke-linecap="round" stroke-dasharray="1200" stroke-dashoffset="1200">
+      <animate attributeName="stroke-dashoffset" values="1200;0;0" keyTimes="0;0.6;1"
+        dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+    </polyline>
+    ${Array.from({ length: days + 1 }, (_, d) => d).filter((d) => d % 2 === 0 && d > 0).map((d) => `
+      <g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${(0.04 + (d / days) * 0.56).toFixed(3)};${(0.07 + (d / days) * 0.56).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        <circle cx="${px(d).toFixed(0)}" cy="${py(d * per).toFixed(0)}" r="3.5" fill="${G.red}"/>
+      </g>`).join('')}
+
+    <!-- openline, paid once -->
+    <line x1="${x0}" y1="${py(flat)}" x2="${x1}" y2="${py(flat)}" stroke="${G.orange}" stroke-width="3.5"
+      stroke-dasharray="460" stroke-dashoffset="460">
+      <animate attributeName="stroke-dashoffset" values="460;0;0" keyTimes="0;0.2;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+    </line>
+    <circle cx="${x0}" cy="${py(flat)}" r="5" fill="${G.orange}"/>
+    ${label(x0 + 10, py(flat) - 14, 'Openline — $19, paid once', { size: 12.5, fill: G.orange })}
+
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.66;0.74;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${label(x1, py(maxV) - 16, 'Roaming — $168', { size: 13, anchor: 'end', fill: G.red })}
+      ${card(384, 396, 176, 44, { r: 11, fill: G.wash, stroke: G.orange, sw: 2 })}
+      ${label(400, 424, '$149 not spent', { size: 15, fill: G.orange })}
+    </g>
+    ${mono(110, 424, 'ONE TRIP, ONE PHONE', { size: 9.5, op: 0.35 })}`;
+    return { svg: gWrap(inner), pills: pillsB('$19, not $168') };
+  },
+};
+
+/* ─── 5 · SEVEN BORDERS ──────────────────────────────────────────── */
+export const sevenBorders = {
+  id: 'travel-seven',
+  name: 'Seven Borders',
+  family: 'Coverage',
+  tagline: 'An itinerary that never disconnects',
+  desc:
+    'A real route — Lisbon, Madrid, Paris, Berlin, Warsaw, Istanbul, Dubai — drawn as a single ' +
+    'continuous line with the signal bar never dropping. Each border crossing flashes the country ' +
+    'code and the network it handed over to, and the connection counter keeps counting. It is the ' +
+    'clearest possible statement of "one eSIM, every border".',
+  pros: [
+    'Names real cities and real handovers instead of an abstract globe',
+    'The unbroken signal bar is the whole promise in one element',
+    'Handover labels make it credible to somebody who knows how roaming works',
+  ],
+  cons: ['Seven labels is tight at this width', 'Implies coverage parity we should verify per route'],
+  scores: { story: 5, motion: 5, perf: 4, mobile: 3, brand: 5, ease: 3 },
+  build: (uid) => {
+    const dur = 14;
+    const stops = [
+      ['Lisbon', 'PT', 'MEO'], ['Madrid', 'ES', 'Movistar'], ['Paris', 'FR', 'Orange'],
+      ['Berlin', 'DE', 'Telekom'], ['Warsaw', 'PL', 'Plus'], ['Istanbul', 'TR', 'Turkcell'],
+      ['Dubai', 'AE', 'Etisalat'],
+    ];
+    const x0 = 78, x1 = 566, y = 210;
+    const px = (i) => x0 + (i / (stops.length - 1)) * (x1 - x0);
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 200, 260, uid)}
+    ${label(78, 62, 'One plan, seven borders, no gap', { size: 15, op: 0.5 })}
+    <path d="M ${px(0)} ${y} ${stops.map((_, i) => i ? `Q ${((px(i - 1) + px(i)) / 2).toFixed(0)} ${y - (i % 2 ? 34 : -34)}, ${px(i).toFixed(0)} ${y}` : '').join(' ')}"
+      fill="none" stroke="${G.line}" stroke-width="2.5"/>
+    <path d="M ${px(0)} ${y} ${stops.map((_, i) => i ? `Q ${((px(i - 1) + px(i)) / 2).toFixed(0)} ${y - (i % 2 ? 34 : -34)}, ${px(i).toFixed(0)} ${y}` : '').join(' ')}"
+      fill="none" stroke="${G.orange}" stroke-width="3.5" stroke-linecap="round"
+      stroke-dasharray="900" stroke-dashoffset="900">
+      <animate attributeName="stroke-dashoffset" values="900;0;0" keyTimes="0;0.7;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+    </path>
+    ${stops.map(([city, cc, net], i) => {
+      const on = (i / stops.length) * 0.7;
+      return `<g>
+        <circle cx="${px(i).toFixed(0)}" cy="${y}" r="6" fill="${G.white}" stroke="${G.line}" stroke-width="2.5"/>
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(4)};${(on + 0.03).toFixed(4)};1"
+            dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+          <circle cx="${px(i).toFixed(0)}" cy="${y}" r="6" fill="${G.orange}"/>
+          ${mono(px(i).toFixed(0), i % 2 ? y - 48 : y + 34, cc, { size: 11, anchor: 'middle', op: 0.8, fill: G.orange })}
+          ${label(px(i).toFixed(0), i % 2 ? y - 30 : y + 52, city, { size: 11.5, anchor: 'middle', op: 0.75 })}
+          ${mono(px(i).toFixed(0), i % 2 ? y - 16 : y + 68, net, { size: 9, anchor: 'middle', op: 0.38 })}
+        </g>
+      </g>`;
+    }).join('')}
+
+    <!-- the signal bar that never drops -->
+    ${card(78, 336, 488, 76, { r: 14, fill: G.white, stroke: G.line })}
+    ${mono(100, 362, 'SIGNAL, ACROSS ALL SEVEN', { size: 9.5, op: 0.42 })}
+    ${Array.from({ length: 40 }, (_, i) => `
+      <rect x="${100 + i * 11.5}" y="374" width="7" height="24" rx="2" fill="${G.orange}" opacity="0.85"/>`).join('')}
+    ${label(544, 396, '100%', { size: 14, anchor: 'end', fill: G.orange })}`;
+    return { svg: gWrap(inner), pills: pillsB('Seven borders, one plan') };
+  },
+};
+
+/* ─── 6 · THE DRAWER OF SIMS ─────────────────────────────────────── */
+export const drawerOfSims = {
+  id: 'travel-drawer',
+  name: 'The Drawer',
+  family: 'Comparison',
+  tagline: 'What the old way leaves behind',
+  desc:
+    'A drawer of dead SIM cards from previous trips — Thailand 2019, Peru 2022, a snapped Japanese ' +
+    'one — each with the money still stranded on it. The drawer closes and a single line replaces it. ' +
+    'It is the funniest option on the board and the only one that makes the alternative look absurd ' +
+    'rather than merely expensive.',
+  pros: [
+    'Immediately recognisable to anybody who has travelled with plastic',
+    'Humour is rare in this category and lands hard',
+    'The stranded balances are a cost nobody thinks about',
+  ],
+  cons: ['Depends on illustration quality to avoid looking cheap', 'Nostalgic rather than forward-looking'],
+  scores: { story: 5, motion: 4, perf: 5, mobile: 4, brand: 5, ease: 3 },
+  build: (uid) => {
+    const dur = 11;
+    const sims = [
+      ['Thailand', '2019', '$4.20 left'],
+      ['Peru', '2022', '$1.80 left'],
+      ['Japan', '2023', 'snapped'],
+      ['Kenya', '2024', '$7.10 left'],
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 200, 250, uid)}
+    ${label(96, 62, 'The drawer, after four trips', { size: 15, op: 0.5 })}
+    ${card(96, 92, 448, 200, { r: 16, fill: '#F8F8F9', stroke: G.line })}
+    ${sims.map(([ct, yr, bal], i) => {
+      const y = 114 + i * 44;
+      const dead = bal === 'snapped';
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${(0.04 + i * 0.09).toFixed(3)};${(0.08 + i * 0.09).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${card(120, y, 76, 34, { r: 6, fill: '#EDEEF0', stroke: '#D8DADE' })}
+        <path d="M 128 ${y + 30} L 168 ${y + 4}" stroke="${dead ? G.red : '#C9CCD2'}" stroke-width="2"/>
+        ${label(212, y + 22, ct, { size: 13, op: 0.75 })}
+        ${mono(300, y + 22, yr, { size: 10, op: 0.4 })}
+        ${mono(512, y + 22, bal, { size: 10.5, anchor: 'end', op: dead ? 0.8 : 0.55, fill: dead ? G.red : G.ink })}
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.48;0.54;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${mono(520, 282, '$13.10 stranded on plastic', { size: 10, anchor: 'end', op: 0.5, fill: G.red })}
+    </g>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.62;0.7;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(96, 320, 448, 86, { r: 16, fill: G.wash, stroke: G.orange, sw: 2 })}
+      ${label(124, 356, 'One plan. Nothing left behind, nothing snapped.', { size: 15, fill: G.orange })}
+      ${mono(124, 380, 'TOP UP THE SAME PLAN IN EVERY COUNTRY YOU GO TO NEXT', { size: 9.5, op: 0.45 })}
+    </g>`;
+    return { svg: gWrap(inner), pills: pillsB('Nothing left behind') };
+  },
+};
+
+/* ─── 7 · TWO MINUTES BEFORE ─────────────────────────────────────── */
+export const twoMinutesBefore = {
+  id: 'travel-before',
+  name: 'Two Minutes Before',
+  family: 'Timing',
+  tagline: 'Bought at the gate, working on arrival',
+  desc:
+    'A clock runs from the departure gate to the arrivals hall, and the plan is bought in the two ' +
+    'minutes before boarding. It answers the objection nobody voices — that this is one more thing ' +
+    'to organise before a trip — by showing it fitting into the gap where people are already looking ' +
+    'at their phone.',
+  pros: [
+    'Removes the planning objection, which is the quiet reason people default to roaming',
+    'A single clock is the cheapest possible narrative device',
+    'Puts the purchase at the moment of highest intent',
+  ],
+  cons: ['Assumes airport wifi, which is not always there', 'Less visually interesting than a map'],
+  scores: { story: 4, motion: 4, perf: 5, mobile: 5, brand: 4, ease: 5 },
+  build: (uid) => {
+    const dur = 10;
+    const marks = [
+      ['Gate', '14:22', 'Buying the plan', 0.1],
+      ['Boarding', '14:24', 'Installed, switched off', 0.32],
+      ['Landing', '17:05', 'Airplane mode off', 0.62],
+      ['Arrivals', '17:06', 'Online, no queue', 0.82],
+    ];
+    const x0 = 100, x1 = 548, y = 226;
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 220, 250, uid)}
+    ${label(100, 62, 'Bought at the gate. Working on arrival.', { size: 15, op: 0.5 })}
+    <line x1="${x0}" y1="${y}" x2="${x1}" y2="${y}" stroke="${G.line}" stroke-width="3"/>
+    <line x1="${x0}" y1="${y}" x2="${x1}" y2="${y}" stroke="${G.orange}" stroke-width="3.5"
+      stroke-dasharray="448" stroke-dashoffset="448">
+      <animate attributeName="stroke-dashoffset" values="448;0;0" keyTimes="0;0.82;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+    </line>
+    ${marks.map(([nm, time, note, t], i) => {
+      const x = x0 + t * (x1 - x0);
+      const up = i % 2 === 0;
+      return `<g>
+        <circle cx="${x.toFixed(0)}" cy="${y}" r="7" fill="${G.white}" stroke="${G.line}" stroke-width="2.5"/>
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${(t * 0.82).toFixed(4)};${(t * 0.82 + 0.04).toFixed(4)};1"
+            dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+          <circle cx="${x.toFixed(0)}" cy="${y}" r="7" fill="${G.orange}"/>
+          <line x1="${x.toFixed(0)}" y1="${up ? y - 14 : y + 14}" x2="${x.toFixed(0)}" y2="${up ? y - 40 : y + 40}"
+            stroke="${G.orange}" stroke-width="1.6" opacity="0.5"/>
+          ${mono(x.toFixed(0), up ? y - 70 : y + 62, time, { size: 12, anchor: 'middle', op: 0.85, fill: G.orange })}
+          ${label(x.toFixed(0), up ? y - 50 : y + 82, nm, { size: 13, anchor: 'middle' })}
+          ${mono(x.toFixed(0), up ? y - 92 : y + 100, note, { size: 9, anchor: 'middle', op: 0.4 })}
+        </g>
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.86;0.92;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(196, 372, 248, 48, { r: 12, fill: G.wash, stroke: G.orange, sw: 2 })}
+      ${label(320, 402, 'Two minutes of effort, total', { size: 14, anchor: 'middle', fill: G.orange })}
+    </g>`;
+    return { svg: gWrap(inner), pills: pillsB('Two minutes, once') };
+  },
+};
+
+/* ─── 8 · THE FAMILY ─────────────────────────────────────────────── */
+export const theFamily = {
+  id: 'travel-family',
+  name: 'Four Phones, One Trip',
+  family: 'Coverage',
+  tagline: 'The plan multiplied across a household',
+  desc:
+    'Travel is rarely one person. Four phones — two adults, two children — each install from the ' +
+    'same purchase and connect in sequence, with the total cost named once at the end against four ' +
+    'roaming bills. It is the only option on the board that addresses the family buyer, who is the ' +
+    'one with the largest bill to avoid.',
+  pros: [
+    'Speaks to the highest-value buyer on the page',
+    'Four roaming bills against one purchase is the strongest arithmetic available',
+    'Nothing else on the board mentions more than one device',
+  ],
+  cons: ['Needs multi-device purchasing to actually exist', 'Four phones is a lot of repeated artwork'],
+  scores: { story: 5, motion: 4, perf: 4, mobile: 3, brand: 4, ease: 3 },
+  build: (uid) => {
+    const dur = 11;
+    const who = ['Adult', 'Adult', 'Child', 'Child'];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 200, 250, uid)}
+    ${label(96, 62, 'One purchase, four phones', { size: 15, op: 0.5 })}
+    ${who.map((w, i) => {
+      const x = 106 + i * 116;
+      const on = 0.1 + i * 0.12;
+      return `<g>
+        ${card(x, 100, 92, 168, { r: 14, fill: G.ink, stroke: G.ink })}
+        ${card(x + 6, 106, 80, 156, { r: 10, fill: '#17171C', stroke: '#17171C' })}
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.05).toFixed(3)};1"
+            dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+          <rect x="${x + 22}" y="160" width="48" height="36" rx="8" fill="${G.orange}" opacity="0.3"/>
+          <rect x="${x + 22}" y="160" width="48" height="36" rx="8" fill="none" stroke="${G.orange}" stroke-width="2"/>
+          ${Array.from({ length: 4 }, (_, b) => `
+            <rect x="${x + 26 + b * 11}" y="${226 - b * 5}" width="7" height="${10 + b * 5}" rx="2" fill="${G.orange}" opacity="0.9"/>`).join('')}
+        </g>
+        ${mono(x + 46, 288, w, { size: 10, anchor: 'middle', op: 0.42 })}
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.62;0.7;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(96, 320, 216, 92, { r: 14, fill: G.white, stroke: G.line })}
+      ${mono(120, 348, 'FOUR ROAMING BILLS', { size: 9.5, op: 0.42 })}
+      ${label(120, 384, '$672', { size: 30, fill: G.red })}
+      ${card(328, 320, 216, 92, { r: 14, fill: G.wash, stroke: G.orange, sw: 2 })}
+      ${mono(352, 348, 'ONE FAMILY PLAN', { size: 9.5, op: 0.45 })}
+      ${label(352, 384, '$59', { size: 30, fill: G.orange })}
+    </g>`;
+    return { svg: gWrap(inner), pills: pillsB('One plan, four phones') };
+  },
+};
+
+/* ─── 9 · STILL WORKING ──────────────────────────────────────────── */
+export const stillWorking = {
+  id: 'travel-working',
+  name: 'Still Working',
+  family: 'Trust',
+  tagline: 'The things that keep running while you move',
+  desc:
+    'Not about data, about consequences. Five things a traveller cannot afford to lose — a boarding ' +
+    'pass, two-factor codes, a maps route, a hotel confirmation, a bank app — each shown staying ' +
+    'available across a border crossing. It reframes connectivity as risk removal, which is a far ' +
+    'stronger motive than saving money.',
+  pros: [
+    'Reframes the purchase from a saving into an insurance, which converts better',
+    'Two-factor codes on a foreign number is a real and under-discussed failure',
+    'Every item is specific rather than a generic benefit',
+  ],
+  cons: ['Five items competes with the bullets beside it', 'Anxiety-led framing may not suit the brand voice'],
+  scores: { story: 5, motion: 3, perf: 5, mobile: 4, brand: 4, ease: 4 },
+  build: (uid) => {
+    const dur = 10;
+    const items = [
+      ['Boarding pass', 'Loads at the gate'],
+      ['Two-factor codes', 'Same number, still yours'],
+      ['Maps, live', 'Route recalculates on arrival'],
+      ['Hotel confirmation', 'In the inbox, not the void'],
+      ['Bank app', 'Approves the payment abroad'],
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 220, 250, uid)}
+    ${label(96, 62, 'What keeps working when you cross a border', { size: 15, op: 0.5 })}
+    ${items.map(([nm, note], i) => {
+      const y = 96 + i * 58;
+      const on = 0.08 + i * 0.1;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.04).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${card(96, y, 448, 46, { r: 11, fill: G.white, stroke: G.line })}
+        <circle cx="122" cy="${y + 23}" r="11" fill="${G.wash}"/>
+        <path d="M 116 ${y + 23} l 4.5 4.5 l 8 -9" fill="none" stroke="${G.orange}" stroke-width="2.4" stroke-linecap="round"/>
+        ${label(148, y + 21, nm, { size: 13.5 })}
+        ${mono(148, y + 37, note, { size: 9.5, op: 0.42 })}
+        ${mono(520, y + 28, 'ONLINE', { size: 9, anchor: 'end', op: 0.75, fill: G.orange })}
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.66;0.74;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${mono(96, 420, 'NONE OF THIS IS ABOUT DATA. IT IS ABOUT NOT BEING STUCK.', { size: 9.5, op: 0.4 })}
+    </g>`;
+    return { svg: gWrap(inner), pills: pillsB('Nothing stops working') };
+  },
+};
+
+export const TRAVEL_VARIANTS = [travelCurrent, borderRun, oneCard, tripTape, theBill,
+  sevenBorders, drawerOfSims, twoMinutesBefore, theFamily, stillWorking];
