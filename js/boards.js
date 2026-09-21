@@ -24,6 +24,16 @@ import { OMDM_CTRL_VARIANTS } from './omdm-ctrl.js';
 import { OMDM_HERO, OMDM_BOOK, OMDM_CTRL } from './kit.js';
 import { CONTACT_VARIANTS, AFFIL_VARIANTS, CONTACT_BOX, AFFIL_BOX } from './contact-affil.js';
 import { BLOGV_VARIANTS, BLOGV_BOX } from './blogvideo.js';
+import { phCurrent, pasteTheLink, theScale, theReceipt, threeDoors, alreadySent, thirtySeconds,
+  theCode, kittyReads, theLadder, noJudging, noModalToday, oneField, detectAndFloor, pickProof,
+  theSlip, queuePosition, noEmailNeeded, livePreview, oneScreen, receiptOut, noFormAtAll,
+  CLAIM_BOX, MODAL_BOX } from './producthunt.js';
+
+/* option 0 is the live block; 1..10 are proposals, strongest first */
+const PH_CLAIM_VARIANTS = [phCurrent, pasteTheLink, theLadder, theReceipt, noJudging,
+  theScale, threeDoors, alreadySent, thirtySeconds, theCode, kittyReads];
+const PH_MODAL_VARIANTS = [noModalToday, detectAndFloor, oneField, noEmailNeeded, oneScreen,
+  pickProof, queuePosition, receiptOut, theSlip, livePreview, noFormAtAll];
 import { ICONS } from './icons.js';
 import { buildIconBoard } from './iconboard.js';
 
@@ -883,6 +893,81 @@ export const BOARDS = [
       ],
     },
   },
+  /* ── /producthunt ─────────────────────────────────── */
+  {
+    key: 'phclaim', page: 'Product Hunt', path: '/producthunt', section: 'Claim block',
+    short: 'Claim block', count: 10, accent: TONES.orange,
+    variants: PH_CLAIM_VARIANTS, embed: CLAIM_BOX,
+    problem: 'The page asks four times to be rewarded and the block meant to collect the claim is a static gift icon above a button that only scrolls.',
+    cfg: {
+      kicker: 'Product Hunt launch', heading: 'Did something?', headingAccent: 'Come and get paid.',
+      lead: 'Comment, review, upvote or post — send us the link and we will set your discount. Between 10% and 100% off, worth up to $1,000. The brief was to replace this block with an animation and a real call to action, and to tighten the strategy while we are here.',
+      bullets: ['<b>Real box</b> — 768 × 360, measured on the live block',
+        '<b>Same offer</b> — 10% floor, 100% ceiling, worth up to $1,000',
+        '<b>Every option carries a CTA</b> — the button is part of the artwork, not next to it',
+        '<b>Job</b> — turn the fourth ask on the page into the one that converts'],
+      keptIdentical: kept('#FF5314', '#E23D00', ['The offer itself: 10% guaranteed floor, up to 100% and $1,000',
+        'The fine print — one reward per person, reviewed after launch day',
+        'The block\u2019s position between the two-ways section and the footer']),
+      embed: CLAIM_BOX,
+      thinking: {
+        title: 'The page asks four times and never once collects',
+        lead: 'Counting the hero, the two route cards and this block, a visitor is asked to claim four times on one page. Not one of those asks is attached to a mechanism — every button is an anchor. So the block has two jobs it is currently failing: give a reason that the three asks above it have not already given, and actually take the claim. The rewording follows from that: stop asking whether they did something and start telling them what happens when they send the link.',
+        jobs: [
+          { t: 'Give new information, not a fourth ask', d: 'By the time a visitor reaches this block they have read the offer twice. Repeating it in bolder type is the one thing guaranteed not to work. Every option here adds something the page has not yet said — the floor, the amount in money, the exchange rate, the queue.' },
+          { t: 'Show the floor', d: 'The single strongest unused fact on the page is that nobody gets nothing. It is buried in a card as “Guaranteed: 10% off, minimum”. Made visible at the point of action it removes the fear of doing the work for nothing.' },
+          { t: 'Convert percentages into money', d: '“Up to 100%” is abstract. “$1,000” appears once, in small type. A percentage is a ratio nobody feels; an amount is a thing people compare.' },
+          { t: 'Prove it is quick', d: 'The real objection is effort, not scepticism. The copy claims 30 seconds where nobody reads it. Demonstrating the claim taking one paste is worth more than the sentence.' },
+          { t: 'Carry the button', d: 'The brief asks for an animation and a CTA. In every option the button is inside the composition, so the artwork leads into the action rather than decorating above it.' },
+        ],
+      },
+      pick: [
+        { k: 'My pick', h: '1 · Paste the Link', d: 'The only option that performs the thing being asked for: a URL types itself in, the platform is recognised, and a guaranteed 10% stamps in before the button is pressed. It answers cost — one paste — and reward — at least 10% — in the same eight seconds, and it makes the CTA a confirmation rather than a leap.' },
+        { k: 'If the goal is clarity', h: '2 · The Ladder', d: 'Four rungs naming the effort and the return, with a marker climbing as the post gets better. It is the clearest statement of the bargain anywhere on the page, and it sets expectations, which means fewer disappointed claims to process.' },
+        { k: 'If the goal is desire', h: '3 · The Receipt', d: 'Prints the plan, the discount and the amount not paid, landing on $0 for a full year. It is the only option that translates the offer into money, which is the unit people actually compare.' },
+        { k: 'If the goal is removing fear', h: '4 · Two Lanes', d: 'A guaranteed lane and a judged lane running side by side, both ending in a payout. It addresses the fear under the whole offer — doing the work and being told no — more directly than any other option.' },
+        { k: 'If the goal is proof', h: '8 · Already Sent', d: 'A ledger of discounts already issued with a running total. Empty before launch day and unbeatable after it, so it is the option to switch to once real claims exist.' },
+      ],
+    },
+  },
+
+  {
+    key: 'phmodal', page: 'Product Hunt', path: '/producthunt', section: 'Claim modal',
+    short: 'Modal', count: 10, accent: TONES.orange,
+    variants: PH_MODAL_VARIANTS, embed: MODAL_BOX,
+    problem: 'There is no modal. Every “Claim your reward” button on the page is an anchor that scrolls to a paragraph telling the visitor to press the button.',
+    cfg: {
+      kicker: 'Product Hunt launch', heading: 'Claim your', headingAccent: 'reward',
+      lead: 'The modal the claim button should open. Nothing opens today — option 0 draws that, because it is the defect the rest of the board exists to fix. Every proposal is a different answer to one question: how little can we ask for before we owe somebody a discount?',
+      bullets: ['<b>Net-new</b> — 560 × 620, no live modal to measure',
+        '<b>Same offer</b> — 10% floor, up to 100%, worth up to $1,000',
+        '<b>Fewest fields wins</b> — every field costs claims on launch day',
+        '<b>Job</b> — take the claim, and say what happens next'],
+      keptIdentical: kept('#FF5314', '#E23D00', ['The offer and the fine print exactly as written on the page',
+        'The orange CTA treatment and 8px button radius from the live page',
+        'The system font stack the live page uses']),
+      embed: MODAL_BOX,
+      thinking: {
+        title: 'Every field is a claim you will not get',
+        lead: 'This is a launch-day form, filled in on a phone, by somebody doing you a favour. That is the least patient traffic a form ever sees. Which means the design question is not what we would like to collect — it is the smallest amount we can ask for and still honour the offer. Half the options here compete on that axis alone. The other half handle the part nobody has designed at all: what a visitor sees after they press submit.',
+        jobs: [
+          { t: 'Ask for as little as possible', d: 'A link identifies the person, the platform and the action all at once. Email, platform pickers and accounts are all things we could do without, and every one of them loses claims.' },
+          { t: 'Commit to a number before submit', d: 'A form that takes your link and says “we will be in touch” is indistinguishable from a form that does nothing. Showing the guaranteed floor while the visitor is still deciding is the difference.' },
+          { t: 'Design the waiting', d: 'The copy promises a human reads every claim, and then the page goes silent. A queue position and a real estimate are cheap to show and they stop the follow-up emails.' },
+          { t: 'Hand something over immediately', d: 'The floor is guaranteed, so it can be issued on the spot. Nobody needs to leave this modal empty-handed, and that is a materially better offer than the page makes today.' },
+          { t: 'Enforce one per person', d: 'The page promises one reward per person and has no way to enforce it. Only the Product Hunt sign-in route actually can.' },
+        ],
+      },
+      pick: [
+        { k: 'My pick', h: '1 · Detect and Commit', d: 'Paste a link, the platform is recognised from the domain, and a guaranteed minimum commits on screen before the button is pressed. It turns the modal from a form into an offer, and it is the only input option that removes the risk of submitting and finding out later you earned nothing.' },
+        { k: 'If the goal is the fewest fields', h: '2 · One Field', d: 'A URL and a button. No email, no picker, no account — the link identifies the person and the reply goes back on the same platform. It costs manual processing and buys the lowest friction available.' },
+        { k: 'If the goal is generosity', h: '3 · Code On The Spot', d: 'Issues a working 10% code the instant a link arrives, and only asks for an email if the visitor wants the judged uplift. Nobody leaves empty-handed, which changes the offer rather than just presenting it better.' },
+        { k: 'If the goal is trust after submit', h: '6 · You Are 14th', d: 'The screen nothing currently designs: a real position in the queue, an estimate, and where the answer will arrive. Composes with any of the input options rather than competing with them.' },
+        { k: 'If you can build the integration', h: '10 · No Form At All', d: 'Sign in with Product Hunt, the upvote and comment are read back from the API, the code is issued, nothing is typed. It is also the only option that can actually enforce one reward per person.' },
+      ],
+    },
+  },
+
 ];
 
 /* ═════════════════════════ NAV + ROUTING ══════════════════════ */
