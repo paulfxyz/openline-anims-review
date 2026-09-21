@@ -786,5 +786,376 @@ export const refWhyItWorks = {
   },
 };
 
+/* ══ REFERRAL · 11–15 ════════════════════════════════════════════════ */
+
+/* ─── 11 · WHAT US$5 BUYS ───────────────────────────────────────── */
+export const refWorth = {
+  id: 'ref-worth',
+  name: 'What US$5 Buys',
+  family: 'Value',
+  tagline: 'The credit priced against real plans',
+  desc:
+    'The box says five dollars and leaves the visitor to work out whether that is worth having. This ' +
+    'prices it against three plans we actually sell: US$5 of a US$7 week in Spain, of US$17 for 3 GB ' +
+    'in Japan, of US$29 for a month across forty countries, with the amount left to pay stated on each ' +
+    'row. The credit stops being a token and becomes a discount with a size.',
+  pros: [
+    'Answers the question the headline provokes \u2014 five dollars off what?',
+    'The \u201cUS$2 to pay\u201d line on the first row is the most persuasive thing in the panel',
+    'Doubles as a price list, so the box starts selling plans as well as the scheme',
+  ],
+  cons: [
+    'Plan names and prices must track the storefront or it dates the moment pricing changes',
+    'Three rows of pricing is a lot of reading next to a form',
+    'Puts the cheapest plan on the page, which is not always the one we want anchored',
+  ],
+  scores: { story: 4, motion: 3, perf: 5, mobile: 4, brand: 3, ease: 4 },
+  build: (uid) => {
+    const dur = 11;
+    const barW = 150;
+    const rows = [
+      ['7 days in Spain', '1 GB \u00b7 US$7', 7, 'US$2 to pay'],
+      ['15 days in Japan', '3 GB \u00b7 US$17', 17, 'US$12 to pay'],
+      ['30 days, 40 countries', '10 GB \u00b7 US$29', 29, 'US$24 to pay'],
+    ];
+    const inner = `
+    ${wdots(uid)}
+    ${label(320, 74, 'What the five dollars is worth', { size: 21, fill: W, anchor: 'middle' })}
+    ${mono(320, 98, 'THE CREDIT, AGAINST PLANS WE SELL TODAY', { size: 9.5, anchor: 'middle', op: 0.55, fill: W })}
+    ${rows.map(([nm, sub, price, rest], i) => {
+      const y = 120 + i * 88;
+      const on = 0.08 + i * 0.16;
+      const t1 = on.toFixed(3);
+      const t2 = (on + 0.06).toFixed(3);
+      const t3 = (on + 0.13).toFixed(3);
+      const fw = Math.round((5 / price) * barW);
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${t1};${t2};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${card(96, y, 448, 76, { r: 15 })}
+        ${label(124, y + 34, nm, { size: 15 })}
+        ${mono(124, y + 56, sub, { size: 9.5, op: 0.42 })}
+        <rect x="330" y="${y + 30}" width="${barW}" height="12" rx="6" fill="#F3F4F6"/>
+        <rect x="330" y="${y + 30}" width="0" height="12" rx="6" fill="${MINT}">
+          <animate attributeName="width" values="0;0;${fw};${fw}" keyTimes="0;${t2};${t3};1"
+            dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        </rect>
+        ${mono(330, y + 60, 'US$5 CREDIT', { size: 8.5, op: 0.55, fill: MINT_T })}
+        ${label(516, y + 40, rest, { size: 14, anchor: 'end', fill: G.deep })}
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.72;0.80;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${mono(320, 414, 'TAKEN OFF AT CHECKOUT \u00b7 NOT A VOUCHER, NOT A REBATE', { size: 9.5, anchor: 'middle', op: 0.7, fill: W })}
+    </g>`;
+    return { svg: gWrap(inner), pills: pillsR('Priced, not promised') };
+  },
+};
+
+/* ─── 12 · IN THEIR WORDS ───────────────────────────────────────── */
+export const refVoices = {
+  id: 'ref-voices',
+  name: 'In Their Words',
+  family: 'Editorial',
+  tagline: 'Three travellers on what they earned',
+  desc:
+    'No diagram and no coins \u2014 three customer quotes, one at a time, each with where they were going ' +
+    'and how much the invites came to. The page already claims 1M+ travellers are earning rewards; ' +
+    'this is the only option that lets one of them say it. A person saying it worked carries further ' +
+    'than a badge showing that it could.',
+  pros: [
+    'Social proof is the strongest lever on a referral box and nothing else here uses it',
+    'Puts a destination in the frame, which is what the visitor is actually shopping for',
+    'Cheap to render and trivial to swap once real quotes exist',
+  ],
+  cons: [
+    'Needs three real, attributable customers \u2014 invented quotes would be worse than no quotes',
+    'Static type for four seconds at a time is the least animated option on the board',
+    'Long quotes get tight at 390px and need shorter lines',
+  ],
+  scores: { story: 5, motion: 2, perf: 5, mobile: 4, brand: 4, ease: 4 },
+  build: (uid) => {
+    const dur = 13.5;
+    const quotes = [
+      {
+        lines: ['\u201cI sent the code to the three people', 'I was travelling with. That week\u2019s data', 'cost me nothing.\u201d'],
+        who: 'Marta \u00b7 Lisbon to Marrakech \u00b7 3 friends joined', tag: '+US$15',
+      },
+      {
+        lines: ['\u201cMy brother bought his plan on a Tuesday.', 'The five dollars was sitting on my', 'account that evening.\u201d'],
+        who: 'Tobias \u00b7 Berlin \u00b7 1 friend joined', tag: '+US$5',
+      },
+      {
+        lines: ['\u201cThe code lives in my notes app now.', 'Anyone flying long-haul gets it,', 'asked for or not.\u201d'],
+        who: 'Aline \u00b7 Paris \u00b7 9 friends joined', tag: '+US$45',
+      },
+    ];
+    const inner = `
+    ${wdots(uid)}
+    ${mono(40, 46, 'WHAT PEOPLE WHO SHARED IT SAY', { size: 10.5, fill: W, op: 0.55 })}
+    <text x="64" y="172" font-size="120" font-weight="700" fill="${W}" opacity="0.22">\u201c</text>
+    ${quotes.map((q, i) => {
+      const on = (i / quotes.length).toFixed(4);
+      const b = (i / quotes.length + 0.005).toFixed(4);
+      const c = Math.min((i + 1) / quotes.length - 0.005, 1).toFixed(4);
+      const d = Math.min((i + 1) / quotes.length, 1).toFixed(4);
+      const ls = q.lines.map((t, k) => label(120, 168 + k * 38, t, { size: 22, fill: W })).join('');
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;${on};${b};${c};${d};1"
+          dur="${dur}s" repeatCount="indefinite" calcMode="discrete"/>
+        ${ls}
+        ${label(120, 322, q.who, { size: 13, fill: W, op: 0.75 })}
+        ${creditBadge(152, 364, q.tag)}
+        ${mono(196, 368, 'EARNED FROM INVITES', { size: 9, op: 0.6, fill: W })}
+      </g>`;
+    }).join('')}
+    ${mono(40, 428, 'JOIN 1M+ TRAVELLERS ALREADY SHARING IT', { size: 10, fill: W, op: 0.5 })}`;
+    return { svg: gWrap(inner), pills: pillsR('Their words') };
+  },
+};
+
+/* ─── 13 · FIVE AND FIVE ────────────────────────────────────────── */
+export const refFiveAndFive = {
+  id: 'ref-fiveandfive',
+  name: 'Five And Five',
+  family: 'Typographic',
+  tagline: 'No picture, just the number twice',
+  desc:
+    'Type only. US$5 fills the frame, a second US$5 joins it on the other side of a rule, and the beat ' +
+    'resolves on \u201cFive dollars each. Not five split in two.\u201d \u2014 the misreading the current line invites. ' +
+    'Nothing to illustrate, nothing to localise but the currency, and it is the only option that would ' +
+    'still read at thumbnail size.',
+  pros: [
+    'Legible at any size, including the phone and a compare tile',
+    'Kills the ambiguity in \u201cyou\u2019ll both get US$5\u201d with one line',
+    'Almost no payload and nothing that can break',
+  ],
+  cons: [
+    'Restates the headline directly above it rather than adding anything to it',
+    'Lives entirely on the type \u2014 a fallback font stack weakens it noticeably',
+    'Says nothing about how to refer or what the credit buys',
+  ],
+  scores: { story: 3, motion: 3, perf: 5, mobile: 5, brand: 4, ease: 5 },
+  build: (uid) => {
+    const dur = 9;
+    const inner = `
+    ${wdots(uid)}
+    ${mono(320, 76, 'THE WHOLE OFFER, IN TYPE', { size: 10.5, anchor: 'middle', op: 0.55, fill: W })}
+
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;1;1;0;0;0" keyTimes="0;0.03;0.28;0.30;0.31;1"
+        dur="${dur}s" repeatCount="indefinite" calcMode="discrete"/>
+      <text x="320" y="268" text-anchor="middle" font-size="104" font-weight="800" fill="${W}">US$5</text>
+      ${mono(320, 316, 'FOR THE FRIEND YOU SEND IT TO', { size: 11, anchor: 'middle', op: 0.75, fill: W })}
+    </g>
+
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.30;0.31;0.62;0.63;1"
+        dur="${dur}s" repeatCount="indefinite" calcMode="discrete"/>
+      <text x="188" y="260" text-anchor="middle" font-size="72" font-weight="800" fill="${W}">US$5</text>
+      <text x="452" y="260" text-anchor="middle" font-size="72" font-weight="800" fill="${W}">US$5</text>
+      <rect x="318" y="196" width="4" height="84" rx="2" fill="${W}" opacity="0.75"/>
+      ${mono(188, 300, 'THEM', { size: 11, anchor: 'middle', op: 0.75, fill: W })}
+      ${mono(452, 300, 'YOU', { size: 11, anchor: 'middle', op: 0.75, fill: W })}
+    </g>
+
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.62;0.63;1"
+        dur="${dur}s" repeatCount="indefinite" calcMode="discrete"/>
+      ${label(320, 226, 'Five dollars each.', { size: 38, fill: W, anchor: 'middle' })}
+      ${label(320, 274, 'Not five split in two.', { size: 38, fill: W, anchor: 'middle' })}
+      ${mono(320, 322, 'ONE CODE \u00b7 OPENLINE5 \u00b7 NO CAP ON HOW MANY FRIENDS', { size: 10, anchor: 'middle', op: 0.7, fill: W })}
+    </g>
+
+    ${[0, 1, 2].map(i => {
+      const on = (i * 0.32).toFixed(3);
+      const off = (i * 0.32 + 0.31).toFixed(3);
+      return `<circle cx="${300 + i * 20}" cy="400" r="4" fill="${W}" opacity="0.3">
+        <animate attributeName="opacity" values="0.3;0.3;1;1;0.3;0.3" keyTimes="0;${on};${(i * 0.32 + 0.005).toFixed(3)};${off};${(i * 0.32 + 0.315).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" calcMode="discrete"/>
+      </circle>`;
+    }).join('')}`;
+    return { svg: gWrap(inner), pills: pillsR('Type only') };
+  },
+};
+
+/* ─── 14 · THE GROUP TRIP ───────────────────────────────────────── */
+export const refGroupTrip = {
+  id: 'ref-grouptrip',
+  name: 'The Group Trip',
+  family: 'Use case',
+  tagline: 'Invite the people you are already going with',
+  desc:
+    'The unanswered question is not what you get, it is who you would send it to. This names the ' +
+    'obvious answer: the group you are already travelling with. One itinerary card, four travellers ' +
+    'joining the trip one by one, and the total climbing to US$20 off the group\u2019s data for that week. ' +
+    'It gives the visitor a specific list of people rather than an abstract friend.',
+  pros: [
+    'Turns \u201crefer a friend\u201d into a concrete moment someone can act on today',
+    'Group framing makes four invites feel natural rather than like farming',
+    'The trip card doubles as a use case for the product itself',
+  ],
+  cons: [
+    'Assumes group travel, which excludes the solo traveller entirely',
+    'Named dates and cities have to be generic enough to stay true all year',
+    'Four rows plus a total is the busiest layout of the five',
+  ],
+  scores: { story: 5, motion: 4, perf: 5, mobile: 3, brand: 4, ease: 4 },
+  build: (uid) => {
+    const dur = 12;
+    const people = [
+      ['Ana', 'AN'],
+      ['Rui', 'RU'],
+      ['Sofia', 'SO'],
+      ['Tom', 'TO'],
+    ];
+    const totals = ['US$5', 'US$10', 'US$15', 'US$20'];
+    const inner = `
+    ${wdots(uid)}
+    ${label(320, 70, 'Start with the people you are going with', { size: 19, fill: W, anchor: 'middle' })}
+    ${card(96, 90, 448, 68, { r: 16 })}
+    ${label(124, 122, 'Lisbon \u2192 Marrakech', { size: 17 })}
+    ${mono(124, 142, '14\u201321 OCT \u00b7 FOUR TRAVELLERS \u00b7 ONE GROUP CHAT', { size: 9, op: 0.42 })}
+    ${people.map(([nm, ini], i) => {
+      const y = 176 + i * 48;
+      const on = 0.10 + i * 0.15;
+      const t1 = on.toFixed(3);
+      const t2 = (on + 0.05).toFixed(3);
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${t1};${t2};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${card(96, y, 448, 40, { r: 12 })}
+        ${avatar(124, y + 20, 14, { fill: G.ink, text: ini, size: 9 })}
+        ${label(150, y + 25, nm, { size: 14 })}
+        ${mono(246, y + 24, 'JOINED WITH OPENLINE5', { size: 9, op: 0.4 })}
+        ${creditBadge(496, y + 20, '+US$5')}
+      </g>`;
+    }).join('')}
+    ${card(96, 378, 448, 58, { r: 15 })}
+    ${label(124, 406, 'Everyone paid, everyone credited', { size: 14 })}
+    ${mono(124, 426, 'OFF THE GROUP\u2019S DATA FOR THAT WEEK', { size: 9, op: 0.42 })}
+    ${totals.map((t, i) => {
+      const on = (0.15 + i * 0.15).toFixed(3);
+      const b = (0.15 + i * 0.15 + 0.005).toFixed(3);
+      const c = i === totals.length - 1 ? '1' : (0.15 + (i + 1) * 0.15).toFixed(3);
+      const d = i === totals.length - 1 ? '1' : (0.15 + (i + 1) * 0.15 + 0.005).toFixed(3);
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;${on};${b};${c};${d};1"
+          dur="${dur}s" repeatCount="indefinite" calcMode="discrete"/>
+        <text x="516" y="${420}" text-anchor="end" font-size="28" font-weight="800" fill="${G.deep}">${t}</text>
+      </g>`;
+    }).join('')}`;
+    return { svg: gWrap(inner), pills: pillsR('One trip, four credits') };
+  },
+};
+
+/* ─── 15 · THE INVITE SCREEN ────────────────────────────────────── */
+export const refInviteScreen = {
+  id: 'ref-invitescreen',
+  name: 'The Invite Screen',
+  family: 'Product demo',
+  tagline: 'The place in the app where the credit lives',
+  desc:
+    'One phone, one screen: the app\u2019s invite tab, with the balance at US$15, the code with a share ' +
+    'button, and four invited friends listed. The share is tapped, the link is copied, the pending ' +
+    'friend flips to joined and the balance becomes US$20. Everything else on this board illustrates ' +
+    'the offer; this shows the account it actually lands in.',
+  pros: [
+    'Removes the doubt about where the credit goes \u2014 it is a balance in the app, not an email',
+    'The pending row flipping to joined is the exact moment a referrer waits for',
+    'Doubles as a product screenshot for the app store listing',
+  ],
+  cons: [
+    'Commits us to an invite screen that looks like this',
+    'Inner screen type is small and drops below readable at 390px',
+    'A dark phone inside the orange box is the biggest tonal departure on the board',
+  ],
+  scores: { story: 4, motion: 4, perf: 4, mobile: 2, brand: 4, ease: 3 },
+  build: (uid) => {
+    const dur = 10;
+    const list = [
+      ['Marta S.', 'paid'],
+      ['Tobias K.', 'paid'],
+      ['Kenji M.', 'paid'],
+      ['Priya N.', 'pending'],
+    ];
+    const rowsSvg = list.map(([nm, st], i) => {
+      const y = 272 + i * 26;
+      const paid = st === 'paid';
+      const pend = `<g opacity="1">
+          <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.54;0.55;1" dur="${dur}s" repeatCount="indefinite" calcMode="discrete"/>
+          <text x="394" y="${y + 16}" text-anchor="end" font-size="9" font-weight="700" fill="#FCD34D"
+            style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace">PENDING</text>
+        </g>
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.55;0.56;1" dur="${dur}s" repeatCount="indefinite" calcMode="discrete"/>
+          <text x="394" y="${y + 16}" text-anchor="end" font-size="9" font-weight="700" fill="${MINT}"
+            style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace">+US$5</text>
+        </g>`;
+      const done = `<text x="394" y="${y + 16}" text-anchor="end" font-size="9" font-weight="700" fill="${MINT}"
+          style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace">+US$5</text>`;
+      return `<g>
+        <rect x="246" y="${y}" width="148" height="22" rx="7" fill="${W}" opacity="0.06"/>
+        <text x="254" y="${y + 16}" font-size="10.5" font-weight="700" fill="${W}" opacity="0.9">${nm}</text>
+        ${paid ? done : pend}
+      </g>`;
+    }).join('');
+    const inner = `
+    ${wdots(uid)}
+    ${mono(40, 46, 'THE INVITE TAB, IN THE APP', { size: 10.5, fill: W, op: 0.55 })}
+
+    <rect x="222" y="40" width="196" height="392" rx="30" fill="${G.ink}"/>
+    <rect x="230" y="48" width="180" height="376" rx="24" fill="#17171C"/>
+    <rect x="298" y="56" width="44" height="7" rx="3.5" fill="#000" opacity="0.85"/>
+    ${mono(246, 84, '9:41', { size: 8, fill: W, op: 0.45 })}
+    ${label(246, 112, 'Invite friends', { size: 16, fill: W })}
+
+    <rect x="246" y="126" width="148" height="66" rx="14" fill="${W}" opacity="0.08"/>
+    ${mono(262, 150, 'YOUR CREDIT', { size: 8.5, fill: W, op: 0.45 })}
+    <g opacity="1">
+      <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.54;0.55;1" dur="${dur}s" repeatCount="indefinite" calcMode="discrete"/>
+      <text x="262" y="180" font-size="24" font-weight="700" fill="${W}"
+        style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace">US$15</text>
+    </g>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.55;0.56;1" dur="${dur}s" repeatCount="indefinite" calcMode="discrete"/>
+      <text x="262" y="180" font-size="24" font-weight="700" fill="${MINT}"
+        style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace">US$20</text>
+    </g>
+
+    <rect x="246" y="204" width="148" height="40" rx="12" fill="${W}" opacity="0.08"/>
+    ${mono(258, 229, 'OPENLINE5', { size: 10, fill: W, op: 0.9, ls: 1.1 })}
+    <g>
+      <rect x="336" y="212" width="50" height="24" rx="12" fill="${G.orange}"/>
+      ${mono(361, 228, 'SHARE', { size: 8, anchor: 'middle', fill: W, op: 1 })}
+      <rect x="336" y="212" width="50" height="24" rx="12" fill="${W}" opacity="0">
+        <animate attributeName="opacity" values="0;0;0.45;0;0" keyTimes="0;0.20;0.23;0.28;1"
+          dur="${dur}s" repeatCount="indefinite"/>
+      </rect>
+    </g>
+
+    ${mono(246, 262, 'INVITED', { size: 8.5, fill: W, op: 0.45 })}
+    ${rowsSvg}
+
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.24;0.27;0.44;0.48;1"
+        dur="${dur}s" repeatCount="indefinite"/>
+      <g>
+        <animateTransform attributeName="transform" type="translate" values="0,12;0,0;0,0"
+          keyTimes="0;0.30;1" dur="${dur}s" repeatCount="indefinite"/>
+        <rect x="250" y="386" width="140" height="28" rx="14" fill="${W}"/>
+        ${mono(320, 404, 'LINK COPIED', { size: 9, anchor: 'middle', op: 0.8, fill: G.ink })}
+      </g>
+    </g>
+
+    ${mono(436, 168, 'ONE BALANCE', { size: 10, fill: W, op: 0.6 })}
+    ${mono(436, 188, 'ONE CODE', { size: 10, fill: W, op: 0.6 })}
+    ${mono(436, 208, 'FOUR INVITES', { size: 10, fill: W, op: 0.6 })}
+    ${mono(40, 440, 'THE CREDIT SITS ON THE ACCOUNT \u2014 NOT IN AN EMAIL, NOT ON A VOUCHER', { size: 9.5, fill: W, op: 0.5 })}`;
+    return { svg: gWrap(inner), pills: pillsR('Real product screen') };
+  },
+};
+
 /* ── registry ── */
-export const REFERRAL_VARIANTS = [refCurrent, chain, splitCoin, linkFlight, wallets, ledger, refStack, refBothWays, refArrives, refShare, refWhyItWorks];
+export const REFERRAL_VARIANTS = [refCurrent, chain, splitCoin, linkFlight, wallets, ledger, refStack, refBothWays, refArrives, refShare, refWhyItWorks,
+  refWorth, refVoices, refFiveAndFive, refGroupTrip, refInviteScreen];

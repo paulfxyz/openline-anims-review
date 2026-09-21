@@ -1,7 +1,7 @@
 import { VARIANTS_1 } from './variants.js';
 import { VARIANTS2 } from './variants2.js';
 
-// index 0 = what is live today, 1..10 = proposals
+// index 0 = what is live today, 1..15 = proposals
 export const VARIANTS = [
   VARIANTS_1[0],   // current
   VARIANTS_1[1],   // 1 Live Handoff
@@ -14,6 +14,11 @@ export const VARIANTS = [
   VARIANTS2[2],    // 8 Route Arcs
   VARIANTS2[3],    // 9 eSIM Wallet
   VARIANTS2[4],    // 10 Kinetic HUD
+  VARIANTS2[5],    // 11 Never Noticed
+  VARIANTS2[6],    // 12 Roll Call
+  VARIANTS2[7],    // 13 Rent Or Own
+  VARIANTS2[8],    // 14 Dip Buy
+  VARIANTS2[9],    // 15 Best Signal Wins
 ];
 
 export const CRITERIA = [

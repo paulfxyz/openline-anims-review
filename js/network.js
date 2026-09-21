@@ -1506,10 +1506,735 @@ export const whyTheIncident = {
   },
 };
 
+/* ══ HERO · 11–15 ══════════════════════════════════════════════════ */
+
+/* ─── 11 · A DAY ON THE NETWORK ─────────────────────────────────── */
+export const netTheDay = {
+  id: 'net-theday',
+  name: 'A Day on the Network',
+  family: 'Journey',
+  tagline: 'One itinerary, five places, one session',
+  desc:
+    'A real day laid out as a route: 07:10 at Lisbon airport, a train to Madrid, an underground ' +
+    'platform, a bus, a hotel at 23:40. A dot travels it while the carrier under it changes four ' +
+    'times, and the session bar below runs for sixteen and a half hours without a break. The switching ' +
+    'claim stops being a diagram and becomes somebody\u2019s Tuesday.',
+  pros: [
+    'Puts the switching where the customer experiences it \u2014 a journey, not a topology',
+    'Named places and times are concrete in a way masts and nodes are not',
+    'The unbroken session bar carries the reliability claim without a word',
+  ],
+  cons: [
+    'A five-stop route is the densest layout on the board and loses stops on a phone',
+    'One itinerary looks specific, so it invites \u201cwhat about my route?\u201d',
+    'Needs the place names localised with the rest of the page',
+  ],
+  scores: { story: 5, motion: 4, perf: 5, mobile: 3, brand: 4, ease: 3 },
+  build: (uid) => {
+    const dur = 14;
+    const stops = [
+      ['07:10', 'Lisbon airport', 'MEO'],
+      ['10:20', 'Madrid Atocha', 'Movistar'],
+      ['13:40', 'Metro, line 1', 'Movistar'],
+      ['17:15', 'Bus to Toledo', 'Orange'],
+      ['23:40', 'Hotel in Toledo', 'Vodafone'],
+    ];
+    const y = 214;
+    const sx = (i) => 120 + i * 110;
+    const route = `M 120 ${y} L 560 ${y}`;
+    const inner = `
+    ${dots(uid)}
+    ${bloom(330, 200, 240, uid)}
+    ${label(96, 58, 'One day, five places, one session', { size: 15, op: 0.5 })}
+    <line x1="120" y1="${y}" x2="560" y2="${y}" stroke="${G.line}" stroke-width="3"/>
+    <line x1="120" y1="${y}" x2="560" y2="${y}" stroke="${G.orange}" stroke-width="3"
+      stroke-dasharray="440" stroke-dashoffset="440">
+      <animate attributeName="stroke-dashoffset" values="440;0;0" keyTimes="0;0.80;1"
+        dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+    </line>
+    ${stops.map(([t, place, car], i) => {
+      const x = sx(i);
+      const on = (i * 0.8) / stops.length;
+      const t1 = on.toFixed(3);
+      const t2 = (on + 0.02).toFixed(3);
+      return `<g>
+        ${mono(x, 154, place, { size: 9.5, anchor: 'middle', op: 0.4 })}
+        ${mono(x, 176, t, { size: 11, anchor: 'middle', op: 0.55 })}
+        <circle cx="${x}" cy="${y}" r="8" fill="${G.white}" stroke="${G.line}" stroke-width="3"/>
+        <rect x="${x - 46}" y="244" width="92" height="26" rx="13" fill="${G.white}" stroke="${G.line}" stroke-width="1.5"/>
+        ${mono(x, 261, car, { size: 9.5, anchor: 'middle', op: 0.35 })}
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${t1};${t2};1"
+            dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+          <circle cx="${x}" cy="${y}" r="8" fill="${G.orange}" stroke="${G.white}" stroke-width="3"/>
+          <rect x="${x - 46}" y="244" width="92" height="26" rx="13" fill="${G.wash}" stroke="${G.orange}" stroke-width="2"/>
+          ${mono(x, 261, car, { size: 9.5, anchor: 'middle', op: 0.95, fill: G.deep })}
+          ${i > 0 ? mono(x - 55, 296, '38 ms', { size: 8.5, anchor: 'middle', op: 0.5, fill: G.orange }) : ''}
+        </g>
+      </g>`;
+    }).join('')}
+    <circle r="7" fill="${G.orange}">
+      <animateMotion dur="${dur}s" keyTimes="0;0.80;1" keyPoints="0;1;1" calcMode="linear"
+        path="${route}" repeatCount="indefinite"/>
+    </circle>
+    ${card(96, 320, 448, 92, { r: 14, fill: G.ink, stroke: G.ink })}
+    ${mono(120, 348, 'ONE SESSION, ALL DAY', { size: 9.5, fill: G.white, op: 0.5 })}
+    ${label(120, 384, '16 h 30 m', { size: 30, fill: G.white })}
+    ${mono(520, 348, 'FOUR HANDOVERS', { size: 9.5, anchor: 'end', fill: G.white, op: 0.5 })}
+    ${mono(520, 384, 'NO RECONNECT \u00b7 SAME IP', { size: 9.5, anchor: 'end', fill: G.orange, op: 0.95 })}
+    <rect x="120" y="396" width="400" height="5" rx="2.5" fill="${G.white}" opacity="0.14"/>
+    <rect x="120" y="396" width="0" height="5" rx="2.5" fill="${G.orange}">
+      <animate attributeName="width" values="0;400;400" keyTimes="0;0.80;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+    </rect>
+    ${mono(96, 436, 'FIVE PLACES \u00b7 FOUR CARRIERS \u00b7 NOTHING TOUCHED ON THE PHONE', { size: 9.5, op: 0.35 })}`;
+    return { svg: gWrap(inner), pills: pillsN('Automatic switching', null) };
+  },
+};
+
+/* ─── 12 · THE THREE NUMBERS ────────────────────────────────────── */
+export const netThreeNumbers = {
+  id: 'net-threenumbers',
+  name: 'The Three Numbers',
+  family: 'Typographic',
+  tagline: 'The page\u2019s own figures, set large',
+  desc:
+    'No illustration at all. The three figures the page already claims \u2014 50+ Tier-1 carriers, 190+ ' +
+    'countries, 99.9% uptime over twelve months \u2014 each fill the frame in turn with one plain line under ' +
+    'them and a rule that draws itself. It invents nothing and asserts nothing new; it just stops ' +
+    'burying the numbers in a stat strip nobody reads.',
+  pros: [
+    'Every claim is already published, so there is nothing to verify or defend',
+    'Legible at 390px and in a compare tile, unlike every diagram on this board',
+    'The lightest option here by a wide margin \u2014 type and two rectangles',
+  ],
+  cons: [
+    'Repeats the stat strip that already sits under the hero',
+    'No product, no device, no place \u2014 nothing to look at between beats',
+    'Only as good as the typeface it lands in',
+  ],
+  scores: { story: 3, motion: 3, perf: 5, mobile: 5, brand: 4, ease: 5 },
+  build: (uid) => {
+    const dur = 13.5;
+    const beats = [
+      ['50+', 'Tier-1 carriers under contract', 'NOT ONE WHOLESALE DEAL RESOLD AS A NETWORK'],
+      ['190+', 'countries, live today', 'ONE PROFILE \u00b7 NO SWAPS \u00b7 NO LOCAL SIM'],
+      ['99.9%', 'uptime, last twelve months', 'MEASURED OVER A YEAR, NOT A GOOD WEEK'],
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 220, 240, uid)}
+    ${mono(320, 74, 'THE THREE NUMBERS THIS PAGE ALREADY CLAIMS', { size: 10.5, anchor: 'middle', op: 0.32 })}
+    ${beats.map(([big, line, sub], i) => {
+      const on = (i / beats.length).toFixed(4);
+      const b = (i / beats.length + 0.004).toFixed(4);
+      const c = Math.min((i + 1) / beats.length - 0.004, 1).toFixed(4);
+      const d = Math.min((i + 1) / beats.length, 1).toFixed(4);
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;${on};${b};${c};${d};1"
+          dur="${dur}s" repeatCount="indefinite" calcMode="discrete"/>
+        <text x="320" y="248" text-anchor="middle" font-size="120" font-weight="800" fill="${G.ink}">${big}</text>
+        <rect x="170" y="272" width="0" height="5" rx="2.5" fill="${G.orange}">
+          <animate attributeName="width" values="0;300;300" keyTimes="0;${(Number(b) + 0.06).toFixed(4)};1"
+            dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        </rect>
+        ${label(320, 316, line, { size: 24, anchor: 'middle', op: 0.85 })}
+        ${mono(320, 348, sub, { size: 10, anchor: 'middle', op: 0.4 })}
+      </g>`;
+    }).join('')}
+    ${[0, 1, 2].map(i => {
+      const on = (i / 3).toFixed(4);
+      const b = (i / 3 + 0.004).toFixed(4);
+      const c = Math.min((i + 1) / 3 - 0.004, 1).toFixed(4);
+      const d = Math.min((i + 1) / 3, 1).toFixed(4);
+      return `<circle cx="${300 + i * 20}" cy="400" r="4" fill="${G.orange}" opacity="0.25">
+        <animate attributeName="opacity" values="0.25;0.25;1;1;0.25;0.25" keyTimes="0;${on};${b};${c};${d};1"
+          dur="${dur}s" repeatCount="indefinite" calcMode="discrete"/>
+      </circle>`;
+    }).join('')}`;
+    return { svg: gWrap(inner), pills: pillsN('Enterprise Grade', '99.9% uptime') };
+  },
+};
+
+/* ─── 13 · FOUR PROFILES, ONE CHIP ──────────────────────────────── */
+export const netTheChip = {
+  id: 'net-thechip',
+  name: 'Four Profiles, One Chip',
+  family: 'Hardware',
+  tagline: 'Where the carriers actually live',
+  desc:
+    'The eSIM itself, drawn large, with four carrier profiles installed on it and a beam to whichever ' +
+    'one is carrying traffic. Nothing else on this board shows the object the customer is buying \u2014 the ' +
+    'masts belong to somebody else and the mesh is a metaphor. This says the four contracts are already ' +
+    'on the chip before the plane lands.',
+  pros: [
+    'Shows the thing being sold rather than the infrastructure behind it',
+    'Explains why switching needs no app, no shop and no plastic',
+    'One large object reads well in a compare tile and on a phone',
+  ],
+  cons: [
+    'A chip is a static object, so the motion is limited to the active profile moving',
+    'Four profiles is a simplification of how profiles and carriers actually map',
+    'Least emotional option on the board \u2014 no place, no person',
+  ],
+  scores: { story: 4, motion: 3, perf: 5, mobile: 4, brand: 4, ease: 4 },
+  build: (uid) => {
+    const dur = 12;
+    const rows = CARRIERS.map((c) => [c.n, c.ping]);
+    const inner = `
+    ${dots(uid)}
+    ${bloom(200, 200, 220, uid)}
+    ${label(88, 58, 'Four carrier profiles, already on the chip', { size: 15, op: 0.5 })}
+
+    <rect x="88" y="104" width="204" height="156" rx="26" fill="${G.ink}"/>
+    <rect x="100" y="116" width="180" height="132" rx="18" fill="#17171C"/>
+    ${[0, 1, 2, 3, 4].map(i => `
+      <rect x="${116 + i * 32}" y="132" width="22" height="12" rx="3" fill="${G.orange}" opacity="0.35">
+        <animate attributeName="opacity" values="0.25;0.85;0.25" dur="2.6s" begin="${(i * 0.32).toFixed(2)}s" repeatCount="indefinite"/>
+      </rect>`).join('')}
+    ${label(190, 194, 'OPENLINE', { size: 15, fill: G.white, anchor: 'middle' })}
+    ${mono(190, 218, 'eSIM \u00b7 4 PROFILES', { size: 9.5, anchor: 'middle', fill: G.white, op: 0.45 })}
+    ${mono(88, 282, 'NO PLASTIC \u00b7 NO SHOP \u00b7 NO SWAP', { size: 9.5, op: 0.35 })}
+
+    ${rows.map(([nm, ping], i) => {
+      const ry = 104 + i * 46;
+      const on = (i / rows.length).toFixed(4);
+      const b = (i / rows.length + 0.006).toFixed(4);
+      const c = Math.min((i + 1) / rows.length - 0.006, 1).toFixed(4);
+      const d = Math.min((i + 1) / rows.length, 1).toFixed(4);
+      const beam = `M 292 182 C 330 182, 330 ${ry + 20}, 372 ${ry + 20}`;
+      return `<g>
+        ${card(372, ry, 188, 38, { r: 11, fill: G.white, stroke: G.line })}
+        ${mono(390, ry + 24, nm.toUpperCase(), { size: 9.5, op: 0.35 })}
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;${on};${b};${c};${d};1"
+            dur="${dur}s" repeatCount="indefinite" calcMode="discrete"/>
+          ${card(372, ry, 188, 38, { r: 11, fill: G.wash, stroke: G.orange, sw: 2 })}
+          ${mono(390, ry + 24, nm.toUpperCase(), { size: 9.5, op: 0.95, fill: G.deep })}
+          ${mono(544, ry + 24, ping, { size: 9.5, anchor: 'end', op: 0.6 })}
+          <path d="${beam}" fill="none" stroke="${G.orange}" stroke-width="2.6" stroke-linecap="round"
+            stroke-dasharray="10 8">
+            <animate attributeName="stroke-dashoffset" values="0;-18" dur="0.7s" repeatCount="indefinite"/>
+          </path>
+        </g>
+      </g>`;
+    }).join('')}
+    ${mono(372, 300, 'CARRYING TRAFFIC NOW', { size: 9.5, op: 0.32 })}
+
+    ${card(88, 318, 472, 82, { r: 14, fill: G.white, stroke: G.line })}
+    ${label(112, 350, 'The switching happens on the chip, not in an app', { size: 15 })}
+    ${mono(112, 376, 'FOUR CONTRACTS INSTALLED BEFORE THE PLANE LANDS \u00b7 50+ CARRIERS ACROSS THE NETWORK', { size: 9, op: 0.4 })}`;
+    return { svg: gWrap(inner), pills: pillsN('One eSIM, four profiles', null) };
+  },
+};
+
+/* ─── 14 · THE CALL THAT DOES NOT DROP ──────────────────────────── */
+export const netTheCall = {
+  id: 'net-thecall',
+  name: 'The Call That Holds',
+  family: 'Product moment',
+  tagline: 'A video call through two carrier switches',
+  desc:
+    'A video call runs in the frame with its timer climbing past three minutes. Twice underneath it the ' +
+    'carrier changes and a small notice slides in \u2014 switched to Movistar, 38 ms \u2014 while the call quality ' +
+    'chip stays green and the timer never resets. Every other option here argues about the network; ' +
+    'this shows the one moment a customer would actually notice it failing.',
+  pros: [
+    'Frames reliability as the thing the customer cares about, not as telemetry',
+    'A call timer that never resets is understood instantly, with no legend',
+    'The switch notice doubles as the transparency argument',
+  ],
+  cons: [
+    'A call UI looks like somebody else\u2019s app and dates quickly',
+    'Implies we guarantee call quality, which depends on the far end too',
+    'Faces have to be abstract or we need real people and releases',
+  ],
+  scores: { story: 5, motion: 4, perf: 4, mobile: 4, brand: 3, ease: 3 },
+  build: (uid) => {
+    const dur = 12;
+    const times = ['00:41', '01:29', '02:18', '03:07'];
+    const switches = [
+      [0.28, 'SWITCHED TO MOVISTAR \u00b7 38 ms'],
+      [0.62, 'SWITCHED TO ORANGE \u00b7 36 ms'],
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 200, 240, uid)}
+    ${label(96, 58, 'A video call, through two carrier switches', { size: 15, op: 0.5 })}
+
+    ${card(150, 80, 340, 236, { r: 18, fill: G.ink, stroke: G.ink })}
+    <rect x="164" y="96" width="152" height="170" rx="12" fill="#1D1D22"/>
+    <circle cx="240" cy="172" r="30" fill="${G.orange}" opacity="0.9"/>
+    ${label(240, 179, 'AM', { size: 16, fill: G.white, anchor: 'middle' })}
+    <rect x="324" y="96" width="152" height="170" rx="12" fill="#1D1D22"/>
+    <circle cx="400" cy="172" r="30" fill="${G.white}" opacity="0.18"/>
+    ${label(400, 179, 'JL', { size: 16, fill: G.white, anchor: 'middle' })}
+    ${times.map((t, i) => {
+      const on = (i / times.length).toFixed(4);
+      const b = (i / times.length + 0.004).toFixed(4);
+      const c = Math.min((i + 1) / times.length - 0.004, 1).toFixed(4);
+      const d = Math.min((i + 1) / times.length, 1).toFixed(4);
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;${on};${b};${c};${d};1"
+          dur="${dur}s" repeatCount="indefinite" calcMode="discrete"/>
+        ${mono(476, 298, t, { size: 13, anchor: 'end', fill: G.white, op: 0.9 })}
+      </g>`;
+    }).join('')}
+    <g transform="translate(164 284)">
+      <rect x="0" y="0" width="128" height="24" rx="12" fill="#10B981" opacity="0.18"/>
+      <circle cx="16" cy="12" r="5" fill="#34D399"/>
+      ${mono(30, 16, 'QUALITY GOOD', { size: 9, fill: '#34D399', op: 0.95 })}
+    </g>
+
+    ${mono(96, 346, 'THE NETWORK UNDER THE CALL', { size: 9.5, op: 0.32 })}
+    <line x1="96" y1="372" x2="544" y2="372" stroke="${G.line}" stroke-width="4"/>
+    <line x1="96" y1="372" x2="544" y2="372" stroke="${G.orange}" stroke-width="4"
+      stroke-dasharray="448" stroke-dashoffset="448">
+      <animate attributeName="stroke-dashoffset" values="448;0;0" keyTimes="0;0.88;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+    </line>
+    ${switches.map(([at, txt], i) => {
+      const x = 96 + Number(at) * 448;
+      const b = (Number(at) + 0.012).toFixed(3);
+      const c = (Number(at) + 0.20).toFixed(3);
+      const d = (Number(at) + 0.23).toFixed(3);
+      return `<g>
+        <rect x="${x.toFixed(0)}" y="360" width="3" height="24" rx="1.5" fill="${G.ink}" opacity="0.55"/>
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;${at};${b};${c};${d};1"
+            dur="${dur}s" repeatCount="indefinite"/>
+          ${card(96 + i * 4, 396, 300, 34, { r: 17, fill: G.wash, stroke: G.orange, sw: 2 })}
+          ${mono(116 + i * 4, 418, txt, { size: 9.5, op: 0.95, fill: G.deep })}
+        </g>
+      </g>`;
+    }).join('')}
+    ${mono(544, 418, 'TIMER NEVER RESET', { size: 9.5, anchor: 'end', op: 0.35 })}`;
+    return { svg: gWrap(inner), pills: pillsN('Session preserved', null) };
+  },
+};
+
+/* ─── 15 · TOLD BY A TRAVELLER ────────────────────────────────── */
+export const netToldByTraveller = {
+  id: 'net-told',
+  name: 'Told by a Traveller',
+  family: 'Editorial',
+  tagline: 'Two customers, in their own words',
+  desc:
+    'Two quotes, one at a time, each with the figures behind it: someone who crossed eleven countries ' +
+    'in three weeks and changed no settings, and someone who sat through a carrier outage and heard ' +
+    'about it from the news rather than from their phone. Ten diagrams on this board argue the claim; ' +
+    'this is the only one where a customer makes it.',
+  pros: [
+    'A human voice against ten technical panels is the strongest possible contrast',
+    'Quotes carry the claim without us appearing to grade our own work',
+    'Cheap, calm, and readable at any size',
+  ],
+  cons: [
+    'Needs two real, attributable customers or it is worthless',
+    'Barely animates \u2014 it is a page of type that changes every six seconds',
+    'Referring to a carrier outage, even unnamed, needs a legal read',
+  ],
+  scores: { story: 5, motion: 2, perf: 5, mobile: 5, brand: 4, ease: 4 },
+  build: (uid) => {
+    const dur = 12;
+    const quotes = [
+      {
+        lines: ['\u201cI only knew it had switched', 'because the name at the top of', 'the screen changed.\u201d'],
+        who: 'Hannah \u00b7 eleven countries in three weeks',
+        stats: [['11', 'COUNTRIES'], ['3', 'WEEKS'], ['0', 'SETTINGS TOUCHED']],
+      },
+      {
+        lines: ['\u201cA carrier went down one evening.', 'I read about it in the news the', 'next day, not on my phone.\u201d'],
+        who: 'Daniel \u00b7 Rome \u00b7 during a regional outage',
+        stats: [['1', 'CARRIER DOWN'], ['38 ms', 'TO MOVE'], ['0', 'CALLS DROPPED']],
+      },
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 200, 240, uid)}
+    ${mono(96, 54, 'WHAT CUSTOMERS SAY ABOUT THE SWITCHING', { size: 10, op: 0.32 })}
+    <text x="88" y="172" font-size="130" font-weight="800" fill="${G.orange}" opacity="0.16">\u201c</text>
+    ${quotes.map((q, i) => {
+      const on = (i / quotes.length).toFixed(4);
+      const b = (i / quotes.length + 0.005).toFixed(4);
+      const c = Math.min((i + 1) / quotes.length - 0.005, 1).toFixed(4);
+      const d = Math.min((i + 1) / quotes.length, 1).toFixed(4);
+      const ls = q.lines.map((t, k) => label(126, 130 + k * 40, t, { size: 24 })).join('');
+      const st = q.stats.map(([v, lbl], k) => {
+        const x = 96 + k * 152;
+        return `${card(x, 320, 140, 76, { r: 13, fill: G.white, stroke: G.line })}
+          <text x="${x + 20}" y="${358}" font-size="26" font-weight="800" fill="${G.orange}">${v}</text>
+          ${mono(x + 20, 380, lbl, { size: 8.5, op: 0.4 })}`;
+      }).join('');
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;${on};${b};${c};${d};1"
+          dur="${dur}s" repeatCount="indefinite" calcMode="discrete"/>
+        ${ls}
+        ${label(126, 286, q.who, { size: 13, op: 0.5 })}
+        ${st}
+      </g>`;
+    }).join('')}
+    ${mono(96, 432, 'THE CLAIM IS THE SAME AS THE HEADLINE. THE VOICE IS NOT OURS.', { size: 9.5, op: 0.32 })}`;
+    return { svg: gWrap(inner), pills: pillsN('Customer words', null) };
+  },
+};
+
+/* ══ WHY · 11–15 ═══════════════════════════════════════════════════ */
+
+/* ─── 11 · THE TRANSCRIPT ─────────────────────────────────────── */
+export const whyTranscript = {
+  id: 'why-transcript',
+  name: 'The Transcript',
+  family: 'Editorial',
+  tagline: 'A support chat, printed in full',
+  desc:
+    'Four messages between a customer on the Rome metro and support. She says the data died; support ' +
+    'replies that it did not \u2014 she moved carrier at 09:13:58 and the session held \u2014 then explains that ' +
+    'underground she was on 800 MHz. The section claims advanced technology; a transcript is the only ' +
+    'format where the technology answers a real person.',
+  pros: [
+    'Two voices make the argument instead of us asserting it alone',
+    'Shows support can see the switch log, which is itself a differentiator',
+    'Warmer and more readable than the six tables already on this board',
+  ],
+  cons: [
+    'Opens with a customer complaining, which is a nerve-holding first frame',
+    'Naming carriers in a support script needs sign-off',
+    'Four bubbles of text is slow reading beside four feature cards',
+  ],
+  scores: { story: 5, motion: 3, perf: 5, mobile: 4, brand: 4, ease: 4 },
+  build: (uid) => {
+    const dur = 12;
+    const msgs = [
+      { side: 'them', y: 84, h: 46, t: '09:14', lines: ['My data just died on the metro in Rome.'] },
+      { side: 'us', y: 142, h: 70, t: '09:14', lines: ['It didn\u2019t. You moved carrier at 09:13:58', 'and the session never dropped.'] },
+      { side: 'them', y: 224, h: 46, t: '09:15', lines: ['So why did it feel slow for a minute?'] },
+      { side: 'us', y: 282, h: 70, t: '09:15', lines: ['Down there you were on 800 MHz \u2014 it', 'reaches the platform. 3500 does not.'] },
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 200, 230, uid)}
+    ${label(96, 58, 'One support conversation, printed in full', { size: 15, op: 0.5 })}
+    ${msgs.map((m, i) => {
+      const us = m.side === 'us';
+      const x = us ? 224 : 96;
+      const on = 0.06 + i * 0.16;
+      const t1 = on.toFixed(3);
+      const t2 = (on + 0.05).toFixed(3);
+      const fill = us ? G.orange : '#F3F4F6';
+      const txt = us ? G.white : G.ink;
+      const ls = m.lines.map((t, k) =>
+        `<text x="${x + 20}" y="${m.y + 30 + k * 24}" font-size="13.5" font-weight="600" fill="${txt}">${t}</text>`).join('');
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${t1};${t2};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        <rect x="${x}" y="${m.y}" width="320" height="${m.h}" rx="16" fill="${fill}"/>
+        ${ls}
+        ${mono(us ? x - 12 : x + 332, m.y + m.h - 8, m.t, { size: 8.5, op: 0.35, anchor: us ? 'end' : 'start' })}
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.72;0.80;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(96, 368, 448, 62, { r: 13, fill: G.wash, stroke: G.orange, sw: 2 })}
+      ${label(120, 396, 'Support can see which carrier you were on, and when.', { size: 13.5 })}
+      ${mono(120, 418, 'MOST PROVIDERS CANNOT, BECAUSE THERE IS ONLY EVER ONE', { size: 9, op: 0.45, fill: G.deep })}
+    </g>`;
+    return { svg: gWrap(inner), pills: pillsN('Switch log, per session', null) };
+  },
+};
+
+/* ─── 12 · ONE SENTENCE ──────────────────────────────────────── */
+export const whyOneSentence = {
+  id: 'why-onesentence',
+  name: 'One Sentence',
+  family: 'Typographic',
+  tagline: 'The difference, with nothing drawn',
+  desc:
+    'No grid, no cards, no chart. \u201cMost eSIMs resell one carrier\u201d sits greyed and underlined, then the ' +
+    'answer lands large: in each country we contract with three to five. The page already states that ' +
+    'figure in body copy where nobody reads it; this is the same claim at the size it deserves, and it ' +
+    'is the only option on the board a visitor can take in without stopping.',
+  pros: [
+    'Readable in under two seconds, which no other option here manages',
+    'Uses a figure already published on the page, so nothing new to defend',
+    'Cheapest thing on the board to build, localise and maintain',
+  ],
+  cons: [
+    'Some visitors read a text-only panel as an unfinished section',
+    'Carries none of the proof the rest of the board offers',
+    'A long translation breaks the line lengths and the whole effect',
+  ],
+  scores: { story: 4, motion: 2, perf: 5, mobile: 5, brand: 4, ease: 5 },
+  build: (uid) => {
+    const dur = 10;
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 220, 240, uid)}
+    ${mono(320, 84, 'THE WHOLE DIFFERENCE, IN ONE SENTENCE', { size: 10, anchor: 'middle', op: 0.32 })}
+    ${label(320, 168, 'Most eSIMs resell one carrier.', { size: 28, anchor: 'middle', op: 0.35 })}
+    <rect x="116" y="182" width="0" height="3" rx="1.5" fill="${G.orange}" opacity="0.6">
+      <animate attributeName="width" values="0;0;408;408" keyTimes="0;0.08;0.22;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+    </rect>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.26;0.34;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${label(320, 258, 'In each country we contract', { size: 34, anchor: 'middle' })}
+    </g>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.40;0.48;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${label(320, 304, 'with three to five.', { size: 34, anchor: 'middle', fill: G.orange })}
+    </g>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.62;0.70;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${mono(320, 358, 'SO THERE IS ALWAYS A SECOND ONE, AND USUALLY A THIRD', { size: 10, anchor: 'middle', op: 0.42 })}
+    </g>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.80;0.88;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${mono(320, 420, 'EVERYTHING ELSE ON THIS PAGE IS DETAIL', { size: 9.5, anchor: 'middle', op: 0.32 })}
+    </g>`;
+    return { svg: gWrap(inner), pills: pillsN('3\u20135 carriers per country', null) };
+  },
+};
+
+/* ─── 13 · STREET LEVEL ──────────────────────────────────────── */
+export const whyStreetLevel = {
+  id: 'why-street',
+  name: 'Street Level',
+  family: 'Spatial',
+  tagline: 'The same address, three depths down',
+  desc:
+    'A cross-section of one place: the pavement, a caf\u00e9 basement, a metro platform. A phone descends ' +
+    'through them while the band it is using changes from 3500 MHz to 2100 to 800, and beside it a ' +
+    'single-carrier eSIM loses its bars on the way down. It puts the coverage argument in a building ' +
+    'rather than in a table of frequencies.',
+  pros: [
+    'Places the claim somewhere the visitor has actually stood',
+    'Explains why two eSIMs differ in the same street without naming a frequency first',
+    'The descending phone gives the loop a direction, which the grid options lack',
+  ],
+  cons: [
+    'A cross-section is an illustration job, not a layout job \u2014 the most drawing on the board',
+    'Band-to-depth mapping is a simplification an engineer will want to qualify',
+    'Three stacked levels leave little room for labels at 390px',
+  ],
+  scores: { story: 5, motion: 4, perf: 5, mobile: 3, brand: 4, ease: 2 },
+  build: (uid) => {
+    const dur = 11;
+    const levels = [
+      ['Pavement', 'n78 \u00b7 3500 MHz', 4, 4],
+      ['Caf\u00e9 basement', 'n1 \u00b7 2100 MHz', 4, 2],
+      ['Metro platform', 'B20 \u00b7 800 MHz', 4, 0],
+    ];
+    const bars = (x, y, on, col) => `<g transform="translate(${x} ${y})">${[0, 1, 2, 3].map(i =>
+      `<rect x="${i * 11}" y="${-6 - i * 6}" width="7" height="${6 + i * 6}" rx="2"
+        fill="${i < on ? col : G.line}"/>`).join('')}</g>`;
+    const inner = `
+    ${dots(uid)}
+    ${bloom(300, 220, 230, uid)}
+    ${label(96, 58, 'One address, three depths', { size: 15, op: 0.5 })}
+    ${mono(390, 92, 'OPENLINE', { size: 9, anchor: 'middle', op: 0.6, fill: G.deep })}
+    ${mono(486, 92, 'ONE CARRIER', { size: 9, anchor: 'middle', op: 0.42 })}
+    ${levels.map(([nm, band, ours, theirs], i) => {
+      const y = 104 + i * 102;
+      const on = 0.10 + i * 0.22;
+      const t1 = on.toFixed(3);
+      const t2 = (on + 0.06).toFixed(3);
+      return `<g>
+        ${card(96, y, 448, 88, { r: 12, fill: i === 0 ? G.white : '#FAFAFB', stroke: G.line })}
+        <rect x="96" y="${y}" width="5" height="88" rx="2.5" fill="${i === 2 ? G.gray : G.orange}" opacity="${1 - i * 0.28}"/>
+        ${label(124, y + 34, nm, { size: 15 })}
+        ${mono(124, y + 56, band, { size: 9.5, op: 0.42 })}
+        ${mono(124, y + 76, i === 0 ? 'ABOVE GROUND' : i === 1 ? 'ONE FLOOR DOWN' : 'TWENTY METRES DOWN', { size: 8.5, op: 0.28 })}
+        <g opacity="0.25">
+          <animate attributeName="opacity" values="0.25;0.25;1;1" keyTimes="0;${t1};${t2};1"
+            dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+          ${bars(372, y + 58, ours, G.orange)}
+          ${theirs > 0
+            ? bars(468, y + 58, theirs, G.gray)
+            : `${bars(468, y + 58, 0, G.gray)}${mono(468, y + 78, 'NO SERVICE', { size: 8.5, op: 0.8, fill: G.red })}`}
+        </g>
+      </g>`;
+    }).join('')}
+    <line x1="300" y1="116" x2="300" y2="368" stroke="${G.ink}" stroke-width="1.5" stroke-dasharray="4 6" opacity="0.35"/>
+    <g>
+      <animateMotion dur="${dur}s" keyTimes="0;0.70;1" keyPoints="0;1;1" calcMode="linear"
+        path="M 300 132 L 300 358" repeatCount="indefinite"/>
+      <rect x="-11" y="-19" width="22" height="38" rx="5" fill="${G.ink}"/>
+      <rect x="-8" y="-16" width="16" height="32" rx="3" fill="${G.orange}"/>
+    </g>
+    ${mono(96, 424, 'THE CHEAP eSIM IS NOT SLOWER DOWN HERE \u2014 IT IS NOT HERE AT ALL', { size: 9.5, op: 0.42, fill: G.deep })}`;
+    return { svg: gWrap(inner), pills: pillsN('Full band access', null) };
+  },
+};
+
+/* ─── 14 · IN THE APP ────────────────────────────────────────── */
+export const whyInTheApp = {
+  id: 'why-intheapp',
+  name: 'In the App',
+  family: 'Product demo',
+  tagline: 'The network screen, doing the switching',
+  desc:
+    'The app\u2019s network screen on a phone: who you are connected to, how many carriers are available ' +
+    'where you are standing, and a switch history that gains a row while you watch. Everything else on ' +
+    'this board argues about the network in the abstract; this shows the screen where a customer can ' +
+    'check the claim themselves.',
+  pros: [
+    'Turns four marketing cards into a feature a customer can open and verify',
+    'The switch history gaining a row is proof rather than illustration',
+    'Reusable in the app store listing and in onboarding',
+  ],
+  cons: [
+    'Commits the app to a screen that may not exist yet',
+    'Covers the same ground as the hero\u2019s carrier readout if both are chosen',
+    'Phone-in-a-panel is the most common eSIM visual there is',
+  ],
+  scores: { story: 4, motion: 4, perf: 4, mobile: 3, brand: 4, ease: 3 },
+  build: (uid) => {
+    const dur = 11;
+    const names = ['Vodafone ES', 'Movistar', 'Orange ES'];
+    const screen = `
+      <rect x="0" y="0" width="190" height="370" fill="#17171C"/>
+      <text x="16" y="44" font-size="15" font-weight="700" fill="${G.white}">Network</text>
+      <rect x="16" y="58" width="158" height="92" rx="14" fill="${G.orange}"/>
+      <text x="32" y="84" font-size="8.5" font-weight="700" letter-spacing="1.1" fill="${G.white}" opacity="0.75"
+        style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace">CONNECTED TO</text>
+      ${names.map((n, i) => {
+        const on = (i / names.length).toFixed(4);
+        const b = (i / names.length + 0.006).toFixed(4);
+        const c = Math.min((i + 1) / names.length - 0.006, 1).toFixed(4);
+        const d = Math.min((i + 1) / names.length, 1).toFixed(4);
+        return `<g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;${on};${b};${c};${d};1"
+            dur="${dur}s" repeatCount="indefinite" calcMode="discrete"/>
+          <text x="32" y="112" font-size="18" font-weight="700" fill="${G.white}">${n}</text>
+        </g>`;
+      }).join('')}
+      <text x="32" y="134" font-size="8.5" font-weight="700" letter-spacing="1.1" fill="${G.white}" opacity="0.8"
+        style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace">5G \u00b7 18 ms \u00b7 n78</text>
+      <rect x="16" y="162" width="158" height="44" rx="12" fill="${G.white}" opacity="0.07"/>
+      <text x="32" y="182" font-size="8.5" font-weight="700" letter-spacing="1.1" fill="${G.white}" opacity="0.5"
+        style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace">CARRIERS HERE</text>
+      <text x="32" y="199" font-size="11.5" font-weight="700" fill="${G.white}">4 available, 4 contracted</text>
+      <text x="16" y="232" font-size="8.5" font-weight="700" letter-spacing="1.1" fill="${G.white}" opacity="0.5"
+        style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace">SWITCH HISTORY</text>
+      ${[['09:14', 'Movistar', '38 ms'], ['08:02', 'Orange ES', '41 ms'], ['07:36', 'Vodafone ES', '36 ms']].map((r, i) => {
+        const ry = 244 + i * 34;
+        const t1 = (0.30 + i * 0.16).toFixed(3);
+        const t2 = (0.36 + i * 0.16).toFixed(3);
+        return `<g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${t1};${t2};1"
+            dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+          <rect x="16" y="${ry}" width="158" height="28" rx="9" fill="${G.white}" opacity="0.06"/>
+          <text x="28" y="${ry + 18}" font-size="8.5" font-weight="700" fill="${G.orange}"
+            style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace">${r[0]}</text>
+          <text x="66" y="${ry + 18}" font-size="10.5" font-weight="700" fill="${G.white}" opacity="0.9">${r[1]}</text>
+          <text x="162" y="${ry + 18}" text-anchor="end" font-size="8.5" font-weight="700" fill="${G.white}" opacity="0.45"
+            style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace">${r[2]}</text>
+        </g>`;
+      }).join('')}`;
+    const inner = `
+    ${dots(uid)}
+    ${bloom(230, 220, 220, uid)}
+    ${label(96, 58, 'You can check it yourself, in the app', { size: 15, op: 0.5 })}
+    ${phone({ x: 230, y: 250, w: 200, h: 380, glowId: uid, screen })}
+    ${card(384, 150, 176, 200, { r: 14, fill: G.white, stroke: G.line })}
+    ${label(406, 184, 'Nothing hidden', { size: 15 })}
+    ${[
+      'The carrier you are on, named',
+      'How many are available here',
+      'Every switch, with its latency',
+      'No silent downgrade',
+    ].map((t, i) => `
+      <g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${(0.14 + i * 0.14).toFixed(3)};${(0.20 + i * 0.14).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        <circle cx="410" cy="${208 + i * 34}" r="3.5" fill="${G.orange}"/>
+        <text x="422" y="${212 + i * 34}" font-size="11" font-weight="600" fill="${G.ink}" opacity="0.7">${t}</text>
+      </g>`).join('')}
+    ${mono(384, 384, 'THE FOUR FEATURE CARDS BESIDE', { size: 9.5, op: 0.35 })}
+    ${mono(384, 402, 'THIS PANEL ARE ALL ONE SCREEN', { size: 9.5, op: 0.35 })}
+    ${mono(384, 420, 'IN THE APP', { size: 9.5, op: 0.35 })}`;
+    return { svg: gWrap(inner), pills: pillsN('Visible in the app', null) };
+  },
+};
+
+/* ─── 15 · THE RING ─────────────────────────────────────────── */
+export const whyTheRing = {
+  id: 'why-thering',
+  name: 'The Ring',
+  family: 'Single gesture',
+  tagline: 'Remove one arc and the circle still closes',
+  desc:
+    'One shape, no table. Four arcs make a ring, one per carrier. A quarter of it goes dark and the two ' +
+    'neighbouring arcs immediately stretch to close the gap, so the ring is never broken. It is the ' +
+    'redundancy claim as a single gesture, and the only option on this board that still reads as a ' +
+    'thumbnail or a favicon.',
+  pros: [
+    'One idea at one size \u2014 legible at 390px and in the compare tile',
+    'No numbers to keep accurate and nothing to translate but the caption',
+    'The closing gap is satisfying and repeats well without wearing out',
+  ],
+  cons: [
+    'Abstract: it proves nothing on its own and leans on the caption',
+    'Says nothing about speed, bands, coverage or price',
+    'A ring implies equal carriers, which is not how the pool actually behaves',
+  ],
+  scores: { story: 3, motion: 4, perf: 5, mobile: 5, brand: 5, ease: 5 },
+  build: (uid) => {
+    const dur = 11;
+    const cx = 320, cy = 222, r = 112;
+    const pol = (a) => [cx + r * Math.cos((a * Math.PI) / 180), cy + r * Math.sin((a * Math.PI) / 180)];
+    const arc = (a1, a2) => {
+      const [x1, y1] = pol(a1);
+      const [x2, y2] = pol(a2);
+      const large = a2 - a1 > 180 ? 1 : 0;
+      return `M ${x1.toFixed(1)} ${y1.toFixed(1)} A ${r} ${r} 0 ${large} 1 ${x2.toFixed(1)} ${y2.toFixed(1)}`;
+    };
+    const quarters = [[5, 85], [95, 175], [185, 265], [275, 355]];
+    const labelAt = (a, t) => {
+      const [lx, ly] = [cx + (r + 40) * Math.cos((a * Math.PI) / 180), cy + (r + 40) * Math.sin((a * Math.PI) / 180)];
+      return mono(lx, ly + 4, t, { size: 9.5, anchor: 'middle', op: 0.5 });
+    };
+    const inner = `
+    ${dots(uid)}
+    ${bloom(cx, cy, 230, uid)}
+    ${mono(320, 70, 'FOUR CARRIERS, ONE RING', { size: 10, anchor: 'middle', op: 0.32 })}
+
+    <g opacity="1">
+      <animate attributeName="opacity" values="1;1;0;0;1;1" keyTimes="0;0.34;0.36;0.74;0.76;1"
+        dur="${dur}s" repeatCount="indefinite"/>
+      ${quarters.map(([a1, a2]) =>
+        `<path d="${arc(a1, a2)}" fill="none" stroke="${G.orange}" stroke-width="18"/>`).join('')}
+    </g>
+
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.34;0.36;0.74;0.76;1"
+        dur="${dur}s" repeatCount="indefinite"/>
+      <path d="${arc(95, 175)}" fill="none" stroke="${G.gray}" stroke-width="18" opacity="0.25" stroke-dasharray="9 9"/>
+      <path d="${arc(5, 170)}" fill="none" stroke="${G.orange}" stroke-width="18"/>
+      <path d="${arc(180, 265)}" fill="none" stroke="${G.orange}" stroke-width="18"/>
+      <path d="${arc(275, 355)}" fill="none" stroke="${G.orange}" stroke-width="18"/>
+      ${mono(cx, cy + 146, 'ONE CARRIER DOWN \u00b7 RING STILL CLOSED', { size: 9.5, anchor: 'middle', op: 0.6, fill: G.deep })}
+    </g>
+
+    ${quarters.map(([a1, a2], i) => labelAt((a1 + a2) / 2, CARRIERS[i].n.toUpperCase())).join('')}
+
+    <circle cx="${cx}" cy="${cy}" r="16" fill="${G.ink}"/>
+    <circle cx="${cx}" cy="${cy}" r="16" fill="none" stroke="${G.ink}" stroke-width="2">
+      <animate attributeName="r" values="16;34" dur="2.2s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.5;0" dur="2.2s" repeatCount="indefinite"/>
+    </circle>
+    ${mono(cx, cy + 5, '1', { size: 12, anchor: 'middle', fill: G.white, op: 0.9 })}
+
+    ${label(320, 400, 'Take one away and the circle still closes.', { size: 17, anchor: 'middle' })}
+    ${mono(320, 428, 'THAT IS WHAT REDUNDANCY MEANS \u00b7 99.9% UPTIME', { size: 9.5, anchor: 'middle', op: 0.35 })}`;
+    return { svg: gWrap(inner), pills: pillsN('Redundancy Built-In', null) };
+  },
+};
+
 /* ── registries ── */
 export const NET_HERO_VARIANTS = [netCurrent, handoff, uptime, arcs, race, mesh, hud,
   theFloor, whoYoureOn, whatBreaksFirst,
-  netTheMap];
+  netTheMap,
+  netTheDay, netThreeNumbers, netTheChip, netTheCall, netToldByTraveller];
 export const WHY_VARIANTS = [whyCurrent, sweep, failGrid, stack, procurement, handoverSlow,
   oneCarrierCost, theBands, nightShift, contractLine,
-  whyTheIncident];
+  whyTheIncident,
+  whyTranscript, whyOneSentence, whyStreetLevel, whyInTheApp, whyTheRing];

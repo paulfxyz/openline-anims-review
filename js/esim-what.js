@@ -839,6 +839,373 @@ export const whatTheSlot = {
   },
 };
 
+
+/* ══════════════════════════════════════════════════════════════════
+   11–15 · five further directions for "What is an eSIM?"
+   Same 640 × 460 box, same orange system, same two floating pills.
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ─── 11 · ACTUAL SIZE ───────────────────────────────────────────── */
+export const actualSize = {
+  id: 'what-size',
+  name: 'Actual Size',
+  family: 'Definition',
+  tagline: 'The same thing, drawn to scale in millimetres',
+  desc:
+    'A measured drawing rather than a metaphor. The 1991 full-size SIM is set out at 25 × 15 mm, the ' +
+    'nano-SIM nests inside it at 12.3 × 8.8 mm, and the eSIM sits beside them at 6 × 5 mm with its ' +
+    'own dimension lines. 375 mm² becomes 30 mm², which is the whole reason it can be soldered to ' +
+    'the board instead of pushed into a tray.',
+  pros: [
+    'Gives a number to the one thing everybody already half-knows',
+    'A dimensioned drawing looks like documentation, which reads as true',
+    'Explains why an eSIM is embedded rather than just asserting that it is',
+  ],
+  cons: [
+    'Engineering-drawing register on a holiday-travel page',
+    'Sits close to The Empty Slot, which also argues from the hardware',
+    'Dimension text is 9–10 px, so the detail is lost at 390 px',
+  ],
+  scores: { story: 4, motion: 3, perf: 5, mobile: 3, brand: 3, ease: 4 },
+  build: (uid) => {
+    const dur = 11;
+    const S = 11.4;
+    const bigW = 25 * S, bigH = 15 * S;
+    const nanW = 12.3 * S, nanH = 8.8 * S;
+    const esW = 6 * S, esH = 5 * S;
+    const bx = 78, by = 130;
+    const ex = 470, ey = by + 40;
+    const dim = (x1, y1, x2, y2) => `
+      <line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${G.ink}" stroke-width="1.4" opacity="0.4"/>
+      <line x1="${x1}" y1="${y1 - 4}" x2="${x1}" y2="${y1 + 4}" stroke="${G.ink}" stroke-width="1.4" opacity="0.4"/>
+      <line x1="${x2}" y1="${y2 - 4}" x2="${x2}" y2="${y2 + 4}" stroke="${G.ink}" stroke-width="1.4" opacity="0.4"/>`;
+    const inner = `
+    ${dots(uid)}
+    ${bloom(300, 210, 250, uid)}
+    ${label(78, 62, 'The same idea, drawn to scale', { size: 15, op: 0.5 })}
+    ${mono(78, 84, 'MILLIMETRES, NOT METAPHORS', { size: 9.5, op: 0.35 })}
+
+    <!-- full-size SIM -->
+    <rect x="${bx}" y="${by}" width="${bigW}" height="${bigH}" rx="10" fill="${G.white}"
+      stroke="${G.gray}" stroke-width="2" stroke-dasharray="6 6" opacity="0.9"/>
+    ${dim(bx, by - 16, bx + bigW, by - 16)}
+    ${mono(bx + bigW / 2, by - 22, '25 mm', { size: 10, anchor: 'middle', op: 0.45 })}
+    ${dim(bx - 16, by, bx - 16, by + bigH)}
+    ${mono(bx - 22, by + bigH / 2 + 4, '15 mm', { size: 10, anchor: 'end', op: 0.45 })}
+    ${mono(bx + bigW - 8, by + bigH - 12, 'FULL-SIZE SIM · 1991', { size: 9, anchor: 'end', op: 0.3 })}
+
+    <!-- nano-SIM nested inside it -->
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.16;0.24;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      <rect x="${bx}" y="${by}" width="${nanW}" height="${nanH}" rx="7" fill="#F1F2F4" stroke="${G.gray}" stroke-width="2"/>
+      <path d="M ${bx + nanW - 22} ${by} L ${bx + nanW} ${by + 22}" stroke="${G.gray}" stroke-width="2"/>
+      ${mono(bx + 14, by + nanH - 14, 'NANO-SIM · 2012', { size: 9, op: 0.4 })}
+      ${mono(bx + nanW + 10, by + 14, '12.3 mm', { size: 9.5, op: 0.4 })}
+    </g>
+
+    <!-- the eSIM, same scale -->
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.34;0.42;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      <rect x="${ex}" y="${ey}" width="${esW}" height="${esH}" rx="4" fill="${G.orange}" stroke="${G.deep}" stroke-width="2"/>
+      ${[0, 1, 2, 3].map(i => `
+        <line x1="${ex}" y1="${ey + 8 + i * 12}" x2="${ex - 11}" y2="${ey + 8 + i * 12}" stroke="${G.orange}" stroke-width="2"/>
+        <line x1="${ex + esW}" y1="${ey + 8 + i * 12}" x2="${ex + esW + 11}" y2="${ey + 8 + i * 12}" stroke="${G.orange}" stroke-width="2"/>`).join('')}
+      ${dim(ex, ey - 16, ex + esW, ey - 16)}
+      ${mono(ex + esW / 2, ey - 22, '6 mm', { size: 10, anchor: 'middle', op: 0.5 })}
+      ${dim(ex + esW + 26, ey, ex + esW + 26, ey + esH)}
+      ${mono(ex + esW + 34, ey + esH / 2 + 4, '5 mm', { size: 10, op: 0.5 })}
+      ${label(ex - 4, ey + esH + 34, 'eSIM', { size: 16, fill: G.orange })}
+      ${mono(ex - 4, ey + esH + 54, 'SOLDERED TO THE BOARD', { size: 9, op: 0.4 })}
+    </g>
+
+    <!-- the arithmetic -->
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.6;0.68;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(78, 326, 466, 84, { r: 16, fill: G.wash, stroke: G.orange, sw: 2 })}
+      ${label(104, 360, '375 mm² became 30 mm²', { size: 17 })}
+      ${label(104, 388, 'Small enough to solder down. Nothing left to remove.', { size: 13.5, fill: G.orange })}
+    </g>`;
+    return { svg: gWrap(inner), pills: pillsA('6 mm, soldered') };
+  },
+};
+
+/* ─── 12 · FOUR QUESTIONS ────────────────────────────────────────── */
+export const fourQuestions = {
+  id: 'what-ask',
+  name: 'Four Questions',
+  family: 'Editorial',
+  tagline: 'The four things people actually ask, answered',
+  desc:
+    'A support thread instead of a diagram. Four real questions type in and get one-line answers: ' +
+    'do I take my own SIM out, do I keep my number, do I need ID or a shop, when does it start. ' +
+    'Every answer is a claim the page already makes further down; nothing else on the board uses ' +
+    'the reader’s own words.',
+  pros: [
+    'Answers what the visitor is thinking rather than restating the heading',
+    'Dialogue is the one register nothing else on this board uses',
+    'Each line doubles as support copy and FAQ schema',
+  ],
+  cons: [
+    'Four exchanges is a lot of reading for an animated panel',
+    'Chat bubbles imply a live support channel that has to exist',
+    'No product and no hardware anywhere in the frame',
+  ],
+  scores: { story: 5, motion: 3, perf: 5, mobile: 4, brand: 3, ease: 5 },
+  build: (uid) => {
+    const dur = 13;
+    const qa = [
+      ['Do I take my normal SIM out?', 'No. Both lines stay in the phone.'],
+      ['Do I keep my own number?', 'Yes. It stays active on line one.'],
+      ['Do I need ID, or a shop?', 'Neither. No registration at all.'],
+      ['When does it start?', 'When you land. Not a minute before.'],
+    ];
+    const rows = qa.map(([q, a], i) => {
+      const y = 96 + i * 84;
+      const on = 0.05 + i * 0.19;
+      const on2 = on + 0.05;
+      const ans = on + 0.1;
+      const ans2 = ans + 0.05;
+      return `
+      <g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${on2.toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${card(60, y, 300, 36, { r: 12, fill: '#F4F4F6', stroke: '#EAEAEE' })}
+        ${label(78, y + 24, q, { size: 13, op: 0.72 })}
+      </g>
+      <g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${ans.toFixed(3)};${ans2.toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${card(268, y + 42, 312, 36, { r: 12, fill: G.wash, stroke: G.orange, sw: 1.8 })}
+        ${label(288, y + 66, a, { size: 13, fill: G.orange })}
+      </g>`;
+    }).join('');
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 220, 250, uid)}
+    ${label(60, 62, 'What people ask before they buy one', { size: 15, op: 0.5 })}
+    ${mono(580, 62, 'OPENLINE SUPPORT', { size: 9.5, anchor: 'end', op: 0.32 })}
+    ${rows}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.86;0.92;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${mono(200, 442, 'FOUR QUESTIONS, FOUR SENTENCES, NO PLASTIC INVOLVED', { size: 9.5, op: 0.4 })}
+    </g>
+    <rect x="524" y="430" width="8" height="14" fill="${G.orange}" opacity="0.8">
+      <animate attributeName="opacity" values="0.8;0.8;0;0" keyTimes="0;0.49;0.5;1" dur="1.1s" repeatCount="indefinite"/>
+    </rect>`;
+    return { svg: gWrap(inner), pills: pillsA('Answered in one line') };
+  },
+};
+
+/* ─── 13 · BOTH LINES ────────────────────────────────────────────── */
+export const bothLines = {
+  id: 'what-both',
+  name: 'Both Lines',
+  family: 'Reassurance',
+  tagline: 'Your own number rings while the eSIM carries the data',
+  desc:
+    'The screen itself, at panel scale and on the only dark frame of the board. Two lines live in ' +
+    'the status bar: the home number takes an incoming call from Mum while a maps download runs on ' +
+    'the Openline eSIM. It removes the objection that actually stops people — that adding an eSIM ' +
+    'means giving up the number everyone has for them.',
+  pros: [
+    'Kills the single biggest fear about eSIMs in one frame',
+    'Dark and full-bleed, so it separates itself from every other tile',
+    'Shows the real surface rather than an illustration of it',
+  ],
+  cons: [
+    'Dual-line behaviour varies by handset, so it can overpromise',
+    'The dark panel fights the warm page palette',
+    'The ink pill bottom-left sits close to the dark slab and loses contrast',
+  ],
+  scores: { story: 5, motion: 3, perf: 5, mobile: 5, brand: 3, ease: 4 },
+  build: (uid) => {
+    const dur = 9;
+    const bars = (x, n, col) => [0, 1, 2, 3].map(b => {
+      const h = 4 + b * 3.4;
+      return `<rect x="${x + b * 6}" y="${58 - h}" width="4" height="${h}" rx="1.4"
+        fill="${col}" opacity="${b < n ? 0.95 : 0.25}"/>`;
+    }).join('');
+    const inner = `
+    ${dots(uid)}
+    ${bloom(360, 200, 240, uid)}
+    <rect x="96" y="16" width="512" height="372" rx="26" fill="${G.ink}"/>
+    <rect x="96" y="16" width="512" height="372" rx="26" fill="none" stroke="${G.white}" stroke-width="1.5" opacity="0.1"/>
+    <!-- status bar with two lines -->
+    ${mono(124, 58, '09:41', { size: 12, fill: G.white, op: 0.8 })}
+    ${bars(430, 3, G.white)}
+    ${mono(456, 58, 'HOME', { size: 9, fill: G.white, op: 0.5 })}
+    ${bars(500, 4, G.orange)}
+    ${mono(526, 58, 'OPENLINE', { size: 9, fill: G.orange, op: 0.9 })}
+    <line x1="124" y1="74" x2="580" y2="74" stroke="${G.white}" stroke-width="1" opacity="0.1"/>
+
+    <!-- line 1: the call on the home number -->
+    <rect x="124" y="98" width="456" height="112" rx="18" fill="${G.white}" opacity="0.06"/>
+    ${mono(148, 126, 'LINE 1 · YOUR OWN NUMBER', { size: 9.5, fill: G.white, op: 0.45 })}
+    ${label(148, 160, 'Mum', { size: 24, fill: G.white })}
+    ${mono(148, 184, '+351 91 •• •• 204 · incoming', { size: 10, fill: G.white, op: 0.4 })}
+    <g>
+      <circle cx="530" cy="154" r="24" fill="${G.orange}" opacity="0.9"/>
+      <circle cx="530" cy="154" r="24" fill="none" stroke="${G.orange}" stroke-width="2.5">
+        <animate attributeName="r" values="24;44" dur="1.8s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.7;0" dur="1.8s" repeatCount="indefinite"/>
+      </circle>
+      <path d="M 521 148 c 2 -3 5 -4 7 -2 l 3 3 c 2 2 1 4 -1 5 l -1 1 c 1 3 3 5 6 6 l 1 -1 c 1 -2 3 -3 5 -1 l 3 3 c 2 2 1 5 -2 7 -6 3 -14 -1 -19 -6 -5 -5 -9 -13 -6 -18 z"
+        fill="${G.white}"/>
+    </g>
+
+    <!-- line 2: data on the eSIM -->
+    <rect x="124" y="226" width="456" height="112" rx="18" fill="${G.orange}" opacity="0.12"/>
+    <rect x="124" y="226" width="456" height="112" rx="18" fill="none" stroke="${G.orange}" stroke-width="1.8" opacity="0.7"/>
+    ${mono(148, 254, 'LINE 2 · OPENLINE eSIM', { size: 9.5, fill: G.orange, op: 0.9 })}
+    ${label(148, 288, 'Maps · Lisbon offline pack', { size: 17, fill: G.white })}
+    <rect x="148" y="304" width="408" height="7" rx="3.5" fill="${G.white}" opacity="0.14"/>
+    <rect x="148" y="304" width="60" height="7" rx="3.5" fill="${G.orange}">
+      <animate attributeName="width" values="60;408;408" keyTimes="0;0.7;1" dur="${dur}s" repeatCount="indefinite"/>
+    </rect>
+    ${mono(148, 330, '12 MB · on eSIM data, not on the home plan', { size: 9.5, fill: G.white, op: 0.45 })}
+    ${mono(556, 330, 'LIVE', { size: 9.5, anchor: 'end', fill: G.orange, op: 0.9 })}
+
+    ${label(200, 428, 'Your number rings. The eSIM carries the data.', { size: 14, op: 0.7 })}`;
+    return { svg: gWrap(inner), pills: pillsA('Two lines, one phone') };
+  },
+};
+
+/* ─── 14 · THE ACRONYM ───────────────────────────────────────────── */
+export const theAcronym = {
+  id: 'what-acronym',
+  name: 'The Acronym',
+  family: 'Typographic',
+  tagline: 'Four letters, and only one of them matters',
+  desc:
+    'No illustration at all. eSIM is set large, unpacks into embedded Subscriber Identity Module ' +
+    'one word at a time, then three of the four words dim and an orange rule slides under ' +
+    '"embedded". The definition arrives by reading rather than by diagram, which is the fastest ' +
+    'route to the point the heading asks for.',
+  pros: [
+    'The lightest option on the board, and razor sharp at any size',
+    'Defines the word in the reader’s own vocabulary',
+    'Typography only, so it can never look like stock illustration',
+  ],
+  cons: [
+    'No product, no phone, nothing to feel',
+    'Acronym-unpacking is a familiar trick and can read as a lecture',
+    'Competes with the section heading directly beside it',
+  ],
+  scores: { story: 4, motion: 4, perf: 5, mobile: 5, brand: 3, ease: 5 },
+  build: (uid) => {
+    const dur = 10;
+    const words = [
+      ['e', 'embedded', true],
+      ['S', 'Subscriber', false],
+      ['I', 'Identity', false],
+      ['M', 'Module', false],
+    ];
+    const rows = words.map(([ltr, word, key], i) => {
+      const y = 216 + i * 44;
+      const on = 0.14 + i * 0.09;
+      const dimTo = key ? '1;1;1;1' : '1;1;0.22;0.22';
+      return `
+      <g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.05).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        <g>
+          <animate attributeName="opacity" values="${dimTo}" keyTimes="0;0.6;0.68;1" dur="${dur}s" repeatCount="indefinite"/>
+          ${label(96, y, ltr, { size: 30, fill: G.orange })}
+          ${label(140, y, word, { size: 30, op: 0.85 })}
+        </g>
+      </g>`;
+    }).join('');
+    const inner = `
+    ${dots(uid)}
+    ${bloom(300, 180, 250, uid)}
+    ${label(96, 74, 'Say it in full', { size: 15, op: 0.5 })}
+    <text x="96" y="168" font-size="86" font-weight="800" fill="${G.ink}" letter-spacing="-2" fill-opacity="0.9"><tspan fill="${G.orange}">e</tspan>SIM</text>
+    ${rows}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.6;0.68;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      <rect x="96" y="226" width="196" height="4" rx="2" fill="${G.orange}"/>
+    </g>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.74;0.82;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${label(340, 286, 'Embedded means soldered in.', { size: 15 })}
+      ${label(340, 314, 'Soldered in means never inserted.', { size: 15 })}
+      ${label(340, 342, 'Never inserted means never lost.', { size: 15, fill: G.orange })}
+    </g>
+    ${mono(544, 168, 'FOUR WORDS', { size: 9.5, anchor: 'end', op: 0.3 })}`;
+    return { svg: gWrap(inner), pills: pillsA('One word matters') };
+  },
+};
+
+/* ─── 15 · ALMOST EVERY PHONE ────────────────────────────────────── */
+export const almostEveryPhone = {
+  id: 'what-capable',
+  name: 'Almost Every Phone',
+  family: 'Proof',
+  tagline: 'The question under the question: does mine have one',
+  desc:
+    'Thirty handsets in a grid light up one by one until twenty-seven are orange and three stay ' +
+    'grey. Underneath, the actual cut-off: every iPhone since the XR, every Pixel since the 3, ' +
+    'every Galaxy S since the S20. It answers the private question the heading provokes — is my ' +
+    'phone one of them — which nothing else on the board goes near.',
+  pros: [
+    'Answers the only question that decides whether the reader keeps reading',
+    'A proportion you can count beats a percentage you have to trust',
+    'Naming three model cut-offs makes it checkable',
+  ],
+  cons: [
+    'The 27-in-30 ratio is illustrative and needs a real source before it ships',
+    'Thirty small glyphs is a busy frame and the grid can read as decoration',
+    'Device names age, so the copy needs revisiting each year',
+  ],
+  scores: { story: 4, motion: 4, perf: 4, mobile: 3, brand: 4, ease: 4 },
+  build: (uid) => {
+    const dur = 11;
+    const cols = 10, rowsN = 3, gw = 34, gh = 52, gapX = 12, gapY = 16;
+    const x0 = 96, y0 = 108;
+    const grey = [7, 18, 25];
+    const cells = Array.from({ length: cols * rowsN }, (_, i) => {
+      const c = i % cols, r = Math.floor(i / cols);
+      const x = x0 + c * (gw + gapX), y = y0 + r * (gh + gapY);
+      const dead = grey.indexOf(i) !== -1;
+      const on = 0.06 + (i / (cols * rowsN)) * 0.5;
+      if (dead) {
+        return `<g>
+          <rect x="${x}" y="${y}" width="${gw}" height="${gh}" rx="7" fill="${G.white}" stroke="${G.line}" stroke-width="2"/>
+          <rect x="${x + 12}" y="${y + 6}" width="10" height="2.5" rx="1.25" fill="${G.line}"/>
+          <rect x="${x + 8}" y="${y + 18}" width="18" height="14" rx="3" fill="${G.line}"/>
+        </g>`;
+      }
+      return `<g>
+        <rect x="${x}" y="${y}" width="${gw}" height="${gh}" rx="7" fill="${G.white}" stroke="${G.line}" stroke-width="2"/>
+        <rect x="${x + 12}" y="${y + 6}" width="10" height="2.5" rx="1.25" fill="${G.line}"/>
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.03).toFixed(3)};1"
+            dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+          <rect x="${x}" y="${y}" width="${gw}" height="${gh}" rx="7" fill="${G.wash}" stroke="${G.orange}" stroke-width="2"/>
+          <rect x="${x + 12}" y="${y + 6}" width="10" height="2.5" rx="1.25" fill="${G.orange}" opacity="0.45"/>
+          <rect x="${x + 8}" y="${y + 18}" width="18" height="14" rx="3" fill="${G.orange}"/>
+          <path d="M ${x + 11} ${y + 42} l 4 4 l 8 -9" fill="none" stroke="${G.orange}" stroke-width="2.2" stroke-linecap="round"/>
+        </g>
+      </g>`;
+    }).join('');
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 190, 250, uid)}
+    ${label(96, 62, 'Does your phone already have one?', { size: 15, op: 0.5 })}
+    ${mono(544, 62, '27 OF 30', { size: 10, anchor: 'end', op: 0.35 })}
+    ${cells}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.62;0.7;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(96, 308, 448, 96, { r: 16, fill: G.wash, stroke: G.orange, sw: 2 })}
+      ${label(122, 342, 'Almost certainly yes', { size: 17, fill: G.orange })}
+      ${label(122, 368, 'Every iPhone since the XR. Every Pixel since the 3.', { size: 13 })}
+      ${label(122, 390, 'Every Galaxy S since the S20. The chip is already there.', { size: 13 })}
+    </g>`;
+    return { svg: gWrap(inner), pills: pillsA('Already compatible') };
+  },
+};
+
 /* ── registry ── */
 export const WHAT_VARIANTS = [whatCurrent, etch, twoWays, drawer, noPostOffice,
-  theProfile, shelfOfCountries, scanIt, landed, nothingToLose, whatTheSlot];
+  theProfile, shelfOfCountries, scanIt, landed, nothingToLose, whatTheSlot,
+  actualSize, fourQuestions, bothLines, theAcronym, almostEveryPhone];

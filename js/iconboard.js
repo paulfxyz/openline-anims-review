@@ -1,5 +1,5 @@
 /* Icon review board — a different shape of problem from the animation
-   boards. Twenty-one candidates, each tiny, so the useful view is the whole
+   boards. Thirty-one candidates, each tiny, so the useful view is the whole
    set side by side at its real size, with one blown up big enough to judge
    the motion and one dropped into a replica of the actual login card.    */
 
@@ -19,7 +19,7 @@ export function buildIconBoard(root, cfg) {
       <div class="ib-top">
         <div class="bd-copy">
           <div class="bd-kicker">/login · greeting</div>
-          <h2 class="bd-h2">Aloha! <span>Twenty ways to say it.</span></h2>
+          <h2 class="bd-h2">Aloha! <span>Thirty ways to say it.</span></h2>
           <p class="bd-lead">The login card opens with a 56×56 rounded badge holding a 34×34 animated glyph on a
             0&nbsp;0&nbsp;64&nbsp;64 viewBox. Every icon below is built to exactly that, with all motion inline as
             SMIL — no stylesheet, no keyframe names, nothing registered globally. Drop-in replacements, one
@@ -70,7 +70,7 @@ export function buildIconBoard(root, cfg) {
 
   <section class="bd-compare">
     <div class="bd-wrap">
-      <div class="bd-eyebrow">All twenty-one, at real size</div>
+      <div class="bd-eyebrow">All thirty-one, at real size</div>
       <h3 class="mt-2 text-[28px] font-bold">Every candidate, running</h3>
       <p class="mt-3 max-w-2xl text-[16px] leading-relaxed text-black/60">
         Each tile shows the icon in the real 56px badge on the left and at triple size on the right, so you can

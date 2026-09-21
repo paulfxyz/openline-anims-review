@@ -767,9 +767,446 @@ export const theSplit = {
   },
 };
 
+/* ══ 11 · Stories ════════════════════════════════════════════ */
+export const storiesCover = {
+  id: 'bv-stories',
+  name: 'Stories',
+  family: 'Social video',
+  tagline: 'Portrait, segmented, held in a hand',
+  desc:
+    'Every other cover option on this board is a landscape frame. This one is a phone: a portrait ' +
+    'story player with three segment bars across the top, each filling in turn as its post takes the ' +
+    'screen, and a swipe-up prompt at the bottom. It borrows the grammar readers already use daily, ' +
+    'and it is the only option that says out loud that the blog is read on a phone in a foreign ' +
+    'country rather than at a desk.',
+  pros: ['Segment bars are understood instantly, with no play glyph needed',
+    'Portrait artwork survives the panel collapsing on mobile',
+    'The device frame flags this as phone content, which matches the audience'],
+  cons: ['The screen is narrow, so titles get two lines and little else fits',
+    'Implies a vertical video format the marketing team would then have to produce',
+    'A device mock dates faster than a flat cover'],
+  scores: { story: 4, motion: 4, perf: 4, mobile: 5, brand: 4, ease: 3 },
+  build: (uid = 'a') => {
+    const dur = 15, each = dur / 3;
+    const dx = 162, dy = 44, dw = 252, dh = 452;
+    const sx = dx + 10, sy = dy + 10, sw = dw - 20, sh = dh - 20;
+    const bw = (sw - 28 - 12) / 3;
+    const scene = (i) => {
+      if (i === 0) {
+        return Array.from({ length: 7 }, (_, k) => {
+          const bh = 54 + ((k * 43) % 110);
+          return `<rect x="${sx + 6 + k * 34}" y="${sy + 300 - bh}" width="${20 + (k % 3) * 8}"
+            height="${bh}" rx="3" fill="#0E1C33" opacity="0.92"/>`;
+        }).join('');
+      }
+      if (i === 1) {
+        return `<path d="M ${sx - 10} ${sy + 292} L ${sx + sw + 10} ${sy + 250}" stroke="#3A3158"
+            stroke-width="9"/>
+          ${Array.from({ length: 6 }, (_, k) =>
+            `<rect x="${sx + k * 44}" y="${sy + 296 - k * 7}" width="5" height="22" fill="#1D1930"/>`).join('')}
+          ${Array.from({ length: 3 }, (_, k) =>
+            `<rect x="${sx + 18 + k * 64}" y="${sy + 252 - k * 10}" width="56" height="24" rx="5"
+              fill="#C9C2F0"/>`).join('')}`;
+      }
+      return `<path d="M ${sx - 10} ${sy + 292} Q ${sx + sw * 0.4} ${sy + 258}, ${sx + sw + 10} ${sy + 286}
+          L ${sx + sw + 10} ${sy + sh} L ${sx - 10} ${sy + sh} Z" fill="#0C2B25"/>
+        ${Array.from({ length: 6 }, (_, k) =>
+          `<rect x="${sx + 10 + k * 38}" y="${sy + 228 - ((k * 31) % 40)}" width="26"
+            height="${66 + ((k * 31) % 40)}" rx="3" fill="#0F332B"/>
+           <rect x="${sx + 10 + k * 38}" y="${sy + 222 - ((k * 31) % 40)}" width="26" height="7" rx="2"
+            fill="#C9724E"/>`).join('')}`;
+    };
+    return {
+      pills: noPills,
+      svg: w(`
+        <rect width="${W}" height="${H}" fill="#FFFDFB"/>
+        <circle cx="84" cy="140" r="150" fill="${OR}" opacity="0.07"/>
+        <circle cx="${W - 66}" cy="${H - 130}" r="170" fill="${OR}" opacity="0.05"/>
+        ${lab(32, 30, 'THREE POSTS, IN THE FORMAT PEOPLE ALREADY WATCH', GRAY, { size: 8.5 })}
+        ${rect(dx, dy, dw, dh, { fill: DARK, r: 30 })}
+        <clipPath id="bvst${uid}"><rect x="${sx}" y="${sy}" width="${sw}" height="${sh}" rx="22"/></clipPath>
+        <g clip-path="url(#bvst${uid})">
+          <rect x="${sx}" y="${sy}" width="${sw}" height="${sh}" fill="${DARK2}"/>
+          ${ARTS.map(([title, cat, min], i) => {
+            const on = ((i * each) / dur).toFixed(4);
+            const off = (((i + 1) * each) / dur).toFixed(4);
+            const hue = ['#1B2E50', '#241E3A', '#123A32'][i];
+            const words = title.split(' ');
+            const mid = Math.ceil(words.length / 2);
+            const l1 = words.length > 2 ? words.slice(0, mid).join(' ') : title;
+            const l2 = words.length > 2 ? words.slice(mid).join(' ') : '';
+            return `<g opacity="0">
+              <animate attributeName="opacity" values="0;0;1;1;0;0"
+                keyTimes="0;${on};${(+on + 0.02).toFixed(4)};${(+off - 0.02).toFixed(4)};${off};1"
+                dur="${dur}s" repeatCount="indefinite"/>
+              <rect x="${sx}" y="${sy}" width="${sw}" height="${sh}" fill="${hue}"/>
+              <circle cx="${sx + 70 + i * 30}" cy="${sy + 130}" r="120" fill="${OR}" opacity="0.17"/>
+              <circle cx="${sx + sw - 24}" cy="${sy + 330}" r="96" fill="#5AA9E6" opacity="0.13"/>
+              ${scene(i)}
+              <defs><linearGradient id="bvsg${uid}${i}" x1="0" y1="1" x2="0" y2="0">
+                <stop offset="0" stop-color="${hue}" stop-opacity="0.96"/>
+                <stop offset="1" stop-color="${hue}" stop-opacity="0"/></linearGradient></defs>
+              <rect x="${sx}" y="${sy + sh - 190}" width="${sw}" height="190"
+                fill="url(#bvsg${uid}${i})"/>
+              ${t(sx + 16, sy + sh - 118, l1, { size: 21, w: 800, fill: WHITE })}
+              ${l2 ? t(sx + 16, sy + sh - 94, l2, { size: 21, w: 800, fill: WHITE }) : ''}
+              ${lab(sx + 16, sy + sh - 70, `${cat.toUpperCase()} \u00B7 ${min.toUpperCase()} READ`, WHITE,
+                { size: 8.5, op: 0.72 })}
+            </g>`;
+          }).join('')}
+        </g>
+        ${ARTS.map((_, i) => {
+          const x = sx + 14 + i * (bw + 6);
+          const on = ((i * each) / dur).toFixed(4);
+          const off = (((i + 1) * each) / dur).toFixed(4);
+          return `${rect(x, sy + 14, bw, 3, { fill: 'rgba(255,255,255,0.3)', r: 1.5 })}
+            <rect x="${x}" y="${sy + 14}" width="0" height="3" rx="1.5" fill="${WHITE}">
+              <animate attributeName="width" values="0;0;${bw.toFixed(1)};${bw.toFixed(1)}"
+                keyTimes="0;${on};${off};1" dur="${dur}s" repeatCount="indefinite"/>
+            </rect>`;
+        }).join('')}
+        ${lab(sx + 14, sy + 42, 'OPENLINE BLOG', WHITE, { size: 8, op: 0.62 })}
+        ${lab(sx + sw - 14, sy + 42, 'LIVE', WHITE, { size: 8, op: 0.62, a: 'end' })}
+        ${lab(dx + dw / 2, sy + sh - 30, 'SWIPE UP TO READ', WHITE, { size: 8.5, a: 'middle', op: 0.7 })}
+        <path d="M ${dx + dw / 2 - 7} ${sy + sh - 16} L ${dx + dw / 2} ${sy + sh - 23} L ${dx + dw / 2 + 7} ${sy + sh - 16}"
+          fill="none" stroke="${WHITE}" stroke-width="2" stroke-linecap="round" opacity="0.5">
+          <animate attributeName="opacity" values="0.2;0.9;0.2" keyTimes="0;0.5;1" dur="1.8s"
+            repeatCount="indefinite"/>
+        </path>
+        ${lab(32, 524, 'THE PANEL AS SOMETHING YOU HOLD, NOT SOMETHING YOU SCAN', GRAY, { size: 8.5 })}`),
+    };
+  },
+};
+
+/* ══ 12 · Five Gigabytes ═══════════════════════════════════════ */
+export const fiveGigabytes = {
+  id: 'bv-fivegb',
+  name: 'Five Gigabytes',
+  family: 'Data',
+  tagline: 'The article\u2019s own numbers, moving',
+  desc:
+    'The lead post is called "Tokyo on 5GB" and the panel never shows a single gigabyte. This makes ' +
+    'the finding the artwork: a five-gigabyte bar filling segment by segment \u2014 0.9 on maps, 1.2 ' +
+    'on camera translation, 1.1 on photographs, 0.2 on messages \u2014 and 1.6 left over. It is the ' +
+    'only light cover on the board, it answers the question the title asks, and a reader who watches ' +
+    'it has already got value before clicking.',
+  pros: ['Gives away the useful answer, which earns the click rather than withholding it',
+    'Light and orange, so it sits inside the page instead of punching a hole in it',
+    'No cover art, no photography, no video implied'],
+  cons: ['Only works for posts that contain numbers, so it will not generalise',
+    'The breakdown has to match whatever the piece actually says',
+    'A stacked bar is a plain object beside the cinematic options'],
+  scores: { story: 5, motion: 3, perf: 5, mobile: 4, brand: 4, ease: 4 },
+  build: (uid = 'a') => {
+    const segs = [['Maps and transit', 0.9, '#C2410C'], ['Camera translation', 1.2, OR],
+      ['Photographs uploaded', 1.1, '#FF8A5C'], ['Messaging', 0.2, '#FFC4A8'],
+      ['Never used', 1.6, '#E5E7EB']];
+    const dur = 12, bx = 32, bwid = 512, by = 214, bh = 44;
+    const counts = ['0.0', '0.9', '2.1', '3.2', '3.4'];
+    const kt = counts.map((_, i) => (i / counts.length).toFixed(4)).concat('1').join(';');
+    let acc = 0;
+    const bars = segs.map(([nm, gb, col], i) => {
+      const x = bx + (acc / 5) * bwid;
+      acc += gb;
+      const wd = (gb / 5) * bwid;
+      const on = (0.06 + i * 0.12).toFixed(3);
+      return `<rect x="${x.toFixed(1)}" y="${by}" width="0" height="${bh}" fill="${col}">
+        <animate attributeName="width" values="0;${wd.toFixed(1)};${wd.toFixed(1)}"
+          keyTimes="0;${(+on + 0.1).toFixed(3)};1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      </rect>`;
+    }).join('');
+    return {
+      pills: noPills,
+      svg: w(`
+        <rect width="${W}" height="${H}" fill="#FFFDFB"/>
+        <circle cx="${W - 50}" cy="70" r="150" fill="${OR}" opacity="0.06"/>
+        ${lab(32, 44, 'ASIA \u00B7 6 MIN READ', OR, { size: 9 })}
+        ${t(32, 92, 'Tokyo on 5GB', { size: 34, w: 800 })}
+        ${t(32, 118, 'Where a fortnight of it actually went', { size: 14, fill: MUT })}
+        <text x="32" y="190" font-family="${MO}" font-size="40" font-weight="700" fill="${INK}">
+          ${counts.map((c, i) => `<tspan x="32" opacity="0">${c}<animate attributeName="opacity"
+            values="${counts.map((_, j) => (j === i ? '1' : '0')).join(';')};${i === 0 ? '1' : '0'}"
+            keyTimes="${kt}" dur="${dur}s" repeatCount="indefinite" calcMode="discrete"/></tspan>`).join('')}
+        </text>
+        ${lab(112, 190, 'GB OF 5 USED', MUT, { size: 9 })}
+        ${rect(372, 152, 172, 40, { fill: OR, r: 10 })}
+        ${t(458, 178, 'Read the piece \u2192', { size: 13.5, w: 700, a: 'middle', fill: WHITE })}
+        <clipPath id="bvfg${uid}"><rect x="${bx}" y="${by}" width="${bwid}" height="${bh}" rx="10"/></clipPath>
+        ${rect(bx, by, bwid, bh, { fill: '#F3F4F6', r: 10 })}
+        <g clip-path="url(#bvfg${uid})">${bars}</g>
+        ${[0, 1, 2, 3, 4, 5].map(g =>
+          `<line x1="${bx + (g / 5) * bwid}" y1="${by + bh + 4}" x2="${bx + (g / 5) * bwid}"
+            y2="${by + bh + 10}" stroke="${LINE}" stroke-width="1.5"/>
+           ${lab(bx + (g / 5) * bwid, by + bh + 24, `${g}GB`, GRAY, { size: 7.5, a: 'middle' })}`).join('')}
+        ${segs.map(([nm, gb, col], i) => {
+          const y = 296 + i * 40;
+          const on = (0.06 + i * 0.12).toFixed(3);
+          const last = i === segs.length - 1;
+          return `<g opacity="0">
+            <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on};${(+on + 0.06).toFixed(3)};1"
+              dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+            ${rect(32, y, 14, 14, { fill: col, r: 3 })}
+            ${t(58, y + 12, nm, { size: 13.5, w: last ? 400 : 600, fill: last ? MUT : INK })}
+            ${t(544, y + 12, `${gb.toFixed(1)} GB`, { m: true, size: 13, w: 700, a: 'end',
+              fill: last ? MUT : INK })}
+            <line x1="32" y1="${y + 26}" x2="544" y2="${y + 26}" stroke="${LINE}" stroke-width="1"/>
+          </g>`;
+        }).join('')}
+        ${lab(32, 520, 'EVERY FIGURE HERE IS FROM THE PIECE ITSELF', GRAY, { size: 8.5 })}`),
+    };
+  },
+};
+
+/* ══ 13 · Listen Instead ══════════════════════════════════════ */
+export const listenInstead = {
+  id: 'bv-listen',
+  name: 'Listen Instead',
+  family: 'Audio',
+  tagline: 'A waveform, not a play button over a photo',
+  desc:
+    'The brief says treat the panel as something playing. This plays audio rather than video: a ' +
+    'waveform filling left to right with a running timecode, and the three posts listed below as ' +
+    'episodes with both numbers \u2014 6 min read, 7 min listen. Audio is the one format this ' +
+    'audience genuinely cannot get on a plane without preparing for, and a narrated article is ' +
+    'cheaper to produce than a video.',
+  pros: ['Promises something that can actually be produced for every post',
+    'Answers "when would I consume this?" \u2014 on the flight, offline',
+    'A waveform reads as playing without needing a poster frame'],
+  cons: ['Commits the team to recording or licensing narration for every article',
+    'No visual sense of place at all',
+    'A synthesised voice would undermine the whole idea'],
+  scores: { story: 4, motion: 4, perf: 5, mobile: 5, brand: 4, ease: 3 },
+  build: (uid = 'a') => {
+    const dur = 14, n = 48;
+    const frames = ['0:00', '0:54', '1:48', '2:42', '3:36', '4:30', '5:24', '6:18'];
+    const fkt = frames.map((_, i) => (i / frames.length).toFixed(4)).concat('1').join(';');
+    const clock = `<text x="32" y="276" font-family="${MO}" font-size="10" font-weight="600"
+      fill="${WHITE}" opacity="0.7">` +
+      frames.map((f, i) =>
+        `<tspan x="32" opacity="0">${f}<animate attributeName="opacity"
+          values="${frames.map((_, j) => (j === i ? '1' : '0')).join(';')};${i === 0 ? '1' : '0'}"
+          keyTimes="${fkt}" dur="${dur}s" repeatCount="indefinite" calcMode="discrete"/></tspan>`).join('') +
+      '</text>';
+    return {
+      pills: noPills,
+      svg: w(`
+        <rect width="${W}" height="${H}" fill="${DARK}"/>
+        <circle cx="110" cy="110" r="190" fill="${OR}" opacity="0.09"/>
+        <circle cx="${W - 60}" cy="${H - 90}" r="170" fill="#5AA9E6" opacity="0.07"/>
+        ${lab(32, 46, 'THE SAME PIECES, READ ALOUD', WHITE, { size: 9, op: 0.5 })}
+        ${t(32, 104, 'Tokyo on 5GB', { size: 30, w: 800, fill: WHITE })}
+        ${lab(32, 130, 'ASIA \u00B7 6 MIN READ \u00B7 7 MIN LISTEN', WHITE, { size: 9, op: 0.6 })}
+        ${Array.from({ length: n }, (_, i) => {
+          const x = 32 + i * ((W - 64) / n);
+          const h = 12 + ((i * 17) % 52);
+          const on = (i / n).toFixed(4);
+          return `<rect x="${x.toFixed(1)}" y="${(206 - h / 2).toFixed(1)}" width="6" height="${h}"
+              rx="3" fill="rgba(255,255,255,0.18)"/>
+            <rect x="${x.toFixed(1)}" y="${(206 - h / 2).toFixed(1)}" width="6" height="${h}" rx="3"
+              fill="${OR}" opacity="0">
+              <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on};${(+on + 0.012).toFixed(4)};1"
+                dur="${dur}s" repeatCount="indefinite"/>
+            </rect>`;
+        }).join('')}
+        ${rail(32, 250, W - 64, dur)}
+        ${clock}
+        ${lab(W - 32, 276, '7:12', WHITE, { a: 'end', size: 10, op: 0.55 })}
+        <path d="M 236 292 L 224 300 L 236 308" fill="none" stroke="${WHITE}" stroke-width="2"
+          stroke-linecap="round" opacity="0.45"/>
+        ${playMark(288, 300, 26, WHITE, OR)}
+        <path d="M 340 292 L 352 300 L 340 308" fill="none" stroke="${WHITE}" stroke-width="2"
+          stroke-linecap="round" opacity="0.45"/>
+        ${ARTS.map(([title, cat, min], i) => {
+          const y = 352 + i * 56;
+          const on = (i / 3).toFixed(4), off = ((i + 1) / 3).toFixed(4);
+          const listen = ['7 MIN', '10 MIN', '6 MIN'][i];
+          return `<g>
+            ${rect(32, y, 512, 46, { fill: 'rgba(255,255,255,0.05)', r: 10 })}
+            <rect x="32" y="${y}" width="512" height="46" rx="10" fill="rgba(255,83,20,0.14)"
+              stroke="${OR}" stroke-width="1.5" opacity="0">
+              <animate attributeName="opacity" values="0;0;1;1;0;0"
+                keyTimes="0;${on};${(+on + 0.02).toFixed(4)};${(+off - 0.02).toFixed(4)};${off};1"
+                dur="${dur}s" repeatCount="indefinite"/>
+            </rect>
+            <path d="M 56 ${y + 16} L 68 ${y + 23} L 56 ${y + 30} Z" fill="${OR}"/>
+            ${t(84, y + 28, title, { size: 13.5, w: 600, fill: WHITE, op: 0.9 })}
+            ${lab(524, y + 28, `${listen} LISTEN`, WHITE, { size: 8.5, a: 'end', op: 0.55 })}
+          </g>`;
+        }).join('')}
+        ${lab(32, 528, 'FOR THE FLIGHT, WHERE THERE IS NO WIFI TO SPEND', WHITE, { size: 8.5, op: 0.42 })}`),
+    };
+  },
+};
+
+/* ══ 14 · Departures ═════════════════════════════════════════ */
+export const departures = {
+  id: 'bv-depart',
+  name: 'Departures',
+  family: 'Travel signage',
+  tagline: 'The blog as an airport board',
+  desc:
+    'A split-flap departures board: reading time in the time column, section where the destination ' +
+    'goes, the article title as the service, and a status at the right. The bottom row flips between ' +
+    'two titles on a loop, so the board is visibly updating rather than merely animated. It is the ' +
+    'only option that borrows a travel object instead of a media player, and it makes five posts ' +
+    'legible at once where the cover options manage one.',
+  pros: ['Instantly reads as travel without a single photograph',
+    'Five posts visible at once, and the flip proves it is live',
+    'The mono-and-amber treatment looks like nothing else on the site'],
+  cons: ['Amber on charcoal fights the orange brand palette',
+    'A pastiche can date quickly and may read as gimmick',
+    'Long titles have to be cut hard to fit the column'],
+  scores: { story: 4, motion: 4, perf: 5, mobile: 3, brand: 3, ease: 4 },
+  build: (uid = 'a') => {
+    const AM = '#F5B544', AMD = 'rgba(245,181,68,0.45)';
+    const rows = [
+      ['6 MIN', 'ASIA', 'Tokyo on 5GB', 'NOW READING'],
+      ['8 MIN', 'EUROPE', 'Europe by rail, always online', 'NEW'],
+      ['5 MIN', 'GUIDES', 'Working from Lisbon', 'NEW'],
+      ['7 MIN', 'MONEY', 'Save 80% on data roaming', 'UPDATED'],
+    ];
+    const dur = 9;
+    return {
+      pills: noPills,
+      svg: w(`
+        <rect width="${W}" height="${H}" fill="#0A0C10"/>
+        ${rect(24, 36, 528, 428, { fill: '#15181E', r: 12 })}
+        ${lab(48, 68, 'READ', AM, { size: 8.5, op: 0.55 })}
+        ${lab(128, 68, 'SECTION', AM, { size: 8.5, op: 0.55 })}
+        ${lab(252, 68, 'ARTICLE', AM, { size: 8.5, op: 0.55 })}
+        ${lab(528, 68, 'STATUS', AM, { size: 8.5, op: 0.55, a: 'end' })}
+        <line x1="48" y1="82" x2="528" y2="82" stroke="rgba(245,181,68,0.22)" stroke-width="1.5"/>
+        ${rows.map(([mins, sec, title, status], i) => {
+          const y = 104 + i * 70;
+          const beg = (i * dur / 5).toFixed(2);
+          return `<g>
+            ${rect(40, y, 496, 52, { fill: 'rgba(255,255,255,0.03)', r: 6 })}
+            ${t(48, y + 32, mins, { m: true, size: 13, w: 700, fill: AM })}
+            ${t(128, y + 32, sec, { m: true, size: 11, w: 700, fill: AM, op: 0.62, ls: 1.2 })}
+            ${t(252, y + 32, title, { size: 15, w: 600, fill: '#F7EEDC' })}
+            ${t(528, y + 32, status, { m: true, size: 10, w: 700, fill: status === 'NEW' ? AM : AMD,
+              a: 'end', ls: 1 })}
+            <rect x="40" y="${y}" width="496" height="3" fill="${AM}" opacity="0.5">
+              <animate attributeName="y" values="${y};${y + 49};${y + 49}" keyTimes="0;0.16;1"
+                dur="${dur}s" begin="${beg}s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0;0.55;0;0" keyTimes="0;0.06;0.16;1"
+                dur="${dur}s" begin="${beg}s" repeatCount="indefinite"/>
+            </rect>
+          </g>`;
+        }).join('')}
+        <g>
+          ${rect(40, 384, 496, 52, { fill: 'rgba(255,255,255,0.03)', r: 6 })}
+          ${t(48, 416, '4 MIN', { m: true, size: 13, w: 700, fill: AM })}
+          ${t(128, 416, 'TECH', { m: true, size: 11, w: 700, fill: AM, op: 0.62, ls: 1.2 })}
+          <g opacity="1">
+            <animate attributeName="opacity" values="1;1;0;0;1" keyTimes="0;0.44;0.5;0.94;1"
+              dur="${dur}s" repeatCount="indefinite"/>
+            ${t(252, 416, 'Essential apps for travellers', { size: 15, w: 600, fill: '#F7EEDC' })}
+          </g>
+          <g opacity="0">
+            <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.46;0.52;0.94;1"
+              dur="${dur}s" repeatCount="indefinite"/>
+            ${t(252, 416, '5G coverage, country by country', { size: 15, w: 600, fill: '#F7EEDC' })}
+          </g>
+          ${t(528, 416, 'JUST IN', { m: true, size: 10, w: 700, fill: AM, a: 'end', ls: 1 })}
+          <rect x="40" y="384" width="496" height="3" fill="${AM}" opacity="0">
+            <animate attributeName="y" values="384;433;433" keyTimes="0;0.08;1" dur="${dur}s"
+              begin="${(dur * 0.44).toFixed(2)}s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0;0.75;0;0" keyTimes="0;0.04;0.08;1" dur="${dur}s"
+              begin="${(dur * 0.44).toFixed(2)}s" repeatCount="indefinite"/>
+          </rect>
+        </g>
+        ${lab(24, 494, '360+ ARTICLES \u00B7 FOUR SECTIONS \u00B7 THE BOARD CHANGES WEEKLY', AM,
+          { size: 8.5, op: 0.5 })}
+        ${lab(552, 494, '13:40', AM, { size: 10, a: 'end', op: 0.7 })}
+        ${lab(24, 522, 'A TRAVEL OBJECT INSTEAD OF A MEDIA PLAYER', GRAY, { size: 8.5 })}`),
+    };
+  },
+};
+
+/* ══ 15 · Four Shelves ═══════════════════════════════════════ */
+export const fourShelves = {
+  id: 'bv-shelves',
+  name: 'Four Shelves',
+  family: 'Catalogue',
+  tagline: 'The four sections, each one drifting',
+  desc:
+    'Lower down, the page lists its four sections with counts \u2014 120+ guides, 85+ tutorials, 60+ ' +
+    'money-saving, 95+ insights \u2014 and the panel beside the headline shows three posts. This ' +
+    'shows the library instead: four labelled shelves, each drifting at its own speed so the movement ' +
+    'never syncs up, with the counts stated on the right. It is continuous motion with no cut, and it ' +
+    'makes the archive feel like a place to browse rather than a feed of three items.',
+  pros: ['Uses the four section counts, which nothing else on the board touches',
+    'Implies depth honestly \u2014 360 articles look like 360 articles',
+    'Four differing speeds mean the loop never visibly restarts'],
+  cons: ['No single post gets any presence, so nothing is really sold',
+    'Four drifting rows is the busiest option here and the heaviest to paint',
+    'Two titles are cross-listed to fill four shelves of three, which the real index does not do'],
+  scores: { story: 3, motion: 5, perf: 3, mobile: 3, brand: 4, ease: 3 },
+  build: (uid = 'a') => {
+    const shelves = [
+      ['Travel Guides', '120+', '#1B3A5C', 26,
+        [['Tokyo on 5GB', '6 MIN'], ['Europe by rail, always online', '8 MIN'],
+          ['Top 10 cities for nomads', '9 MIN']]],
+      ['Tech Tutorials', '85+', OR, 33,
+        [['The complete eSIM guide', '12 MIN'], ['Multi-network eSIM explained', '7 MIN'],
+          ['Essential travel apps', '4 MIN']]],
+      ['Money Saving', '60+', '#123A32', 22,
+        [['Save 80% on data roaming', '7 MIN'], ['Choosing the right plan', '6 MIN'],
+          ['Working from Lisbon', '5 MIN']]],
+      ['Industry Insights', '95+', '#241E3A', 29,
+        [['5G coverage in 2025', '8 MIN'], ['Cybersecurity for travellers', '6 MIN'],
+          ['Remote work, done properly', '7 MIN']]],
+    ];
+    const cardW = 112, step = 124;
+    const card = (x, y, title, min, hue) => {
+      const l1 = title.length > 17 ? title.slice(0, title.lastIndexOf(' ', 17)) : title;
+      const l2 = title.length > 17 ? title.slice(title.lastIndexOf(' ', 17) + 1) : '';
+      const l2s = l2.length > 17 ? l2.slice(0, 16) + '\u2026' : l2;
+      return `${rect(x, y, cardW, 70, { fill: WHITE, stroke: LINE, r: 9 })}
+        ${rect(x + 1, y + 1, cardW - 2, 26, { fill: hue, r: 8 })}
+        <path d="M ${x + 50} ${y + 8} L ${x + 62} ${y + 14} L ${x + 50} ${y + 20} Z"
+          fill="rgba(255,255,255,0.92)"/>
+        ${t(x + 10, y + 43, l1, { size: 8.5, w: 700 })}
+        ${l2s ? t(x + 10, y + 54, l2s, { size: 8.5, w: 700 }) : ''}
+        ${lab(x + 10, y + 65, min, MUT, { size: 6.5 })}`;
+    };
+    return {
+      pills: noPills,
+      svg: w(`
+        <rect width="${W}" height="${H}" fill="#FFFDFB"/>
+        <circle cx="${W - 40}" cy="40" r="140" fill="${OR}" opacity="0.05"/>
+        ${lab(32, 36, 'THE WHOLE BLOG, FOUR SHELVES', GRAY, { size: 9 })}
+        ${shelves.map(([name, count, hue, spd, items], si) => {
+          const Y = 56 + si * 114;
+          const cards = Array.from({ length: 8 }, (_, k) => {
+            const [ti, mn] = items[k % 3];
+            return card(32 + k * step, Y + 28, ti, mn, hue);
+          }).join('');
+          return `
+            ${t(32, Y + 14, name, { size: 13.5, w: 700 })}
+            ${lab(544, Y + 14, `${count} ARTICLES`, GRAY, { size: 8.5, a: 'end' })}
+            <clipPath id="bvsh${uid}${si}">
+              <rect x="32" y="${Y + 24}" width="512" height="78" rx="10"/>
+            </clipPath>
+            <g clip-path="url(#bvsh${uid}${si})">
+              <g>
+                <animateMotion dur="${spd}s" repeatCount="indefinite" calcMode="linear"
+                  path="M 0 0 L -${step * 3} 0"/>
+                ${cards}
+              </g>
+            </g>`;
+        }).join('')}
+        ${lab(32, 524, '120+ GUIDES \u00B7 85+ TUTORIALS \u00B7 60+ ON SAVING MONEY \u00B7 95+ ON THE INDUSTRY',
+          GRAY, { size: 8.5 })}`),
+    };
+  },
+};
+
 export const BLOGV_VARIANTS = [
   blogvCurrent, nowPlaying, threeCovers, theReel, postcard, chapterCards,
   longRead, whereRead, subscribeCover, readWhileWait, theSplit,
+  storiesCover, fiveGigabytes, listenInstead, departures, fourShelves,
 ];
 
 export const BLOGV_BOX = { w: W, h: H };

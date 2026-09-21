@@ -118,6 +118,7 @@ export function buildBoard(root, cfg) {
             <p class="mt-3 text-[14.5px] leading-relaxed text-white/65">${p.d}</p>
           </div>`).join('')}
       </div>
+      <p class="mt-5 text-[13px] leading-relaxed text-white/40">Note: this recommendation was written when the board held ten options. Options 11&ndash;15 were added afterwards and have not been weighed against it &mdash; read them on their own merits.</p>
     </div>
   </section>
 

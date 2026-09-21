@@ -224,8 +224,8 @@ export const theBar = {
               dur="${dur}s" begin="${beg}s" repeatCount="indefinite"/>
             <g>
               <animateTransform attributeName="transform" type="translate"
-                values="0 0;0 ${(yEnd - yStart).toFixed(0)};0 ${pass ? (yEnd - yStart).toFixed(0) : (yEnd - yStart + 150).toFixed(0)}"
-                keyTimes="0;0.5;0.78" dur="${dur}s" begin="${beg}s" repeatCount="indefinite" fill="freeze"/>
+                values="0 0;0 ${(yEnd - yStart).toFixed(0)};0 ${pass ? (yEnd - yStart).toFixed(0) : (yEnd - yStart + 150).toFixed(0)};0 ${pass ? (yEnd - yStart).toFixed(0) : (yEnd - yStart + 150).toFixed(0)}"
+                keyTimes="0;0.5;0.78;1" dur="${dur}s" begin="${beg}s" repeatCount="indefinite" fill="freeze"/>
               ${rect(x, yStart, 92, 46, { fill: INST.panel, r: 5, stroke: pass ? INST.up : INST.down })}
               ${lab(x + 10, yStart + 18, nm.length > 9 ? nm.slice(0, 9) : nm, INST.dim, { size: 7 })}
               ${t(x + 82, yStart + 38, 'L' + tier, { m: true, size: 15, w: 700, a: 'end', fill: pass ? INST.up : INST.down })}
@@ -745,8 +745,384 @@ export const showTheWorking = {
   },
 };
 
+/* ══════════════════════════════════════════════════════════════════════════
+   ROUND TWO — options 11–15. Axes the first ten left alone: the artefact a
+   third party receives, claims paired with figures, the month’s refusals in
+   aggregate, the latency of the record, and standing as something earned.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* a figure that steps through `vals` on a slow cycle — the same mechanism the
+   hero and book files call `repricing`, which this file did not need until now */
+const stepper = (x, y, vals, o = {}) => {
+  const n = vals.length;
+  const kt = vals.map((_, i) => (i / n).toFixed(4)).concat('1').join(';');
+  return `<text x="${x}" y="${y}" font-family="${MO}" font-size="${o.size || 14}" font-weight="${o.w || 600}"` +
+    ` fill="${o.fill || '#fff'}" text-anchor="${o.a || 'end'}">` +
+    vals.map((v, i) =>
+      `<tspan x="${x}" opacity="0">${v}` +
+      `<animate attributeName="opacity" values="${vals.map((_, j) => (j === i ? '1' : '0')).join(';')};${i === 0 ? '1' : '0'}"` +
+      ` keyTimes="${kt}" dur="${o.dur || 10}s" repeatCount="indefinite" calcMode="discrete"/></tspan>`
+    ).join('') + '</text>';
+};
+
+/* 11 ── The Export (INST) */
+export const theExport = {
+  id: 'oc-export',
+  name: 'The Export',
+  family: 'A · institutional',
+  tagline: 'The pack an auditor actually receives',
+  desc:
+    'The other options show the record being written. This one shows it leaving the building. A ' +
+    'period is selected, the pack builds — 5,412 quotes, 2,784 matches, 2,784 settlements, ' +
+    '10,980 sealed entries — and it closes with a checksum and a seal time. It answers the ' +
+    'question the section provokes and never addresses: fine, but can my auditor get it, and in ' +
+    'what form.',
+  pros: ['Answers the due-diligence question directly', 'A checksum on a finite pack is a stronger claim than “immutable”', 'The counts tie back to the reconciliation option'],
+  cons: ['Committing to a file format and a checksum is a real product commitment', 'A build-progress bar is a dull piece of motion', 'Nothing about verification or segregation appears'],
+  scores: { story: 4, motion: 3, perf: 5, mobile: 4, brand: 5, ease: 4 },
+  build: () => {
+    const dur = 12;
+    const fields = [['PERIOD', '01 – 30 SEP'], ['ROUTE', 'JP · TIER-1'], ['COUNTERPARTIES', 'ALL 34']];
+    const counts = [
+      ['QUOTES', ['1,204', '3,880', '5,412']],
+      ['MATCHES', ['612', '1,996', '2,784']],
+      ['SETTLEMENTS', ['612', '1,996', '2,784']],
+      ['ENTRIES SEALED', ['2,428', '7,872', '10,980']],
+    ];
+    return {
+      pills: noPills,
+      svg: wB(`
+        ${rect(0, 0, W, H, { fill: INST.ground, r: 0 })}
+        ${glow(`${W - 80}`, `0`, `230`, 0.45)}
+        ${lab(28, 32, 'AUDIT EXPORT', INST.text, { size: 9.5 })}
+        ${lab(W - 28, 32, 'FOR A THIRD PARTY', INST.faint, { a: 'end' })}
+
+        ${rect(28, 48, W - 56, 72, { fill: INST.panel, r: 6 })}
+        ${fields.map(([k, v], i) => {
+          const x = 44 + i * 188;
+          return `${lab(x, 72, k, INST.faint, { size: 7.5 })}
+            ${t(x, 96, v, { m: true, size: 13, w: 600, fill: INST.text })}`;
+        }).join('')}
+
+        ${lab(28, 148, 'BUILDING PACK', INST.faint, { size: 8.5 })}
+        ${rect(28, 158, W - 56, 6, { fill: 'rgba(255,255,255,0.08)', r: 3 })}
+        <rect x="28" y="158" width="0" height="6" rx="3" fill="${INST.gold}">
+          <animate attributeName="width" values="0;${W - 56};${W - 56}" keyTimes="0;0.5;1"
+            dur="${dur}s" repeatCount="indefinite" fill="freeze"/></rect>
+
+        ${counts.map(([k, vals], i) => {
+          const y = 186 + i * 44;
+          return `
+          ${rect(28, y, W - 56, 36, { fill: i % 2 ? 'rgba(255,255,255,0.025)' : 'none', r: 4 })}
+          ${lab(44, y + 22, k, INST.dim, { size: 8.5 })}
+          ${stepper(W - 44, y + 26, vals, { fill: i === 3 ? INST.gold : INST.text, size: 17, w: 700, dur: dur / 2 })}`;
+        }).join('')}
+
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.62;0.7;1" dur="${dur}s"
+            repeatCount="indefinite" fill="freeze"/>
+          ${rect(28, 366, W - 56, 46, { fill: INST.panel, r: 6, stroke: INST.goldDim })}
+          ${lab(44, 386, 'SHA-256', INST.faint, { size: 7.5 })}
+          ${t(104, 388, 'a91f3c…7c02be', { m: true, size: 12, w: 600, fill: INST.gold })}
+          ${lab(44, 404, 'SEALED 30 SEP 23:59:58 UTC · 1.4 MB · CSV + JSON', INST.faint, { size: 7.5 })}
+          ${tick(W - 148, 390, INST.up, 0.9)}
+          ${lab(W - 128, 394, 'READY', INST.up, { size: 9 })}
+        </g>
+        ${lab(28, H - 8, 'EVERY LINE IN THE PACK CAN BE RE-DERIVED FROM THE CHAIN IT CAME FROM', INST.faint, { size: 8.5 })}`),
+    };
+  },
+};
+
+/* 12 ── Claim and Artefact (FIN) */
+export const claimAndArtefact = {
+  id: 'oc-claims',
+  name: 'Claim and Artefact',
+  family: 'B · fintech-clean',
+  tagline: 'Each of the four sentences, with the figure behind it',
+  desc:
+    'The four controls in the page\u2019s own words, set large, each paired with one number that ' +
+    'backs it — 34 of 41 applications admitted, 128 quotes blocked below the bar, 10,980 sealed ' +
+    'entries, 25.6 TB of deferred exposure tracked apart. No illustration, no flow, no card. It ' +
+    'is the smallest possible change that turns the section from four claims into four claims ' +
+    'with evidence.',
+  pros: ['Keeps all four controls at equal weight, in the live order', 'Cheapest option here by a wide margin', 'Every figure is one number the system can produce'],
+  cons: ['No motion worth the name — four figures landing', 'Type-only beside a four-item list risks looking like a second list', 'Four disconnected metrics do not tell a story'],
+  scores: { story: 4, motion: 2, perf: 5, mobile: 5, brand: 3, ease: 5 },
+  build: () => {
+    const dur = 10;
+    const rows = [
+      ['34 / 41', 'ADMITTED OF APPLIED', FIN.text],
+      ['128', 'QUOTES BLOCKED BELOW THE BAR', FIN.accent],
+      ['10,980', 'SEALED ENTRIES IN SEPTEMBER', FIN.text],
+      ['25.6 TB', 'DEFERRED EXPOSURE, TRACKED APART', FIN.accent],
+    ];
+    return {
+      pills: noPills,
+      svg: wB(`
+        ${rect(0, 0, W, H, { fill: FIN.ground, r: 0 })}
+        ${lab(28, 40, 'WHAT WE CLAIM', FIN.faint, { size: 9 })}
+        ${lab(W - 28, 40, 'WHAT BACKS IT · SEPTEMBER', FIN.accent, { size: 9, a: 'end' })}
+
+        ${CTRLS.map((c, i) => {
+          const y = 76 + i * 88;
+          const on = (0.12 + i * 0.14).toFixed(3);
+          const onE = (0.18 + i * 0.14).toFixed(3);
+          const [fig, note, col] = rows[i];
+          return `<g>
+            ${rect(28, y, W - 56, 1, { fill: FIN.line, r: 0 })}
+            <rect x="28" y="${y - 1}" width="0" height="2" fill="${FIN.accent}">
+              <animate attributeName="width" values="0;0;${W - 56};${W - 56}" keyTimes="0;${on};${onE};1"
+                dur="${dur}s" repeatCount="indefinite" fill="freeze"/></rect>
+            ${t(28, y + 34, c[0], { size: 21, w: 700, fill: FIN.text })}
+            ${lab(28, y + 56, SHORT[i], FIN.faint, { size: 7.5 })}
+            <g opacity="0">
+              <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on};${onE};1"
+                dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+              ${t(W - 28, y + 38, fig, { m: true, size: 32, w: 700, a: 'end', fill: col })}
+              ${lab(W - 28, y + 58, note, FIN.faint, { size: 7.5, a: 'end' })}
+            </g>
+          </g>`;
+        }).join('')}
+        ${rect(28, 428, W - 56, 1, { fill: FIN.line, r: 0 })}
+        ${lab(28, 420, 'FOUR SENTENCES, FOUR FIGURES — JP · TIER-1, SEPTEMBER', FIN.dim, { size: 8.5 })}`),
+    };
+  },
+};
+
+/* 13 ── What Got Stopped (INST) */
+export const whatGotStopped = {
+  id: 'oc-stopped',
+  name: 'What Got Stopped',
+  family: 'A · institutional',
+  tagline: 'A month of refusals, counted',
+  desc:
+    'The Gate and Nothing Anonymous each show one refusal as a moment. This shows the month in ' +
+    'aggregate: 41 applications, 34 admitted, 7 refused — three for unverifiable business ' +
+    'ownership, two for a sanctioned jurisdiction, two for standing below every route minimum — ' +
+    'plus 128 quotes blocked at the bar and no anonymous prints at all. It is the shape of ' +
+    'answer a compliance review expects, which is a tally rather than an anecdote.',
+  pros: ['A rate, not an anecdote — harder to dismiss', 'Names the three refusal grounds separately', 'The zero at the end is the strongest figure on the panel'],
+  cons: ['Publishing a refusal rate invites questions about who was refused', 'Needs real monthly figures and a policy on restating them', 'Entirely a statistics panel — no product surface visible'],
+  scores: { story: 5, motion: 3, perf: 5, mobile: 4, brand: 4, ease: 4 },
+  build: () => {
+    const dur = 12;
+    const x0 = 28, wTot = W - 56;
+    const admW = (wTot * 34 / 41).toFixed(0);
+    const refW = (wTot * 7 / 41).toFixed(0);
+    const reasons = [['Business ownership could not be verified', 3], ['Sanctioned jurisdiction', 2], ['Standing below every route minimum', 2]];
+    return {
+      pills: noPills,
+      svg: wB(`
+        ${rect(0, 0, W, H, { fill: INST.ground, r: 0 })}
+        ${glow(`120`, `0`, `240`, 0.45)}
+        ${lab(28, 32, 'WHAT THE CONTROLS STOPPED IN SEPTEMBER', INST.text, { size: 9.5 })}
+        ${lab(W - 28, 32, 'ALL ROUTES', INST.faint, { a: 'end' })}
+
+        ${lab(28, 64, 'APPLIED TO QUOTE', INST.faint, { size: 8.5 })}
+        ${t(W - 28, 68, '41', { m: true, size: 20, w: 700, a: 'end', fill: INST.text })}
+        ${rect(x0, 78, wTot, 30, { fill: 'rgba(255,255,255,0.08)', r: 4 })}
+
+        <rect x="${x0}" y="126" width="0" height="30" rx="4" fill="${INST.up}" opacity="0.8">
+          <animate attributeName="width" values="0;${admW};${admW}" keyTimes="0;0.22;1" dur="${dur}s"
+            repeatCount="indefinite" fill="freeze"/></rect>
+        <rect y="126" height="30" rx="4" fill="${INST.down}" opacity="0.85">
+          <animate attributeName="x" values="${x0};${+x0 + +admW + 4};${+x0 + +admW + 4}" keyTimes="0;0.22;1"
+            dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+          <animate attributeName="width" values="0;${+refW - 4};${+refW - 4}" keyTimes="0;0.22;1"
+            dur="${dur}s" repeatCount="indefinite" fill="freeze"/></rect>
+        <line x1="${x0 + 40}" y1="108" x2="${x0 + 40}" y2="126" stroke="${INST.line}"/>
+        <line x1="${W - 68}" y1="108" x2="${W - 68}" y2="126" stroke="${INST.line}"/>
+        ${lab(x0 + 14, 174, '34 ADMITTED', INST.up, { size: 9 })}
+        ${lab(W - 28, 174, '7 REFUSED', INST.down, { size: 9, a: 'end' })}
+
+        ${reasons.map(([why, n], i) => {
+          const y = 194 + i * 46;
+          const on = (0.32 + i * 0.1).toFixed(3);
+          const onE = (0.37 + i * 0.1).toFixed(3);
+          return `<g opacity="0">
+            <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on};${onE};1" dur="${dur}s"
+              repeatCount="indefinite" fill="freeze"/>
+            ${rect(28, y, W - 56, 38, { fill: INST.panel, r: 5 })}
+            ${rect(28, y, 3, 38, { fill: INST.down, r: 0 })}
+            ${cross(52, y + 19, INST.down, 4.5)}
+            ${t(74, y + 24, why, { size: 12, w: 500, fill: INST.text })}
+            ${t(W - 44, y + 25, String(n), { m: true, size: 16, w: 700, a: 'end', fill: INST.down })}
+          </g>`;
+        }).join('')}
+
+        ${rect(28, 348, W - 56, 1, { fill: INST.line, r: 0 })}
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.66;0.74;1" dur="${dur}s"
+            repeatCount="indefinite" fill="freeze"/>
+          ${lab(28, 376, 'QUOTES BLOCKED BELOW THE ROUTE MINIMUM', INST.dim, { size: 8.5 })}
+          ${t(W - 28, 382, '128', { m: true, size: 22, w: 700, a: 'end', fill: INST.gold })}
+        </g>
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.78;0.86;1" dur="${dur}s"
+            repeatCount="indefinite" fill="freeze"/>
+          ${lab(28, 408, 'PRINTS WITHOUT A VERIFIED COUNTERPARTY', INST.dim, { size: 8.5 })}
+          ${t(W - 28, 414, '0', { m: true, size: 22, w: 700, a: 'end', fill: INST.up })}
+        </g>
+        ${lab(28, 434, 'A CONTROL THAT NEVER REFUSES ANYTHING IS NOT A CONTROL', INST.faint, { size: 8.5 })}`),
+    };
+  },
+};
+
+/* 14 ── Twenty-Two Milliseconds (FIN) */
+export const twentyTwoMs = {
+  id: 'oc-ms',
+  name: 'Twenty-Two Milliseconds',
+  family: 'B · fintech-clean',
+  tagline: 'The record is written before the money moves',
+  desc:
+    'One trade on a millisecond scale: the quote is accepted at 14:22:04.118, matched eight ' +
+    'milliseconds later, sealed into the trail fourteen after that. Twenty-two milliseconds from ' +
+    'quote to sealed record, against a settlement instruction that will not clear for thirty ' +
+    'days. The gap between those two numbers is the whole argument — the audit trail is written ' +
+    'synchronously, not reconstructed from a nightly batch.',
+  pros: ['Answers a sharp technical objection no other option addresses', 'One interval to remember, and it is a small one', 'Reads instantly on a phone'],
+  cons: ['A specific latency figure is a commitment engineering has to hold', 'Milliseconds are abstract to a commercial reader', 'Covers the audit trail only'],
+  scores: { story: 4, motion: 4, perf: 5, mobile: 5, brand: 4, ease: 4 },
+  build: (uid) => {
+    const dur = 9;
+    const sh = `<defs><filter id="${uid}-sh" x="-20%" y="-20%" width="140%" height="140%">` +
+      `<feDropShadow dx="0" dy="5" stdDeviation="9" flood-color="#0F172A" flood-opacity="0.07"/></filter></defs>`;
+    const x0 = 64, x1 = 560;
+    const at = (ms) => (x0 + (ms / 22) * (x1 - x0)).toFixed(1);
+    const marks = [[0, '14:22:04.118', 'QUOTE ACCEPTED'], [8, '.126', 'MATCHED'], [22, '.140', 'SEALED INTO THE TRAIL']];
+    return {
+      pills: noPills,
+      svg: wB(`
+        ${rect(0, 0, W, H, { fill: FIN.ground, r: 0 })}
+        ${sh}
+        ${lab(28, 40, 'ONE TRADE, TO THE MILLISECOND', FIN.faint, { size: 9 })}
+        ${lab(W - 28, 40, 'JP · TIER-1 · 2.4 TB @ 0.83', FIN.faint, { size: 9, a: 'end' })}
+
+        ${lab(W / 2, 92, 'QUOTE TO SEALED RECORD', FIN.faint, { size: 9, a: 'middle' })}
+        ${t(W / 2, 150, '22 ms', { m: true, size: 58, w: 700, a: 'middle', fill: FIN.accent })}
+
+        <line x1="${x0}" y1="216" x2="${x1}" y2="216" stroke="${FIN.lineHard}" stroke-width="2"/>
+        <circle cy="216" r="7" fill="${FIN.accent}">
+          <animate attributeName="cx" values="${x0};${x1};${x1}" keyTimes="0;0.42;1" dur="${dur}s"
+            repeatCount="indefinite"/></circle>
+        <rect x="${x0}" y="213" width="0" height="6" rx="3" fill="${FIN.accent}">
+          <animate attributeName="width" values="0;${x1 - x0};${x1 - x0}" keyTimes="0;0.42;1" dur="${dur}s"
+            repeatCount="indefinite"/></rect>
+
+        ${marks.map(([ms, stamp, what], i) => {
+          const x = at(ms);
+          const a = i === 0 ? 'start' : i === 2 ? 'end' : 'middle';
+          const on = (0.04 + (ms / 22) * 0.38).toFixed(3);
+          const onE = (+on + 0.03).toFixed(3);
+          return `
+          <line x1="${x}" y1="196" x2="${x}" y2="236" stroke="${FIN.lineHard}"/>
+          <g opacity="0">
+            <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on};${onE};1" dur="${dur}s"
+              repeatCount="indefinite" fill="freeze"/>
+            ${t(x, 188, stamp, { m: true, size: 12, w: 600, a, fill: FIN.text })}
+            ${lab(x, 258, what, FIN.dim, { size: 8, a })}
+            ${lab(x, 274, '+' + ms + ' ms', FIN.faint, { size: 8, a })}
+          </g>`;
+        }).join('')}
+
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.52;0.6;1" dur="${dur}s"
+            repeatCount="indefinite" fill="freeze"/>
+          <g filter="url(#${uid}-sh)">${rect(28, 300, W - 56, 76, { fill: FIN.panel, r: 14, stroke: FIN.line })}</g>
+          ${lab(52, 328, 'SETTLEMENT INSTRUCTION', FIN.faint, { size: 8 })}
+          ${t(52, 352, 'Deferred · T+30 · segregated from upfront', { size: 13, w: 600, fill: FIN.text })}
+          ${t(W - 52, 348, 'T+30', { m: true, size: 24, w: 700, a: 'end', fill: FIN.accent })}
+        </g>
+        ${lab(28, 404, 'THE RECORD EXISTS THIRTY DAYS BEFORE THE MONEY MOVES', FIN.dim, { size: 8.5 })}
+        ${lab(28, 424, 'RECORDED SYNCHRONOUSLY, NOT RECONSTRUCTED FROM A NIGHTLY BATCH', FIN.faint, { size: 8.5 })}`),
+    };
+  },
+};
+
+/* 15 ── Standing, Earned (FIN) */
+export const standingEarned = {
+  id: 'oc-standing',
+  name: 'Standing, Earned',
+  family: 'B · fintech-clean',
+  tagline: 'Six months of delivery, three levels, more routes',
+  desc:
+    'Minimum level enforcement read as an opportunity rather than a barrier. One counterparty\u2019s ' +
+    'standing over six months: reseller in April, MVNO-reseller from June once the delivery record ' +
+    'supported it, full MVNO in September — and the count of routes it may quote rising from 3 to ' +
+    '11 to 24 behind it. The Bar shows the door closed; this shows what opens it.',
+  pros: ['The only option that frames a control as something a buyer can act on', 'Draws “the delivery record sitting behind it”, which no option uses', 'Gives the section a positive ending'],
+  cons: ['Softens a section whose job is rigour', 'Promotion criteria have to be real and published, or this is a promise', 'The route counts are illustrative'],
+  scores: { story: 4, motion: 4, perf: 5, mobile: 4, brand: 3, ease: 4 },
+  build: (uid) => {
+    const dur = 12;
+    const sh = `<defs><filter id="${uid}-sh" x="-20%" y="-20%" width="140%" height="140%">` +
+      `<feDropShadow dx="0" dy="5" stdDeviation="9" flood-color="#0F172A" flood-opacity="0.07"/></filter></defs>`;
+    const months = ['APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP'];
+    const level = [0, 0, 1, 1, 1, 2];               /* 0 reseller, 1 MVNO-reseller, 2 full MVNO */
+    const bands = [['FULL MVNO', 132], ['MVNO-RESELLER', 186], ['RESELLER', 240]];
+    const yOf = (l) => [240, 186, 132].at(l);
+    const xOf = (i) => 88 + i * 84;
+    const step = months.map((_, i) => {
+      const x = xOf(i), y = yOf(level[i]);
+      const prev = i ? yOf(level[i - 1]) : y;
+      return (i ? `L ${x} ${prev} L ${x} ${y} ` : `M ${x} ${y} `) + `L ${x + 42} ${y}`;
+    }).join(' ');
+    return {
+      pills: noPills,
+      svg: wB(`
+        ${rect(0, 0, W, H, { fill: FIN.ground, r: 0 })}
+        ${sh}
+        ${lab(28, 40, 'STANDING IS EARNED, NOT DECLARED', FIN.faint, { size: 9 })}
+        ${lab(W - 28, 40, 'TIER &amp; STANDING · 9 SIGNALS', FIN.accent, { size: 9, a: 'end' })}
+
+        ${t(28, 74, 'Straits Connect Pte', { size: 17, w: 700, fill: FIN.text })}
+        ${lab(W - 28, 72, 'SIX MONTHS ON THE BOOK', FIN.faint, { size: 8, a: 'end' })}
+
+        ${lab(28, 108, 'MNO — NOT REACHABLE BY PROMOTION', FIN.faint, { size: 7.5 })}
+        <line x1="28" y1="114" x2="${W - 28}" y2="114" stroke="${FIN.line}" stroke-dasharray="3 4"/>
+        ${bands.map(([nm, y]) => `
+          <line x1="28" y1="${y}" x2="${W - 28}" y2="${y}" stroke="${FIN.line}"/>
+          ${lab(28, y - 8, nm, FIN.dim, { size: 7.5 })}`).join('')}
+
+        <path d="${step}" fill="none" stroke="${FIN.accent}" stroke-width="3" stroke-linecap="round"
+          pathLength="1" stroke-dasharray="1" stroke-dashoffset="1">
+          <animate attributeName="stroke-dashoffset" values="1;0;0" keyTimes="0;0.45;1" dur="${dur}s"
+            repeatCount="indefinite"/></path>
+
+        ${months.map((m, i) => {
+          const x = xOf(i), y = yOf(level[i]);
+          const on = (0.06 + i * 0.065).toFixed(3);
+          const onE = (+on + 0.03).toFixed(3);
+          return `
+          ${lab(x + 21, 270, m, FIN.faint, { size: 8, a: 'middle' })}
+          <g opacity="0">
+            <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on};${onE};1" dur="${dur}s"
+              repeatCount="indefinite" fill="freeze"/>
+            <circle cx="${x + 21}" cy="${y}" r="5" fill="${FIN.panel}" stroke="${FIN.accent}" stroke-width="2.5"/>
+          </g>`;
+        }).join('')}
+
+        ${rect(28, 294, W - 56, 1, { fill: FIN.line, r: 0 })}
+        ${lab(28, 322, 'ROUTES IT MAY QUOTE', FIN.faint, { size: 8.5 })}
+        ${stepper(W - 28, 330, ['3', '11', '24'], { fill: FIN.accent, size: 28, w: 700, dur: dur })}
+        ${lab(28, 358, 'DELIVERY RECORD', FIN.faint, { size: 8.5 })}
+        ${t(W - 28, 364, '38 SETTLEMENTS, ALL ON TIME', { m: true, size: 13, w: 600, a: 'end', fill: FIN.up })}
+
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.6;0.68;1" dur="${dur}s"
+            repeatCount="indefinite" fill="freeze"/>
+          ${rect(28, 382, W - 56, 34, { fill: FIN.accentSoft, r: 10 })}
+          ${tick(48, 399, FIN.up, 0.85)}
+          ${t(72, 404, 'Promoted to full MVNO — now clears the JP · Tier-1 minimum', { size: 12, w: 600, fill: FIN.text })}
+        </g>
+        ${lab(28, 432, 'THE BOOK WILL NOT MATCH BELOW THE MINIMUM, BUT THE MINIMUM CAN BE MET', FIN.faint, { size: 8.5 })}`),
+    };
+  },
+};
+
 export const OMDM_CTRL_VARIANTS = [
   ctrlCurrent,
   theGate, theBar, theChain, twoPots, fourStamps,
   onboarding, reconciled, exposure, nothingAnonymous, showTheWorking,
+  theExport, claimAndArtefact, whatGotStopped, twentyTwoMs, standingEarned,
 ];

@@ -536,8 +536,237 @@ export const icCompass = {
     </g>`),
 };
 
+/* ── 21 · MONOGRAM A ───────────────────────────────────────────────── */
+export const icMono = {
+  id: 'ic-mono',
+  name: 'Monogram A.',
+  family: 'Letterform',
+  note: 'The A of “Aloha” writes itself — two orange strokes up to the apex, an ink crossbar sliding in, then the brand dot landing as a full stop. No illustration at all, which makes it the only candidate here that cannot be misread as some other object. It survives 34px comfortably because it is three fat strokes and a disc, though it does need the word “Aloha!” beside it to explain itself.',
+  svg: (uid) => S(`
+    <g transform="translate(32 33)">
+      <g>
+        <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.84;0.94;1" dur="4.6s" repeatCount="indefinite"/>
+        <path d="M -14 20 L 0 -20" stroke="${O}" stroke-width="7.6" stroke-dasharray="43" stroke-dashoffset="43">
+          <animate attributeName="stroke-dashoffset" values="43;0;0" keyTimes="0;0.2;1" dur="4.6s" repeatCount="indefinite"/>
+        </path>
+        <path d="M 14 20 L 0 -20" stroke="${O}" stroke-width="7.6" stroke-dasharray="43" stroke-dashoffset="43">
+          <animate attributeName="stroke-dashoffset" values="43;43;0;0" keyTimes="0;0.18;0.38;1" dur="4.6s" repeatCount="indefinite"/>
+        </path>
+        <path d="M -7.5 5 H 7.5" stroke="${INK}" stroke-width="6" stroke-dasharray="15" stroke-dashoffset="15">
+          <animate attributeName="stroke-dashoffset" values="15;15;0;0" keyTimes="0;0.42;0.54;1" dur="4.6s" repeatCount="indefinite"/>
+        </path>
+        <circle cx="20" cy="19" r="4.4" fill="${OD}" opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.56;0.62;1" dur="4.6s" repeatCount="indefinite"/>
+        </circle>
+      </g>
+    </g>`),
+};
+
+/* ── 22 · ARC SMILE ────────────────────────────────────────────────── */
+export const icArcSmile = {
+  id: 'ic-smile',
+  name: 'Arc Smile',
+  family: 'Greeting',
+  note: 'The logo arc tipped over into a smile under two ink eyes — the brand stroke doing the greeting instead of a hand. The mouth draws in left to right, the eyes blink once, then it rests. A face is the shape people resolve fastest, so this is the most legible thing in the set at 34px; the question is only whether Paul wants the brand to be this informal.',
+  svg: (uid) => S(`
+    <g transform="translate(32 32)">
+      <circle r="23" fill="${O}" opacity="0.12"/>
+      <g fill="${INK}">
+        <ellipse cx="-8.5" cy="-8" rx="3.6" ry="3.6">
+          <animate attributeName="ry" values="3.6;3.6;0.6;3.6;3.6" keyTimes="0;0.6;0.66;0.72;1" dur="4.4s" repeatCount="indefinite"/>
+        </ellipse>
+        <ellipse cx="8.5" cy="-8" rx="3.6" ry="3.6">
+          <animate attributeName="ry" values="3.6;3.6;0.6;3.6;3.6" keyTimes="0;0.6;0.66;0.72;1" dur="4.4s" repeatCount="indefinite"/>
+        </ellipse>
+      </g>
+      <path d="M -14 3 q 14 15 28 0" stroke="${O}" stroke-width="6.4" fill="none" stroke-dasharray="40" stroke-dashoffset="40">
+        <animate attributeName="stroke-dashoffset" values="40;0;0;40" keyTimes="0;0.22;0.9;1" dur="4.4s" repeatCount="indefinite"/>
+      </path>
+    </g>`),
+};
+
+/* ── 23 · ALOHA BUBBLE ─────────────────────────────────────────────── */
+export const icBubble = {
+  id: 'ic-bubble',
+  name: 'Aloha Bubble',
+  family: 'Greeting',
+  note: 'A speech bubble pops in with a small overshoot and three white dots bounce inside it, so the greeting is being said to you rather than printed at you. The bubble is one fat silhouette filling the badge edge to edge, so it holds at 34px without trouble. The honest weakness: three bouncing dots is the universal typing indicator, so some people will read “live chat” rather than “hello”.',
+  svg: (uid) => S(`
+    <g transform="translate(32 31)">
+      <g>
+        <animateTransform attributeName="transform" type="scale" values="0.2;1.08;1;1;1" keyTimes="0;0.1;0.16;0.92;1" dur="4s" repeatCount="indefinite"/>
+        <path d="M -21 -15 h 42 a 5 5 0 0 1 5 5 v 16 a 5 5 0 0 1 -5 5 h -22 l -12 10 v -10 h -8 a 5 5 0 0 1 -5 -5 v -16 a 5 5 0 0 1 5 -5 z"
+          fill="${O}" stroke="${INK}" stroke-width="3"/>
+        ${[0, 1, 2].map(i => `<circle cx="${-10 + i * 10}" cy="-2" r="3.4" fill="${W}">
+          <animate attributeName="cy" values="-2;-6;-2;-2" keyTimes="0;0.12;0.26;1" dur="1.9s" begin="${(i * 0.16).toFixed(2)}s" repeatCount="indefinite"/>
+        </circle>`).join('')}
+      </g>
+    </g>`),
+};
+
+/* ── 24 · RAINBOW ──────────────────────────────────────────────────── */
+export const icRainbow = {
+  id: 'ic-rainbow',
+  name: 'Rainbow',
+  family: 'Island',
+  note: 'Three thick bands draw themselves over a faint horizon and un-draw again. Hawaii is the Rainbow State and its number plates say so, which makes this the one island reference nobody needs told; each band is 5.4 units wide so all three stay separate at 34px instead of merging into an orange lump. It is also the least product-specific icon on the board — it says “somewhere good”, not “eSIM”.',
+  svg: (uid) => S(`
+    <g transform="translate(32 42)">
+      <path d="M -24 3 h 48" stroke="${INK}" stroke-width="3" opacity="0.18"/>
+      ${[[21, O], [14.5, AMB], [8, GRN]].map((band, i) => {
+    const r = band[0], col = band[1];
+    const len = (Math.PI * r).toFixed(1);
+    const beg = (i * 0.14).toFixed(2);
+    return `<path d="M ${-r} 0 A ${r} ${r} 0 0 1 ${r} 0" stroke="${col}" stroke-width="5.4" fill="none"
+        stroke-dasharray="${len}" stroke-dashoffset="${len}">
+        <animate attributeName="stroke-dashoffset" values="${len};0;0;${len}" keyTimes="0;0.3;0.86;1"
+          dur="4.4s" begin="${beg}s" repeatCount="indefinite"/>
+      </path>`;
+  }).join('')}
+    </g>`),
+};
+
+/* ── 25 · PINEAPPLE ────────────────────────────────────────────────── */
+export const icPine = {
+  id: 'ic-pine',
+  name: 'Pineapple',
+  family: 'Island',
+  note: 'The pineapple has been the shorthand for hospitality for three centuries, and it is also the crop Hawaii is known for — a welcome that needs no hand and no face. The crown sways continuously while the fruit breathes, so there is nothing to wait for and nothing that resolves. One fat silhouette with a crown on top, so it holds at 34px; the crosshatch on the body turns to texture at that size, which is fine because the outline is doing the work.',
+  svg: (uid) => S(`
+    <g transform="translate(32 34)">
+      <g>
+        <animateTransform attributeName="transform" type="translate" values="0 0.8;0 -0.8;0 0.8" dur="4.4s" repeatCount="indefinite"/>
+        <g>
+          <animateTransform attributeName="transform" type="rotate" values="-6 0 -10;6 0 -10;-6 0 -10" dur="4.4s" repeatCount="indefinite"/>
+          <g fill="${GRN}" stroke="${INK}" stroke-width="2.2">
+            <path d="M -1 -9 C -8 -15 -12 -19 -15 -24 C -9 -22 -4 -16 -1 -11 Z"/>
+            <path d="M 1 -9 C 8 -15 12 -19 15 -24 C 9 -22 4 -16 1 -11 Z"/>
+            <path d="M 0 -8 C -3 -16 -2 -22 0 -27 C 3 -21 3 -15 2 -8 Z"/>
+          </g>
+        </g>
+        <ellipse cy="4" rx="13.5" ry="17" fill="${AMB}" stroke="${INK}" stroke-width="2.8"/>
+        <clipPath id="pn-${uid}"><ellipse cy="4" rx="13.5" ry="17"/></clipPath>
+        <g clip-path="url(#pn-${uid})" stroke="${OD}" stroke-width="2.2" opacity="0.55">
+          ${[-24, -16, -8, 0, 8, 16, 24].map(k => `<path d="M ${k - 16} -12 L ${k + 16} 20"/><path d="M ${k + 16} -12 L ${k - 16} 20"/>`).join('')}
+        </g>
+      </g>
+    </g>`),
+};
+
+/* ── 26 · ALOHA HEART ──────────────────────────────────────────────── */
+export const icHeart = {
+  id: 'ic-heart',
+  name: 'Aloha Means Love',
+  family: 'Warmth',
+  note: 'Aloha is not really “hello”, it is affection — this is the only icon that translates the word instead of the situation. A heart takes a double beat, rests, and pushes one ring out on the first beat; a filled heart is about as safe as shapes get at 34px. The cost is that it is a heart, so it drifts towards a charity or dating register unless the copy carries the meaning.',
+  svg: (uid) => S(`
+    <g transform="translate(32 31)">
+      <circle r="14" fill="none" stroke="${O}" stroke-width="2.6" opacity="0">
+        <animate attributeName="r" values="14;30" dur="3.4s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.55;0" dur="3.4s" repeatCount="indefinite"/>
+      </circle>
+      <g>
+        <animateTransform attributeName="transform" type="scale" values="1;1.12;1;1.06;1;1" keyTimes="0;0.06;0.14;0.2;0.28;1"
+          dur="3.4s" repeatCount="indefinite"/>
+        <path d="M 0 18 L -16 1 A 11.5 11.5 0 1 1 0 -12 A 11.5 11.5 0 1 1 16 1 Z" fill="${O}" stroke="${INK}" stroke-width="3"/>
+      </g>
+    </g>`),
+};
+
+/* ── 27 · MAGIC LINK ───────────────────────────────────────────────── */
+export const icMail = {
+  id: 'ic-mlink',
+  name: 'Magic Link',
+  family: 'Login',
+  note: 'The flap of an envelope swings up, a single token lifts out, the flap closes and the badge rests — the sign-in-by-email mechanic drawn literally, in the same spirit as the door and the lock. The envelope is a big rectangle so it reads fine at 34px; the token is a 5-unit disc, about the smallest element I would allow in this box. Fair warning: plenty of people will simply read “you have mail”.',
+  svg: (uid) => S(`
+    <g transform="translate(32 34)">
+      <rect x="-20" y="-12" width="40" height="27" rx="4" fill="${O}" stroke="${INK}" stroke-width="3"/>
+      <path d="M -20 -12 L 0 3 L 20 -12" fill="${OD}" stroke="${INK}" stroke-width="3">
+        <animate attributeName="d"
+          values="M -20 -12 L 0 3 L 20 -12;M -20 -12 L 0 -26 L 20 -12;M -20 -12 L 0 -26 L 20 -12;M -20 -12 L 0 3 L 20 -12;M -20 -12 L 0 3 L 20 -12"
+          keyTimes="0;0.16;0.66;0.8;1" dur="4s" repeatCount="indefinite"/>
+      </path>
+      <circle r="5" cy="0" fill="${W}" stroke="${INK}" stroke-width="2.6" opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.2;0.28;0.6;0.7;1" dur="4s" repeatCount="indefinite"/>
+        <animate attributeName="cy" values="0;0;-6;-24;-28;-28" keyTimes="0;0.2;0.3;0.62;0.7;1" dur="4s" repeatCount="indefinite"/>
+      </circle>
+    </g>`),
+};
+
+/* ── 28 · ACTIVATION CODE ──────────────────────────────────────────── */
+export const icQR = {
+  id: 'ic-qr',
+  name: 'Activation Code',
+  family: 'Openline',
+  note: 'The QR square people actually scan to install an Openline eSIM, with its modules filling in and clearing again in a slow diagonal wave. The three corner finders are heavy and never animate, so the silhouette stays stable. Marginal by design: at 34px the modules are texture rather than a code, so it reads as “a QR” instead of something scannable — that may be enough, or it may feel like a cheat.',
+  svg: (uid) => S(`
+    <g transform="translate(32 32)">
+      ${[[-21, -21], [7, -21], [-21, 7]].map(p => `
+        <rect x="${p[0]}" y="${p[1]}" width="14" height="14" rx="2" fill="none" stroke="${INK}" stroke-width="3.4"/>
+        <rect x="${p[0] + 4.4}" y="${p[1] + 4.4}" width="5.2" height="5.2" rx="1" fill="${O}"/>`).join('')}
+      ${[[-2, -21], [-2, -14.6], [4.4, -14.6], [-2, -8.2], [10.8, -8.2], [-21, -1.8], [-14.6, -1.8],
+    [-8.2, -1.8], [-2, -1.8], [4.4, -1.8], [10.8, -1.8], [17.2, -1.8], [-2, 4.6], [4.4, 4.6],
+    [17.2, 4.6], [-2, 11], [10.8, 11], [17.2, 11], [4.4, 16.4], [17.2, 16.4]].map((p, i) => {
+    const beg = (i * 0.055).toFixed(2);
+    return `<rect x="${p[0]}" y="${p[1]}" width="5.2" height="5.2" rx="1" fill="${INK}" opacity="0">
+        <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.08;0.9;1" dur="4.4s" begin="${beg}s" repeatCount="indefinite"/>
+      </rect>`;
+  }).join('')}
+    </g>`),
+};
+
+/* ── 29 · SAIL & SEA ───────────────────────────────────────────────── */
+export const icSail = {
+  id: 'ic-sail',
+  name: 'Sail & Sea',
+  family: 'Travel',
+  note: 'A two-sail boat rocking on a swell, with both water lines flexing under it on the same beat — continuous motion, no event to wait for, nothing that resolves. Hull and sails fuse into one triangular mass, which is exactly what you want at 34px, and it fills the badge corner to corner. It is the calmest of the travel options, but unlike the plane or the boarding pass nothing about it says “connectivity”.',
+  svg: (uid) => S(`
+    <g transform="translate(32 30)">
+      <g>
+        <animateTransform attributeName="transform" type="rotate" values="-4 0 12;4 0 12;-4 0 12" dur="3.6s" repeatCount="indefinite"/>
+        <animateTransform attributeName="transform" type="translate" values="0 1;0 -1;0 1" dur="3.6s" repeatCount="indefinite" additive="sum"/>
+        <path d="M 1 6 V -22" stroke="${INK}" stroke-width="3"/>
+        <path d="M -2 6 V -20 L -18 6 Z" fill="${W}" stroke="${INK}" stroke-width="3"/>
+        <path d="M 4 6 V -19 C 14 -8 18 0 19 6 Z" fill="${O}" stroke="${INK}" stroke-width="2.8"/>
+        <path d="M -20 7 h 40 l -7 9 h -26 z" fill="${OD}" stroke="${INK}" stroke-width="3"/>
+      </g>
+      <path d="M -24 21 q 8 -5 16 0 t 16 0" stroke="${O}" stroke-width="4" fill="none">
+        <animate attributeName="d" values="M -24 21 q 8 -5 16 0 t 16 0;M -24 21 q 8 5 16 0 t 16 0;M -24 21 q 8 -5 16 0 t 16 0"
+          dur="3.6s" repeatCount="indefinite"/>
+      </path>
+      <path d="M -22 28 q 9 -5 18 0 t 18 0" stroke="${OL}" stroke-width="3.6" fill="none" opacity="0.9">
+        <animate attributeName="d" values="M -22 28 q 9 -5 18 0 t 18 0;M -22 28 q 9 4 18 0 t 18 0;M -22 28 q 9 -5 18 0 t 18 0"
+          dur="3.6s" begin="0.4s" repeatCount="indefinite"/>
+      </path>
+    </g>`),
+};
+
+/* ── 30 · BREATHE ──────────────────────────────────────────────────── */
+export const icBreathe = {
+  id: 'ic-breathe',
+  name: 'Breathe',
+  family: 'Warmth',
+  note: 'Here the animation is the whole idea: a ring closing over a two-and-a-half second inhale and opening again on the exhale, centre swelling on the same count, paced to make the wait for the OAuth redirect feel deliberate rather than slow. Two fat concentric strokes and a disc make it the most robust shape in the set at 34px. The risk is plain — it can be read as a loading spinner, and it is the least Hawaiian thing on the board.',
+  svg: (uid) => S(`
+    <g transform="translate(32 32)">
+      <circle r="19" fill="none" stroke="${INK}" stroke-width="3" opacity="0.12"/>
+      <path d="M 0 -19 A 19 19 0 1 1 -0.01 -19" stroke="${O}" stroke-width="5" fill="none"
+        stroke-dasharray="119.4" stroke-dashoffset="119.4">
+        <animate attributeName="stroke-dashoffset" values="119.4;0;0;119.4;119.4" keyTimes="0;0.42;0.5;0.92;1"
+          dur="6s" calcMode="spline" keySplines="0.4 0 0.2 1;0 0 1 1;0.4 0 0.2 1;0 0 1 1" repeatCount="indefinite"/>
+      </path>
+      <circle r="5" fill="${O}">
+        <animate attributeName="r" values="5;8.4;8.4;5;5" keyTimes="0;0.42;0.5;0.92;1"
+          dur="6s" calcMode="spline" keySplines="0.4 0 0.2 1;0 0 1 1;0.4 0 0.2 1;0 0 1 1" repeatCount="indefinite"/>
+      </circle>
+    </g>`),
+};
+
 export const ICONS = [
   icCurrent, icShaka, icWave, icHibiscus, icPalm, icPlane, icGlobe, icChip, icSignal,
   icPassport, icCase, icPassScan, icLei, icSurf, icSun, icPin, icUnlock, icDoor, icLogo,
-  icDrink, icCompass,
+  icDrink, icCompass, icMono, icArcSmile, icBubble, icRainbow, icPine, icHeart, icMail,
+  icQR, icSail, icBreathe,
 ];

@@ -824,5 +824,357 @@ export const nTheAlert = {
   },
 };
 
+/* ══ BIZ NEEDS · 11–15 ═══════════════════════════════════════════════ */
+
+export const nAuditTrail = {
+  id: 'n-audit',
+  name: 'The Audit Trail',
+  family: 'Proof',
+  tagline: 'Every change, attributed to a person',
+  desc:
+    '\u201cEnterprise security and compliance\u201d is a phrase; an audit log is the artefact that satisfies it. ' +
+    'Entries append one at a time \u2014 a policy applied to sixteen APAC lines, an approval with the reason ' +
+    'attached, a line created by the HR sync, a role revoked, a lost device suspended \u2014 each with a ' +
+    'timestamp and an actor. It answers the question an auditor actually asks: who changed this.',
+  pros: [
+    'Shows the compliance claim as a record rather than a shield icon',
+    'Naming the actor \u2014 including the API and the system \u2014 is the detail that reads as real',
+    'Appending rows give continuous motion with no loop seam to hide',
+  ],
+  cons: [
+    'Monospace log lines are the least warm image on the board',
+    'Six rows of dense text get tight below 700px',
+    'Every event type shown has to exist in the real log',
+  ],
+  scores: { story: 4, motion: 4, perf: 5, mobile: 3, brand: 3, ease: 5 },
+  build: (uid) => {
+    const dur = 12;
+    const rows = [
+      ['09:14:02', 'r.okafor@acme', 'policy 20GB-HARD-CAP applied \u00b7 field-ops-apac \u00b7 16 lines'],
+      ['11:36:41', 's.miller@acme', 'approved +10 GB for j.davis \u00b7 reason: client visit'],
+      ['13:02:09', 'api \u00b7 hr-sync', 'line ln_8f2a41 created from starter record ACME-4471'],
+      ['15:48:30', 'f.dubois@acme', 'exported March invoice \u00b7 cost centres EU-01, AP-04'],
+      ['16:20:55', 'r.okafor@acme', 'role FINANCE revoked from l.bauer@acme'],
+      ['17:05:12', 'system', 'line ln_22c7d0 suspended \u00b7 device reported lost'],
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 210, 240, uid)}
+    ${mono(72, 54, 'AUDIT LOG \u00b7 TODAY \u00b7 ACME INTERNATIONAL', { size: 9.5, op: 0.45 })}
+    ${card(72, 74, 496, 318, { r: 16, fill: WHITE, stroke: INK, sw: 2.5 })}
+    <circle cx="100" cy="104" r="5" fill="${GREEN}">
+      <animate attributeName="opacity" values="1;0.3;1" dur="1.8s" repeatCount="indefinite"/>
+    </circle>
+    ${mono(114, 108, 'APPEND ONLY', { size: 9, op: 0.45 })}
+    ${mono(544, 108, 'WHO \u00b7 WHAT \u00b7 WHEN', { size: 9, op: 0.3, anchor: 'end' })}
+    <line x1="72" y1="124" x2="568" y2="124" stroke="${LINE}" stroke-width="1.5"/>
+    ${rows.map(([ts, who, what], i) => {
+      const y = 150 + i * 38;
+      const on = 0.05 + i * 0.1;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.03).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${mono(100, y, ts, { size: 9.5, op: 0.4 })}
+        ${mono(168, y, who, { size: 9.5, op: 0.85, fill: P.deep })}
+        ${mono(100, y + 16, what, { size: 9, op: 0.5 })}
+        ${i < 5 ? `<line x1="100" y1="${y + 26}" x2="540" y2="${y + 26}" stroke="${LINE}" stroke-width="1"/>` : ''}
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.72;0.78;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${mono(100, 376, 'IMMUTABLE \u00b7 RETAINED SEVEN YEARS \u00b7 EXPORTABLE AS CSV', { size: 8.5, op: 0.4 })}
+      ${card(72, 402, 496, 44, { r: 11, fill: P.wash, stroke: P.main, sw: 1.8 })}
+      ${label(96, 430, 'Your auditor asks who changed it. This is the answer.', { size: 13.5, fill: P.deep })}
+    </g>`;
+    return { svg: wrap(inner), pills: pN('Attributable changes') };
+  },
+};
+
+export const nThreeInTheMorning = {
+  id: 'n-support',
+  name: 'Three In The Morning',
+  family: 'Service',
+  tagline: 'What 24/7 support looks like at 03:12',
+  desc:
+    'The list promises priority 24/7 support and nothing on the board shows a human. This is the ' +
+    'transcript: a traveller in Seoul loses data at 03:12 with a client presentation at eight, a named ' +
+    'agent replies inside a minute, extends the pool and copies the team lead, and the line is back ' +
+    'before the fourth message. Two minutes, start to finish, in the middle of the night.',
+  pros: [
+    'The only option with a person in it, which changes the temperature of the board',
+    'Support quality is what renewals turn on and nothing else illustrates it',
+    'Timestamps ninety seconds apart make the claim specific rather than a badge',
+  ],
+  cons: [
+    'Sets a response-time expectation the support rota has to meet every night',
+    'A chat transcript looks like every SaaS site\u2019s support section',
+    'Covers one capability out of eight',
+  ],
+  scores: { story: 5, motion: 4, perf: 5, mobile: 4, brand: 4, ease: 5 },
+  build: (uid) => {
+    const dur = 11;
+    const msgs = [
+      ['03:12', 'JOHN D. \u00b7 SEOUL', 'Data has stopped. I present at 08:00.', '', 'them', 300, 72, 76, 0.06],
+      ['03:13', 'MAYA \u00b7 OPENLINE SUPPORT', 'Your line hit its 20 GB cap. Extending 5 GB.', 'SARAH, HIS TEAM LEAD, IS COPIED', 'us', 348, 220, 158, 0.28],
+      ['03:14', 'JOHN D.', 'Back on. Thank you.', '', 'them', 216, 72, 262, 0.5],
+    ];
+    const stats = [['MEDIAN FIRST REPLY', '3 min'], ['HOURS COVERED', '24/7'], ['HANDLED BY', 'a named agent']];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 200, 240, uid)}
+    ${mono(72, 54, 'PRIORITY 24/7 SUPPORT \u00b7 A TUESDAY, 03:12 IN SEOUL', { size: 9.5, op: 0.45 })}
+    ${msgs.map(([ts, who, body, note, side, w, x, y, on]) => {
+      const mine = side === 'us';
+      const h = note ? 90 : 72;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on};${(on + 0.05).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${card(x, y, w, h, { r: 14, fill: mine ? P.wash : '#F4F5F7', stroke: mine ? P.main : LINE, sw: mine ? 1.8 : 1.5 })}
+        ${mono(x + 22, y + 26, who, { size: 8.5, op: mine ? 0.6 : 0.42, fill: mine ? P.deep : INK })}
+        ${label(x + 22, y + 52, body, { size: 13.5 })}
+        ${note ? mono(x + 22, y + 74, note, { size: 8.5, op: 0.4 }) : ''}
+        ${mono(x + w - 22, y + 26, ts, { size: 9, op: 0.4, anchor: 'end' })}
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.13;0.16;0.27;0.29;1"
+        dur="${dur}s" repeatCount="indefinite" calcMode="discrete"/>
+      ${[0, 1, 2].map((i) => `<circle cx="${492 + i * 16}" cy="140" r="4.5" fill="${P.main}" opacity="0.4">
+        <animate attributeName="opacity" values="0.25;0.9;0.25" dur="1.1s" begin="${(i * 0.2).toFixed(2)}s" repeatCount="indefinite"/>
+      </circle>`).join('')}
+    </g>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.6;0.66;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(72, 344, 496, 46, { r: 11, fill: GREEN_SOFT, stroke: 'transparent', sw: 0 })}
+      <path d="M 98 366 l 5 5 l 10 -11" fill="none" stroke="${GREEN_TEXT}" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="128" y="372" font-size="13.5" font-weight="700" fill="${GREEN_TEXT}">Resolved in two minutes \u00b7 no ticket queue, no office hours</text>
+    </g>
+    ${stats.map(([k, v], i) => {
+      const x = 72 + i * 172;
+      const on = 0.74 + i * 0.05;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.04).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${mono(x, 420, k, { size: 8.5, op: 0.4 })}
+        ${num(x, 444, v, { size: 15 })}
+      </g>`;
+    }).join('')}`;
+    return { svg: wrap(inner), pills: pN('Answered in 90 seconds') };
+  },
+};
+
+export const nFleetImport = {
+  id: 'n-bulk',
+  name: 'Three Hundred At Once',
+  family: 'Scale',
+  tagline: 'A spreadsheet in, a provisioned fleet out',
+  desc:
+    'Every option on this board shows a fleet that already exists. This shows it arriving: a 312-row ' +
+    'employee export is dropped in, department maps to group and country maps to policy, and the ' +
+    'counter runs to 312 provisioned in forty-one seconds. It answers the question the enterprise tier ' +
+    '\u2014 100+ users \u2014 raises immediately, which is who does this work.',
+  pros: [
+    'Answers the practical objection behind the 100+ user tier',
+    'Column mapping is the detail that tells an IT buyer this is a real import, not a demo',
+    'The counter gives the board its only genuine sense of volume',
+  ],
+  cons: [
+    'Forty-one seconds for 312 lines is a performance claim that has to hold',
+    'A CSV import is an unglamorous thing to put in a marketing panel',
+    'Overlaps the API option \u2014 both are about provisioning without forms',
+  ],
+  scores: { story: 4, motion: 5, perf: 5, mobile: 4, brand: 3, ease: 4 },
+  build: (uid) => {
+    const dur = 10;
+    const maps = [['department', 'group'], ['country', 'policy'], ['manager', 'approver']];
+    const groups = [['SALES \u00b7 EMEA', '148'], ['FIELD OPS \u00b7 APAC', '96'], ['EXECUTIVES \u00b7 US', '68']];
+    const counts = ['0', '104', '248', '312'];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 210, 240, uid)}
+    ${mono(72, 54, 'ONBOARD A FLEET, NOT A PERSON', { size: 9.5, op: 0.45 })}
+    ${card(72, 74, 236, 72, { r: 13, fill: WHITE, stroke: P.main, sw: 2 })}
+    <rect x="96" y="96" width="26" height="30" rx="4" fill="${P.soft}"/>
+    <path d="M 102 106 h 14 M 102 112 h 14 M 102 118 h 9" stroke="${P.deep}" stroke-width="1.6" stroke-linecap="round"/>
+    ${label(136, 108, 'acme-fleet.csv', { size: 13.5 })}
+    ${mono(136, 126, '312 ROWS \u00b7 DROPPED IN', { size: 8.5, op: 0.4 })}
+    ${maps.map(([from, to], i) => {
+      const y = 176 + i * 42;
+      const on = 0.08 + i * 0.07;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.04).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${mono(96, y, from.toUpperCase(), { size: 9.5, op: 0.45 })}
+        <path d="M 200 ${y - 4} H 226" stroke="${P.main}" stroke-width="2"/>
+        <path d="M 232 ${y - 4} l -8 -5 v 10 z" fill="${P.main}"/>
+        ${mono(244, y, to.toUpperCase(), { size: 9.5, op: 0.8, fill: P.deep })}
+      </g>`;
+    }).join('')}
+    ${card(336, 74, 232, 228, { r: 14, fill: P.wash, stroke: P.main, sw: 2 })}
+    ${mono(360, 104, 'PROVISIONED', { size: 9, op: 0.5, fill: P.deep })}
+    ${counts.map((c, i) => `
+      <g opacity="0">
+        <animate attributeName="opacity" values="${['1;0;0;0;0', '0;1;0;0;0', '0;0;1;0;0', '0;0;0;1;1'][i]}"
+          keyTimes="0;0.2;0.42;0.62;1" dur="${dur}s" repeatCount="indefinite" calcMode="discrete"/>
+        <text x="360" y="164" font-size="48" font-weight="700" fill="${P.deep}" style="font-family:${MONO}">${c}</text>
+      </g>`).join('')}
+    ${mono(360, 188, 'OF 312 EMPLOYEE RECORDS', { size: 8.5, op: 0.4 })}
+    <rect x="360" y="206" width="184" height="14" rx="7" fill="${WHITE}"/>
+    <rect x="360" y="206" width="0" height="14" rx="7" fill="${P.main}">
+      <animate attributeName="width" values="0;0;184;184" keyTimes="0;0.2;0.68;1" dur="${dur}s" repeatCount="indefinite"
+        calcMode="spline" keySplines="0 0 1 1;0.3 0 0.2 1;0 0 1 1"/>
+    </rect>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.68;0.72;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${mono(360, 246, 'ELAPSED', { size: 8.5, op: 0.4 })}
+      ${num(360, 274, '00:41', { size: 20 })}
+    </g>
+    ${groups.map(([g, n], i) => {
+      const y = 310 + i * 42;
+      const on = 0.7 + i * 0.06;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.04).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${card(72, y, 496, 36, { r: 10, fill: WHITE, stroke: LINE })}
+        <path d="M 98 ${y + 18} l 4.5 4.5 l 9 -10" fill="none" stroke="${P.main}" stroke-width="2.4" stroke-linecap="round"/>
+        ${mono(126, y + 23, g, { size: 9.5, op: 0.55 })}
+        ${num(544, y + 24, n + ' lines', { size: 12, anchor: 'end' })}
+      </g>`;
+    }).join('')}
+    ${mono(72, 448, 'NO PER-USER FORMS \u00b7 NO CODE \u00b7 NOTHING POSTED TO ANYBODY', { size: 9, op: 0.35 })}`;
+    return { svg: wrap(inner), pills: pN('312 lines, one file') };
+  },
+};
+
+export const nSecurityReview = {
+  id: 'n-review',
+  name: 'The Security Review',
+  family: 'Procurement',
+  tagline: 'The questionnaire, already answered',
+  desc:
+    'Nothing kills a deal like a six-week security review. This draws the questionnaire itself \u2014 SAML, ' +
+    'SCIM, residency, encryption, sub-processors, the DPA, breach notification, penetration testing \u2014 ' +
+    'with the answer beside each line and a cleared stamp at the end. It speaks to the person who can ' +
+    'block the purchase rather than the person who wants it.',
+  pros: [
+    'Addresses the reviewer who blocks deals, who no other option here speaks to',
+    'Specific answers \u2014 Okta, AES-256, 72 hours \u2014 are worth more than a shield icon',
+    'Doubles as the trust page a procurement team will ask for anyway',
+  ],
+  cons: [
+    'Eight question-and-answer rows is the densest option on the board',
+    'Every answer is a contractual commitment and needs legal sign-off',
+    'Dry \u2014 there is no story here, only compliance',
+  ],
+  scores: { story: 4, motion: 3, perf: 5, mobile: 2, brand: 3, ease: 4 },
+  build: (uid) => {
+    const dur = 12;
+    const qs = [
+      ['Single sign-on', 'SAML 2.0 \u00b7 Okta, Entra ID, Google'],
+      ['User lifecycle', 'SCIM provisioning and deprovisioning'],
+      ['Data residency', 'EU region available on request'],
+      ['Encryption', 'TLS 1.3 in transit \u00b7 AES-256 at rest'],
+      ['Sub-processors', 'Published list \u00b7 change notice given'],
+      ['Processing agreement', 'Standard DPA \u00b7 signed as drafted'],
+      ['Breach notification', 'Within 72 hours \u00b7 contractual'],
+      ['Penetration testing', 'Annual \u00b7 summary available under NDA'],
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 200, 240, uid)}
+    ${mono(72, 54, 'VENDOR SECURITY REVIEW \u00b7 SENT BY ACME IT SECURITY', { size: 9.5, op: 0.45 })}
+    ${card(72, 70, 496, 306, { r: 16, fill: WHITE, stroke: INK, sw: 2.5 })}
+    ${qs.map(([q, a], i) => {
+      const y = 104 + i * 36;
+      const on = 0.04 + i * 0.075;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.03).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        <circle cx="102" cy="${y - 4}" r="9" fill="${P.wash}"/>
+        <path d="M 97 ${y - 4} l 4 4 l 7.5 -8.5" fill="none" stroke="${P.main}" stroke-width="2.2" stroke-linecap="round"/>
+        ${label(122, y, q, { size: 12.5 })}
+        ${mono(544, y, a, { size: 9, op: 0.45, anchor: 'end' })}
+        ${i < 7 ? `<line x1="96" y1="${y + 14}" x2="544" y2="${y + 14}" stroke="${LINE}" stroke-width="1"/>` : ''}
+      </g>`;
+    }).join('')}
+    <g opacity="0" transform="translate(356 386) rotate(-6)">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.74;0.8;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      <rect width="212" height="52" rx="10" fill="none" stroke="${GREEN_TEXT}" stroke-width="2.5" opacity="0.8"/>
+      <text x="106" y="24" text-anchor="middle" font-size="12" font-weight="700" fill="${GREEN_TEXT}"
+        letter-spacing="1.4" style="font-family:${MONO}">CLEARED BY IT SECURITY</text>
+      <text x="106" y="41" text-anchor="middle" font-size="9" font-weight="700" fill="${GREEN_TEXT}" opacity="0.7"
+        letter-spacing="1" style="font-family:${MONO}">TWO DAYS AFTER IT WAS SENT</text>
+    </g>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.66;0.72;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${label(72, 408, 'Eight questions, eight answers', { size: 15 })}
+      ${mono(72, 430, 'USUALLY THE LONGEST PART OF THE SALE', { size: 9, op: 0.4 })}
+    </g>`;
+    return { svg: wrap(inner), pills: pN('Review-ready') };
+  },
+};
+
+export const nWhatItReplaces = {
+  id: 'n-replaces',
+  name: 'What It Replaces',
+  family: 'Consolidation',
+  tagline: 'Five suppliers struck off, one line left',
+  desc:
+    'The heading says everything your business needs; this says what stops being needed. Four local SIM ' +
+    'vendors, a roaming add-on at $15\u201325 a gigabyte, a spreadsheet of IMEIs, a pocket Wi-Fi rental ' +
+    'account and eleven expense claims a month are struck through one at a time, and one blue line takes ' +
+    'their place. Dark, so it does not look like the ninth white console.',
+  pros: [
+    'Frames the product as removal rather than addition, which is a different argument entirely',
+    'Strike-through is a single, unmistakable gesture that reads at any size',
+    'Dark panel gives the board a break from nine light dashboards',
+  ],
+  cons: [
+    'Names a stack we are guessing at \u2014 not every buyer has all five of these',
+    'Negative framing, which sits oddly under a positive heading',
+    'Tells you nothing about what the product actually does',
+  ],
+  scores: { story: 4, motion: 4, perf: 5, mobile: 5, brand: 3, ease: 5 },
+  build: (uid) => {
+    const dur = 11;
+    const DK = '#0B1020';
+    const items = [
+      ['Four local SIM vendors', 'four suppliers, four invoices'],
+      ['A roaming add-on contract', '$15\u201325 per gigabyte'],
+      ['A spreadsheet of IMEIs', 'maintained by whoever left last'],
+      ['Pocket Wi-Fi rentals', 'couriered, chased, occasionally lost'],
+      ['Eleven expense claims a month', 'finance reviews every one'],
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${mono(40, 54, 'WHAT LEAVES THE STACK', { size: 9.5, op: 0.45 })}
+    ${card(40, 72, 560, 316, { r: 22, fill: DK, stroke: DK, sw: 0 })}
+    ${items.map(([nm, note], i) => {
+      const y = 112 + i * 42;
+      const on = 0.08 + i * 0.1;
+      return `<g>
+        <text x="72" y="${y}" font-size="16" font-weight="700" fill="${WHITE}" opacity="0.88">${nm}</text>
+        ${mono(568, y, note.toUpperCase(), { size: 8.5, fill: WHITE, op: 0.3, anchor: 'end' })}
+        <line x1="72" y1="${y - 5}" x2="72" y2="${y - 5}" stroke="#FCA5A5" stroke-width="2.2" stroke-linecap="round">
+          <animate attributeName="x2" values="72;72;${72 + nm.length * 8.2};${72 + nm.length * 8.2}"
+            keyTimes="0;${on.toFixed(3)};${(on + 0.06).toFixed(3)};1" dur="${dur}s" repeatCount="indefinite"
+            calcMode="spline" keySplines="0 0 1 1;0.35 0 0.2 1;0 0 1 1"/>
+        </line>
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.66;0.74;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      <rect x="72" y="322" width="496" height="48" rx="12" fill="${P.main}"/>
+      <text x="96" y="352" font-size="16" font-weight="700" fill="${WHITE}">One supplier. One invoice. One console.</text>
+      ${mono(544, 352, '190+ COUNTRIES', { size: 9, fill: WHITE, op: 0.7, anchor: 'end' })}
+    </g>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.8;0.88;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${mono(40, 424, 'FIVE ACCOUNTS AND A SPREADSHEET, REPLACED BY ONE LINE ITEM', { size: 9, op: 0.35 })}
+    </g>`;
+    return { svg: wrap(inner), pills: pN('Five accounts, gone') };
+  },
+};
+
 /* ── registry ── */
-export const BIZ_NEEDS_VARIANTS = [nCurrent, consoleTabs, alertResolve, scaleDial, orgTree, controls, nEightThings, nInvoiceLine, nWhoCanDoWhat, nItIntegrates, nTheAlert];
+export const BIZ_NEEDS_VARIANTS = [nCurrent, consoleTabs, alertResolve, scaleDial, orgTree, controls, nEightThings, nInvoiceLine, nWhoCanDoWhat, nItIntegrates, nTheAlert, nAuditTrail, nThreeInTheMorning, nFleetImport, nSecurityReview, nWhatItReplaces];

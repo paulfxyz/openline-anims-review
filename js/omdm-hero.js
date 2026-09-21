@@ -784,8 +784,388 @@ export const bothSidesVerified = {
   },
 };
 
+/* ══════════════════════════════════════════════════════════════════════════
+   ROUND TWO — options 11–15. Axes the first ten left alone: geography,
+   the matching decision, depth, pure type, and the request interface.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* 11 ── Where It Trades (INST) */
+export const whereItTrades = {
+  id: 'om-routes',
+  name: 'Where It Trades',
+  family: 'A · institutional',
+  tagline: 'The book laid out as geography',
+  desc:
+    'Every other option on this board is a table, a ladder or a chart. This one is a map: six ' +
+    'routes sit on a schematic graticule carrying their own live price, prints travel the arcs ' +
+    'between them, and a severe-weather advisory over Kyushu reprices Tokyo by four basis points ' +
+    'while you watch. It draws a sentence the page states and never shows — routes are priced ' +
+    'for the world they run through.',
+  pros: ['The only spatial reading of the book', 'Ties a named risk signal to a visible price move', 'Feels global without asserting a country count'],
+  cons: ['The map is schematic — no coastlines, so it can read as a network diagram', 'Six prices at six angles scan slower than one column', 'Node labels crowd badly below 420px'],
+  scores: { story: 4, motion: 4, perf: 4, mobile: 2, brand: 4, ease: 3 },
+  build: () => {
+    /* x, y, route code, price, label anchor, dx, dy */
+    const nodes = [
+      [96, 168, 'US · T1', '0.72', 'middle', 0, 24],
+      [214, 146, 'GB · T1', '0.54', 'end', -14, -4],
+      [258, 158, 'DE · T1', '0.61', 'start', 14, -4],
+      [414, 252, 'SG · T1', '0.58', 'middle', 0, 24],
+      [474, 172, 'JP · T1', '0.84', 'start', 14, -4],
+      [168, 286, 'BR · T2', '1.14', 'middle', 0, 24],
+    ];
+    const arcs = [
+      ['M 96 168 Q 148 130 214 146', 3.2],
+      ['M 214 146 Q 236 136 258 158', 2.4],
+      ['M 258 158 Q 350 150 414 252', 4.4],
+      ['M 414 252 Q 466 226 474 172', 2.8],
+      ['M 214 146 Q 150 224 168 286', 3.6],
+    ];
+    return {
+      pills: noPills,
+      svg: wB(`
+        ${rect(0, 0, W, H, { fill: INST.ground, r: 0 })}
+        ${glow(`300`, `140`, `250`, 0.55)}
+        ${lab(30, 40, 'OMDM · THE BOOK BY ROUTE', INST.text, { size: 10 })}
+        ${lab(W - 26, 40, 'USD / GB', INST.faint, { a: 'end' })}
+
+        ${rect(26, 68, W - 52, 268, { fill: INST.panel, r: 8 })}
+        ${[104, 144, 184, 224, 264, 304].map(y =>
+          `<line x1="40" y1="${y}" x2="${W - 40}" y2="${y}" stroke="${INST.line}" stroke-dasharray="2 6"/>`).join('')}
+        ${[64, 120, 176, 232, 288, 344, 400, 456, 512].map(x =>
+          `<line x1="${x}" y1="84" x2="${x}" y2="320" stroke="${INST.line}" stroke-dasharray="2 6" opacity="0.6"/>`).join('')}
+
+        ${arcs.map(([d, dur], i) => `
+          <path d="${d}" fill="none" stroke="${INST.lineHard}" stroke-width="1" stroke-dasharray="3 4"/>
+          <rect x="-4" y="-2.5" width="8" height="5" rx="1.5" fill="${INST.gold}" opacity="0.9">
+            <animateMotion dur="${dur}s" begin="${(i * 0.7).toFixed(1)}s" repeatCount="indefinite" path="${d}"/>
+          </rect>`).join('')}
+
+        ${nodes.map(([x, y, code, px, a, dx, dy]) => `
+          <circle cx="${x}" cy="${y}" r="5.5" fill="${INST.ground}" stroke="${INST.gold}" stroke-width="1.8"/>
+          ${lab(x + dx, y + dy, code, INST.faint, { size: 8, a })}
+          ${t(x + dx, y + dy + 18, px, { m: true, size: 14, w: 700, a, fill: INST.gold })}`).join('')}
+
+        <circle cx="474" cy="172" r="8" fill="none" stroke="${INST.gold}" stroke-width="1.5">
+          <animate attributeName="r" values="8;28" dur="2.6s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.8;0" dur="2.6s" repeatCount="indefinite"/>
+        </circle>
+
+        <circle cx="34" cy="368" r="3.5" fill="${INST.gold}">${pulse(2.6, 0.3, 1)}</circle>
+        ${lab(48, 372, 'SEVERE WEATHER ADVISORY · KYUSHU — JP · TIER-1 +4 BP', INST.gold, { size: 8.5, op: 0.9 })}
+        ${lab(48, 388, 'GEOPOLITICAL &amp; CLIMATE RISK · 18 SIGNALS', INST.faint, { size: 8 })}
+
+        ${rect(26, 404, W - 52, 1, { fill: INST.line, r: 0 })}
+        ${lab(30, 426, 'ROUTES ARE PRICED FOR THE WORLD THEY RUN THROUGH', INST.dim, { size: 9 })}
+        ${lab(W - 26, 426, 'SIX OF THE ROUTES ON THE BOOK', INST.faint, { size: 8.5, a: 'end' })}`),
+    };
+  },
+};
+
+/* 12 ── Best Fill (FIN) */
+export const bestFill = {
+  id: 'om-fill',
+  name: 'Best Fill',
+  family: 'B · fintech-clean',
+  tagline: 'The cheapest quote loses',
+  desc:
+    'One order — 8.0 TB on DE · Tier-1 — and the four quotes competing for it. The cheapest at ' +
+    '0.59 is refused for standing below the route minimum, the next at 0.61 is passed over on ' +
+    '94.1% attach success, and the fill lands at 0.63. It draws the page\u2019s own line that ' +
+    'nothing else here touches: the cheapest quote is not always the best fill, and quality, ' +
+    'risk and settlement terms are part of the match.',
+  pros: ['Shows the matching logic, not just the price', 'Explains why a buyer should not simply sort by price', 'Every rejection names its reason'],
+  cons: ['Four rows of five columns is a lot of reading for a hero', 'Publishing a fill decision invites argument about the rule', 'Says nothing about repricing, which is the headline claim'],
+  scores: { story: 5, motion: 3, perf: 5, mobile: 3, brand: 4, ease: 4 },
+  build: (uid) => {
+    const sh = `<defs><filter id="${uid}-sh" x="-20%" y="-20%" width="140%" height="140%">` +
+      `<feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#0F172A" flood-opacity="0.07"/></filter></defs>`;
+    const rows = [
+      ['0.59', 'Larga Telecom', 'MVNO-RESELLER', '97.4%', 'T+30', 'REFUSED', FIN.down, '#FDECEE'],
+      ['0.61', 'Rheinmobil GmbH', 'FULL MVNO', '94.1%', 'T+14', 'PASSED OVER', FIN.dim, FIN.rise],
+      ['0.63', 'Nordwest Mobil AG', 'FULL MVNO', '99.2%', 'T+30', 'FILLED', FIN.accent, FIN.accentSoft],
+      ['0.66', 'Deutsche Netz AG', 'MNO', '99.4%', 'UPFRONT', 'NEXT IN LINE', FIN.faint, FIN.rise],
+    ];
+    return {
+      pills: noPills,
+      svg: wB(`
+        ${rect(0, 0, W, H, { fill: FIN.ground, r: 0 })}
+        ${sh}
+        ${lab(30, 44, 'MATCHED ON MORE THAN PRICE', FIN.faint, { size: 9 })}
+        ${lab(W - 30, 44, 'DE · TIER-1 · 8.0 TB REQUESTED', FIN.accent, { size: 9, a: 'end' })}
+
+        <g filter="url(#${uid}-sh)">${rect(28, 60, W - 56, 300, { fill: FIN.panel, r: 16, stroke: FIN.line })}</g>
+        ${lab(52, 90, 'QUOTE', FIN.faint, { size: 8 })}
+        ${lab(128, 90, 'COUNTERPARTY', FIN.faint, { size: 8 })}
+        ${lab(352, 90, 'ATTACH', FIN.faint, { size: 8, a: 'end' })}
+        ${lab(372, 90, 'TERMS', FIN.faint, { size: 8 })}
+        ${lab(W - 52, 90, 'MATCH', FIN.faint, { size: 8, a: 'end' })}
+        <line x1="52" y1="98" x2="${W - 52}" y2="98" stroke="${FIN.line}"/>
+
+        ${rows.map(([px, cp, st, at, tm, vd, col, wash], i) => {
+          const y = 108 + i * 62;
+          const beg = (i * 0.7).toFixed(2);
+          const win = vd === 'FILLED';
+          const kv = (0.34 + i * 0.06).toFixed(3);
+          const kvE = (0.38 + i * 0.06).toFixed(3);
+          return `<g opacity="0">
+            <animate attributeName="opacity" values="0;1;1" keyTimes="0;0.06;1" dur="10s"
+              begin="${beg}s" repeatCount="indefinite" fill="freeze"/>
+            ${win ? `<rect x="40" y="${y}" width="${W - 80}" height="54" rx="10" fill="${FIN.accentSoft}" opacity="0">
+              <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.62;0.7;1" dur="10s"
+                repeatCount="indefinite" fill="freeze"/></rect>
+            <rect x="40" y="${y}" width="3" height="54" rx="1.5" fill="${FIN.accent}" opacity="0">
+              <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.62;0.7;1" dur="10s"
+                repeatCount="indefinite" fill="freeze"/></rect>` : ''}
+            ${t(52, y + 34, px, { m: true, size: 20, w: 700, fill: win ? FIN.accent : FIN.text })}
+            ${t(128, y + 26, cp, { size: 12, w: 600, fill: FIN.text })}
+            ${lab(128, y + 42, st, FIN.faint, { size: 7.5 })}
+            ${t(352, y + 30, at, { m: true, size: 12.5, a: 'end', fill: at === '94.1%' ? FIN.down : FIN.dim })}
+            ${lab(372, y + 30, tm, FIN.dim, { size: 8.5 })}
+            <g opacity="0">
+              <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${kv};${kvE};1" dur="10s"
+                repeatCount="indefinite" fill="freeze"/>
+              ${rect(W - 168, y + 16, 116, 22, { fill: wash, r: 11 })}
+              ${lab(W - 110, y + 31, vd, col, { size: 7.5, a: 'middle' })}
+            </g>
+          </g>`;
+        }).join('')}
+
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.72;0.8;1" dur="10s"
+            repeatCount="indefinite" fill="freeze"/>
+          ${t(30, 392, 'Filled at 0.63 — two basis points above the cheapest quote on the route.',
+            { size: 12, fill: FIN.text })}
+          ${t(30, 412, 'Refused on standing, passed over on attach success. Both are priced signals.',
+            { size: 11, fill: FIN.dim })}
+        </g>
+        ${lab(W - 30, 434, 'QUALITY, RISK AND TERMS ARE PART OF THE MATCH', FIN.accent, { size: 8.5, a: 'end' })}`),
+    };
+  },
+};
+
+/* 13 ── A Deeper Book (INST) */
+export const deeperBook = {
+  id: 'om-depth',
+  name: 'A Deeper Book',
+  family: 'A · institutional',
+  tagline: 'More counterparties, tighter spread',
+  desc:
+    'One gesture, held for the whole loop: the bid and the ask closing on each other. Two ' +
+    'counterparties quote JP · Tier-1 and the spread is 0.14 on 12 TB of depth; at five it is ' +
+    '0.08 on 38 TB; at nine it is 0.04 on 84 TB, with the mid steady at 0.83 throughout. It is ' +
+    'the argument behind the page\u2019s boldest paragraph — that competitors are welcome in the ' +
+    'book, because a deeper book prices better for everyone standing in it.',
+  pros: ['One idea, one shape, readable in a second', 'Makes the open-to-competitors paragraph make commercial sense', 'Survives being shrunk to a phone or a slide'],
+  cons: ['Steps through three states rather than moving continuously', 'The depth figures are illustrative and would need real book data', 'Shows no route detail and no signals'],
+  scores: { story: 4, motion: 3, perf: 5, mobile: 5, brand: 5, ease: 5 },
+  build: () => {
+    const x0 = 64, x1 = 512, lo = 0.72, hi = 0.94;
+    const px = (v) => x0 + ((v - lo) / (hi - lo)) * (x1 - x0);
+    const bids = [0.76, 0.80, 0.82], asks = [0.90, 0.88, 0.86];
+    const bx = bids.map(v => px(v).toFixed(1));
+    const ax = asks.map(v => px(v).toFixed(1));
+    const bw = bids.map((v, i) => (px(asks[i]) - px(v)).toFixed(1));
+    const kt = '0;0.28;0.36;0.61;0.69;0.94;1';
+    const seq = (a) => `${a[0]};${a[0]};${a[1]};${a[1]};${a[2]};${a[2]};${a[2]}`;
+    return {
+      pills: noPills,
+      svg: wB(`
+        ${rect(0, 0, W, H, { fill: INST.ground, r: 0 })}
+        ${glow(`${W / 2}`, `210`, `210`, 0.6)}
+        ${lab(30, 40, 'JP · TIER-1 · THE SPREAD', INST.text, { size: 10 })}
+        ${lab(W - 26, 40, 'USD / GB', INST.faint, { a: 'end' })}
+
+        ${lab(W / 2, 96, 'BID-ASK SPREAD', INST.faint, { a: 'middle', size: 9 })}
+        ${repricing(W / 2, 142, ['0.14', '0.08', '0.04'], { fill: INST.gold, size: 40, w: 700, a: 'middle', dur: 12 })}
+
+        ${lab(x0, 180, 'BID', INST.up, { size: 8.5 })}
+        ${repricing(x0 + 34, 181, ['0.76', '0.80', '0.82'], { fill: INST.text, size: 12.5, w: 600, a: 'start', dur: 12 })}
+        ${lab(x1, 180, 'ASK', INST.down, { size: 8.5, a: 'end' })}
+        ${repricing(x1 - 34, 181, ['0.90', '0.88', '0.86'], { fill: INST.text, size: 12.5, w: 600, dur: 12 })}
+
+        ${rect(x0, 196, x1 - x0, 28, { fill: 'rgba(255,255,255,0.05)', r: 4 })}
+        <rect y="196" height="28" rx="4" fill="${INST.gold}" opacity="0.30">
+          <animate attributeName="x" values="${seq(bx)}" keyTimes="${kt}" dur="12s" repeatCount="indefinite"/>
+          <animate attributeName="width" values="${seq(bw)}" keyTimes="${kt}" dur="12s" repeatCount="indefinite"/>
+        </rect>
+        <rect y="188" width="3" height="44" fill="${INST.up}">
+          <animate attributeName="x" values="${seq(bx)}" keyTimes="${kt}" dur="12s" repeatCount="indefinite"/>
+        </rect>
+        <rect y="188" width="3" height="44" fill="${INST.down}">
+          <animate attributeName="x" values="${seq(ax)}" keyTimes="${kt}" dur="12s" repeatCount="indefinite"/>
+        </rect>
+        <line x1="${px(0.83).toFixed(1)}" y1="182" x2="${px(0.83).toFixed(1)}" y2="238"
+          stroke="${INST.lineHard}" stroke-dasharray="3 3"/>
+        ${lab(px(0.83), 252, 'MID 0.83 — UNMOVED', INST.faint, { size: 8, a: 'middle' })}
+
+        <line x1="${x0}" y1="268" x2="${x1}" y2="268" stroke="${INST.line}"/>
+        ${[0.72, 0.94].map((v, i) => `${lab(px(v), 284, v.toFixed(2), INST.faint, { size: 8, a: i ? 'end' : 'start' })}`).join('')}
+
+        ${lab(30, 326, 'COUNTERPARTIES QUOTING THIS ROUTE', INST.dim, { size: 9 })}
+        ${repricing(W - 26, 330, ['2', '5', '9'], { fill: INST.gold, size: 20, w: 700, dur: 12 })}
+        ${Array.from({ length: 9 }, (_, i) => {
+          const stage = i < 2 ? 0 : i < 5 ? 1 : 2;
+          const v = [0, 1, 2].map(s => (s >= stage ? '1' : '0.14')).concat('0.14').join(';');
+          return `<circle cx="${184 + i * 26}" cy="356" r="6" fill="${INST.gold}" opacity="0.14">
+            <animate attributeName="opacity" values="${v}" keyTimes="0;0.3333;0.6667;1"
+              dur="12s" calcMode="discrete" repeatCount="indefinite"/></circle>`;
+        }).join('')}
+
+        ${rect(26, 384, W - 52, 1, { fill: INST.line, r: 0 })}
+        ${lab(30, 408, 'DEPTH AT THE MID', INST.faint, { size: 9 })}
+        ${repricing(W - 26, 412, ['12 TB', '38 TB', '84 TB'], { fill: INST.text, size: 17, w: 600, dur: 12 })}
+        ${lab(30, 436, 'A DEEPER BOOK PRICES BETTER FOR EVERYONE STANDING IN IT', INST.dim, { size: 9 })}`),
+    };
+  },
+};
+
+/* 14 ── Quoted, Repriced, Settled (FIN) */
+export const quotedRepricedSettled = {
+  id: 'om-three',
+  name: 'Quoted, Repriced, Settled',
+  family: 'B · fintech-clean',
+  tagline: 'Three words from the lead, and today\u2019s count under each',
+  desc:
+    'No illustration at all: the three verbs already in the opening paragraph set large, each ' +
+    'lighting in turn with the day\u2019s figure beside it — 184 quotes, 1,206 reprices, 96 ' +
+    'settled for 268.4 TB. The copy is the artwork, and the numbers are the proof that the ' +
+    'sentence is describing something that happened rather than something intended.',
+  pros: ['Nothing to misread — the words are the picture', 'Cheapest option on the board to build and to load', 'Gives the hero three concrete figures it currently has none of'],
+  cons: ['No sense of a market, a book or a counterparty', 'Type-only heroes look underbuilt beside a chart', 'Three daily counters need a real source before launch'],
+  scores: { story: 3, motion: 2, perf: 5, mobile: 5, brand: 3, ease: 5 },
+  build: () => {
+    const items = [
+      ['Quoted', '184', 'QUOTES SENT INTO THE BOOK'],
+      ['Repriced', '1,206', 'TIMES THE MID MOVED'],
+      ['Settled', '96', 'MATCHED AND CLEARED · 268.4 TB'],
+    ];
+    return {
+      pills: noPills,
+      svg: wB(`
+        ${rect(0, 0, W, H, { fill: FIN.ground, r: 0 })}
+        ${lab(40, 54, 'JP · TIER-1 · TODAY SO FAR', FIN.faint, { size: 9 })}
+        ${lab(W - 40, 54, 'OMDM', FIN.accent, { size: 9, a: 'end' })}
+
+        ${items.map(([word, figure, note], i) => {
+          const y = 132 + i * 104;
+          const on = (0.1 + i * 0.22).toFixed(3);
+          const onE = (0.16 + i * 0.22).toFixed(3);
+          return `<g>
+            ${rect(40, y - 48, W - 80, 1, { fill: FIN.line, r: 0 })}
+            <rect x="40" y="${y - 49}" width="0" height="2" fill="${FIN.accent}">
+              <animate attributeName="width" values="0;0;${W - 80};${W - 80}" keyTimes="0;${on};${onE};1"
+                dur="9s" repeatCount="indefinite" fill="freeze"/></rect>
+            ${t(40, y, word, { size: 44, w: 700, fill: FIN.lineHard })}
+            <g opacity="0">
+              <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on};${onE};1"
+                dur="9s" repeatCount="indefinite" fill="freeze"/>
+              ${t(40, y, word, { size: 44, w: 700, fill: FIN.text })}
+              ${t(W - 40, y, figure, { m: true, size: 30, w: 700, a: 'end', fill: FIN.accent })}
+            </g>
+            ${lab(40, y + 22, note, FIN.faint, { size: 8.5 })}
+          </g>`;
+        }).join('')}
+
+        ${lab(40, 434, 'EVERY ROUTE QUOTED, REPRICED AND SETTLED — CONTINUOUSLY', FIN.dim, { size: 9 })}
+        <circle cx="${W - 46}" cy="430" r="4" fill="${FIN.up}">${pulse(2.4, 0.4, 1)}</circle>`),
+    };
+  },
+};
+
+/* 15 ── The RFQ (INST) */
+export const theRfq = {
+  id: 'om-rfq',
+  name: 'The RFQ',
+  family: 'A · institutional',
+  tagline: 'A request typed in, three quotes back, ticking down',
+  desc:
+    'The interface rather than the abstraction. A request is typed into the terminal — route, ' +
+    'size, settlement, minimum attach — the quote button fires, and three counterparties answer ' +
+    'inside a firm-for-eight-seconds window that visibly counts down. It answers the question a ' +
+    'qualified buyer has after the headline, which is not \u201cis it a market\u201d but ' +
+    '\u201cwhat do I actually do here, and how long is the price good for\u201d.',
+  pros: ['Shows the product doing the thing instead of symbolising it', 'The expiry countdown is a claim no other option makes', 'Sets up the access-by-request block at the foot of the page'],
+  cons: ['Implies an RFQ workflow that has to exist exactly as drawn', 'A form is a cold first impression for a hero', 'The typing sequence eats four seconds before anything is quoted'],
+  scores: { story: 4, motion: 4, perf: 5, mobile: 3, brand: 5, ease: 3 },
+  build: () => {
+    const fields = [
+      ['ROUTE', 'DE · TIER-1'],
+      ['SIZE', '8.0 TB'],
+      ['SETTLEMENT', 'T+30 DEFERRED'],
+      ['MIN ATTACH', '99.0%'],
+    ];
+    const quotes = [
+      ['0.63', 'Nordwest Mobil AG', 'FULL MVNO · 99.2%', true],
+      ['0.65', 'Deutsche Netz AG', 'MNO · 99.4%', false],
+      ['0.66', 'Rheinmobil GmbH', 'FULL MVNO · 99.1%', false],
+    ];
+    return {
+      pills: noPills,
+      svg: wB(`
+        ${rect(0, 0, W, H, { fill: INST.ground, r: 0 })}
+        ${glow(`120`, `40`, `200`, 0.5)}
+        ${lab(30, 38, 'REQUEST FOR QUOTE', INST.text, { size: 10 })}
+        ${lab(W - 26, 38, 'OMDM TERMINAL', INST.faint, { a: 'end' })}
+
+        ${rect(26, 52, W - 52, 150, { fill: INST.panel, r: 8 })}
+        ${fields.map(([k, v], i) => {
+          const y = 82 + i * 34;
+          const on = (0.04 + i * 0.06).toFixed(3);
+          const onE = (0.07 + i * 0.06).toFixed(3);
+          return `
+          ${lab(44, y, k, INST.faint, { size: 8 })}
+          <g opacity="0">
+            <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on};${onE};1"
+              dur="14s" repeatCount="indefinite" fill="freeze"/>
+            ${t(W - 44, y + 1, v, { m: true, size: 13, w: 600, a: 'end', fill: INST.text })}
+          </g>
+          ${rect(44, y + 10, W - 88, 1, { fill: INST.line, r: 0 })}`;
+        }).join('')}
+        <rect x="${W - 40}" width="2" height="14" fill="${INST.gold}">
+          <animate attributeName="y" values="70;104;138;172;172" keyTimes="0;0.07;0.13;0.19;1"
+            dur="14s" calcMode="discrete" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.22;0.26;1"
+            dur="14s" repeatCount="indefinite"/>
+        </rect>
+
+        ${rect(26, 214, 170, 32, { fill: 'none', r: 6, stroke: INST.gold })}
+        ${lab(111, 234, 'REQUEST QUOTE', INST.gold, { size: 9, a: 'middle' })}
+        <rect x="26" y="214" width="170" height="32" rx="6" fill="${INST.gold}" opacity="0">
+          <animate attributeName="opacity" values="0;0;0.22;0;0" keyTimes="0;0.25;0.28;0.33;1"
+            dur="14s" repeatCount="indefinite"/></rect>
+        ${lab(212, 234, 'FIRM FOR 8 SECONDS', INST.faint, { size: 8 })}
+
+        ${quotes.map(([px, cp, meta, best], i) => {
+          const y = 254 + i * 48;
+          const on = (0.3 + i * 0.05).toFixed(3);
+          const onE = (0.33 + i * 0.05).toFixed(3);
+          return `<g opacity="0">
+            <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on};${onE};1"
+              dur="14s" repeatCount="indefinite" fill="freeze"/>
+            ${rect(26, y, W - 52, 42, { fill: INST.panel, r: 5, stroke: best ? INST.gold : 'none', sw: best ? 1 : 0 })}
+            ${t(44, y + 28, px, { m: true, size: 18, w: 700, fill: best ? INST.gold : INST.text })}
+            ${t(118, y + 22, cp, { size: 12, w: 600, fill: INST.text })}
+            ${lab(118, y + 35, meta, INST.faint, { size: 7.5 })}
+            ${best ? lab(W - 44, y + 27, 'BEST OFFER', INST.gold, { size: 8, a: 'end' })
+              : lab(W - 44, y + 27, 'IN LINE', INST.faint, { size: 8, a: 'end' })}
+          </g>`;
+        }).join('')}
+
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.36;0.4;1"
+            dur="14s" repeatCount="indefinite" fill="freeze"/>
+          ${lab(30, 438, 'QUOTE EXPIRES IN', INST.faint, { size: 9 })}
+          ${repricing(W - 26, 442, ['0:08', '0:06', '0:04', '0:02'], { fill: INST.text, size: 18, w: 600, dur: 8 })}
+        </g>
+        ${lab(30, 414, 'ACCESS IS BY REQUEST, AND BY VERIFICATION', INST.dim, { size: 8.5 })}`),
+    };
+  },
+};
+
 export const OMDM_HERO_VARIANTS = [
   heroCurrent,
   theBook, twoSides, theTape, repricingClock, rateCardVsMarket,
   quoteCard, finBoard, theGap, sixFamilies, bothSidesVerified,
+  whereItTrades, bestFill, deeperBook, quotedRepricedSettled, theRfq,
 ];

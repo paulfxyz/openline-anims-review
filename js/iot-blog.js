@@ -1329,6 +1329,375 @@ export const blgWhatItIsNot = {
   },
 };
 
+/* ══ BLOG · 11–15 ═══════════════════════════════════════════════════ */
+
+export const blgFourShelves = {
+  id: 'blg-shelf',
+  name: 'Four Shelves',
+  family: 'Proof',
+  tagline: 'The blog\u2019s own category counts, adding up',
+  desc:
+    'Lower down this page the blog already publishes what is on each shelf \u2014 120+ travel guides, ' +
+    '95+ industry insights, 85+ tech tutorials, 60+ money saving \u2014 and the hero above it ignores all ' +
+    'four. Four bars grow to those counts and a total settles at 360, so the 350+ in the header stops ' +
+    'being a round number and becomes an arithmetic the reader can check.',
+  pros: [
+    'Makes the 350+ claim verifiable instead of asserted',
+    'Uses the real four categories, so the taxonomy cannot drift from the site',
+    'A reader can see at a glance whether the blog covers their kind of question',
+    'Four rects and four numbers \u2014 nothing cheaper on the board',
+  ],
+  cons: ['A bar chart in a content hero is a cold opening', 'No headline appears at all, so nothing invites a click'],
+  scores: { story: 4, motion: 3, perf: 5, mobile: 5, brand: 4, ease: 5 },
+  build: (uid) => {
+    const { P, wrap, dots, bloom, mono, label, card, num, MONO } = B;
+    const D = 6.4;
+    const shelves = [
+      ['Travel Guides', 'DESTINATIONS AND CONNECTIVITY', 120, P.deep],
+      ['Industry Insights', 'TRENDS, NEWS, TECHNOLOGY', 95, P.main],
+      ['Tech Tutorials', 'SETUP AND TROUBLESHOOTING', 85, '#FDBA74'],
+      ['Money Saving', 'CUTTING WHAT YOU PAY ABROAD', 60, '#FED7AA'],
+    ];
+    const k = 2.5;
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 210, 230, uid)}
+    ${mono(40, 46, 'WHAT IS ACTUALLY IN HERE', { size: 10, op: 0.32 })}
+    ${shelves.map(([nm, sub, n, col], i) => {
+      const y = 74 + i * 76, w = (n * k).toFixed(0);
+      const on = (0.08 + i * 0.09).toFixed(3), lit = (0.2 + i * 0.09).toFixed(3);
+      return `
+      <g>
+        ${label(40, y + 24, nm, { size: 15 })}
+        ${mono(40, y + 42, sub, { size: 8.5, op: 0.36 })}
+        <rect x="232" y="${y + 6}" width="${w}" height="32" rx="7" fill="${LINE}" opacity="0.5"/>
+        <rect x="232" y="${y + 6}" width="0" height="32" rx="7" fill="${col}">
+          <animate attributeName="width" values="0;${w};${w}" keyTimes="0;${lit};1"
+            dur="${D}s" repeatCount="indefinite"/>
+        </rect>
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${lit};${(+lit + 0.05).toFixed(3)};1"
+            dur="${D}s" repeatCount="indefinite"/>
+          <text x="${244 + +w}" y="${y + 30}" font-size="17" font-weight="700" fill="${P.deep}"
+            style="font-family:${MONO}">${n}+</text>
+        </g>
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.62;0.7;1" dur="${D}s" repeatCount="indefinite"/>
+      ${card(40, 384, 560, 52, { r: 14, fill: INK, stroke: INK })}
+      ${mono(62, 406, 'FOUR SHELVES, COUNTED', { size: 9, op: 0.5, fill: WHITE })}
+      <text x="62" y="428" font-size="13" font-weight="700" fill="${WHITE}" opacity="0.9">120 + 95 + 85 + 60</text>
+      <text x="578" y="420" text-anchor="end" font-size="22" font-weight="700" fill="${P.main}"
+        style="font-family:${MONO}">360</text>
+    </g>`;
+    return { svg: wrap(inner), pills: pBl('New every week', '360 counted') };
+  },
+};
+
+export const blgEightyPercent = {
+  id: 'blg-saved',
+  name: 'The 80% Guide',
+  family: 'Outcome',
+  tagline: 'What one article is worth in money',
+  desc:
+    'The blog already carries an article titled How to Save 80% on International Data Roaming, and ' +
+    'nothing in the hero shows what that means. A typical fourteen-day roaming bill of $212.40 is put ' +
+    'on screen and then shrinks as each of the article\u2019s four steps is applied, landing at $42.00 \u2014 ' +
+    'the 80% the headline promises, executed rather than claimed.',
+  pros: [
+    'Converts the blog from reading material into a number the reader keeps',
+    'The 80% is the blog\u2019s own headline, so the claim is already published',
+    'A shrinking bill is the clearest motion available on this board',
+    'Works at any width because the payload is one figure',
+  ],
+  cons: [
+    'The four step amounts are illustrative and need a real worked example behind them',
+    'Sells one article rather than the library',
+    'A savings calculation invites \u201Cit depends\u201D from anyone who reads carefully',
+  ],
+  scores: { story: 5, motion: 5, perf: 5, mobile: 5, brand: 4, ease: 4 },
+  build: (uid) => {
+    const { P, wrap, dots, bloom, mono, label, card, MONO } = B;
+    const D = 9;
+    const stops = ['212.40', '164.10', '96.80', '61.20', '42.00'];
+    const widths = [420, 324, 191, 121, 83];
+    const steps = [
+      ['Turn off your carrier\u2019s roaming plan', '\u2212$48.30'],
+      ['Buy the destination eSIM instead', '\u2212$67.30'],
+      ['Cap background sync before you fly', '\u2212$35.60'],
+      ['Top up rather than auto-renew', '\u2212$19.20'],
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(300, 190, 230, uid)}
+    ${mono(40, 46, 'FOURTEEN DAYS ABROAD \u00b7 WHAT THE DATA COSTS', { size: 10, op: 0.32 })}
+    ${stops.map((s, i) => {
+      const on = (i / 5).toFixed(4), up = (i / 5 + 0.004).toFixed(4);
+      const off = ((i + 1) / 5).toFixed(4), gone = Math.min((i + 1) / 5 + 0.004, 1).toFixed(4);
+      const last = i === stops.length - 1;
+      const kt = last ? `0;${on};${up};1` : `0;${on};${up};${off};${gone};1`;
+      const vals = last ? '0;0;1;1' : '0;0;1;1;0;0';
+      return `
+      <g opacity="0">
+        <animate attributeName="opacity" values="${vals}" keyTimes="${kt}"
+          dur="${D}s" repeatCount="indefinite" calcMode="discrete"/>
+        <text x="40" y="128" font-size="52" font-weight="700" fill="${i === 0 ? INK : P.deep}"
+          style="font-family:${MONO}">$${s}</text>
+        <rect x="40" y="152" width="${widths[i]}" height="26" rx="7" fill="${i === 0 ? '#D6D9DE' : P.main}"/>
+        ${mono(40, 200, i === 0 ? 'BEFORE \u00b7 CARRIER ROAMING' : `AFTER STEP ${i} \u00b7 SAVED $${(212.4 - +s).toFixed(2)}`, { size: 9, op: 0.45 })}
+      </g>`;
+    }).join('')}
+    ${steps.map(([t, amt], i) => {
+      const on = ((i + 1) / 5).toFixed(4), up = ((i + 1) / 5 + 0.004).toFixed(4);
+      const y = 228 + i * 46;
+      return `
+      <g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on};${up};1"
+          dur="${D}s" repeatCount="indefinite" calcMode="discrete"/>
+        ${card(40, y, 560, 38, { r: 10, fill: WHITE, stroke: LINE })}
+        <circle cx="64" cy="${y + 19}" r="10" fill="${GREEN_SOFT}"/>
+        <path d="M 59 ${y + 19} l 4 4 l 7 -8" fill="none" stroke="${GREEN_TEXT}" stroke-width="2.2" stroke-linecap="round"/>
+        ${label(86, y + 24, t, { size: 13 })}
+        <text x="578" y="${y + 24}" text-anchor="end" font-size="12.5" font-weight="700" fill="${GREEN_TEXT}"
+          style="font-family:${MONO}">${amt}</text>
+      </g>`;
+    }).join('')}
+    ${mono(40, 432, 'FROM: HOW TO SAVE 80% ON INTERNATIONAL DATA ROAMING \u00b7 6 MIN READ', { size: 9.5, op: 0.36 })}`;
+    return { svg: wrap(inner), pills: pBl('Worth reading', '$170 saved') };
+  },
+};
+
+export const blgArchive = {
+  id: 'blg-archive',
+  name: 'The Archive',
+  family: 'Scale',
+  tagline: 'The whole library at once, one title lit at a time',
+  desc:
+    'A dark panel filled edge to edge with the library as a field of title lines, drifting slowly ' +
+    'upward. Across the middle a lit strip holds one real title at a time, set legibly, with its ' +
+    'category and read time. The scale of the field is the argument \u2014 the reader sees 350+ rather ' +
+    'than being told it, and the strip gives the eye one thing to actually read.',
+  pros: [
+    'The only option that makes the size of the library visible',
+    'Dark, so it does not blur into the ten light panels on the comparison grid',
+    'Continuous drift has no loop seam and never repeats the same frame',
+    'The lit band is a single clear focal point in an otherwise busy field',
+  ],
+  cons: [
+    'The field is a representation, not 350 real titles \u2014 a careful reader may count',
+    'The lit strip is its own layer, so it is not literally reading the row drifting behind it',
+    'Dark panel on a white page needs the section padding rechecked',
+  ],
+  scores: { story: 4, motion: 4, perf: 4, mobile: 4, brand: 3, ease: 3 },
+  build: (uid) => {
+    const { P, wrap, dots, bloom, mono, MONO } = B;
+    const feat = [
+      ['The Complete Guide to eSIM Technology in 2025', 'TECHNOLOGY \u00b7 8 MIN'],
+      ['Top 10 Travel Destinations for Digital Nomads', 'TRAVEL GUIDES \u00b7 7 MIN'],
+      ['How to Save 80% on International Data Roaming', 'MONEY SAVING \u00b7 6 MIN'],
+      ['Understanding Multi-Network eSIM Technology', 'INDUSTRY INSIGHTS \u00b7 5 MIN'],
+      ['Cybersecurity Tips for International Travelers', 'TECH TUTORIALS \u00b7 6 MIN'],
+      ['5G Network Coverage: What Travelers Need to Know', 'INDUSTRY INSIGHTS \u00b7 7 MIN'],
+    ];
+    const D = 21;
+    const rows = 44, pitch = 16, colX = [24, 214, 404];
+    const field = colX.map((cx, c) =>
+      Array.from({ length: rows }, (_, r) => {
+        const w = 68 + ((r * 37 + c * 53) % 88);
+        const strong = (r + c) % 7 === 0;
+        return `<rect x="${cx}" y="${r * pitch}" width="${w}" height="5" rx="2.5"
+          fill="${strong ? '#3A4C6E' : '#22304A'}" opacity="${strong ? 0.95 : 0.7}"/>`;
+      }).join('')).join('');
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 210, 240, uid)}
+    ${mono(40, 46, 'THREE HUNDRED AND FIFTY, ALL AT ONCE', { size: 10, op: 0.32 })}
+    <rect x="40" y="62" width="560" height="330" rx="18" fill="#0A1122"/>
+    <svg x="42" y="64" width="556" height="326" viewBox="0 0 556 326" overflow="hidden">
+      <g>
+        <animateTransform attributeName="transform" type="translate" values="0 0;0 ${-rows * pitch}"
+          dur="${D}s" repeatCount="indefinite" calcMode="linear"/>
+        <g>${field}</g>
+        <g transform="translate(0 ${rows * pitch})">${field}</g>
+      </g>
+      <rect width="556" height="326" fill="#0A1122" opacity="0.55"/>
+      <rect y="132" width="556" height="56" fill="#111C33"/>
+      <path d="M 0 132 H 556 M 0 188 H 556" stroke="${P.main}" stroke-width="1.4" opacity="0.5"/>
+    </svg>
+    ${feat.map(([t, meta], i) => {
+      const on = (i / 6).toFixed(4), up = (i / 6 + 0.004).toFixed(4);
+      const off = ((i + 1) / 6).toFixed(4), gone = Math.min((i + 1) / 6 + 0.004, 1).toFixed(4);
+      const last = i === feat.length - 1;
+      const kt = last ? `0;${on};${up};1` : `0;${on};${up};${off};${gone};1`;
+      const vals = last ? '0;0;1;1' : '0;0;1;1;0;0';
+      return `
+      <g opacity="0">
+        <animate attributeName="opacity" values="${vals}" keyTimes="${kt}"
+          dur="${D}s" repeatCount="indefinite" calcMode="discrete"/>
+        <text x="70" y="223" font-size="15.5" font-weight="700" fill="#F2F5FA">${t}</text>
+        <text x="70" y="243" font-size="8.5" font-weight="700" letter-spacing="1.1" fill="#7D8CAB"
+          style="font-family:${MONO}">${meta}</text>
+      </g>`;
+    }).join('')}
+    <rect x="54" y="208" width="5" height="40" rx="2.5" fill="${P.main}"/>
+    ${mono(40, 420, '350+ TITLES \u00b7 190+ COUNTRIES \u00b7 EVERY ONE STILL MAINTAINED', { size: 9.5, op: 0.34 })}`;
+    return { svg: wrap(inner), pills: pBl('350+ articles', 'Still maintained') };
+  },
+};
+
+export const blgBeforeYouGo = {
+  id: 'blg-when',
+  name: 'Before You Go',
+  family: 'Journey',
+  tagline: 'The right guide at each stage of a trip',
+  desc:
+    'The blog is currently sorted by date, which is the one order that helps nobody. This lays a trip ' +
+    'out as a spine \u2014 booking, two weeks out, at the gate, landed, day three \u2014 and moves a marker ' +
+    'along it while the matching real article surfaces underneath. It answers the only question a ' +
+    'traveller has on arriving at a blog: which of these is for me, today.',
+  pros: [
+    'Sorts the library by the reader\u2019s situation rather than by publication date',
+    'Every stop uses a real published article, so it can ship without new writing',
+    'A left-to-right spine needs no instruction to read',
+    'Doubles as a template for a genuinely useful blog landing section',
+  ],
+  cons: [
+    'Five stops means each article is on screen for only a few seconds',
+    'Assumes a linear trip, which does not fit long-stay nomads',
+    'The stage-to-article mapping is an editorial judgement someone has to own',
+  ],
+  scores: { story: 5, motion: 4, perf: 5, mobile: 4, brand: 5, ease: 4 },
+  build: (uid) => {
+    const { P, wrap, dots, bloom, mono, label, card, panel, MONO } = B;
+    const D = 15;
+    const stops = [
+      ['BOOKING', 'How to Choose the Right eSIM Plan', 'Pick a data package by destination, length of trip and how you actually use it.', 'MONEY SAVING \u00b7 5 MIN'],
+      ['2 WEEKS OUT', 'The Complete Guide to eSIM Technology', 'How an eSIM works, which phones accept one, and how to install it before you fly.', 'TECHNOLOGY \u00b7 8 MIN'],
+      ['AT THE GATE', 'Essential Apps for International Travelers', 'What to download while you still have wifi: maps, translation, offline tickets.', 'TRAVEL GUIDES \u00b7 6 MIN'],
+      ['LANDED', 'Understanding Multi-Network eSIM Technology', 'Why the eSIM changes network for you, and what to do in a country that resists.', 'INDUSTRY INSIGHTS \u00b7 5 MIN'],
+      ['DAY THREE', 'Best Practices for Remote Work While Traveling', 'Holding a working day together across time zones and an unreliable connection.', 'TRAVEL GUIDES \u00b7 7 MIN'],
+    ];
+    const xs = [72, 196, 320, 444, 568];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 200, 230, uid)}
+    ${mono(40, 46, 'ORDERED BY WHEN YOU NEED IT, NOT BY DATE', { size: 10, op: 0.32 })}
+    <path d="M 72 116 H 568" stroke="${LINE}" stroke-width="3" stroke-linecap="round"/>
+    ${stops.map(([kick], i) => `
+      ${mono(xs[i], 92, kick, { size: 8.5, op: 0.42, anchor: 'middle' })}
+      <circle cx="${xs[i]}" cy="116" r="6.5" fill="${WHITE}" stroke="${INK}" stroke-width="2.2"/>`).join('')}
+    <g>
+      <animateTransform attributeName="transform" type="translate"
+        values="0 0;124 0;248 0;372 0;496 0;496 0" keyTimes="0;0.2;0.4;0.6;0.8;1"
+        dur="${D}s" repeatCount="indefinite" calcMode="discrete"/>
+      <circle cx="72" cy="116" r="11" fill="${P.main}"/>
+      <circle cx="72" cy="116" r="11" fill="none" stroke="${P.main}" stroke-width="2">
+        <animate attributeName="r" values="11;26" dur="1.6s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.7;0" dur="1.6s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+    ${panel(40, 152, 560, 198, { r: 16 })}
+    ${stops.map(([kick, title, stand, meta], i) => {
+      const on = (i / 5).toFixed(4), up = (i / 5 + 0.004).toFixed(4);
+      const off = ((i + 1) / 5).toFixed(4), gone = Math.min((i + 1) / 5 + 0.004, 1).toFixed(4);
+      const last = i === stops.length - 1;
+      const kt = last ? `0;${on};${up};1` : `0;${on};${up};${off};${gone};1`;
+      const vals = last ? '0;0;1;1' : '0;0;1;1;0;0';
+      return `
+      <g opacity="0">
+        <animate attributeName="opacity" values="${vals}" keyTimes="${kt}"
+          dur="${D}s" repeatCount="indefinite" calcMode="discrete"/>
+        ${mono(72, 186, kick + ' \u00b7 READ THIS ONE', { size: 8.5, op: 0.5, fill: P.deep })}
+        ${label(72, 226, title, { size: 21 })}
+        <text x="72" y="256" font-size="13" fill="${INK}" opacity="0.58">${stand}</text>
+        <g transform="translate(72 278)">
+          <rect width="210" height="26" rx="13" fill="${P.wash}"/>
+          <text x="105" y="17" text-anchor="middle" font-size="8.5" font-weight="700" letter-spacing="1"
+            fill="${P.deep}" style="font-family:${MONO}">${meta}</text>
+        </g>
+      </g>`;
+    }).join('')}
+    ${card(40, 370, 560, 44, { r: 12, fill: P.wash, stroke: P.main, sw: 1.5 })}
+    ${label(62, 398, 'Five of 350+ \u2014 the rest are sorted the same way', { size: 13, fill: P.deep })}
+    ${mono(40, 436, 'TRAVEL GUIDES \u00b7 TECH TUTORIALS \u00b7 MONEY SAVING \u00b7 INDUSTRY INSIGHTS', { size: 9, op: 0.3 })}`;
+    return { svg: wrap(inner), pills: pBl('Read it at the right time', 'Five trip stages') };
+  },
+};
+
+export const blgOneHeadline = {
+  id: 'blg-oneline',
+  name: 'One Headline',
+  family: 'Typographic',
+  tagline: 'No cards, no icons, only the writing',
+  desc:
+    'Every blog hero in this category is a grid of tiles. This is one real headline at a time, set ' +
+    'large enough to be the artwork, with its standfirst and read time underneath and nothing else on ' +
+    'screen \u2014 no card, no border, no globe icon. Five of the blog\u2019s actual titles cycle through. It ' +
+    'asks the headlines to do the work, which is a fair test of whether they are any good.',
+  pros: [
+    'The cleanest option on the board, and the only one with no illustration',
+    'Type this size is legible on any phone without a single change',
+    'Costs nothing to build and nothing to maintain beyond swapping strings',
+    'Puts pressure on headline quality, which is the right pressure for a blog',
+  ],
+  cons: [
+    'One headline at a time gives no sense of breadth or volume',
+    'If a chosen headline is weak, there is nothing to hide behind',
+    'The least eventful motion of the fifteen \u2014 it is a hard cut every three seconds',
+  ],
+  scores: { story: 3, motion: 2, perf: 5, mobile: 5, brand: 4, ease: 5 },
+  build: (uid) => {
+    const { P, wrap, dots, bloom, mono, MONO } = B;
+    const D = 15;
+    const items = [
+      ['The Complete Guide to', 'eSIM Technology in 2025', 'How they work, why they are replacing the plastic, and what to check first.', 'TECHNOLOGY \u00b7 8 MIN \u00b7 UPDATED THIS MONTH'],
+      ['How to Save 80% on', 'International Data Roaming', 'The four things frequent travellers do before they leave the house.', 'MONEY SAVING \u00b7 6 MIN'],
+      ['Top 10 Destinations for', 'Digital Nomads in 2025', 'Where the connection, the rent and the coffee actually add up. Lisbon to Bali.', 'TRAVEL GUIDES \u00b7 7 MIN'],
+      ['5G Coverage: What', 'Travelers Need to Know', 'Which countries deliver it, which advertise it, and how to get on it.', 'INDUSTRY INSIGHTS \u00b7 7 MIN'],
+      ['Cybersecurity Tips for', 'International Travelers', 'Public wifi, border checks and the settings worth changing before you fly.', 'TECH TUTORIALS \u00b7 6 MIN'],
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 200, 240, uid)}
+    ${mono(40, 62, 'FROM THE BLOG', { size: 9.5, op: 0.42 })}
+    ${items.map(([l1, l2, stand, meta], i) => {
+      const on = (i / 5).toFixed(4), up = (i / 5 + 0.004).toFixed(4);
+      const off = ((i + 1) / 5).toFixed(4), gone = Math.min((i + 1) / 5 + 0.004, 1).toFixed(4);
+      const last = i === items.length - 1;
+      const kt = last ? `0;${on};${up};1` : `0;${on};${up};${off};${gone};1`;
+      const vals = last ? '0;0;1;1' : '0;0;1;1;0;0';
+      return `
+      <g opacity="0">
+        <animate attributeName="opacity" values="${vals}" keyTimes="${kt}"
+          dur="${D}s" repeatCount="indefinite" calcMode="discrete"/>
+        <rect x="40" y="92" width="84" height="5" rx="2.5" fill="${P.main}"/>
+        <text x="40" y="178" font-size="36" font-weight="700" fill="${INK}">${l1}</text>
+        <text x="40" y="224" font-size="36" font-weight="700" fill="${P.deep}">${l2}</text>
+        <text x="40" y="268" font-size="14.5" fill="${INK}" opacity="0.6">${stand}</text>
+        <text x="40" y="312" font-size="9.5" font-weight="700" letter-spacing="1.2" fill="${INK}"
+          opacity="0.38" style="font-family:${MONO}">${meta}</text>
+      </g>`;
+    }).join('')}
+    ${items.map((_, i) => {
+      const on = (i / 5).toFixed(4), up = (i / 5 + 0.004).toFixed(4);
+      const off = ((i + 1) / 5).toFixed(4), gone = Math.min((i + 1) / 5 + 0.004, 1).toFixed(4);
+      const last = i === items.length - 1;
+      const kt = last ? `0;${on};${up};1` : `0;${on};${up};${off};${gone};1`;
+      const vals = last ? '0;0;1;1' : '0;0;1;1;0;0';
+      const bx = 40 + i * 112;
+      return `
+      <rect x="${bx}" y="376" width="100" height="5" rx="2.5" fill="${LINE}"/>
+      <rect x="${bx}" y="376" width="100" height="5" rx="2.5" fill="${P.main}" opacity="0">
+        <animate attributeName="opacity" values="${vals}" keyTimes="${kt}"
+          dur="${D}s" repeatCount="indefinite" calcMode="discrete"/>
+      </rect>`;
+    }).join('')}
+    ${mono(40, 424, '350+ ARTICLES \u00b7 NO CARDS, NO TILES, JUST THE WRITING', { size: 9.5, op: 0.32 })}`;
+    return { svg: wrap(inner), pills: pBl('New every week', 'Read the headline') };
+  },
+};
+
 /* ── registry ── */
 export const BLOG_VARIANTS = [blogCurrent, feedLive, topicOrbit, readingNow, destShuffle, weekly, blgAnswers, blgKeptCurrent, blgWhoWrote, blgOneGuide,
-  blgWhatItIsNot];
+  blgWhatItIsNot, blgFourShelves, blgEightyPercent, blgArchive, blgBeforeYouGo, blgOneHeadline];

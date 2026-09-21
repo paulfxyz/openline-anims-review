@@ -738,4 +738,351 @@ export const acWhenItDrops = {
 };
 
 /* ── registry ── */
-export const ACCESS_VARIANTS = [acCurrent, roster, wall, ladder, regional, signalLadder, acYourRoute, acWhatTier1Means, acSideBySide, acFiftyTwo, acWhenItDrops];
+
+/* ══ ACCESS · 11–15 ═════════════════════════════════════════════════ */
+
+export const acThirtySeconds = {
+  id: 'ac-thirty',
+  name: 'Thirty Seconds',
+  family: 'Honesty',
+  tagline: 'The one case in ten where you do something',
+  desc:
+    'Further down this page we admit that about one time in ten a different eSIM profile has to be ' +
+    'installed by QR code, and that it takes thirty seconds. Nothing on the page shows it. Here a code ' +
+    'appears, a counter runs 30 down to 0, three steps tick off, and the new carrier attaches with the ' +
+    'reason printed. The awkward part of the product, handled in the open.',
+  pros: [
+    'Uses the 90/10 admission the page already makes and no animation touches',
+    'A counter running to zero is the fastest way to make thirty seconds feel small',
+    'Answers a support question before it becomes a support ticket',
+  ],
+  cons: [
+    'Puts a manual step on a panel that is selling automatic switching',
+    'Thirty seconds has to hold on an old handset and a bad hotel wifi',
+  ],
+  scores: { story: 5, motion: 4, perf: 5, mobile: 4, brand: 3, ease: 4 },
+  build: (uid) => {
+    const dur = 10;
+    const flip = (k, n) => {
+      const on = k / n, off = (k + 1) / n;
+      const b = Math.min(on + 0.006, 1), d = Math.min(off + 0.006, 1);
+      return `<animate attributeName="opacity" values="0;0;1;1;0;0"
+        keyTimes="0;${on.toFixed(4)};${b.toFixed(4)};${off.toFixed(4)};${d.toFixed(4)};1"
+        dur="${dur}s" repeatCount="indefinite" calcMode="discrete"/>`;
+    };
+    const cell = 11, qx = 78, qy = 118;
+    const inFinder = (r, c) => (r < 3 && c < 3) || (r < 3 && c > 7) || (r > 7 && c < 3);
+    const finder = (fx, fy) => `
+      <rect x="${fx}" y="${fy}" width="33" height="33" fill="${INK}"/>
+      <rect x="${fx + 5.5}" y="${fy + 5.5}" width="22" height="22" fill="${WHITE}"/>
+      <rect x="${fx + 11}" y="${fy + 11}" width="11" height="11" fill="${INK}"/>`;
+    const dotsQ = [];
+    for (let r = 0; r < 11; r++) {
+      for (let c = 0; c < 11; c++) {
+        if (inFinder(r, c)) continue;
+        if ((r * 7 + c * 13 + ((r * c) % 5)) % 3 !== 0) continue;
+        dotsQ.push(`<rect x="${qx + c * cell}" y="${qy + r * cell}" width="${cell}" height="${cell}" fill="${INK}"/>`);
+      }
+    }
+    const counts = ['30', '24', '18', '12', '06', '00'];
+    const steps = ['Old profile removed', 'Code scanned', 'Attached to Orange ES 5G'];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(300, 210, 240, uid)}
+    ${mono(56, 56, 'THE 10% CASE \u00b7 A NEW PROFILE BY QR', { size: 9.5, op: 0.45 })}
+    ${card(60, 100, 157, 157, { r: 14, fill: WHITE, stroke: LINE, sw: 2 })}
+    ${dotsQ.join('')}
+    ${finder(qx, qy)}
+    ${finder(qx + 8 * cell, qy)}
+    ${finder(qx, qy + 8 * cell)}
+    ${mono(138, 280, 'SCAN ONCE', { size: 9, anchor: 'middle', op: 0.4 })}
+    ${counts.map((t, k) => `<g opacity="0">${flip(k, counts.length)}
+      <text x="250" y="168" font-size="52" font-weight="700" fill="${P.deep}"
+        style="font-family:${MONO}">${t}</text></g>`).join('')}
+    ${mono(250, 194, 'SECONDS LEFT', { size: 9.5, op: 0.4 })}
+    <rect x="250" y="210" width="300" height="8" rx="4" fill="${LINE}"/>
+    <rect x="250" y="210" width="300" height="8" rx="4" fill="${P.main}">
+      <animate attributeName="width" values="300;0;0" keyTimes="0;0.86;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+    </rect>
+    ${steps.map((t, i) => {
+      const on = 0.14 + i * 0.22;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.04).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${tick(252, 248 + i * 32, t, { stroke: P.main, size: 12.5 })}
+      </g>`;
+    }).join('')}
+    ${card(56, 332, 248, 96, { r: 14, fill: WHITE, stroke: LINE })}
+    ${mono(80, 362, '90% OF THE TIME', { size: 8.5, op: 0.4 })}
+    ${label(80, 392, 'Nothing to do at all', { size: 14.5 })}
+    ${mono(80, 412, 'AUTOMATIC SWITCHING, NO PROMPT', { size: 8.5, op: 0.32 })}
+    ${card(328, 332, 256, 96, { r: 14, fill: P.wash, stroke: P.main, sw: 2 })}
+    ${mono(352, 362, '10% OF CASES', { size: 8.5, op: 0.5, fill: P.deep })}
+    ${label(352, 392, 'Thirty seconds, once', { size: 14.5, fill: P.deep })}
+    ${mono(352, 412, 'BETTER PRICE OR BETTER SIGNAL', { size: 8.5, op: 0.4 })}`;
+    return { svg: wrap(inner), pills: pAC('The 10% case') };
+  },
+};
+
+export const acPassportStamps = {
+  id: 'ac-stamps',
+  name: 'Passport Stamps',
+  family: 'Editorial',
+  tagline: 'One week, five countries, four carriers',
+  desc:
+    'The roster proved by use instead of counted. Five entries from one week of travel \u2014 Lisbon on ' +
+    'Vodafone PT, Madrid on Orange ES, Zurich on Swisscom, Tokyo on NTT Docomo, Sydney on Telstra \u2014 each ' +
+    'stamped in with the time and the handover that got there. Nobody typed anything and nothing was ' +
+    'reinstalled.',
+  pros: [
+    'Reads as one person\u2019s week rather than a corporate inventory',
+    'Covers the 190+ countries claim and the handover claim in the same frame',
+    'Holds up perfectly as a still image in a deck or an ad',
+  ],
+  cons: [
+    'Five stamps is a smaller number than the headline promises',
+    'A stamp motif is a travel cliché, and this is not only a travel product',
+  ],
+  scores: { story: 5, motion: 3, perf: 5, mobile: 5, brand: 4, ease: 5 },
+  build: (uid) => {
+    const dur = 12;
+    const legs = [
+      ['MON 08:12', 'Lisbon', 'Vodafone PT \u00b7 5G', 'PT', 'ATTACHED'],
+      ['MON 19:40', 'Madrid', 'Orange ES \u00b7 5G', 'ES', 'HANDOVER 41 ms'],
+      ['WED 07:05', 'Zurich', 'Swisscom \u00b7 5G', 'CH', 'HANDOVER 38 ms'],
+      ['THU 22:15', 'Tokyo', 'NTT Docomo \u00b7 5G', 'JP', 'HANDOVER 44 ms'],
+      ['SAT 11:30', 'Sydney', 'Telstra \u00b7 5G', 'AU', 'HANDOVER 39 ms'],
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 220, 250, uid)}
+    ${mono(56, 54, 'ONE WEEK, AS THE PROFILE SAW IT', { size: 9.5, op: 0.45 })}
+    <line x1="56" y1="72" x2="584" y2="72" stroke="${INK}" stroke-width="2"/>
+    ${legs.map(([when, city, carrier, code, note], i) => {
+      const y = 112 + i * 66;
+      const on = 0.06 + i * 0.13;
+      const rot = -7 + i * 3.5;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.05).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        <g transform="translate(88 ${y - 4}) rotate(${rot.toFixed(1)})">
+          <rect x="-28" y="-21" width="56" height="42" rx="8" fill="none" stroke="${P.main}" stroke-width="2" opacity="0.75"/>
+          <text x="0" y="1" text-anchor="middle" font-size="15" font-weight="700" fill="${P.deep}"
+            style="font-family:${MONO}">${code}</text>
+          <text x="0" y="14" text-anchor="middle" font-size="7" font-weight="700" fill="${P.deep}" opacity="0.6"
+            letter-spacing="0.8" style="font-family:${MONO}">ENTERED</text>
+        </g>
+        ${mono(140, y, when, { size: 10, op: 0.42 })}
+        ${label(232, y, city, { size: 16 })}
+        ${label(344, y, carrier, { size: 12.5, op: 0.6 })}
+        ${mono(584, y, note, { size: 9, anchor: 'end', op: 0.4, fill: P.deep })}
+        <line x1="56" y1="${y + 22}" x2="584" y2="${y + 22}" stroke="${LINE}" stroke-width="1.2"/>
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.72;0.8;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${label(56, 440, 'Five countries, four carriers, one profile \u2014 nothing typed in.', { size: 15, fill: P.deep })}
+    </g>`;
+    return { svg: wrap(inner), pills: pAC('Five countries, one profile') };
+  },
+};
+
+export const acCrowdedCell = {
+  id: 'ac-crowded',
+  name: 'The Crowded Cell',
+  family: 'Congestion',
+  tagline: 'Same spot, three carriers, one of them jammed',
+  desc:
+    'One of the eight bullets beside this section promises better performance in congested areas, and ' +
+    'nothing illustrates it. Sixty thousand people stand on one cell site: Vodafone is at 96% load, ' +
+    'Orange at 74%, T-Mobile at 41%, the loads move, and the attachment follows the least loaded one. ' +
+    'The consequence is printed underneath \u2014 74 Mbps against 9.',
+  pros: [
+    'Congestion, not coverage, is the failure people actually experience at events',
+    'Explains why fifty partners matter in a place where one tower serves everybody',
+    'Load bars move continuously without a reset',
+  ],
+  cons: [
+    'Shows a Tier-1 partner performing badly, which needs a careful read',
+    'The throughput figures have to come from a real measurement',
+  ],
+  scores: { story: 5, motion: 4, perf: 5, mobile: 4, brand: 4, ease: 4 },
+  build: (uid) => {
+    const dur = 8;
+    const ops = [
+      { n: 'Vodafone', g: '5G', a: 96, b: 92, c: 97, col: RED },
+      { n: 'Orange', g: '5G', a: 74, b: 48, c: 71, col: P.main },
+      { n: 'T-Mobile', g: 'LTE', a: 41, b: 66, c: 44, col: P.main },
+    ];
+    const bw = 230, bx = 250;
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 220, 240, uid)}
+    ${mono(56, 50, 'FULL STADIUM \u00b7 62,000 PEOPLE \u00b7 ONE CELL SITE', { size: 9.5, op: 0.45 })}
+    ${[0, 1, 2].map((r) => Array.from({ length: 34 }, (_, i) =>
+      `<circle cx="${58 + i * 15.6}" cy="${74 + r * 13}" r="2.6" fill="${INK}" opacity="${(i + r) % 7 === 0 ? 0.28 : 0.13}"/>`).join('')).join('')}
+    ${ops.map((o, i) => {
+      const y = 150 + i * 74;
+      const wa = ((o.a / 100) * bw).toFixed(0);
+      const wb = ((o.b / 100) * bw).toFixed(0);
+      const wc = ((o.c / 100) * bw).toFixed(0);
+      return `
+      ${card(56, y - 30, 528, 60, { r: 13, fill: WHITE, stroke: LINE })}
+      ${mast(92, y + 12, { s: 0.42 })}
+      ${label(128, y - 4, o.n, { size: 15 })}
+      ${mono(128, y + 14, o.g + ' \u00b7 LOAD', { size: 8.5, op: 0.38 })}
+      <rect x="${bx}" y="${y - 6}" width="${bw}" height="12" rx="6" fill="${LINE}"/>
+      <rect x="${bx}" y="${y - 6}" width="${wa}" height="12" rx="6" fill="${o.col}" opacity="0.85">
+        <animate attributeName="width" values="${wa};${wb};${wc};${wa}" keyTimes="0;0.34;0.7;1"
+          dur="${dur}s" repeatCount="indefinite"/>
+      </rect>
+      <text x="${bx + bw + 14}" y="${y + 4}" font-size="12" font-weight="700" fill="${INK}" opacity="0.5"
+        style="font-family:${MONO}">${o.a}%</text>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0;0.006;0.5;0.506;1" dur="${dur}s"
+        repeatCount="indefinite" calcMode="discrete"/>
+      ${badge(520, 286, 'ON THIS ONE', { w: 64, h: 24, size: 8, fill: P.main })}
+    </g>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.5;0.506;1;1;1" dur="${dur}s"
+        repeatCount="indefinite" calcMode="discrete"/>
+      ${badge(520, 212, 'ON THIS ONE', { w: 64, h: 24, size: 8, fill: P.main })}
+    </g>
+    ${card(56, 352, 528, 76, { r: 14, fill: P.wash, stroke: P.main, sw: 2 })}
+    ${label(80, 386, '74 Mbps on the quiet carrier. 9 on the jammed one.', { size: 15 })}
+    ${mono(80, 410, 'SAME SPOT, SAME SECOND \u00b7 THIS IS WHY BREADTH MATTERS', { size: 8.5, op: 0.45, fill: P.deep })}`;
+    return { svg: wrap(inner), pills: pAC('Load-aware, not just signal') };
+  },
+};
+
+export const acNoConfig = {
+  id: 'ac-noconfig',
+  name: 'Nothing To Configure',
+  family: 'Contrast',
+  tagline: 'The APN form nobody fills in any more',
+  desc:
+    'The section promises that no manual configuration is ever needed, and the fastest way to feel that ' +
+    'promise is to see what it replaced. On the left, the nine fields of an APN settings form \u2014 name, ' +
+    'APN, proxy, port, username, password, MMSC, MCC/MNC, type \u2014 struck through one at a time. On the ' +
+    'right, one line: install the profile.',
+  pros: [
+    'Nine fields being crossed out is a physical, satisfying way to show \u201cnone\u201d',
+    'Anybody who has ever roamed on a prepaid SIM recognises that form immediately',
+    'No carrier names, so nothing here needs legal or partner approval',
+  ],
+  cons: [
+    'Requires the reader to have suffered the old way to feel the relief',
+    'Nine struck-out rows is a lot of small type on a phone',
+  ],
+  scores: { story: 4, motion: 4, perf: 5, mobile: 3, brand: 4, ease: 5 },
+  build: (uid) => {
+    const dur = 11;
+    const fields = ['Name', 'APN', 'Proxy', 'Port', 'Username', 'Password', 'MMSC', 'MCC / MNC', 'APN type'];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 220, 240, uid)}
+    ${mono(56, 54, 'WHAT THIS REPLACED', { size: 9.5, op: 0.45 })}
+    ${card(56, 74, 268, 328, { r: 16, fill: WHITE, stroke: LINE, sw: 1.5 })}
+    ${mono(80, 104, 'ACCESS POINT NAMES', { size: 8.5, op: 0.4 })}
+    <line x1="80" y1="116" x2="300" y2="116" stroke="${LINE}" stroke-width="1.2"/>
+    ${fields.map((f, i) => {
+      const y = 144 + i * 28;
+      const on = 0.1 + i * 0.055;
+      return `
+      ${label(80, y, f, { size: 12, op: 0.62 })}
+      <rect x="182" y="${y - 11}" width="118" height="15" rx="4" fill="${LINE}" opacity="0.6"/>
+      <line x1="78" y1="${y - 4}" x2="302" y2="${y - 4}" stroke="${RED}" stroke-width="1.8"
+        stroke-dasharray="224" stroke-dashoffset="224" opacity="0.65">
+        <animate attributeName="stroke-dashoffset" values="224;224;0;0"
+          keyTimes="0;${on.toFixed(3)};${(on + 0.035).toFixed(3)};1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      </line>`;
+    }).join('')}
+    ${card(348, 74, 236, 186, { r: 16, fill: P.wash, stroke: P.main, sw: 2 })}
+    ${mono(372, 106, 'THE OPENLINE WAY', { size: 8.5, op: 0.5, fill: P.deep })}
+    ${label(372, 138, 'Install the profile.', { size: 17 })}
+    ${tick(372, 174, 'Nothing to type', { stroke: P.main, size: 12 })}
+    ${tick(372, 204, 'Nothing to choose', { stroke: P.main, size: 12 })}
+    ${tick(372, 234, 'Nothing to redo abroad', { stroke: P.main, size: 12 })}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.68;0.76;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      <text x="348" y="330" font-size="52" font-weight="700" fill="${P.deep}" style="font-family:${MONO}">0</text>
+      ${mono(392, 330, 'FIELDS TO FILL IN', { size: 9.5, op: 0.42 })}
+      ${label(348, 372, 'Nine fields, or none.', { size: 15, fill: P.deep })}
+    </g>
+    ${mono(56, 434, 'NO MANUAL CONFIGURATION EVER NEEDED \u00b7 THE CLAIM, DRAWN', { size: 9, op: 0.32 })}`;
+    return { svg: wrap(inner), pills: pAC('Zero setup') };
+  },
+};
+
+export const acDepartureBoard = {
+  id: 'ac-board',
+  name: 'Departure Board',
+  family: 'Dark surface',
+  tagline: 'Fifty-two names, flipping like an airport board',
+  desc:
+    'A dark split-flap board: carrier, country, band, status. Seven rows flip at their own pace, so far ' +
+    'more than seven names pass through \u2014 Vodafone DE, A1 AT, Telia SE, then the next three \u2014 with every ' +
+    'row reading DIRECT. Fifty-two partners will not fit on one screen legibly, so the board cycles ' +
+    'through them instead of shrinking them.',
+  pros: [
+    'The only dark panel available to this section on an otherwise white page',
+    'Flipping rows show more of the roster than any static grid can at this size',
+    'Reads as an arrivals board, which suits a product about crossing borders',
+  ],
+  cons: [
+    'Every name on it must be a partner we can legally list',
+    'A board metaphor leans travel, and the section also sells to fixed IoT fleets',
+    'Names are only on screen for a couple of seconds each',
+  ],
+  scores: { story: 4, motion: 5, perf: 4, mobile: 3, brand: 3, ease: 4 },
+  build: (uid) => {
+    const rowSets = [
+      [['Vodafone', 'DE', 'n78'], ['A1 Telekom', 'AT', 'n78'], ['Telia', 'SE', 'n78']],
+      [['Orange', 'FR', 'n78'], ['Proximus', 'BE', 'n78'], ['KPN', 'NL', 'n78']],
+      [['T-Mobile', 'US', 'n41'], ['Verizon', 'US', 'n77'], ['AT&amp;T', 'US', 'n77']],
+      [['NTT Docomo', 'JP', 'n79'], ['KDDI au', 'JP', 'n78'], ['SK Telecom', 'KR', 'n78']],
+      [['Telef\u00f3nica', 'ES', 'n78'], ['TIM', 'IT', 'n78'], ['Swisscom', 'CH', 'n78']],
+      [['Telstra', 'AU', 'n78'], ['Singtel', 'SG', 'n78'], ['Jio', 'IN', 'n78']],
+      [['Etisalat', 'AE', 'n78'], ['STC', 'SA', 'n78'], ['MTN', 'ZA', 'B3']],
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 210, 240, uid)}
+    <rect x="40" y="64" width="560" height="312" rx="20" fill="${INK}"/>
+    ${mono(66, 100, 'CARRIER', { size: 8.5, fill: WHITE, op: 0.4 })}
+    ${mono(300, 100, 'COUNTRY', { size: 8.5, fill: WHITE, op: 0.4 })}
+    ${mono(400, 100, 'BAND', { size: 8.5, fill: WHITE, op: 0.4 })}
+    ${mono(574, 100, 'STATUS', { size: 8.5, fill: WHITE, op: 0.4, anchor: 'end' })}
+    <line x1="66" y1="112" x2="574" y2="112" stroke="${WHITE}" stroke-width="1" opacity="0.14"/>
+    ${rowSets.map((set, i) => {
+      const y = 142 + i * 32;
+      const rdur = 6 + i * 0.7;
+      return set.map((s, k) => {
+        const on = k / 3, off = (k + 1) / 3;
+        const b = Math.min(on + 0.008, 1), d = Math.min(off + 0.008, 1);
+        return `<g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1;0;0"
+            keyTimes="0;${on.toFixed(4)};${b.toFixed(4)};${off.toFixed(4)};${d.toFixed(4)};1"
+            dur="${rdur.toFixed(1)}s" repeatCount="indefinite" calcMode="discrete"/>
+          <text x="66" y="${y}" font-size="14" font-weight="700" fill="${WHITE}">${s[0]}</text>
+          <text x="300" y="${y}" font-size="11.5" font-weight="700" fill="${WHITE}" opacity="0.55"
+            style="font-family:${MONO}">${s[1]}</text>
+          <text x="400" y="${y}" font-size="11.5" font-weight="700" fill="${WHITE}" opacity="0.45"
+            style="font-family:${MONO}">${s[2]}</text>
+          <text x="574" y="${y}" text-anchor="end" font-size="11" font-weight="700" fill="${P.main}"
+            letter-spacing="0.8" style="font-family:${MONO}">DIRECT</text>
+        </g>`;
+      }).join('');
+    }).join('')}
+    <line x1="66" y1="344" x2="574" y2="344" stroke="${WHITE}" stroke-width="1" opacity="0.14"/>
+    <text x="66" y="366" font-size="10.5" font-weight="700" fill="${P.main}" letter-spacing="1"
+      style="font-family:${MONO}">52 DIRECT AGREEMENTS \u00b7 190+ COUNTRIES \u00b7 ALL TIER-1</text>
+    ${label(40, 412, 'Every name on the board is an agreement, not a resale.', { size: 15 })}
+    ${mono(40, 438, 'THE BOARD KEEPS FLIPPING \u2014 FIFTY-TWO WILL NOT FIT ON ONE SCREEN', { size: 9, op: 0.32 })}`;
+    return { svg: wrap(inner), pills: pAC('52 direct agreements') };
+  },
+};
+
+/* ── registry ── */
+export const ACCESS_VARIANTS = [acCurrent, roster, wall, ladder, regional, signalLadder, acYourRoute, acWhatTier1Means, acSideBySide, acFiftyTwo, acWhenItDrops, acThirtySeconds, acPassportStamps, acCrowdedCell, acNoConfig, acDepartureBoard];

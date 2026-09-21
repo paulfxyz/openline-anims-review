@@ -593,9 +593,346 @@ export const twoDoors = {
   },
 };
 
+/* C11 ── Bot Or Human */
+export const botOrHuman = {
+  id: 'ct-bothuman',
+  name: 'Bot Or Human',
+  family: 'Honesty',
+  tagline: 'Every message says who wrote it',
+  desc:
+    'The page promises an AI assistant and live agents in the same breath and never says which one ' +
+    'you get. This labels every message. The assistant answers the network question instantly from ' +
+    'the help centre, refuses the billing question rather than guessing, and hands over to Mei, who ' +
+    'fixes it. A tally underneath gives the real split for the day \u2014 44 of 61 conversations ' +
+    'never needed a person.',
+  pros: ['Uses the AI assistant the page advertises and no other option touches',
+    'An assistant that admits its limits is more reassuring than one that does not',
+    'Sets the right expectation before the first message'],
+  cons: ['Admits most answers are automated, which some readers will dislike',
+    'The handover has to be this clean in practice',
+    'Three stacked messages leave little room for anything else'],
+  scores: { story: 5, motion: 3, perf: 5, mobile: 4, brand: 4, ease: 3 },
+  build: () => {
+    const dur = 13;
+    return {
+      pills: noPills,
+      svg: wC(`
+        ${bg(CW, CH, OR)}
+        ${lab(40, 38, 'WHO IS ACTUALLY ANSWERING', GRAY, { size: 9 })}
+        ${rect(32, 48, 512, 292, { fill: WHITE, stroke: LINE, r: 16 })}
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;1;1" keyTimes="0;0.06;1" dur="${dur}s"
+            repeatCount="indefinite" fill="freeze"/>
+          ${lab(54, 74, 'YOU', GRAY, { size: 8.5 })}
+          ${bubble(54, 80, 300, 58, true, '', ['Which network will I get in Japan?',
+            'And why was I charged twice?'])}
+        </g>
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.24;0.32;1" dur="${dur}s"
+            repeatCount="indefinite" fill="freeze"/>
+          ${lab(522, 160, 'ASSISTANT \u00B7 AUTOMATED', GRAY, { size: 8.5, a: 'end' })}
+          ${rect(202, 166, 320, 74, { fill: '#F9FAFB', r: 12, stroke: LINE })}
+          ${t(216, 190, 'Japan: whichever network is', { size: 11.5, fill: INK })}
+          ${t(216, 206, 'strongest \u2014 that one is in the', { size: 11.5, fill: INK })}
+          ${t(216, 222, 'help centre. The charge I will not guess.', { size: 11.5, fill: INK })}
+        </g>
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.54;0.62;1" dur="${dur}s"
+            repeatCount="indefinite" fill="freeze"/>
+          ${lab(522, 262, 'MEI \u00B7 A PERSON', GREEN_TEXT, { size: 8.5, a: 'end' })}
+          ${rect(202, 268, 320, 58, { fill: WHITE, stroke: GR, sw: 1.5, r: 12 })}
+          ${t(216, 292, 'Duplicate on 14 Sep \u2014 refunded to', { size: 11.5, fill: INK })}
+          ${t(216, 308, 'the same card. Nothing else needed.', { size: 11.5, fill: INK })}
+        </g>
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.78;0.86;1" dur="${dur}s"
+            repeatCount="indefinite" fill="freeze"/>
+          ${rect(32, 352, 512, 44, { fill: '#F9FAFB', r: 12 })}
+          ${t(54, 380, '61 conversations today', { size: 12.5, fill: MUT })}
+          ${t(522, 380, '44 ASSISTANT \u00B7 17 A PERSON', { m: true, size: 11, w: 700, a: 'end', fill: INK })}
+        </g>
+        ${lab(32, 414, 'THE PAGE PROMISES BOTH \u2014 THIS SAYS WHICH ONE YOU HAVE', GRAY, { size: 8 })}`),
+    };
+  },
+};
+
+/* C12 ── Eight Languages */
+export const eightLanguages = {
+  id: 'ct-eight',
+  name: 'Eight Languages',
+  family: 'Typography',
+  tagline: 'The same question, eight ways',
+  desc:
+    '"8 languages" sits in the support grid as a bare number. This makes it the artwork: one real ' +
+    'question \u2014 will I keep my number \u2014 set large and cycling through all eight, with the ' +
+    'English gloss underneath and the eight chips lighting in turn. No illustration, no card, no ' +
+    'metric; the type carries it. For a company selling to people who are abroad, the language you ' +
+    'can complain in matters more than a response time.',
+  pros: ['Turns a listed number into something a reader feels',
+    'Non-Latin scripts make the claim instantly credible',
+    'Cheapest option here to keep accurate as the language list grows'],
+  cons: ['Proves nothing about speed or competence',
+    'Needs a native check on all eight strings before it ships',
+    'Eight cycles is a long loop to watch through'],
+  scores: { story: 4, motion: 2, perf: 5, mobile: 4, brand: 5, ease: 4 },
+  build: () => {
+    const qs = [
+      ['English', 'Will I keep my number?'],
+      ['Espa\u00F1ol', '\u00BFConservo mi n\u00FAmero?'],
+      ['Portugu\u00EAs', 'Mantenho o meu n\u00FAmero?'],
+      ['Fran\u00E7ais', 'Je garde mon num\u00E9ro ?'],
+      ['Deutsch', 'Behalte ich meine Nummer?'],
+      ['\u65E5\u672C\u8A9E', '\u756A\u53F7\u306F\u305D\u306E\u307E\u307E\uFF1F'],
+      ['\u4E2D\u6587', '\u53F7\u7801\u4F1A\u4FDD\u7559\u5417\uFF1F'],
+      ['T\u00FCrk\u00E7e', 'Numaram\u0131 koruyor muyum?'],
+    ];
+    const dur = 16, each = dur / qs.length;
+    return {
+      pills: noPills,
+      svg: wC(`
+        ${bg(CW, CH, OR)}
+        ${lab(40, 38, 'ASK IN WHICHEVER ONE IS EASIEST', GRAY, { size: 9 })}
+        ${rect(32, 54, 512, 150, { fill: WHITE, stroke: LINE, r: 16 })}
+        ${qs.map(([lg, q], i) => {
+          const on = ((i * each) / dur).toFixed(4);
+          const off = ((i * each + each * 0.92) / dur).toFixed(4);
+          return `<g opacity="0">
+            <animate attributeName="opacity" values="0;0;1;1;0;0"
+              keyTimes="0;${on};${(+on + 0.012).toFixed(4)};${(+off - 0.012).toFixed(4)};${off};1"
+              dur="${dur}s" repeatCount="indefinite"/>
+            ${t(56, 136, q, { size: 24, w: 700 })}
+            ${lab(522, 96, lg, OR, { size: 9, a: 'end' })}
+          </g>`;
+        }).join('')}
+        ${t(56, 170, '\u201CWill I keep my number?\u201D', { size: 12.5, fill: MUT })}
+        ${lab(56, 192, 'ANSWERED IN THE LANGUAGE IT WAS ASKED IN', GRAY, { size: 8 })}
+        ${qs.map(([lg], i) => {
+          const col = i % 4, row = (i / 4) | 0;
+          const x = 32 + col * 131, y = 228 + row * 52;
+          const on = ((i * each) / dur).toFixed(4);
+          const off = ((i * each + each * 0.92) / dur).toFixed(4);
+          return `${rect(x, y, 119, 44, { fill: WHITE, stroke: LINE, r: 10 })}
+            <rect x="${x}" y="${y}" width="119" height="44" rx="10" fill="${ORW}" stroke="${OR}"
+              stroke-width="1.5" opacity="0">
+              <animate attributeName="opacity" values="0;0;1;1;0;0"
+                keyTimes="0;${on};${(+on + 0.008).toFixed(4)};${off};${(+off + 0.004).toFixed(4)};1"
+                dur="${dur}s" repeatCount="indefinite"/></rect>
+            ${t(x + 59.5, y + 27, lg, { size: 12.5, w: 600, a: 'middle' })}`;
+        }).join('')}
+        ${rect(32, 340, 512, 44, { fill: '#F9FAFB', r: 12 })}
+        ${t(54, 368, '8 languages \u00B7 500+ help articles \u00B7 one chat window', { size: 12.5, fill: MUT })}
+        ${lab(32, 410, 'THE PAGE STATES EIGHT LANGUAGES AND SHOWS ONE', GRAY, { size: 8.5 })}`),
+    };
+  },
+};
+
+/* C13 ── Peak Hours */
+export const peakHours = {
+  id: 'ct-peak',
+  name: 'Peak Hours',
+  family: 'Data',
+  tagline: 'Every hour of yesterday, and what it cost you',
+  desc:
+    'The support grid claims 24/7 and then admits "peak hours: 9 AM \u2013 9 PM EST" further down ' +
+    'the page, which reads as a get-out. This shows both honestly: a bar per hour of yesterday, the ' +
+    'peak window marked, and the median time to a first reply for each quarter of the day \u2014 41 ' +
+    'seconds in the afternoon, two minutes eighteen overnight. It is the only dark option on this ' +
+    'board, and the only one that publishes its worst case.',
+  pros: ['Reconciles 24/7 with the peak-hours caveat instead of hiding it',
+    'Naming the slowest reply of the day buys trust for the fast ones',
+    'Dark treatment sets it apart from every other option here'],
+  cons: ['Publishes the fact that nights are slower',
+    'A dark block on a white page needs the page around it to allow it',
+    'Needs real per-hour data, refreshed'],
+  scores: { story: 4, motion: 4, perf: 5, mobile: 3, brand: 3, ease: 3 },
+  build: () => {
+    const hrs = [0.22, 0.16, 0.13, 0.11, 0.12, 0.16, 0.24, 0.38, 0.52, 0.72, 0.86, 0.94,
+      0.90, 0.88, 0.92, 0.97, 1.00, 0.92, 0.84, 0.76, 0.64, 0.52, 0.38, 0.28];
+    const dur = 12, base = 286, maxH = 168;
+    return {
+      pills: noPills,
+      svg: wC(`
+        <rect width="${CW}" height="${CH}" fill="#0D1117"/>
+        <circle cx="${CW - 70}" cy="60" r="150" fill="${OR}" opacity="0.08"/>
+        ${lab(40, 40, 'EVERY HOUR YESTERDAY', WHITE, { size: 9, op: 0.5 })}
+        ${t(40, 70, 'Someone answered in all 24', { size: 18, w: 700, fill: WHITE })}
+        ${rect(225, 100, 260, 200, { fill: 'rgba(255,255,255,0.05)', r: 8 })}
+        ${lab(233, 118, 'PEAK \u00B7 9 AM \u2013 9 PM EST', WHITE, { size: 8, op: 0.45 })}
+        ${hrs.map((v, i) => {
+          const x = 48 + i * 20, h = (maxH * v).toFixed(1), y = (base - maxH * v).toFixed(1);
+          const on = (i / hrs.length).toFixed(4);
+          return `<rect x="${x}" y="${y}" width="14" height="${h}" rx="3" fill="rgba(255,255,255,0.14)"/>
+            <rect x="${x}" y="${y}" width="14" height="${h}" rx="3" fill="${OR}" opacity="0">
+              <animate attributeName="opacity" values="0;0;0.95;0.95;0;0"
+                keyTimes="0;${on};${(+on + 0.006).toFixed(4)};${(+on + 0.024).toFixed(4)};${(+on + 0.03).toFixed(4)};1"
+                dur="${dur}s" repeatCount="indefinite"/></rect>`;
+        }).join('')}
+        <line x1="48" y1="${base + 4}" x2="${CW - 48}" y2="${base + 4}"
+          stroke="rgba(255,255,255,0.16)" stroke-width="1.5"/>
+        ${[[0, '00'], [6, '06'], [12, '12'], [18, '18'], [23, '23']].map(([h, s]) =>
+          lab(48 + h * 20 + 7, base + 20, s, WHITE, { size: 8, a: 'middle', op: 0.4 })).join('')}
+        ${lab(48, 336, 'MEDIAN TIME TO FIRST REPLY', WHITE, { size: 8.5, op: 0.45 })}
+        ${cycle(CW - 48, 344, ['00\u201306 \u00B7 2M 18S', '06\u201312 \u00B7 1M 04S',
+          '12\u201318 \u00B7 41S', '18\u201324 \u00B7 52S'], { fill: WHITE, size: 16, a: 'end', dur })}
+        ${lab(48, 374, 'SLOWEST YESTERDAY: 4M 11S AT 03:40 \u00B7 STILL ANSWERED', WHITE, { size: 8.5, op: 0.4 })}
+        ${lab(48, 400, 'THE NIGHT IS SLOWER. IT IS NOT CLOSED.', OR, { size: 9 })}`),
+    };
+  },
+};
+
+/* C14 ── Out Of Scope */
+export const cannotFix = {
+  id: 'ct-limits',
+  name: 'Out Of Scope',
+  family: 'Limits',
+  tagline: 'The four problems support cannot solve',
+  desc:
+    'Every support page lists what it can do. This lists what it cannot \u2014 a carrier-locked ' +
+    'handset, a national network outage, data you have already spent, a QR code that has been ' +
+    'scanned \u2014 and beside each one, exactly what happens instead: a full refund, a switch to ' +
+    'another network, an honest breakdown, a free reissue. Naming the limits is the strongest ' +
+    'possible way of saying the rest is true.',
+  pros: ['Nothing else in the category does this, so it is memorable',
+    'Pre-empts the four complaints support actually receives',
+    'Every line is a commitment the company can keep'],
+  cons: ['A list of negatives on a hero needs nerve to sign off',
+    'Each promised remedy becomes a policy',
+    'No motion worth watching twice'],
+  scores: { story: 5, motion: 2, perf: 5, mobile: 5, brand: 5, ease: 4 },
+  build: () => {
+    const rows = [
+      ['A phone that is carrier-locked', 'We say so in the first reply and refund in full'],
+      ['A network outage where you are', 'We switch you to another network we carry, and name the one that failed'],
+      ['Data you have already used', 'We cannot re-credit it \u2014 we can show you what spent it'],
+      ['A QR code that has been scanned', 'We reissue the profile once, free'],
+    ];
+    const dur = 12;
+    return {
+      pills: noPills,
+      svg: wC(`
+        ${bg(CW, CH, OR)}
+        ${lab(40, 44, 'FOUR THINGS SUPPORT CANNOT FIX', GRAY, { size: 9 })}
+        ${rows.map(([no, yes], i) => {
+          const y = 62 + i * 74;
+          const on = (0.05 + i * 0.13).toFixed(3);
+          return `<g opacity="0">
+            <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on};${(+on + 0.05).toFixed(3)};1"
+              dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+            ${rect(36, y, 504, 64, { fill: WHITE, stroke: LINE, r: 12 })}
+            <circle cx="66" cy="${y + 32}" r="13" fill="#F3F4F6"/>
+            <path d="M 61 ${y + 27} l 10 10 M 71 ${y + 27} l -10 10" stroke="${MUT}" stroke-width="2"
+              stroke-linecap="round"/>
+            ${t(96, y + 27, no, { size: 13.5, w: 700 })}
+            <g opacity="0">
+              <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${(+on + 0.06).toFixed(3)};${(+on + 0.1).toFixed(3)};1"
+                dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+              ${tick(96, y + 44, GR, 0.8)}
+              ${t(114, y + 49, yes, { size: 10.5, fill: MUT })}
+            </g>
+          </g>`;
+        }).join('')}
+        ${lab(36, 384, 'AND WHAT HAPPENS INSTEAD, EVERY TIME', GRAY, { size: 8.5 })}
+        ${lab(36, 410, 'A PAGE THAT NAMES ITS LIMITS IS THE ONE WORTH BELIEVING', GRAY, { size: 8, op: 0.75 })}`),
+    };
+  },
+};
+
+/* C15 ── In Your Pocket */
+export const inYourPocket = {
+  id: 'ct-pocket',
+  name: 'In Your Pocket',
+  family: 'Product demo',
+  tagline: 'The widget, on the phone, at 02:40 local',
+  desc:
+    'The page describes the chat widget in the bottom-right corner of every page and then never ' +
+    'shows it. This does: a phone at 02:40 in Osaka, the orange chat icon pulsing, the widget ' +
+    'opening, and the answer arriving \u2014 turn on data roaming, Settings then Mobile Data. The ' +
+    'note beside it explains why anyone is awake: it is 13:40 in Lisbon. Support seen from the ' +
+    'traveller\u2019s side rather than the company\u2019s.',
+  pros: ['Shows the actual interface a reader will use, in the place they will use it',
+    'Explains 24/7 from the customer\u2019s time zone, not the org chart',
+    'The answer it gives is the real fix from the installation guide'],
+  cons: ['Phone chrome plus widget chrome is a lot of detail at 390px',
+    'Only demonstrates one question',
+    'The widget mock has to track whatever Zendesk actually renders'],
+  scores: { story: 4, motion: 4, perf: 4, mobile: 3, brand: 4, ease: 3 },
+  build: () => {
+    const dur = 12;
+    return {
+      pills: noPills,
+      svg: wC(`
+        ${bg(CW, CH, OR)}
+        ${rect(52, 46, 176, 316, { fill: INK, r: 26 })}
+        ${rect(60, 54, 160, 300, { fill: WHITE, r: 20 })}
+        ${rect(120, 60, 40, 5, { fill: INK, r: 2.5 })}
+        ${lab(74, 84, '02:40', MUT, { size: 8 })}
+        ${lab(206, 84, 'OSAKA', MUT, { size: 8, a: 'end' })}
+        ${rect(74, 96, 132, 10, { fill: '#F3F4F6', r: 5 })}
+        ${rect(74, 114, 100, 8, { fill: '#F3F4F6', r: 4 })}
+        ${rect(74, 130, 118, 8, { fill: '#F3F4F6', r: 4 })}
+        <g opacity="1">
+          <animate attributeName="opacity" values="1;1;0;0;1" keyTimes="0;0.28;0.34;0.94;1"
+            dur="${dur}s" repeatCount="indefinite"/>
+          ${rect(74, 152, 132, 8, { fill: '#F3F4F6', r: 4 })}
+          ${rect(74, 168, 112, 8, { fill: '#F3F4F6', r: 4 })}
+          <circle cx="188" cy="320" r="26" fill="${OR}" opacity="0.18">
+            <animate attributeName="r" values="18;30;18" keyTimes="0;0.5;1" dur="2.4s"
+              repeatCount="indefinite"/>
+          </circle>
+          <circle cx="188" cy="320" r="18" fill="${OR}"/>
+          ${rect(180, 314, 16, 11, { fill: WHITE, r: 3 })}
+          ${lab(74, 324, 'EVERY PAGE, BOTTOM RIGHT', MUT, { size: 7 })}
+        </g>
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.3;0.36;0.94;1"
+            dur="${dur}s" repeatCount="indefinite"/>
+          ${rect(68, 158, 144, 188, { fill: WHITE, stroke: LINE, r: 14 })}
+          ${rect(68, 158, 144, 30, { fill: ORW, r: 14 })}
+          ${rect(68, 174, 144, 14, { fill: ORW, r: 0 })}
+          ${lab(82, 178, 'OPENLINE SUPPORT', OR, { size: 7 })}
+          ${rect(84, 198, 112, 34, { fill: OR, r: 10 })}
+          ${t(94, 212, 'No service since I', { size: 9, fill: WHITE })}
+          ${t(94, 224, 'landed in Osaka', { size: 9, fill: WHITE })}
+          <g opacity="0">
+            <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.52;0.6;1" dur="${dur}s"
+              repeatCount="indefinite" fill="freeze"/>
+            ${rect(84, 242, 112, 58, { fill: '#F3F4F6', r: 10 })}
+            ${t(94, 258, 'Data roaming is off.', { size: 9, fill: INK })}
+            ${t(94, 270, 'Settings \u203A Mobile Data', { size: 9, fill: INK })}
+            ${t(94, 282, '\u203A Openline \u203A Roaming on.', { size: 9, fill: INK })}
+            ${rect(84, 308, 112, 20, { fill: GRW, r: 10 })}
+            ${lab(94, 321, 'MEI \u00B7 02:41 LOCAL', GREEN_TEXT, { size: 7 })}
+          </g>
+        </g>
+        ${lab(256, 66, 'THE WIDGET THE PAGE DESCRIBES', GRAY, { size: 8.5 })}
+        ${[['Tap the chat icon', 'Bottom right, on every page'],
+           ['Ask in your own words', 'Or search the 500+ help articles'],
+           ['Get the actual fix', 'Not a ticket number, the setting']].map(([h, s], i) => {
+          const y = 96 + i * 54;
+          const on = (0.1 + i * 0.16).toFixed(3);
+          return `<g>
+            ${t(280, y + 14, h, { size: 13.5, w: 700 })}
+            ${t(280, y + 34, s, { size: 10.5, fill: MUT })}
+            <g opacity="0">
+              <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on};${(+on + 0.05).toFixed(3)};1"
+                dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+              ${tick(258, y + 9, GR, 0.9)}
+            </g>
+          </g>`;
+        }).join('')}
+        ${rect(256, 264, 288, 84, { fill: '#F9FAFB', r: 12 })}
+        ${t(276, 294, 'It is 02:40 in Osaka.', { size: 13.5, w: 700 })}
+        ${t(276, 316, 'It is 13:40 in Lisbon,', { size: 12, fill: MUT })}
+        ${t(276, 332, 'where Mei is.', { size: 12, fill: MUT })}
+        ${lab(36, 400, '24/7 MEANS THE WIDGET IS AWAKE WHEN YOU ARE', GRAY, { size: 8.5 })}`),
+    };
+  },
+};
+
 export const CONTACT_VARIANTS = [
   contactCurrent, underTwo, threeAgents, noQueue, followSunC, oneReply,
   askAnything, ninetyEight, beforeYouAsk, transcript, twoDoors,
+  botOrHuman, eightLanguages, peakHours, cannotFix, inYourPocket,
 ];
 
 /* ════════════════════════════════════════════════════════════════════════
@@ -1175,9 +1512,365 @@ export const theDashboard = {
   },
 };
 
+/* A11 ── Realistically */
+export const realistically = {
+  id: 'af-realistic',
+  name: 'Realistically',
+  family: 'Arithmetic',
+  tagline: 'The FAQ question, answered on the hero',
+  desc:
+    'The page\u2019s own FAQ asks "how much can I realistically earn?" and the hero answers it with ' +
+    'somebody else\u2019s $3,247. This answers it properly, one factor at a time: 12,000 ' +
+    'subscribers, 1.4% click the link, 4.96% of those buy, the average plan is $23, the starter rate ' +
+    'is 30% \u2014 $55 a month. The number is small on purpose. Every input is visible, so a reader ' +
+    'can substitute their own and trust the result.',
+  pros: ['Answers the question the page asks itself and never addresses',
+    'A small number with visible working is more persuasive to experienced affiliates than a large one',
+    'Uses the 4.96% rate the page already publishes'],
+  cons: ['$55 a month may put off the audience the page is chasing',
+    'Five rows of arithmetic is a lot of reading for a hero',
+    'Every assumption is now a number someone can argue with'],
+  scores: { story: 5, motion: 3, perf: 5, mobile: 4, brand: 4, ease: 4 },
+  build: () => {
+    const rows = [
+      ['YOUR AUDIENCE', 'the list or channel you already have', '12,000'],
+      ['\u00D7 1.4% CLICK', 'a normal rate for a recommendation', '168 clicks'],
+      ['\u00D7 4.96% BUY', 'the conversion rate this page publishes', '8 sales'],
+      ['\u00D7 $23 AVERAGE PLAN', 'across the plans travellers pick', '$184 sold'],
+      ['\u00D7 30% COMMISSION', 'the starter tier, not the top one', '$55.20'],
+    ];
+    const dur = 11;
+    return {
+      pills: noPills,
+      svg: wA(`
+        ${bg(AW, AH, GR)}
+        ${lab(46, 40, 'HOW MUCH CAN I REALISTICALLY EARN?', GRAY, { size: 9 })}
+        ${rows.map(([k, s, v], i) => {
+          const y = 54 + i * 58;
+          const on = (0.06 + i * 0.13).toFixed(3);
+          const last = i === rows.length - 1;
+          return `<g>
+            ${rect(44, y, 504, 48, { fill: WHITE, stroke: LINE, r: 10 })}
+            ${lab(66, y + 20, k, last ? GREEN_TEXT : GRAY, { size: 8.5 })}
+            ${t(66, y + 37, s, { size: 11, fill: MUT })}
+            <g opacity="0">
+              <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on};${(+on + 0.05).toFixed(3)};1"
+                dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+              ${t(526, y + 31, v, { m: true, size: last ? 18 : 15, w: 700, a: 'end',
+                fill: last ? GREEN_TEXT : INK })}
+            </g>
+          </g>`;
+        }).join('')}
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.72;0.8;1" dur="${dur}s"
+            repeatCount="indefinite" fill="freeze"/>
+          ${rect(44, 348, 504, 58, { fill: GRW, r: 12 })}
+          ${lab(68, 372, 'A MONTH, AT THE STARTER RATE', GREEN_TEXT, { size: 8.5 })}
+          ${t(526, 394, '$55', { m: true, size: 26, w: 700, a: 'end', fill: GREEN_TEXT })}
+          ${t(68, 394, '$74 once you are on the 40% tier', { size: 11.5, fill: MUT })}
+        </g>
+        ${lab(46, 422, 'CONSERVATIVE INPUTS \u00B7 CHANGE ANY ONE AND THE ANSWER CHANGES', GRAY, { size: 8 })}`),
+    };
+  },
+};
+
+/* A12 ── The Receipts */
+export const whereItCame = {
+  id: 'af-source',
+  name: 'The Receipts',
+  family: 'Provenance',
+  tagline: 'The same $3,247, with its receipts',
+  desc:
+    'The live card states a total and nothing about its origin, which is exactly why it reads as ' +
+    'decoration. This keeps the figure and traces it to the three pieces of content that produced ' +
+    'it: a video description, one newsletter issue and a single Reddit reply, with the sales and ' +
+    'money each returned. The two notifications already on the live card \u2014 +$18.40 and +$24.90 ' +
+    '\u2014 land on the rows they belong to as you watch.',
+  pros: ['Fixes the exact complaint about the current card without changing the headline number',
+    'Shows an affiliate what kind of content actually earns, which is the useful part',
+    'The three rows sum to the stated total, so the card survives a calculator'],
+  cons: ['Invents a plausible content mix that marketing must be willing to stand behind',
+    'Still somebody else\u2019s total',
+    'Row three earns little, which slightly undercuts the pitch'],
+  scores: { story: 5, motion: 4, perf: 5, mobile: 4, brand: 4, ease: 4 },
+  build: () => {
+    const src = [
+      ['Video description', '\u201CBest eSIM for Japan\u201D \u00B7 84k views', '21 SALES', '$1,842', 0.567, '+$24.90'],
+      ['Newsletter, issue 46', 'Sent to 9,400 readers', '14 SALES', '$968', 0.298, '+$18.40'],
+      ['One Reddit reply', 'r/JapanTravel \u00B7 posted once', '7 SALES', '$437', 0.135, ''],
+    ];
+    const dur = 12;
+    return {
+      pills: noPills,
+      svg: wA(`
+        ${bg(AW, AH, GR)}
+        ${lab(46, 40, 'WHERE THE $3,247 CAME FROM', GRAY, { size: 9 })}
+        ${src.map(([nm, sub, sales, amt, share, note], i) => {
+          const y = 54 + i * 92;
+          const on = (0.06 + i * 0.12).toFixed(3);
+          const bw = (300 * share).toFixed(0);
+          return `<g opacity="0">
+            <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on};${(+on + 0.05).toFixed(3)};1"
+              dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+            ${rect(44, y, 504, 80, { fill: WHITE, stroke: LINE, r: 12 })}
+            ${rect(66, y + 20, 40, 40, { fill: GRW, r: 10 })}
+            ${i === 0
+              ? `<path d="M 80 ${y + 31} L 96 ${y + 40} L 80 ${y + 49} Z" fill="${GR}"/>`
+              : i === 1
+                ? `<rect x="76" y="${y + 31}" width="24" height="18" rx="3" fill="none" stroke="${GR}" stroke-width="2"/>
+                   <path d="M 76 ${y + 33} L 88 ${y + 42} L 100 ${y + 33}" fill="none" stroke="${GR}" stroke-width="2"/>`
+                : `<path d="M 76 ${y + 30} h 24 v 14 h -14 l -10 8 z" fill="none" stroke="${GR}" stroke-width="2"/>`}
+            ${t(122, y + 32, nm, { size: 14, w: 700 })}
+            ${lab(122, y + 50, sub, MUT, { size: 8 })}
+            ${rect(122, y + 60, 300, 8, { fill: '#F3F4F6', r: 4 })}
+            <rect x="122" y="${y + 60}" width="0" height="8" rx="4" fill="${GR}" opacity="0.75">
+              <animate attributeName="width" values="0;${bw};${bw}"
+                keyTimes="0;${(+on + 0.16).toFixed(3)};1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+            </rect>
+            ${t(526, y + 34, amt, { m: true, size: 17, w: 700, a: 'end', fill: GREEN_TEXT })}
+            ${lab(526, y + 54, sales, GRAY, { size: 8, a: 'end' })}
+            ${note ? `<g opacity="0">
+              <animate attributeName="opacity" values="0;0;1;1;1" keyTimes="0;${(0.5 + i * 0.14).toFixed(3)};${(0.56 + i * 0.14).toFixed(3)};0.98;1"
+                dur="${dur}s" repeatCount="indefinite"/>
+              ${rect(440, y + 58, 84, 20, { fill: GRW, r: 10 })}
+              ${lab(482, y + 72, note + ' JUST NOW', GREEN_TEXT, { size: 6.5, a: 'middle' })}
+            </g>` : ''}
+          </g>`;
+        }).join('')}
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.74;0.82;1" dur="${dur}s"
+            repeatCount="indefinite" fill="freeze"/>
+          ${rect(44, 332, 504, 58, { fill: GRW, r: 12 })}
+          ${lab(68, 356, 'THREE PIECES OF CONTENT \u00B7 42 SALES', GREEN_TEXT, { size: 8.5 })}
+          ${t(526, 378, '$3,247', { m: true, size: 26, w: 700, a: 'end', fill: GREEN_TEXT })}
+          ${t(68, 378, 'the same figure, with a source per line', { size: 11.5, fill: MUT })}
+        </g>
+        ${lab(46, 412, 'THE CURRENT CARD SHOWS THE TOTAL AND HIDES THE WORK', GRAY, { size: 8 })}`),
+    };
+  },
+};
+
+/* A13 ── The Statement */
+export const theStatement = {
+  id: 'af-statement',
+  name: 'The Statement',
+  family: 'Paperwork',
+  tagline: 'Five lines, one reversal, a total that foots',
+  desc:
+    'An earnings card asks to be believed; a remittance advice can be checked. Five September sales ' +
+    'print in turn with the plan, the price, the rate and the commission \u2014 then a refunded order ' +
+    'arrives as a negative line and takes $6.80 back out. The net is $40.20, paid on 1 October by ' +
+    'PayPal, with a reference. Showing the clawback is what makes the column trustworthy.',
+  pros: ['Arithmetic a reader can verify in their head, including the subtraction',
+    'The reversal answers the unspoken "what happens on a refund?"',
+    'Reads as a real back office rather than a marketing dashboard'],
+  cons: ['Least exciting thing that could occupy a hero',
+    'Small monospace columns are hard work below 400px wide',
+    'Admits up front that some commission gets taken back'],
+  scores: { story: 4, motion: 3, perf: 5, mobile: 2, brand: 4, ease: 4 },
+  build: () => {
+    const lines = [
+      ['03 SEP', '20 GB \u00B7 Japan', '$37.00', '40%', '$14.80', 0],
+      ['09 SEP', '5 GB \u00B7 Europe', '$17.00', '40%', '$6.80', 0],
+      ['14 SEP', 'Unlimited \u00B7 30 days', '$59.00', '40%', '$23.60', 0],
+      ['21 SEP', '1 GB \u00B7 7 days', '$4.50', '40%', '$1.80', 0],
+      ['24 SEP', '5 GB \u00B7 order refunded', '\u2212$17.00', '40%', '\u2212$6.80', 1],
+    ];
+    const dur = 12;
+    return {
+      pills: noPills,
+      svg: wA(`
+        ${bg(AW, AH, GR)}
+        ${lab(46, 38, 'REMITTANCE ADVICE \u00B7 SEPTEMBER', GRAY, { size: 9 })}
+        ${rect(44, 50, 504, 300, { fill: WHITE, stroke: LINE, r: 12 })}
+        ${lab(66, 80, 'DATE', GRAY, { size: 7.5 })}
+        ${lab(136, 80, 'WHAT SOLD', GRAY, { size: 7.5 })}
+        ${lab(392, 80, 'PRICE', GRAY, { size: 7.5, a: 'end' })}
+        ${lab(446, 80, 'RATE', GRAY, { size: 7.5, a: 'end' })}
+        ${lab(526, 80, 'YOURS', GRAY, { size: 7.5, a: 'end' })}
+        <line x1="66" y1="90" x2="526" y2="90" stroke="${LINE}" stroke-width="1.5"/>
+        ${lines.map(([d, what, px, rt, amt, neg], i) => {
+          const y = 116 + i * 38;
+          const on = (0.05 + i * 0.11).toFixed(3);
+          return `<g opacity="0">
+            <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on};${(+on + 0.04).toFixed(3)};1"
+              dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+            ${lab(66, y, d, GRAY, { size: 8.5 })}
+            ${t(136, y, what, { size: 12.5, fill: neg ? MUT : INK })}
+            ${t(392, y, px, { m: true, size: 11.5, a: 'end', fill: neg ? RED : MUT })}
+            ${t(446, y, rt, { m: true, size: 11.5, a: 'end', fill: MUT })}
+            ${t(526, y, amt, { m: true, size: 13.5, w: 700, a: 'end', fill: neg ? RED : INK })}
+          </g>`;
+        }).join('')}
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.6;0.66;1" dur="${dur}s"
+            repeatCount="indefinite" fill="freeze"/>
+          ${lab(136, 322, 'REFUNDED 28 SEP \u2014 COMMISSION REVERSED IN FULL', RED, { size: 7.5 })}
+        </g>
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.78;0.86;1" dur="${dur}s"
+            repeatCount="indefinite" fill="freeze"/>
+          ${rect(44, 362, 504, 46, { fill: GRW, r: 12 })}
+          ${lab(68, 390, 'NET DUE \u00B7 PAID 1 OCTOBER \u00B7 PAYPAL', GREEN_TEXT, { size: 8.5 })}
+          ${t(526, 394, '$40.20', { m: true, size: 22, w: 700, a: 'end', fill: GREEN_TEXT })}
+        </g>
+        ${lab(46, 424, 'REFERENCE OL-PAY-7C02BE \u00B7 ONE REVERSAL INCLUDED \u00B7 THE COLUMN STILL ADDS UP',
+          GRAY, { size: 7.5 })}`),
+    };
+  },
+};
+
+/* A14 ── The Terms */
+export const theTerms = {
+  id: 'af-terms',
+  name: 'The Terms',
+  family: 'Terms',
+  tagline: 'Both columns, including the one nobody prints',
+  desc:
+    'The whole deal on one card. On the left, what is paid: 30% rising to 40%, the three tiers the ' +
+    'page names, the 90-day cookie, the 1st of the month by PayPal, bank or crypto, and no fee or ' +
+    'minimum audience. On the right, what is not paid: your own orders, refunded orders, coupon-site ' +
+    'traffic and paid search on the brand name. Every programme has the right-hand column; almost ' +
+    'none publish it, and publishing it is the credibility play.',
+  pros: ['One card answers everything a serious affiliate asks before applying',
+    'Publishing the exclusions removes the suspicion that they are hidden',
+    'Nothing invented \u2014 every left-hand line is already stated somewhere on the page'],
+  cons: ['Dense; it is a document, not a picture',
+    'Legal will want to review every line, which slows it down',
+    'The exclusions are the first thing a hostile reader will screenshot'],
+  scores: { story: 4, motion: 2, perf: 5, mobile: 3, brand: 4, ease: 5 },
+  build: () => {
+    const yes = [
+      '30% of the plan price, rising to 40%',
+      'Tiers at 0\u201310, 11\u201350 and 50+ sales a month',
+      '90-day cookie from the first click',
+      'Paid on the 1st \u2014 PayPal, bank or crypto',
+      'No fee, no minimum audience, no exclusivity',
+    ];
+    const no = [
+      'Orders you place yourself',
+      'Orders refunded before they settle',
+      'Coupon-site traffic you did not send',
+      'Paid search on the word Openline',
+    ];
+    const dur = 11;
+    return {
+      pills: noPills,
+      svg: wA(`
+        ${bg(AW, AH, GR)}
+        ${lab(46, 38, 'THE WHOLE DEAL, BOTH COLUMNS', GRAY, { size: 9 })}
+        ${rect(44, 50, 248, 306, { fill: WHITE, stroke: GR, r: 14 })}
+        ${rect(44, 50, 248, 46, { fill: GRW, r: 14 })}
+        ${rect(44, 78, 248, 18, { fill: GRW, r: 0 })}
+        ${lab(66, 80, 'WHAT YOU ARE PAID', GREEN_TEXT, { size: 8.5 })}
+        ${yes.map((s, i) => {
+          const y = 122 + i * 46;
+          const on = (0.05 + i * 0.08).toFixed(3);
+          const wrap = s.length > 30 ? [s.slice(0, s.lastIndexOf(' ', 30)), s.slice(s.lastIndexOf(' ', 30) + 1)] : [s];
+          return `<g opacity="0">
+            <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on};${(+on + 0.04).toFixed(3)};1"
+              dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+            ${tick(66, y - 4, GR, 0.9)}
+            ${wrap.map((ln, j) => t(88, y + j * 15, ln, { size: 11.5, fill: INK })).join('')}
+          </g>`;
+        }).join('')}
+        ${rect(304, 50, 244, 306, { fill: WHITE, stroke: LINE, r: 14 })}
+        ${rect(304, 50, 244, 46, { fill: '#F9FAFB', r: 14 })}
+        ${rect(304, 78, 244, 18, { fill: '#F9FAFB', r: 0 })}
+        ${lab(326, 80, 'WHAT YOU ARE NOT PAID FOR', GRAY, { size: 8.5 })}
+        ${no.map((s, i) => {
+          const y = 122 + i * 46;
+          const on = (0.4 + i * 0.08).toFixed(3);
+          const wrap = s.length > 28 ? [s.slice(0, s.lastIndexOf(' ', 28)), s.slice(s.lastIndexOf(' ', 28) + 1)] : [s];
+          return `<g opacity="0">
+            <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on};${(+on + 0.04).toFixed(3)};1"
+              dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+            <path d="M 326 ${y - 8} l 9 9 M 335 ${y - 8} l -9 9" stroke="${MUT}" stroke-width="2"
+              stroke-linecap="round"/>
+            ${wrap.map((ln, j) => t(348, y + j * 15, ln, { size: 11.5, fill: MUT })).join('')}
+          </g>`;
+        }).join('')}
+        ${rect(304, 300, 244, 42, { fill: '#F9FAFB', r: 10 })}
+        ${lab(326, 318, 'CURRENT TIER', GRAY, { size: 7.5 })}
+        ${cycle(526, 330, ['STARTER \u00B7 0\u201310 SALES', 'GROWTH \u00B7 11\u201350 SALES',
+          'PRO \u00B7 50+ SALES'], { fill: GREEN_TEXT, size: 12, a: 'end', dur })}
+        ${rect(44, 372, 504, 36, { fill: GRW, r: 10 })}
+        ${t(296, 395, 'Nothing here is buried in a PDF', { size: 12.5, w: 600, a: 'middle', fill: GREEN_TEXT })}
+        ${lab(46, 424, 'EVERY PROGRAMME HAS A RIGHT-HAND COLUMN \u2014 MOST DO NOT PRINT IT', GRAY, { size: 8 })}`),
+    };
+  },
+};
+
+/* A15 ── First Sale */
+export const firstSale = {
+  id: 'af-first',
+  name: 'First Sale',
+  family: 'One sale',
+  tagline: 'One event, followed end to end',
+  desc:
+    'The opposite of a $3,247 total: a single sale, large enough to read across the room. Someone in ' +
+    'Seoul who clicked your link six days ago buys a 5 GB Japan plan at 21:14; $6.80 counts up beside ' +
+    'it; the line underneath tracks click, purchase and payout dates. The closing line does the ' +
+    'work \u2014 the big card is forty-two of these. Dark, so it does not look like another dashboard.',
+  pros: ['One number, one story, legible at any size',
+    'Nothing is aggregated, so there is nothing to doubt',
+    'The only dark option on this board, which makes it stand out in review'],
+  cons: ['$6.80 is a small number to lead a hero with',
+    'A dark block on a white-and-green page is a bigger design decision than it looks',
+    'Says nothing about rates, cookies or payouts on its own'],
+  scores: { story: 5, motion: 4, perf: 5, mobile: 5, brand: 3, ease: 4 },
+  build: (uid = 'a') => {
+    const dur = 10;
+    return {
+      pills: noPills,
+      svg: wA(`
+        <defs><radialGradient id="af1-${uid}" cx="50%" cy="50%" r="50%">
+          <stop offset="0" stop-color="${GR}" stop-opacity="0.30"/>
+          <stop offset="1" stop-color="${GR}" stop-opacity="0"/></radialGradient></defs>
+        <rect width="${AW}" height="${AH}" fill="#0B1512"/>
+        <circle cx="${AW / 2}" cy="180" r="220" fill="url(#af1-${uid})">
+          <animate attributeName="opacity" values="0.6;1;0.6" keyTimes="0;0.5;1" dur="6s"
+            repeatCount="indefinite"/>
+        </circle>
+        ${lab(46, 44, 'ONE SALE, IN FULL', WHITE, { size: 9, op: 0.45 })}
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;1;1" keyTimes="0;0.08;1" dur="${dur}s"
+            repeatCount="indefinite" fill="freeze"/>
+          ${rect(80, 96, 432, 152, { fill: WHITE, r: 18 })}
+          ${lab(104, 128, 'SALE \u00B7 21:14 LOCAL', GRAY, { size: 8.5 })}
+          ${t(104, 164, '5 GB \u00B7 Japan', { size: 19, w: 700 })}
+          ${t(104, 190, 'Bought in Seoul by a reader who clicked six days ago', { size: 11.5, fill: MUT })}
+          ${rect(104, 206, 148, 26, { fill: GRW, r: 13 })}
+          ${lab(118, 223, 'PLAN PRICE $17.00', GREEN_TEXT, { size: 8 })}
+          ${cycle(488, 176, ['$0.00', '$2.20', '$4.60', '$6.80'], { fill: GREEN_TEXT, size: 34, a: 'end', dur: dur * 0.5 })}
+          ${lab(488, 198, 'YOUR COMMISSION AT 40%', GRAY, { size: 8, a: 'end' })}
+        </g>
+        ${[['15 SEP', 'CLICKED'], ['21 SEP', 'BOUGHT'], ['1 OCT', 'PAID']].map(([d, s], i) => {
+          const x = 122 + i * 174;
+          const on = (0.3 + i * 0.14).toFixed(3);
+          return `<g opacity="0">
+            <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on};${(+on + 0.05).toFixed(3)};1"
+              dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+            <circle cx="${x}" cy="292" r="7" fill="${GR}"/>
+            ${lab(x, 322, d, WHITE, { size: 9, a: 'middle', op: 0.85 })}
+            ${lab(x, 340, s, WHITE, { size: 8, a: 'middle', op: 0.4 })}
+          </g>`;
+        }).join('')}
+        <line x1="122" y1="292" x2="470" y2="292" stroke="rgba(255,255,255,0.14)" stroke-width="2"/>
+        <circle r="4" fill="${WHITE}" opacity="0.8">
+          <animateMotion dur="${dur}s" repeatCount="indefinite" keyTimes="0;0.3;0.72;1"
+            keyPoints="0;0;1;1" calcMode="linear" path="M 122 292 L 470 292"/>
+        </circle>
+        ${t(46, 384, 'The $3,247 card is forty-two of these.', { size: 15, w: 600, fill: WHITE })}
+        ${lab(46, 408, 'WE WOULD RATHER SHOW YOU ONE YOU CAN FOLLOW', WHITE, { size: 8.5, op: 0.4 })}`),
+    };
+  },
+};
+
 export const AFFIL_VARIANTS = [
   affilCurrent, theLadder, ninetyDays, actuallyGet, oneLink, honestFunnel,
   payoutDay, threeSteps, theMonth, paidOnRenewals, theDashboard,
+  realistically, whereItCame, theStatement, theTerms, firstSale,
 ];
 
 export const CONTACT_BOX = { w: CW, h: CH };

@@ -805,4 +805,338 @@ export const aiTheCost = {
 };
 
 /* ── registry ── */
-export const AI_VARIANTS = [aiCurrent, aiTrace, aiBoard, aiNeural, aiRadar, aiTicker, aiWhyThisOne, aiBeforeYouNotice, aiLearns, aiOffSwitch, aiTheCost];
+
+/* ══ AI · 11–15 ═════════════════════════════════════════════════════ */
+
+export const aiSentence = {
+  id: 'ai-sentence',
+  name: 'The Sentence',
+  family: 'Typographic',
+  tagline: 'The section\u2019s own claim, with live numbers inside it',
+  desc:
+    'No illustration at all. The sentence the section already uses is set large, its three inputs \u2014 ' +
+    'signal strength, network congestion, wholesale pricing \u2014 pulled onto their own lines, and a ' +
+    'reading pinned to each one that changes every three seconds. The copy is the artwork; the numbers ' +
+    'are the only evidence that it is more than copy.',
+  pros: [
+    'The one option with no diagram to misread \u2014 it reads as fast as a headline',
+    'Puts the page\u2019s own three inputs in front of the reader with values attached',
+    'Cheapest possible build and perfectly sharp at any size',
+  ],
+  cons: [
+    'Three flipping numbers is the least motion of any option here',
+    'A wall of type next to a wall of type \u2014 the section already has a heading and four cards',
+  ],
+  scores: { story: 4, motion: 2, perf: 5, mobile: 5, brand: 4, ease: 5 },
+  build: (uid) => {
+    const dur = 9;
+    const flip = (k, n) => {
+      const on = k / n, off = (k + 1) / n;
+      const b = Math.min(on + 0.006, 1), d = Math.min(off + 0.006, 1);
+      return `<animate attributeName="opacity" values="0;0;1;1;0;0"
+        keyTimes="0;${on.toFixed(4)};${b.toFixed(4)};${off.toFixed(4)};${d.toFixed(4)};1"
+        dur="${dur}s" repeatCount="indefinite" calcMode="discrete"/>`;
+    };
+    const rows = [
+      ['signal strength', ['\u221271 dBm', '\u221268 dBm', '\u221274 dBm']],
+      ['network congestion', ['18% busy', '31% busy', '12% busy']],
+      ['wholesale pricing', ['\u20ac0.58/GB', '\u20ac0.61/GB', '\u20ac0.54/GB']],
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(300, 210, 240, uid)}
+    <circle cx="60" cy="50" r="5" fill="${P.main}">
+      <animate attributeName="opacity" values="1;0.25;1" dur="1.4s" repeatCount="indefinite"/>
+    </circle>
+    ${mono(76, 54, 'READING NOW', { size: 9.5, op: 0.42 })}
+    ${label(58, 108, 'Our model weighs', { size: 22, op: 0.78 })}
+    ${rows.map(([phrase, vals], i) => {
+      const y = 158 + i * 62;
+      const states = vals.map((v, k) => `<g opacity="0">${flip(k, vals.length)}
+        <text x="584" y="${y}" text-anchor="end" font-size="14" font-weight="700" fill="${P.deep}"
+          style="font-family:${MONO}">${v}</text></g>`).join('');
+      return `
+      <rect x="58" y="${y - 24}" width="4" height="32" rx="2" fill="${P.main}"/>
+      ${label(76, y, phrase, { size: 24, fill: P.deep })}
+      <line x1="76" y1="${y + 16}" x2="584" y2="${y + 16}" stroke="${LINE}" stroke-width="1.2"/>
+      ${states}`;
+    }).join('')}
+    ${label(58, 372, 'and connects you to the best', { size: 22, op: 0.78 })}
+    ${label(58, 404, 'Tier-1 network \u2014 every second.', { size: 22, op: 0.78 })}
+    ${mono(584, 404, 'NO ILLUSTRATION', { size: 9, anchor: 'end', op: 0.26 })}`;
+    return { svg: wrap(inner), pills: pAI('The claim, measured') };
+  },
+};
+
+export const aiOnScreen = {
+  id: 'ai-onscreen',
+  name: 'On Your Screen',
+  family: 'Product surface',
+  tagline: 'What the handset actually shows when it switches',
+  desc:
+    'The handset, at device scale, doing the thing the section describes: the status card reads ' +
+    '\u201cVodafone 5G\u201d, the ranked list of what else is reachable sits under it, and a toast drops \u2014 ' +
+    '\u201cSwitched to Orange \u00b7 41 ms\u201d \u2014 before the card follows. Beside it, three lines name what the user ' +
+    'has to do about any of it, which is nothing.',
+  pros: [
+    'Shows the product rather than a symbol for the product',
+    'The toast is the exact artefact a user would recognise from their own phone',
+    'Answers \u201cwill it interrupt me?\u201d in the same frame as \u201cdoes it switch?\u201d',
+  ],
+  cons: [
+    'Commits the app to a screen that must eventually exist in this form',
+    'A 196px-wide screen means the list rows are small on a phone',
+  ],
+  scores: { story: 4, motion: 4, perf: 5, mobile: 4, brand: 5, ease: 4 },
+  build: (uid) => {
+    const dur = 8;
+    const win = (a, b) => {
+      const b1 = Math.min(a + 0.01, 1), b2 = Math.min(b + 0.01, 1);
+      return `<animate attributeName="opacity" values="0;0;1;1;0;0"
+        keyTimes="0;${a.toFixed(4)};${b1.toFixed(4)};${b.toFixed(4)};${b2.toFixed(4)};1"
+        dur="${dur}s" repeatCount="indefinite" calcMode="discrete"/>`;
+    };
+    const list = [['Vodafone', '94'], ['Orange', '91'], ['T-Mobile', '78']];
+    const body = `
+      ${mono(22, 32, '09:41', { size: 9, op: 0.42 })}
+      <circle cx="148" cy="28" r="4" fill="${P.main}"/>
+      ${mono(160, 32, 'LIVE', { size: 8.5, op: 0.4 })}
+      ${card(16, 46, 164, 98, { r: 14, fill: P.wash, stroke: P.main, sw: 1.6 })}
+      ${mono(34, 74, 'CONNECTED VIA', { size: 8.5, op: 0.45 })}
+      <g opacity="0">${win(0, 0.5)}${label(34, 104, 'Vodafone 5G', { size: 17 })}</g>
+      <g opacity="0">${win(0.52, 1)}${label(34, 104, 'Orange 5G', { size: 17 })}</g>
+      ${bars(34, 130, 4, 4, { unit: 9, step: 5 })}
+      ${mono(34, 170, 'ALSO REACHABLE HERE', { size: 8.5, op: 0.4 })}
+      ${list.map(([nm, sc], i) => {
+        const y = 198 + i * 30;
+        return `
+        ${label(34, y, nm, { size: 12.5, op: 0.72 })}
+        ${mono(166, y, sc, { size: 11, anchor: 'end', op: 0.45 })}
+        <line x1="34" y1="${y + 10}" x2="166" y2="${y + 10}" stroke="${LINE}" stroke-width="1"/>`;
+      }).join('')}
+      <g opacity="0">${win(0, 0.5)}
+        <circle cx="24" cy="194" r="4.5" fill="${P.main}"/>
+      </g>
+      <g opacity="0">${win(0.52, 1)}
+        <circle cx="24" cy="224" r="4.5" fill="${P.main}"/>
+      </g>
+      <g opacity="0">${win(0.0, 0.2)}
+        <rect x="14" y="296" width="168" height="46" rx="12" fill="${INK}"/>
+        <text x="30" y="318" font-size="12" font-weight="700" fill="${WHITE}">Switched to Vodafone</text>
+        ${mono(30, 334, '38 ms \u00b7 NOTHING TO ACCEPT', { size: 7.5, fill: WHITE, op: 0.55 })}
+      </g>
+      <g opacity="0">${win(0.5, 0.72)}
+        <rect x="14" y="296" width="168" height="46" rx="12" fill="${INK}"/>
+        <text x="30" y="318" font-size="12" font-weight="700" fill="${WHITE}">Switched to Orange</text>
+        ${mono(30, 334, '41 ms \u00b7 NOTHING TO ACCEPT', { size: 7.5, fill: WHITE, op: 0.55 })}
+      </g>`;
+    const inner = `
+    ${dots(uid)}
+    ${bloom(210, 230, 230, uid)}
+    ${phoneLight({ x: 200, y: 236, w: 196, h: 372, body })}
+    ${mono(336, 148, 'WHAT THE USER SEES', { size: 9.5, op: 0.45 })}
+    ${label(336, 184, 'Almost nothing.', { size: 21 })}
+    ${tick(338, 224, 'The status line changes', { stroke: P.main, size: 12.5 })}
+    ${tick(338, 258, 'No prompt, no confirmation', { stroke: P.main, size: 12.5 })}
+    ${tick(338, 292, 'The call carries on', { stroke: P.main, size: 12.5 })}
+    ${card(336, 322, 248, 84, { r: 13, fill: P.wash, stroke: P.main, sw: 2 })}
+    ${mono(358, 352, 'SWITCHES TODAY', { size: 8.5, op: 0.5 })}
+    ${num(358, 386, '37, none noticed', { size: 15, fill: P.deep })}`;
+    return { svg: wrap(inner), pills: pAI('Seen from the phone') };
+  },
+};
+
+export const aiAcrossCity = {
+  id: 'ai-city',
+  name: 'Across The City',
+  family: 'Spatial',
+  tagline: 'Best here is not best four hundred metres later',
+  desc:
+    'A plan view: three overlapping coverage areas, one route crossing all of them, and a dot ' +
+    'travelling it. Where the areas overlap the carrier hands over and a chip names it \u2014 ' +
+    '\u201cVodafone \u2192 Orange \u00b7 41 ms\u201d. It makes the case that selection is a geographic problem, which is ' +
+    'the reason a static list of partners cannot answer it.',
+  pros: [
+    'The only option that says why the answer keeps changing: you moved',
+    'Overlapping coverage is a fact of the network, not a metaphor we invented',
+    'One continuous loop with no reset flash \u2014 the dot simply keeps going',
+  ],
+  cons: [
+    'Abstract circles are not a real map, and a sharp reader will ask for one',
+    'Two handover chips at once can crowd the middle of the frame',
+  ],
+  scores: { story: 5, motion: 5, perf: 4, mobile: 3, brand: 4, ease: 3 },
+  build: (uid) => {
+    const dur = 9;
+    const route = 'M 74 406 C 168 396 196 306 266 274 C 344 240 372 186 448 156 C 500 136 538 120 566 108';
+    const areas = [
+      { x: 168, y: 322, r: 112, n: 'Vodafone', m: '5G \u00b7 n78' },
+      { x: 330, y: 234, r: 116, n: 'Orange', m: '5G \u00b7 n78' },
+      { x: 486, y: 158, r: 104, n: 'T-Mobile', m: 'LTE \u00b7 B3' },
+    ];
+    const hands = [
+      { x: 266, y: 274, t: 'Vodafone \u2192 Orange', ms: '41 ms \u00b7 NO DROP', on: 0.3 },
+      { x: 448, y: 156, t: 'Orange \u2192 T-Mobile', ms: '36 ms \u00b7 NO DROP', on: 0.66 },
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 240, 250, uid)}
+    ${mono(40, 46, 'ONE ROUTE \u00b7 THREE COVERAGE AREAS \u00b7 PLAN VIEW', { size: 9.5, op: 0.42 })}
+    ${areas.map((b, i) => `
+      <circle cx="${b.x}" cy="${b.y}" r="${b.r}" fill="${P.main}" opacity="${(0.07 + i * 0.015).toFixed(3)}"/>
+      <circle cx="${b.x}" cy="${b.y}" r="${b.r}" fill="none" stroke="${P.main}" stroke-width="1.4"
+        stroke-dasharray="7 7" opacity="0.4"/>
+      ${mono(b.x, b.y - b.r + 24, b.n.toUpperCase(), { size: 9.5, anchor: 'middle', op: 0.55, fill: P.deep })}
+      ${mono(b.x, b.y - b.r + 40, b.m, { size: 8.5, anchor: 'middle', op: 0.3 })}`).join('')}
+    ${flowLine(route, { w: 3.4, dur: 0.9 })}
+    ${hands.map((h) => `
+      <circle cx="${h.x}" cy="${h.y}" r="7" fill="${WHITE}" stroke="${P.main}" stroke-width="2.5"/>
+      <g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1;0;0"
+          keyTimes="0;${h.on.toFixed(3)};${(h.on + 0.03).toFixed(3)};${(h.on + 0.2).toFixed(3)};${(h.on + 0.23).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite"/>
+        <rect x="${h.x - 76}" y="${h.y - 54}" width="152" height="42" rx="11" fill="${INK}"/>
+        <text x="${h.x}" y="${h.y - 34}" text-anchor="middle" font-size="11" font-weight="700" fill="${WHITE}">${h.t}</text>
+        ${mono(h.x, h.y - 20, h.ms, { size: 8, anchor: 'middle', fill: WHITE, op: 0.55 })}
+      </g>`).join('')}
+    <circle r="7" fill="${P.main}">
+      <animateMotion dur="${dur}s" repeatCount="indefinite" path="${route}"/>
+    </circle>
+    <circle r="7" fill="none" stroke="${P.main}" stroke-width="2" opacity="0.45">
+      <animateMotion dur="${dur}s" repeatCount="indefinite" path="${route}"/>
+      <animate attributeName="r" values="7;19;7" keyTimes="0;0.5;1" dur="1.6s" repeatCount="indefinite"/>
+    </circle>
+    ${mono(40, 444, 'THE BEST NETWORK IS A PLACE, NOT A PREFERENCE', { size: 9, op: 0.34 })}`;
+    return { svg: wrap(inner), pills: pAI('Switches as you move') };
+  },
+};
+
+export const aiFourPromises = {
+  id: 'ai-promises',
+  name: 'Four Promises',
+  family: 'Editorial',
+  tagline: 'The section\u2019s four cards, each given a number',
+  desc:
+    'The section already makes four promises in four small cards \u2014 AI-powered selection, dynamic ' +
+    'optimisation, price intelligence, instant switching \u2014 and none of them carries a figure. Here each ' +
+    'one is quoted on the left and answered on the right: 1,438 evaluations a minute, 37 switches today, ' +
+    '\u20ac0.58 average fill, 41 ms median. A ledger, set as type.',
+  pros: [
+    'Uses copy that is already on the page, so nothing new has to be approved',
+    'Four claims and four numbers is easy to keep current and easy to audit',
+    'Reads as a summary of the whole section rather than one idea from it',
+  ],
+  cons: [
+    'It is a table \u2014 there is no scene and very little movement',
+    'Quoting our own marketing has a slightly self-satisfied tone if the numbers ever slip',
+  ],
+  scores: { story: 5, motion: 2, perf: 5, mobile: 4, brand: 4, ease: 5 },
+  build: (uid) => {
+    const dur = 12;
+    const rows = [
+      ['\u201cAI-Powered Selection\u201d', 'SIGNAL, CONGESTION AND PRICE, IN REAL TIME', '1,438', 'EVALUATIONS A MINUTE'],
+      ['\u201cDynamic Optimization\u201d', 'SWITCH WHEN A BETTER OPTION APPEARS', '37', 'SWITCHES TODAY, 6 CARRIERS'],
+      ['\u201cPrice Intelligence\u201d', 'ROUTE THROUGH THE CHEAPEST USABLE CARRIER', '\u20ac0.58', 'AVERAGE FILL, 22% UNDER LIST'],
+      ['\u201cInstant Switching\u201d', 'SEAMLESS TRANSITIONS IN MILLISECONDS', '41 ms', 'MEDIAN, 180 ms AT THE 99TH'],
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 220, 250, uid)}
+    ${mono(56, 52, 'THE FOUR PROMISES IN THIS SECTION, MEASURED', { size: 9.5, op: 0.45 })}
+    <line x1="56" y1="70" x2="584" y2="70" stroke="${INK}" stroke-width="2"/>
+    ${rows.map(([claim, sub, fig, note], i) => {
+      const y = 110 + i * 84;
+      const on = 0.06 + i * 0.13;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.05).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${label(56, y, claim, { size: 17 })}
+        ${mono(56, y + 20, sub, { size: 8.5, op: 0.38 })}
+        ${num(584, y - 2, fig, { size: 22, anchor: 'end' })}
+        ${mono(584, y + 20, note, { size: 8.5, anchor: 'end', op: 0.4 })}
+        <line x1="56" y1="${y + 40}" x2="584" y2="${y + 40}" stroke="${LINE}" stroke-width="1.2"/>
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.68;0.76;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${mono(56, 442, 'FOUR CLAIMS ON THE PAGE \u00b7 FOUR NUMBERS WE CAN BE HELD TO', { size: 9.5, op: 0.5, fill: P.deep })}
+    </g>`;
+    return { svg: wrap(inner), pills: pAI('Four claims, four numbers') };
+  },
+};
+
+export const aiWorstCase = {
+  id: 'ai-worstcase',
+  name: 'Worst Case',
+  family: 'Statistics',
+  tagline: 'Ten thousand switches, including the slow ones',
+  desc:
+    'A distribution rather than a demo: ten thousand switch times in twenty-millisecond bins, with the ' +
+    'median marked at 41 ms and the ninety-ninth percentile at 180 ms. The tail is drawn instead of ' +
+    'hidden. \u201cMilliseconds\u201d is a marketing word until somebody shows the slow end of the curve, which ' +
+    'is the number a procurement team will actually ask for.',
+  pros: [
+    'The only option that volunteers its worst case, which buys credibility cheaply',
+    'A histogram is the register enterprise buyers already read',
+    'Every figure on it survives translation \u2014 there is almost no copy',
+  ],
+  cons: [
+    'Percentiles mean nothing to a consumer visitor',
+    'Publishing a p99 invites somebody to measure it themselves',
+    'One build-in and then it holds \u2014 the least kinetic option here',
+  ],
+  scores: { story: 4, motion: 3, perf: 5, mobile: 4, brand: 3, ease: 4 },
+  build: (uid) => {
+    const dur = 10;
+    const bins = [180, 2900, 3400, 1600, 820, 430, 260, 170, 110, 70, 40, 18, 8, 4];
+    const maxV = 3400, base = 342, top = 132, bw = 26, step = 34.6, x0 = 84;
+    const px = (ms) => x0 + (ms / 280) * 484;
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 220, 250, uid)}
+    ${mono(56, 52, 'TEN THOUSAND SWITCHES \u00b7 HOW LONG EACH ONE TOOK', { size: 9.5, op: 0.45 })}
+    ${mono(56, 76, 'SWITCHES PER 20 ms BIN', { size: 8.5, op: 0.32 })}
+    <line x1="${x0}" y1="${base}" x2="568" y2="${base}" stroke="${LINE}" stroke-width="2"/>
+    ${bins.map((v, i) => {
+      const h = (v / maxV) * (base - top);
+      const x = (x0 + i * step + (step - bw) / 2).toFixed(1);
+      const yTo = (base - h).toFixed(1);
+      const a = (0.04 + i * 0.03).toFixed(3);
+      const b = (0.1 + i * 0.03).toFixed(3);
+      return `<rect x="${x}" y="${base}" width="${bw}" height="0" rx="3" fill="${P.main}" opacity="${v > 800 ? 0.95 : 0.55}">
+        <animate attributeName="y" values="${base};${base};${yTo};${yTo}" keyTimes="0;${a};${b};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        <animate attributeName="height" values="0;0;${h.toFixed(1)};${h.toFixed(1)}" keyTimes="0;${a};${b};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      </rect>`;
+    }).join('')}
+    ${[0, 40, 80, 120, 160, 200, 240, 280].map((ms) =>
+      mono(px(ms).toFixed(0), base + 20, String(ms), { size: 8.5, anchor: 'middle', op: 0.32 })).join('')}
+    ${mono(568, base + 38, 'MILLISECONDS', { size: 8.5, anchor: 'end', op: 0.3 })}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.5;0.58;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      <line x1="${px(41).toFixed(0)}" y1="${top}" x2="${px(41).toFixed(0)}" y2="${base}" stroke="${P.deep}"
+        stroke-width="2" stroke-dasharray="5 5"/>
+      ${mono(px(41) + 8, top + 12, 'MEDIAN 41 ms', { size: 9, op: 0.65, fill: P.deep })}
+    </g>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.62;0.7;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      <line x1="${px(180).toFixed(0)}" y1="${top}" x2="${px(180).toFixed(0)}" y2="${base}" stroke="${AMBER}"
+        stroke-width="2" stroke-dasharray="5 5"/>
+      ${mono(px(180) + 8, top + 12, '99TH PERCENTILE 180 ms', { size: 9, op: 0.8, fill: AMBER })}
+    </g>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.74;0.82;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(56, 386, 252, 56, { r: 12, fill: P.wash, stroke: P.main, sw: 2 })}
+      ${mono(78, 410, 'HALF OF THEM UNDER', { size: 8.5, op: 0.5 })}
+      ${num(78, 432, '41 ms', { size: 17, fill: P.deep })}
+      ${card(332, 386, 252, 56, { r: 12, fill: WHITE, stroke: LINE })}
+      ${mono(354, 410, 'SLOWEST OF THE TEN THOUSAND', { size: 8.5, op: 0.4 })}
+      ${num(354, 432, '240 ms', { size: 17 })}
+    </g>`;
+    return { svg: wrap(inner), pills: pAI('41 ms median, 180 ms p99') };
+  },
+};
+
+/* ── registry ── */
+export const AI_VARIANTS = [aiCurrent, aiTrace, aiBoard, aiNeural, aiRadar, aiTicker, aiWhyThisOne, aiBeforeYouNotice, aiLearns, aiOffSwitch, aiTheCost, aiSentence, aiOnScreen, aiAcrossCity, aiFourPromises, aiWorstCase];

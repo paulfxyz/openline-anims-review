@@ -754,9 +754,341 @@ export const signalSweep = {
   },
 };
 
+/* ══ 11 · Fix First ═════════════════════════════════════════ */
+export const jumpToFix = {
+  id: 'ig-fix',
+  name: 'Fix First',
+  family: 'Troubleshooting',
+  tagline: 'Sorted by the problem, not by the running order',
+  desc:
+    'Chapter Deck lists the video in order; this lists it by what has gone wrong. Three real failures ' +
+    'from the support queue \u2014 no service after landing, the QR email missing, "code already ' +
+    'used" \u2014 each with its one-line answer and the timecode where the video shows it, and the ' +
+    'active row lights in turn. Most people who reach this card are already stuck, so the honest ' +
+    'entry point is the symptom.',
+  pros: ['Matches why people actually arrive on this page',
+    'The one-line answers help even without playing the video',
+    'Deep-linkable later: each row can become its own timestamp',
+    'Whole card is still one button, with the pill on its own side'],
+  cons: ['Leads with failure, which marketing may not want in a hero',
+    'Three problems and three answers is a lot of type at phone width',
+    'The symptom list has to be maintained against the real support queue'],
+  scores: { story: 5, motion: 3, perf: 5, mobile: 3, brand: 3, ease: 4 },
+  build: (uid) => {
+    const rows = [
+      ['\u201CNo service\u201D after landing', 'Data roaming is off \u2014 Settings \u203A Mobile Data', '2:12'],
+      ['The QR email never arrived', 'It is in your dashboard too, or redeem again at /start', '0:18'],
+      ['\u201CCode already used\u201D', 'Each QR scans once \u2014 support reissues the profile', '1:05'],
+    ];
+    const dur = 9;
+    return mk(uid, `Play the ${DUR} installation video, chaptered by problem`, `
+      ${ground(uid, { a: 'rgba(255,83,20,0.15)' })}
+      ${bloom(uid, 120, 150, 140, 6.5)}
+      ${lab(30, 44, 'FOR WHEN IT IS NOT WORKING', 'rgba(255,255,255,0.42)', { size: 9 })}
+      ${t(30, 88, 'Stuck at the', { size: 19, w: 700, fill: WHITE })}
+      ${t(30, 112, 'last step?', { size: 19, w: 700, fill: OR })}
+      ${ctaPill(123, 176, 'Play from 0:00', { w: 186, h: 42 })}
+      ${tapHint(30, 224, { a: 'start', text: 'OR TAP ANYWHERE ON THIS CARD', size: 8 })}
+      ${lab(30, 292, `IPHONE & ANDROID \u00B7 ${DUR}`, 'rgba(255,255,255,0.34)', { size: 8.5 })}
+      ${rect(238, 40, 314, 244, { fill: 'rgba(255,255,255,0.05)', r: 12,
+        stroke: 'rgba(255,255,255,0.10)' })}
+      ${lab(254, 64, 'JUMP TO A PROBLEM', 'rgba(255,255,255,0.38)', { size: 8.5 })}
+      ${rows.map(([sym, fix, tc], i) => {
+        const y = 78 + i * 68;
+        return `<g>
+          ${rect(250, y, 290, 60, { fill: 'rgba(255,255,255,0.04)', r: 9 })}
+          <rect x="250" y="${y}" width="290" height="60" rx="9" fill="rgba(255,83,20,0.14)"
+            stroke="${OR}" stroke-width="1.5" opacity="0">
+            <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.03;0.3;0.34;1"
+              dur="${dur}s" begin="${(i * dur) / 3}s" repeatCount="indefinite"/>
+          </rect>
+          ${t(264, y + 24, sym, { size: 13.5, w: 700, fill: WHITE })}
+          ${t(264, y + 43, fix, { size: 10.5, fill: 'rgba(255,255,255,0.56)' })}
+          ${lab(528, y + 24, tc, OR, { a: 'end', size: 10, ls: 0.6 })}
+        </g>`;
+      }).join('')}
+      ${liveFrame()}`);
+  },
+};
+
+/* ══ 12 · Boarding Pass ══════════════════════════════════════ */
+export const boardingPass = {
+  id: 'ig-pass',
+  name: 'Boarding Pass',
+  family: 'Physical object',
+  tagline: 'A ticket, with a stub you press',
+  desc:
+    'The card stops pretending to be a video frame and becomes a boarding pass: three step cells on ' +
+    'the body, a perforated stub on the right carrying the play disc and the runtime, and a barcode ' +
+    'along the bottom with a scanner line running across it. A full-width orange bar under the ticket ' +
+    'states in words that tapping anywhere plays the video, so the affordance is a band of its own ' +
+    'rather than a glyph over the artwork.',
+  pros: ['A travel object on a travel page, and unmistakably not stock video',
+    'The stub gives the play mark a home nothing else can overlap',
+    'Light, so it does not punch a dark hole in a white page',
+    'The orange bar states the whole-card behaviour in plain words'],
+  cons: ['Second light option on the board, so it competes with Daylight',
+    'Skeuomorphic, and pastiche dates faster than plain type',
+    'Fine ticket detail is the first thing to break at phone width'],
+  scores: { story: 4, motion: 3, perf: 4, mobile: 3, brand: 4, ease: 3 },
+  build: (uid) => {
+    const PX = 404, INK2 = '#0B0B0F';
+    const bars = Array.from({ length: 46 }, (_, i) => {
+      const bw = [1.5, 3, 2, 4][i % 4];
+      return `<rect x="${(44 + i * 7.3).toFixed(1)}" y="214" width="${bw}" height="26" fill="${INK2}"
+        opacity="0.72"/>`;
+    }).join('');
+    return mk(uid, `Play the ${DUR} installation walkthrough for iPhone and Android`, `
+      <defs>
+        <linearGradient id="${uid}-pg" x1="0" y1="0" x2="0.7" y2="1">
+          <stop offset="0" stop-color="#FFFFFF"/>
+          <stop offset="1" stop-color="${ORW}"/>
+        </linearGradient>
+        <pattern id="${uid}-pd" width="22" height="22" patternUnits="userSpaceOnUse">
+          <circle cx="1" cy="1" r="1" fill="rgba(255,83,20,0.12)"/>
+        </pattern>
+      </defs>
+      <rect width="${W}" height="${H}" fill="url(#${uid}-pg)"/>
+      <rect width="${W}" height="${H}" fill="url(#${uid}-pd)"/>
+      ${rect(22, 26, 532, 232, { fill: '#FFFFFF', r: 14, stroke: 'rgba(11,11,15,0.10)', sw: 1.5 })}
+      <line x1="${PX}" y1="38" x2="${PX}" y2="246" stroke="rgba(11,11,15,0.22)" stroke-width="1.5"
+        stroke-dasharray="5 6"/>
+      <circle cx="${PX}" cy="26" r="7" fill="${ORW}"/>
+      <circle cx="${PX}" cy="258" r="7" fill="${ORW}"/>
+      ${lab(44, 54, 'OPENLINE \u00B7 INSTALLATION', OR, { size: 8.5 })}
+      ${t(44, 88, 'How to install', { size: 19, w: 700, fill: INK2 })}
+      ${t(44, 110, 'your Openline eSIM', { size: 19, w: 700, fill: INK2 })}
+      ${STEPS.map(([label, ic], i) => {
+        const x = 44 + i * 112;
+        const on = (i * 0.24).toFixed(3);
+        return `<g>
+          ${rect(x, 130, 100, 64, { fill: ORW, r: 9, stroke: 'rgba(255,83,20,0.22)' })}
+          <rect x="${x}" y="130" width="100" height="64" rx="9" fill="rgba(255,83,20,0.12)"
+            stroke="${OR}" stroke-width="1.5" opacity="0">
+            <animate attributeName="opacity" values="0;1;1;0;0"
+              keyTimes="0;${(+on + 0.02).toFixed(3)};${(+on + 0.2).toFixed(3)};${(+on + 0.24).toFixed(3)};1"
+              dur="8s" repeatCount="indefinite"/>
+          </rect>
+          ${glyph(ic, x + 12, 142, 20, OR)}
+          ${lab(x + 88, 156, `0${i + 1}`, 'rgba(11,11,15,0.3)', { a: 'end', size: 10 })}
+          ${t(x + 12, 182, NICE[i], { size: 11.5, w: 700, fill: INK2 })}
+        </g>`;
+      }).join('')}
+      ${bars}
+      <rect x="44" y="210" width="26" height="34" fill="${OR}" opacity="0.22">
+        <animate attributeName="x" values="44;344;44" keyTimes="0;0.5;1" dur="5.4s"
+          repeatCount="indefinite"/>
+      </rect>
+      ${lab(479, 56, 'ADMIT ONE', 'rgba(11,11,15,0.34)', { a: 'middle', size: 8.5 })}
+      <circle cx="479" cy="124" r="40" fill="${OR}" opacity="0.12">
+        <animate attributeName="opacity" values="0.07;0.2;0.07" keyTimes="0;0.5;1" dur="3.2s"
+          repeatCount="indefinite"/>
+      </circle>
+      <circle cx="479" cy="124" r="29" fill="${OR}"/>
+      ${tri(480.5, 124, 12)}
+      ${lab(479, 186, DUR, INK2, { a: 'middle', size: 12, ls: 0.8 })}
+      ${lab(479, 210, 'IPHONE', 'rgba(11,11,15,0.4)', { a: 'middle', size: 8 })}
+      ${lab(479, 224, '& ANDROID', 'rgba(11,11,15,0.4)', { a: 'middle', size: 8 })}
+      ${rect(22, 272, 532, 38, { fill: OR, r: 10 })}
+      ${t(288, 296, 'Tap anywhere on this pass to play the video', { size: 13.5, w: 700, a: 'middle',
+        fill: WHITE })}
+      ${rect(1, 1, W - 2, H - 2, { stroke: 'rgba(255,83,20,0.28)', sw: 1.5, r: 15 })}`);
+  },
+};
+
+/* ══ 13 · Words Only ════════════════════════════════════════ */
+export const wordsOnly = {
+  id: 'ig-clauses',
+  name: 'Words Only',
+  family: 'Typographic',
+  tagline: 'Three sentences and a timecode each',
+  desc:
+    'No illustration at all, and no icons: the whole video is three short sentences set large \u2014 ' +
+    'scan the code, add the eSIM, you\u2019re online \u2014 each arriving on its own beat with its ' +
+    'timecode ruled off to the right and a line drawing itself underneath. The bottom band carries the ' +
+    'play label. It is the fastest thing here to build and the only option with nothing to draw, so ' +
+    'nothing can look dated or cheap.',
+  pros: ['Nothing to draw, nothing to license, nothing to keep in sync but three lines',
+    'The largest legible type of any option on the board',
+    'Timecodes prove there is a real edit behind it',
+    'Cheapest render here: type plus two opacity loops'],
+  cons: ['No image at all, so it will read as plain beside the cinematic options',
+    'Gives away the whole video, which may reduce plays',
+    'Leans entirely on the typeface being right'],
+  scores: { story: 4, motion: 3, perf: 5, mobile: 5, brand: 4, ease: 5 },
+  build: (uid) => {
+    const lines = [[NICE[0] + '.', '0:34'], [NICE[1] + '.', '1:52'], [NICE[2] + '.', '2:48']];
+    const dur = 7;
+    return mk(uid, `Play the ${DUR} installation walkthrough \u2014 three steps`, `
+      ${ground(uid, { a: 'rgba(255,83,20,0.12)' })}
+      ${bloom(uid, 150, 120, 150, 6)}
+      ${lab(32, 46, 'THE WHOLE VIDEO, IN THREE SENTENCES', 'rgba(255,255,255,0.42)', { size: 9 })}
+      ${lines.map(([s, tc], i) => {
+        const y = 112 + i * 46;
+        const on = (0.06 + i * 0.13).toFixed(3);
+        return `<g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1"
+            keyTimes="0;${on};${(+on + 0.05).toFixed(3)};1" dur="${dur}s" repeatCount="indefinite"/>
+          ${t(32, y, s, { size: 29, w: 800, fill: i === 2 ? OR : WHITE })}
+          ${lab(544, y - 2, tc, 'rgba(255,255,255,0.42)', { a: 'end', size: 10.5, ls: 0.6 })}
+          <rect x="32" y="${y + 10}" width="0" height="2" rx="1" fill="${OR}" opacity="0.5">
+            <animate attributeName="width" values="0;0;168;168"
+              keyTimes="0;${on};${(+on + 0.12).toFixed(3)};1" dur="${dur}s" repeatCount="indefinite"/>
+          </rect>
+        </g>`;
+      }).join('')}
+      ${rect(0, H - 56, W, 56, { fill: 'rgba(255,255,255,0.06)', r: 0 })}
+      ${rect(0, H - 56, W, 1, { fill: 'rgba(255,255,255,0.12)', r: 0 })}
+      <circle cx="44" cy="${H - 28}" r="15" fill="${OR}"/>
+      ${tri(45, H - 28, 7)}
+      ${t(70, H - 31, 'Play the walkthrough', { size: 15, w: 700, fill: WHITE })}
+      ${lab(70, H - 15, `TAP ANYWHERE ON THIS CARD \u00B7 IPHONE & ANDROID`, 'rgba(255,255,255,0.4)',
+        { size: 8.5 })}
+      ${durChip(W - 76, H - 43)}
+      ${liveFrame()}`);
+  },
+};
+
+/* ══ 14 · From Your Inbox ═══════════════════════════════════ */
+export const fromInbox = {
+  id: 'ig-inbox',
+  name: 'From Your Inbox',
+  family: 'Inbox',
+  tagline: 'The email, opening itself',
+  desc:
+    'Step one on this page is "open your email", and no option shows that. Here a small mail client ' +
+    'sits on the left: the message from support@openline.com titled "Your eSIM QR Code" opens on a ' +
+    'loop, revealing the activation code and the QR block with a scan line crossing it, then closes ' +
+    'again. The right column numbers the three steps and carries the play pill, clear of the artwork.',
+  pros: ['Starts where the user actually is, in the confirmation email',
+    'Uses the real sender, subject and activation-code format from the page',
+    'The open-and-close loop shows a sequence without a video frame',
+    'Artwork on the left, call to action on the right \u2014 no overlap'],
+  cons: ['A mail-client mock has to look generic enough for every client',
+    'Small type inside the mock is the first thing lost on a phone',
+    'Showing a real-looking activation code invites people to try it'],
+  scores: { story: 5, motion: 4, perf: 4, mobile: 3, brand: 3, ease: 3 },
+  build: (uid) => {
+    const X = 28, Y = 52, CW = 268, CH = 216;
+    const chrome = `
+      ${rect(X, Y, CW, CH, { fill: DARK2, r: 12, stroke: 'rgba(255,255,255,0.12)' })}
+      ${rect(X, Y, CW, 30, { fill: 'rgba(255,255,255,0.05)', r: 12 })}
+      ${lab(X + 14, Y + 20, 'INBOX', 'rgba(255,255,255,0.4)', { size: 8.5 })}
+      ${lab(X + CW - 14, Y + 20, '3 NEW', OR, { a: 'end', size: 8.5 })}`;
+    const closed = `
+      ${rect(X + 10, Y + 40, CW - 20, 46, { fill: 'rgba(255,83,20,0.12)', r: 8, stroke: OR })}
+      ${t(X + 22, Y + 60, 'Openline', { size: 12, w: 700, fill: WHITE })}
+      ${t(X + 22, Y + 77, 'Your eSIM QR Code', { size: 11, fill: 'rgba(255,255,255,0.62)' })}
+      ${lab(X + CW - 22, Y + 60, 'NEW', OR, { a: 'end', size: 8 })}
+      ${[0, 1].map(i => `
+        ${rect(X + 10, Y + 94 + i * 42, CW - 20, 36, { fill: 'rgba(255,255,255,0.04)', r: 8 })}
+        ${rect(X + 22, Y + 106 + i * 42, 78, 7, { fill: 'rgba(255,255,255,0.16)', r: 3 })}
+        ${rect(X + 22, Y + 118 + i * 42, 132, 6, { fill: 'rgba(255,255,255,0.09)', r: 3 })}`).join('')}
+      ${rect(X + 10, Y + 178, CW - 20, 28, { fill: 'rgba(255,255,255,0.04)', r: 8 })}
+      ${rect(X + 22, Y + 190, 96, 7, { fill: 'rgba(255,255,255,0.12)', r: 3 })}`;
+    const open = `
+      ${lab(X + 14, Y + 52, 'SUPPORT@OPENLINE.COM', 'rgba(255,255,255,0.42)', { size: 8 })}
+      ${t(X + 14, Y + 74, 'Your eSIM QR Code', { size: 13.5, w: 700, fill: WHITE })}
+      <line x1="${X + 14}" y1="${Y + 84}" x2="${X + CW - 14}" y2="${Y + 84}"
+        stroke="rgba(255,255,255,0.10)" stroke-width="1"/>
+      ${rect(X + 14, Y + 96, 108, 108, { fill: '#FFFFFF', r: 8 })}
+      ${glyph(QR, X + 34, Y + 116, 68, INK, 1.8)}
+      <rect x="${X + 14}" y="${Y + 100}" width="108" height="2" fill="${OR}">
+        <animate attributeName="y" values="${Y + 100};${Y + 198};${Y + 100}" keyTimes="0;0.5;1"
+          dur="2.6s" repeatCount="indefinite"/>
+      </rect>
+      ${lab(X + 136, Y + 112, 'ACTIVATION CODE', 'rgba(255,255,255,0.4)', { size: 7.5 })}
+      ${t(X + 136, Y + 130, 'TN2026120409', { m: true, size: 10.5, w: 700, fill: WHITE })}
+      ${t(X + 136, Y + 144, '82590B44A913', { m: true, size: 10.5, w: 700, fill: WHITE })}
+      ${rect(X + 136, Y + 158, 112, 26, { fill: 'rgba(255,83,20,0.16)', r: 7, stroke: OR })}
+      ${t(X + 192, Y + 175, 'Quick Activation', { size: 10, w: 700, a: 'middle', fill: WHITE })}
+      ${lab(X + 136, Y + 200, 'SCAN IT ONCE', 'rgba(255,255,255,0.34)', { size: 7.5 })}`;
+    return mk(uid, `Play the ${DUR} video: from the email to an active eSIM`, `
+      ${ground(uid)}
+      ${bloom(uid, 420, 150, 160, 6.5)}
+      ${chrome}
+      ${cycle([closed, open], 9)}
+      ${lab(320, 68, 'STEP ONE IS NOT ON THIS PAGE', 'rgba(255,255,255,0.42)', { size: 8.5 })}
+      ${t(320, 104, 'It starts in', { size: 21, w: 700, fill: WHITE })}
+      ${t(320, 130, 'your email', { size: 21, w: 700, fill: OR })}
+      ${[['1', 'Open the email from Openline'], ['2', 'Scan the QR code'],
+        ['3', 'Follow the on-screen steps']].map(([n, s], i) => `
+        ${lab(320, 168 + i * 22, n, OR, { size: 9.5 })}
+        ${t(336, 168 + i * 22, s, { size: 11.5, fill: 'rgba(255,255,255,0.6)' })}`).join('')}
+      ${ctaPill(423, 256, `Watch it \u00B7 ${DUR}`, { w: 206, h: 40 })}
+      ${tapHint(288, 306, { op: 0.4, text: 'TAP ANYWHERE ON THIS CARD \u00B7 IPHONE & ANDROID' })}
+      ${liveFrame()}`);
+  },
+};
+
+/* ══ 15 · Watched By ════════════════════════════════════════ */
+export const watchedBy = {
+  id: 'ig-watched',
+  name: 'Watched By',
+  family: 'Social proof',
+  tagline: 'The retention curve, shown on the poster',
+  desc:
+    'Instead of promising the video is useful, this shows how it was used: how many people watched it, ' +
+    'what share reached the end, and a retention curve with a marker at 1:52 where viewers pause to do ' +
+    'the step themselves. A dot travels the curve on a loop. Every figure here is invented for the ' +
+    'mock-up and would have to come from real playback analytics before this ships.',
+  pros: ['Proof rather than promise, which is the strongest reason to press play',
+    'The pause at 1:52 tells people the video is genuinely followable',
+    'Reuses numbers the analytics stack already collects',
+    'Chart on top, pill underneath \u2014 they never overlap'],
+  cons: ['Every number shown is fabricated until playback analytics are wired up',
+    'Weak numbers would actively discourage the click, so it is only safe once real',
+    'A line chart in a hero is an unusual thing to ask a visitor to read'],
+  scores: { story: 4, motion: 4, perf: 5, mobile: 4, brand: 3, ease: 2 },
+  build: (uid) => {
+    const pts = [[30, 140], [80, 141], [130, 150], [180, 158], [230, 166], [280, 176], [313, 190],
+      [340, 192], [390, 198], [440, 205], [490, 211], [546, 217]];
+    const poly = pts.map(([x, y]) => `${x},${y}`).join(' ');
+    const path = pts.map(([x, y], i) => `${i === 0 ? 'M' : 'L'} ${x} ${y}`).join(' ');
+    const stats = [['4,812', 'TRAVELLERS WATCHED IT'], ['96%', 'WATCHED TO THE END'],
+      ['3:01', 'AVERAGE WATCH TIME']];
+    return mk(uid, `Play the ${DUR} installation walkthrough`, `
+      ${ground(uid, { a: 'rgba(255,83,20,0.14)' })}
+      <defs>
+        <linearGradient id="${uid}-ag" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="${OR}" stop-opacity="0.34"/>
+          <stop offset="1" stop-color="${OR}" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      ${lab(24, 36, 'HOW OTHER PEOPLE USED THIS VIDEO', 'rgba(255,255,255,0.42)', { size: 9 })}
+      ${tapHint(W - 24, 36, { a: 'end', op: 0.38, size: 8 })}
+      ${stats.map(([v, l], i) => {
+        const x = 24 + i * 180;
+        return `${rect(x, 50, 168, 56, { fill: 'rgba(255,255,255,0.05)', r: 10,
+          stroke: 'rgba(255,255,255,0.08)' })}
+          ${t(x + 14, 80, v, { m: true, size: 20, w: 700, fill: WHITE })}
+          ${lab(x + 14, 97, l, 'rgba(255,255,255,0.4)', { size: 7.5, ls: 1 })}`;
+      }).join('')}
+      <polygon points="30,240 ${poly} 546,240" fill="url(#${uid}-ag)"/>
+      <polyline points="${poly}" fill="none" stroke="${OR}" stroke-width="2.2"
+        stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="30" y1="240" x2="546" y2="240" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+      <line x1="313" y1="132" x2="313" y2="240" stroke="rgba(255,255,255,0.22)" stroke-width="1"
+        stroke-dasharray="3 4"/>
+      ${lab(322, 142, 'PEOPLE PAUSE HERE', OR, { size: 7.5 })}
+      ${lab(322, 154, 'TO DO THE STEP THEMSELVES', 'rgba(255,255,255,0.42)', { size: 7.5 })}
+      <circle r="4.5" fill="${WHITE}">
+        <animateMotion dur="6s" repeatCount="indefinite" calcMode="linear" path="${path}"/>
+        <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.05;0.92;1" dur="6s"
+          repeatCount="indefinite"/>
+      </circle>
+      ${lab(30, 254, '0:00', 'rgba(255,255,255,0.34)', { size: 8 })}
+      ${lab(313, 254, '1:52', 'rgba(255,255,255,0.34)', { a: 'middle', size: 8 })}
+      ${lab(546, 254, DUR, 'rgba(255,255,255,0.34)', { a: 'end', size: 8 })}
+      ${ctaPill(W / 2, 290, `Watch it \u00B7 ${DUR}`, { w: 250, h: 42 })}
+      ${liveFrame()}`);
+  },
+};
+
 export const INSTALL_VARIANTS = [
   igCurrent, oneBigButton, stepsSequenced, chapterDeck, phoneLive, filmstrip,
   thirtySeconds, captionTrack, twoLanes, daylight, signalSweep,
+  jumpToFix, boardingPass, wordsOnly, fromInbox, watchedBy,
 ];
 
 export const INSTALL_BOX = { w: W, h: H };

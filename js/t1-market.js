@@ -782,4 +782,330 @@ export const mkNoSurge = {
 };
 
 /* ── registry ── */
-export const MARKET_VARIANTS = [mkCurrent, candles, dipHunter, orderBook, vsMarket, tape, mkYouPaid, mkSpread, mkSettled, mkWhoSells, mkNoSurge];
+
+/* ══ MARKET · 11–15 ═════════════════════════════════════════════════ */
+
+export const mkNightDesk = {
+  id: 'mk-night',
+  name: 'Night Desk',
+  family: 'Dark surface',
+  tagline: 'The fills that happened while you were asleep',
+  desc:
+    'The only dark panel on the page, and the only one that uses a clock instead of a chart axis. ' +
+    'Nine buys land between one and six in the morning \u2014 \u20ac0.58, \u20ac0.55, \u20ac0.49 at 03:12 \u2014 with a sweep ' +
+    'line crossing the night as they appear. \u201cTrades this market 24/7\u201d is a claim about hours nobody is ' +
+    'watching, so it should be drawn in those hours.',
+  pros: [
+    'Dark ground makes it the one panel on a white page you cannot scroll past',
+    'Uses the 24/7 claim literally, which no other option on this board touches',
+    'A clock axis is instantly readable without knowing anything about markets',
+  ],
+  cons: [
+    'A dark block needs care not to fight the rest of the light page',
+    'The overnight framing is charming but says nothing about price levels',
+  ],
+  scores: { story: 4, motion: 4, perf: 5, mobile: 4, brand: 3, ease: 4 },
+  build: (uid) => {
+    const dur = 12;
+    const trades = [[0.4, 0.58], [1.1, 0.55], [1.8, 0.62], [2.4, 0.51], [3.2, 0.49],
+      [3.9, 0.57], [4.6, 0.53], [5.3, 0.6], [5.8, 0.52]];
+    const X = (h) => 30 + (h / 6) * 486;
+    const Y = (p) => 246 - ((p - 0.45) / 0.22) * 150;
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 210, 240, uid)}
+    <g transform="translate(40 56)">
+      <rect width="560" height="320" rx="22" fill="${INK}"/>
+      <circle cx="30" cy="34" r="5" fill="${P.main}">
+        <animate attributeName="opacity" values="1;0.3;1" dur="1.6s" repeatCount="indefinite"/>
+      </circle>
+      ${mono(46, 38, 'OMDM DESK \u00b7 01:00\u201306:00 CET', { size: 9.5, fill: WHITE, op: 0.5 })}
+      <text x="530" y="40" text-anchor="end" font-size="12" font-weight="700" fill="${P.main}"
+        style="font-family:${MONO}">9 FILLS WHILE YOU SLEPT</text>
+      ${[0, 1, 2, 3].map((i) => `<line x1="30" y1="${96 + i * 50}" x2="516" y2="${96 + i * 50}"
+        stroke="${WHITE}" stroke-width="1" opacity="0.07"/>`).join('')}
+      <line x1="30" y1="246" x2="516" y2="246" stroke="${WHITE}" stroke-width="1.5" opacity="0.18"/>
+      ${trades.map(([h, p], i) => {
+        const x = X(h).toFixed(0);
+        const y = Y(p).toFixed(0);
+        const yl = (Y(p) - 13).toFixed(0);
+        const on = 0.06 + i * 0.09;
+        return `<g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.03).toFixed(3)};1"
+            dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+          <line x1="${x}" y1="${y}" x2="${x}" y2="246" stroke="${P.main}" stroke-width="1.6" opacity="0.32"/>
+          <circle cx="${x}" cy="${y}" r="5" fill="${P.main}"/>
+          <text x="${x}" y="${yl}" text-anchor="middle" font-size="9.5" font-weight="700" fill="${P.main}"
+            style="font-family:${MONO}">\u20ac${p.toFixed(2)}</text>
+        </g>`;
+      }).join('')}
+      ${[0, 1, 2, 3, 4, 5, 6].map((i) =>
+        mono(X(i).toFixed(0), 266, '0' + i + ':00', { size: 8.5, anchor: 'middle', fill: WHITE, op: 0.3 })).join('')}
+      <g>
+        <line x1="30" y1="76" x2="30" y2="252" stroke="${P.main}" stroke-width="1.5" opacity="0.5"/>
+        <animateTransform attributeName="transform" type="translate" values="0,0;486,0" dur="${dur}s"
+          repeatCount="indefinite"/>
+      </g>
+      ${mono(30, 300, 'AVERAGE FILL \u20ac0.54 \u00b7 LOWEST \u20ac0.49 AT 03:12 \u00b7 NOBODY AWAKE', { size: 9, fill: WHITE, op: 0.42 })}
+    </g>
+    ${label(40, 412, 'The market never closes, so the desk does not either.', { size: 15 })}
+    ${mono(40, 440, 'NINE OF TODAY\u2019S FOUR THOUSAND PURCHASES \u00b7 ALL BEFORE BREAKFAST', { size: 9, op: 0.34 })}`;
+    return { svg: wrap(inner), pills: pMK('Overnight fills') };
+  },
+};
+
+export const mkPassThrough = {
+  id: 'mk-passthrough',
+  name: 'Where It Goes',
+  family: 'Mechanism',
+  tagline: 'The saving, split in public',
+  desc:
+    'The question a market panel raises and never answers: if you buy cheaper, do I see it? A single ' +
+    'block \u2014 \u20ac0.36 saved against list, per gigabyte \u2014 forks into a wide cyan band worth \u20ac0.29 that ' +
+    'goes into the customer\u2019s price and a thin grey one worth \u20ac0.07 that we keep. Publishing the split ' +
+    'is a stronger claim than publishing the saving.',
+  pros: [
+    'Answers the trust question the rest of the board leaves hanging',
+    'A wide band against a thin one carries the ratio without reading a number',
+    'Commercially specific in a way competitors will not copy',
+  ],
+  cons: [
+    'Publishing a margin, even as a ratio, is a commercial decision above design',
+    'The split has to hold every month or the panel becomes a liability',
+  ],
+  scores: { story: 5, motion: 3, perf: 5, mobile: 4, brand: 4, ease: 4 },
+  build: (uid) => {
+    const dur = 11;
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 220, 240, uid)}
+    ${mono(56, 58, 'WHAT THE DESK SAVED LAST MONTH, AND WHERE IT WENT', { size: 9.5, op: 0.45 })}
+    <rect x="56" y="186" width="188" height="76" rx="12" fill="${INK}"/>
+    ${mono(76, 216, 'SAVED AGAINST LIST', { size: 8.5, fill: WHITE, op: 0.45 })}
+    <text x="76" y="248" font-size="26" font-weight="700" fill="${P.main}" style="font-family:${MONO}">\u20ac0.36</text>
+    ${mono(180, 248, '/GB', { size: 10, fill: WHITE, op: 0.4 })}
+    <path d="M 244 208 C 330 208 344 148 424 148 L 560 148" fill="none" stroke="${P.main}" stroke-width="56"
+      opacity="0.92" stroke-dasharray="430" stroke-dashoffset="430">
+      <animate attributeName="stroke-dashoffset" values="430;430;0;0" keyTimes="0;0.08;0.46;1" dur="${dur}s"
+        repeatCount="indefinite" fill="freeze"/>
+    </path>
+    <path d="M 244 248 C 330 248 344 312 424 312 L 560 312" fill="none" stroke="${GRAY}" stroke-width="14"
+      opacity="0.45" stroke-dasharray="430" stroke-dashoffset="430">
+      <animate attributeName="stroke-dashoffset" values="430;430;0;0" keyTimes="0;0.08;0.46;1" dur="${dur}s"
+        repeatCount="indefinite" fill="freeze"/>
+    </path>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.48;0.56;1" dur="${dur}s"
+        repeatCount="indefinite" fill="freeze"/>
+      ${mono(544, 112, 'INTO YOUR PRICE \u00b7 81%', { size: 9, anchor: 'end', op: 0.55, fill: P.deep })}
+      <text x="544" y="160" text-anchor="end" font-size="30" font-weight="700" fill="${WHITE}"
+        style="font-family:${MONO}">\u20ac0.29</text>
+      ${mono(544, 292, 'KEPT BY US \u00b7 19%', { size: 9, anchor: 'end', op: 0.4 })}
+      <text x="544" y="344" text-anchor="end" font-size="18" font-weight="700" fill="${INK}" opacity="0.5"
+        style="font-family:${MONO}">\u20ac0.07</text>
+    </g>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.64;0.72;1" dur="${dur}s"
+        repeatCount="indefinite" fill="freeze"/>
+      ${card(56, 374, 528, 62, { r: 13, fill: P.wash, stroke: P.main, sw: 2 })}
+      ${label(80, 412, 'Four fifths of every cent the desk saves leaves our hands.', { size: 14.5, fill: P.deep })}
+    </g>`;
+    return { svg: wrap(inner), pills: pMK('81% passed through') };
+  },
+};
+
+export const mkInApp = {
+  id: 'mk-inapp',
+  name: 'In The App',
+  family: 'Product surface',
+  tagline: 'Your rate, and the four trades that set it',
+  desc:
+    'The market from the customer\u2019s side of the glass: an app screen showing \u20ac0.61/GB for the month, ' +
+    '22% under list, and the trades behind it \u2014 40 GB from Orange ES at 03:12 for \u20ac0.49, three more ' +
+    'beneath. Everything else on this board describes a market; this shows the screen where a customer ' +
+    'would check it.',
+  pros: [
+    'Turns an abstract market into a feature somebody can open and read',
+    'Named counterparties and timestamps make the rate checkable',
+    'Gives sales a screenshot rather than a diagram',
+  ],
+  cons: [
+    'Promises a screen the app does not have yet',
+    'Showing per-trade prices exposes wholesale rates to competitors',
+  ],
+  scores: { story: 5, motion: 3, perf: 5, mobile: 5, brand: 5, ease: 3 },
+  build: (uid) => {
+    const dur = 11;
+    const rows = [
+      ['03:12', 'Orange ES', '40 GB', '\u20ac0.49'],
+      ['05:48', 'Vodafone DE', '25 GB', '\u20ac0.54'],
+      ['09:20', 'Telef\u00f3nica ES', '60 GB', '\u20ac0.57'],
+      ['11:02', 'A1 Telekom AT', '18 GB', '\u20ac0.61'],
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 210, 240, uid)}
+    ${card(56, 62, 528, 336, { r: 20, fill: WHITE, stroke: LINE, sw: 2 })}
+    <rect x="58" y="64" width="524" height="50" rx="18" fill="${P.wash}"/>
+    <rect x="58" y="96" width="524" height="18" fill="${P.wash}"/>
+    ${mono(80, 94, 'OPENLINE \u00b7 DATA', { size: 9.5, op: 0.55, fill: P.deep })}
+    ${mono(560, 94, 'UPDATED 3 s AGO', { size: 8.5, anchor: 'end', op: 0.4 })}
+    ${mono(80, 148, 'YOUR RATE THIS MONTH', { size: 8.5, op: 0.4 })}
+    <text x="80" y="186" font-size="34" font-weight="700" fill="${INK}" style="font-family:${MONO}">\u20ac0.61</text>
+    ${label(178, 186, '/GB', { size: 14, op: 0.42 })}
+    <g transform="translate(430 154)">
+      <rect width="130" height="34" rx="17" fill="${GREEN_SOFT}"/>
+      <text x="65" y="23" text-anchor="middle" font-size="11.5" font-weight="700" fill="${GREEN_TEXT}"
+        style="font-family:${MONO}">22% UNDER LIST</text>
+    </g>
+    <line x1="80" y1="208" x2="560" y2="208" stroke="${LINE}" stroke-width="1.5"/>
+    ${mono(80, 232, 'BOUGHT FOR YOU TODAY', { size: 8.5, op: 0.4 })}
+    ${rows.map(([t, who, vol, price], i) => {
+      const y = 262 + i * 34;
+      const on = 0.1 + i * 0.1;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.05).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${mono(80, y, t, { size: 10.5, op: 0.45 })}
+        ${label(148, y, who, { size: 13, op: 0.85 })}
+        ${mono(390, y, vol, { size: 10.5, anchor: 'end', op: 0.45 })}
+        ${num(560, y, price, { size: 13, anchor: 'end' })}
+        <line x1="80" y1="${y + 12}" x2="560" y2="${y + 12}" stroke="${LINE}" stroke-width="1"/>
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.62;0.7;1" dur="${dur}s"
+        repeatCount="indefinite" fill="freeze"/>
+      ${label(56, 428, 'Every trade that set your rate, on the day it happened.', { size: 14.5, fill: P.deep })}
+    </g>`;
+    return { svg: wrap(inner), pills: pMK('Visible to the customer') };
+  },
+};
+
+export const mkLikeMarkets = {
+  id: 'mk-likemarkets',
+  name: 'Like Electricity',
+  family: 'Analogy',
+  tagline: 'Three markets that reprice all day',
+  desc:
+    'Nobody has to be taught that electricity and airline seats are priced by the minute. Three small ' +
+    'panels put those two beside wholesale data, each with its own jagged price line and how often it ' +
+    'moves \u2014 48 prices a day, thousands a day, continuously. The third is ours, and the difference is ' +
+    'who is standing in the market: the customer, or us.',
+  pros: [
+    'Borrows understanding the reader already has instead of teaching a new idea',
+    'Three small charts read faster than one large one',
+    'Gives the section a line a salesperson can repeat verbatim',
+  ],
+  cons: [
+    'Comparing ourselves to electricity pricing invites the association with price spikes',
+    'Overlaps the fixed-price argument the board already makes elsewhere',
+  ],
+  scores: { story: 4, motion: 3, perf: 5, mobile: 4, brand: 4, ease: 5 },
+  build: (uid) => {
+    const dur = 10;
+    const cols = [
+      { t: 'Electricity', s: 'SPOT, HALF-HOURLY', f: '48 prices a day', who: 'YOU ABSORB IT', seed: 9, on: false },
+      { t: 'Airline seats', s: 'REPRICED ON DEMAND', f: 'thousands a day', who: 'YOU ABSORB IT', seed: 21, on: false },
+      { t: 'Mobile data', s: 'OMDM \u00b7 WHOLESALE', f: 'traded continuously', who: 'WE ABSORB IT', seed: 5, on: true },
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 210, 240, uid)}
+    ${mono(56, 58, 'THREE MARKETS THAT REPRICE ALL DAY', { size: 9.5, op: 0.45 })}
+    ${cols.map((c, i) => {
+      const x = 56 + i * 180;
+      const pts = series(22, c.seed, 0.5, 1.3);
+      const poly = pts.map((v, k) => {
+        const px = (x + 22 + (k / 21) * 124).toFixed(1);
+        const py = (232 - (v - 0.5) * 100).toFixed(1);
+        return px + ' ' + py;
+      }).join(' ');
+      const on = 0.08 + i * 0.12;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.06).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${card(x, 92, 168, 240, { r: 16, fill: c.on ? P.wash : WHITE, stroke: c.on ? P.main : LINE, sw: c.on ? 2 : 1.5 })}
+        ${label(x + 22, 126, c.t, { size: 15, fill: c.on ? P.deep : INK })}
+        ${mono(x + 22, 146, c.s, { size: 8, op: 0.4 })}
+        <polyline points="${poly}" fill="none" stroke="${c.on ? P.main : GRAY}" stroke-width="2.2"
+          stroke-linecap="round" opacity="${c.on ? 1 : 0.65}"/>
+        <line x1="${x + 22}" y1="252" x2="${x + 146}" y2="252" stroke="${LINE}" stroke-width="1.2"/>
+        ${mono(x + 22, 276, 'MOVES', { size: 8, op: 0.35 })}
+        ${label(x + 22, 298, c.f, { size: 12.5, op: 0.8 })}
+        ${mono(x + 22, 320, c.who, { size: 8.5, op: c.on ? 0.65 : 0.4, fill: c.on ? P.deep : INK })}
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.6;0.68;1" dur="${dur}s"
+        repeatCount="indefinite" fill="freeze"/>
+      ${card(56, 356, 528, 76, { r: 14, fill: WHITE, stroke: LINE })}
+      ${label(80, 390, 'You already buy things priced by the minute.', { size: 14.5 })}
+      ${label(80, 416, 'This is the one where somebody stands in the market for you.', { size: 14.5, fill: P.deep })}
+    </g>`;
+    return { svg: wrap(inner), pills: pMK('A market you know') };
+  },
+};
+
+export const mkThousands = {
+  id: 'mk-thousands',
+  name: 'Thousands Daily',
+  family: 'Scale',
+  tagline: 'One square per purchase',
+  desc:
+    'The section claims thousands of purchases a day and nothing on the page shows what that looks ' +
+    'like. Two hundred and sixty-four squares fill in column by column, each one a real buy, tinted by ' +
+    'region \u2014 and the caption admits this is only part of today\u2019s four thousand. No chart, no price, no ' +
+    'ladder: just the rate of work made visible.',
+  pros: [
+    'Quantity is the one claim on this board that has never been drawn',
+    'A field of squares is unlike anything else on the page or the board',
+    'Cheap to render and reads instantly at any width',
+  ],
+  cons: [
+    'Says nothing about price, saving, or benefit to the reader',
+    'Decorative if the count ever stops being true',
+    'The region tints need a legend to mean anything',
+  ],
+  scores: { story: 3, motion: 4, perf: 5, mobile: 4, brand: 4, ease: 5 },
+  build: (uid) => {
+    const dur = 8;
+    const COLS = 24, ROWS = 11, cell = 22, x0 = 64, y0 = 104;
+    const tints = [
+      { c: P.main, op: 0.95, t: 'EU WEST' },
+      { c: P.deep, op: 0.9, t: 'EU EAST' },
+      { c: P.main, op: 0.5, t: 'APAC' },
+      { c: P.soft, op: 1, t: 'AMERICAS' },
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 210, 240, uid)}
+    ${mono(64, 58, 'EVERY SQUARE IS ONE PURCHASE THE DESK MADE TODAY', { size: 9.5, op: 0.45 })}
+    ${mono(584, 58, '264 OF 4,182', { size: 9.5, anchor: 'end', op: 0.4, fill: P.deep })}
+    ${Array.from({ length: COLS }, (_, c) => {
+      const on = 0.02 + c * 0.026;
+      const sq = Array.from({ length: ROWS }, (_, r) => {
+        const t = tints[(c * 7 + r * 13 + ((c * r) % 5)) % 4];
+        const x = x0 + c * cell;
+        const y = y0 + r * cell;
+        return `<rect x="${x}" y="${y}" width="15" height="15" rx="3.5" fill="${t.c}" opacity="${t.op}"/>`;
+      }).join('');
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.02).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${sq}
+      </g>`;
+    }).join('')}
+    ${tints.map((t, i) => {
+      const x = 64 + i * 134;
+      return `<rect x="${x}" y="${368}" width="11" height="11" rx="3" fill="${t.c}" opacity="${t.op}"/>
+        ${mono(x + 20, 378, t.t, { size: 8.5, op: 0.4 })}`;
+    }).join('')}
+    ${label(64, 414, 'The desk made four thousand of these today.', { size: 15 })}
+    ${mono(64, 440, 'ELEVEN REGIONS \u00b7 NONE OF THEM PRICED BY HAND', { size: 9, op: 0.34 })}`;
+    return { svg: wrap(inner), pills: pMK('4,182 buys today') };
+  },
+};
+
+/* ── registry ── */
+export const MARKET_VARIANTS = [mkCurrent, candles, dipHunter, orderBook, vsMarket, tape, mkYouPaid, mkSpread, mkSettled, mkWhoSells, mkNoSurge, mkNightDesk, mkPassThrough, mkInApp, mkLikeMarkets, mkThousands];

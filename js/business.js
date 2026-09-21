@@ -802,5 +802,364 @@ export const bizTheSaving = {
   },
 };
 
+/* ══ BIZ HERO · 11–15 ════════════════════════════════════════════════ */
+
+const { phoneLight } = K;
+
+export const bizCaseStudy = {
+  id: 'biz-case',
+  name: 'The Customer Result',
+  family: 'Editorial',
+  tagline: 'One company, one number, in their words',
+  desc:
+    'The page already carries a customer result that nothing in the panel uses: a 25-person team ' +
+    'travelling three times a year saved $47,000 annually, and setup took two hours instead of two ' +
+    'weeks. This sets that as a pull quote with the three figures beneath it. No dashboard, no chart — ' +
+    'a reference, which is what a B2B buyer asks for after the demo.',
+  pros: [
+    'The only option on the board that offers social proof rather than a product picture',
+    'Every figure is already published on this page, so nothing new has to be defended',
+    'Reads well as a still and lifts straight into a deck or a case-study page',
+  ],
+  cons: [
+    'The quote wording is written for this mock — it needs a real, named customer before it ships',
+    'An anonymous \u201coperations director\u201d is weaker proof than a logo',
+    'Almost no motion, so it will feel static next to the animated options',
+  ],
+  scores: { story: 5, motion: 2, perf: 5, mobile: 5, brand: 4, ease: 5 },
+  build: (uid) => {
+    const dur = 11;
+    const figs = [
+      ['$47,000', 'SAVED IN A YEAR', P.deep],
+      ['2 hours', 'TO SET UP, NOT 2 WEEKS', INK],
+      ['85%', 'LESS ADMIN TIME', P.deep],
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 200, 250, uid)}
+    ${mono(48, 54, 'CUSTOMER RESULT \u00b7 25 PEOPLE \u00b7 THREE TRIPS A YEAR EACH', { size: 9.5, op: 0.45 })}
+    ${card(48, 76, 544, 156, { r: 16, fill: WHITE, stroke: INK, sw: 2.5 })}
+    <text x="76" y="150" font-size="72" font-weight="700" fill="${P.soft}">\u201c</text>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.04;0.12;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      <text x="112" y="126" font-size="19" font-weight="600" fill="${INK}">We treated roaming as a cost of doing business.</text>
+    </g>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.18;0.26;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      <text x="112" y="156" font-size="19" font-weight="600" fill="${INK}">Switching took an afternoon and took $47,000 a year</text>
+      <text x="112" y="182" font-size="19" font-weight="600" fill="${INK}">out of the budget.</text>
+    </g>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.34;0.42;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${mono(112, 212, 'OPERATIONS DIRECTOR \u00b7 25-PERSON TEAM \u00b7 6 COUNTRIES', { size: 9, op: 0.45 })}
+    </g>
+    ${figs.map(([big, note, col], i) => {
+      const x = 48 + i * 186;
+      const on = 0.5 + i * 0.1;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.05).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${card(x, 256, 172, 104, { r: 14, fill: i === 0 ? P.wash : WHITE, stroke: i === 0 ? P.main : LINE, sw: i === 0 ? 2 : 1.5 })}
+        ${num(x + 22, 312, big, { size: 27, fill: col })}
+        ${mono(x + 22, 336, note, { size: 8.5, op: 0.42 })}
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.8;0.88;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(48, 378, 544, 52, { r: 13, fill: WHITE, stroke: LINE })}
+      ${tick(76, 402, 'Same trips, same data, same people \u2014 a different supplier', { size: 13 })}
+    </g>`;
+    return { svg: wrap(inner), pills: pB('A named reference') };
+  },
+};
+
+export const bizPerGig = {
+  id: 'biz-pergb',
+  name: 'Per Gigabyte',
+  family: 'Single figure',
+  tagline: 'The two prices on one number line',
+  desc:
+    'Procurement reduces this category to one figure: cost per gigabyte. The page states both \u2014 ' +
+    '$15\u201325 traditional, $3\u20138 on Openline \u2014 and no option uses them. A dark poster plots both ranges ' +
+    'on a single $0\u2013$25 scale, the bands sweeping out from the left, so the distance between them is ' +
+    'the whole picture. One idea, very large.',
+  pros: [
+    'Uses the page\u2019s own published price ranges rather than invented invoice totals',
+    'Legible at a glance and at 390px \u2014 two bands and a scale',
+    'Dark panel gives the board a register break from nine light dashboards',
+  ],
+  cons: [
+    'A range is a weaker claim than a firm price, and buyers will ask which end they get',
+    'Says nothing about admin, coverage or control',
+    'Dark artwork on a white page needs the section around it to cope',
+  ],
+  scores: { story: 4, motion: 3, perf: 5, mobile: 5, brand: 3, ease: 5 },
+  build: (uid) => {
+    const dur = 9;
+    const DK = '#0B1020';
+    const BAD = '#FCA5A5';
+    const ticks = [[80, '$0'], [172, '$5'], [265, '$10'], [357, '$15'], [449, '$20'], [542, '$25']];
+    const inner = `
+    ${dots(uid)}
+    ${mono(40, 54, 'THE ONLY FIGURE PROCUREMENT ASKS FOR', { size: 9.5, op: 0.45 })}
+    ${card(40, 72, 560, 320, { r: 22, fill: DK, stroke: DK, sw: 0 })}
+    ${mono(72, 106, 'COST PER GIGABYTE', { size: 9, fill: WHITE, op: 0.45 })}
+    ${mono(568, 106, 'AS STATED ON THIS PAGE', { size: 9, fill: WHITE, op: 0.3, anchor: 'end' })}
+
+    ${mono(72, 152, 'TRADITIONAL ROAMING', { size: 9.5, fill: WHITE, op: 0.5 })}
+    <text x="542" y="156" text-anchor="end" font-size="34" font-weight="700" fill="${BAD}"
+      style="font-family:${MONO}">$15\u201325</text>
+    <rect x="357" y="170" width="0" height="26" rx="7" fill="${BAD}" opacity="0.9">
+      <animate attributeName="width" values="0;185;185" keyTimes="0;0.3;1" dur="${dur}s" repeatCount="indefinite"
+        calcMode="spline" keySplines="0.4 0 0.2 1;0 0 1 1"/>
+    </rect>
+    ${mono(357, 216, 'SET UP IN 2\u20135 BUSINESS DAYS', { size: 8.5, fill: WHITE, op: 0.35 })}
+    ${[357, 542].map((x) => `<line x1="${x}" y1="196" x2="${x}" y2="320" stroke="${WHITE}" stroke-width="1"
+      stroke-dasharray="3 5" opacity="0.14"/>`).join('')}
+
+    ${mono(72, 236, 'OPENLINE BUSINESS', { size: 9.5, fill: WHITE, op: 0.5 })}
+    <text x="248" y="277" font-size="34" font-weight="700" fill="${WHITE}" style="font-family:${MONO}">$3\u20138</text>
+    <rect x="135" y="254" width="0" height="26" rx="7" fill="${P.main}">
+      <animate attributeName="width" values="0;0;93;93" keyTimes="0;0.3;0.52;1" dur="${dur}s" repeatCount="indefinite"
+        calcMode="spline" keySplines="0 0 1 1;0.4 0 0.2 1;0 0 1 1"/>
+    </rect>
+    ${mono(135, 300, 'SET UP IN 30 SECONDS', { size: 8.5, fill: WHITE, op: 0.35 })}
+    ${[135, 228].map((x) => `<line x1="${x}" y1="280" x2="${x}" y2="320" stroke="${WHITE}" stroke-width="1"
+      stroke-dasharray="3 5" opacity="0.14"/>`).join('')}
+
+    <line x1="80" y1="320" x2="560" y2="320" stroke="${WHITE}" stroke-width="1.2" opacity="0.25"/>
+    ${ticks.map(([x, t]) => `
+      <line x1="${x}" y1="320" x2="${x}" y2="328" stroke="${WHITE}" stroke-width="1.2" opacity="0.25"/>
+      ${mono(x, 344, t, { size: 8.5, fill: WHITE, op: 0.35, anchor: 'middle' })}`).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.6;0.7;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      <text x="72" y="378" font-size="16" font-weight="700" fill="${WHITE}">Same gigabyte. Roughly four times the price.</text>
+    </g>
+    ${mono(40, 424, 'MIDPOINT TO MIDPOINT \u00b7 $20 AGAINST $5.50 \u00b7 190+ COUNTRIES EITHER WAY', { size: 9, op: 0.35 })}`;
+    return { svg: wrap(inner), pills: pB('$3\u20138 per GB') };
+  },
+};
+
+export const bizInTheirHand = {
+  id: 'biz-hand',
+  name: 'In Their Hand',
+  family: 'Device',
+  tagline: 'The 30 seconds as the traveller sees them',
+  desc:
+    'Every other option is drawn from the buyer\u2019s desk. This is the phone: an install prompt, a bar ' +
+    'filling, then a status line reading NTT Docomo with the company policy already attached. Beside it, ' +
+    'the three things that did not have to happen \u2014 nothing shipped, nothing bought on arrival, no IT ' +
+    'ticket. It makes \u201cdeploy in 30 seconds\u201d a thing you watch on a handset.',
+  pros: [
+    'The only option that draws a device, which is what the product actually is',
+    'Shows the employee experience, the part IT gets complaints about',
+    'The install bar gives honest, literal motion \u2014 no invented telemetry',
+  ],
+  cons: [
+    'A phone screen is a small canvas, so the fleet story shrinks to one person',
+    'Carrier names on screen imply partnerships that must hold in that country',
+    'Covers onboarding only \u2014 no cost or billing argument at all',
+  ],
+  scores: { story: 4, motion: 4, perf: 5, mobile: 4, brand: 5, ease: 4 },
+  build: (uid) => {
+    const dur = 10;
+    const W = 184, H = 300;
+    const screen = `
+      <rect x="14" y="30" width="${W - 28}" height="${H - 60}" rx="14" fill="${P.wash}"/>
+      <g opacity="1">
+        <animate attributeName="opacity" values="1;0;0" keyTimes="0;0.3;1" dur="${dur}s" repeatCount="indefinite" calcMode="discrete"/>
+        <text x="34" y="120" font-size="13" font-weight="700" fill="${INK}">Add work eSIM?</text>
+        <text x="34" y="142" font-size="10" font-weight="600" fill="${INK}" opacity="0.5">Acme International</text>
+        <rect x="34" y="170" width="116" height="34" rx="17" fill="${P.main}"/>
+        <text x="92" y="192" text-anchor="middle" font-size="12" font-weight="700" fill="${WHITE}">Install</text>
+      </g>
+      <g opacity="0">
+        <animate attributeName="opacity" values="0;1;0;0" keyTimes="0;0.3;0.62;1" dur="${dur}s" repeatCount="indefinite" calcMode="discrete"/>
+        <text x="34" y="120" font-size="13" font-weight="700" fill="${INK}">Installing\u2026</text>
+        <rect x="34" y="146" width="116" height="10" rx="5" fill="${LINE}"/>
+        <rect x="34" y="146" width="0" height="10" rx="5" fill="${P.main}">
+          <animate attributeName="width" values="0;0;116;116" keyTimes="0;0.32;0.6;1" dur="${dur}s" repeatCount="indefinite"/>
+        </rect>
+        <text x="34" y="180" font-size="9" font-weight="700" fill="${INK}" opacity="0.45"
+          style="font-family:${MONO}">NO SIM TRAY, NO SHOP</text>
+      </g>
+      <g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.62;0.64;1" dur="${dur}s" repeatCount="indefinite" calcMode="discrete"/>
+        <circle cx="42" cy="116" r="10" fill="${P.main}"/>
+        <path d="M 36 116 l 4.5 4.5 l 8 -9" fill="none" stroke="${WHITE}" stroke-width="2.2" stroke-linecap="round"/>
+        <text x="62" y="120" font-size="12.5" font-weight="700" fill="${INK}">Connected</text>
+        <text x="34" y="152" font-size="10" font-weight="700" fill="${P.deep}" style="font-family:${MONO}">NTT DOCOMO \u00b7 5G</text>
+        <text x="34" y="178" font-size="9" font-weight="700" fill="${INK}" opacity="0.45"
+          style="font-family:${MONO}">20 GB POLICY \u00b7 BILLED TO ACME</text>
+        <text x="34" y="198" font-size="9" font-weight="700" fill="${INK}" opacity="0.45"
+          style="font-family:${MONO}">MANAGED BY YOUR IT TEAM</text>
+      </g>
+      ${mono(34, 56, 'TOKYO \u00b7 09:41', { size: 8.5, op: 0.4 })}
+      <rect x="62" y="280" width="60" height="4" rx="2" fill="${LINE}"/>`;
+    const notes = [
+      ['Nothing shipped', 'the profile arrived in the welcome email'],
+      ['Nothing bought on arrival', 'no airport kiosk, no local prepaid SIM'],
+      ['Nothing for IT to do', 'the policy was attached before she landed'],
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(200, 230, 210, uid)}
+    ${mono(40, 54, 'A NEW STARTER LANDS IN TOKYO', { size: 9.5, op: 0.45 })}
+    ${phoneLight({ x: 150, y: 254, w: W, h: H, body: screen })}
+    ${notes.map(([nm, note], i) => {
+      const y = 96 + i * 104;
+      const on = 0.4 + i * 0.13;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.06).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${card(268, y, 324, 86, { r: 13, fill: WHITE, stroke: LINE })}
+        <g transform="translate(294 ${y + 30})" stroke="${GRAY}" stroke-width="2.2" stroke-linecap="round">
+          <path d="M -6 -6 L 6 6 M 6 -6 L -6 6"/>
+        </g>
+        ${label(318, y + 36, nm, { size: 14 })}
+        ${mono(294, y + 62, note, { size: 8.5, op: 0.4 })}
+      </g>`;
+    }).join('')}
+    ${mono(40, 436, 'DEPLOY IN 30 SECONDS \u00b7 190+ COUNTRIES \u00b7 NOTHING IN THE POST', { size: 9, op: 0.35 })}`;
+    return { svg: wrap(inner), pills: pB('Live in 30 seconds') };
+  },
+};
+
+export const bizFlatLine = {
+  id: 'biz-flat',
+  name: 'The Flat Line',
+  family: 'Forecast',
+  tagline: 'Twelve months of spend, six of them predictable',
+  desc:
+    'A twelve-month spend chart. The first half spikes between \u20ac940 and \u20ac5,620 as trips and roaming ' +
+    'bundles land at random; from July the line runs flat around \u20ac2,300 and stays there. The saving is ' +
+    'the headline, but the flat line is the part a finance director actually buys \u2014 a number they can ' +
+    'put in a budget.',
+  pros: [
+    'Predictability is a benefit no other option on the board claims',
+    'A drawn line is the clearest motion here and reads instantly',
+    'Works as evidence in a renewal or board pack, not just a hero',
+  ],
+  cons: [
+    'The twelve figures are illustrative and need to come from a real account',
+    'A chart is a cold image for a page about people travelling',
+    'Two lines and three stat cards is a lot of small type on a phone',
+  ],
+  scores: { story: 5, motion: 4, perf: 5, mobile: 3, brand: 3, ease: 4 },
+  build: (uid) => {
+    const dur = 12;
+    const before = 'M 72 262 L 119 161 L 165 269 L 212 116 L 258 232 L 305 178';
+    const after = 'M 351 225 L 398 226 L 444 224 L 491 225 L 537 224 L 584 226';
+    const grid = [[300, '\u20ac0'], [235, '\u20ac2k'], [169, '\u20ac4k'], [104, '\u20ac6k']];
+    const months = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
+    const cards = [
+      ['WORST MONTH BEFORE', '\u20ac5,620', RED],
+      ['WORST MONTH SINCE', '\u20ac2,340', P.deep],
+      ['MONTH TO MONTH SWING', '\u00b171% \u2192 \u00b12%', INK],
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 200, 250, uid)}
+    ${mono(40, 54, 'CONNECTIVITY SPEND \u00b7 TWELVE MONTHS \u00b7 ONE ACCOUNT', { size: 9.5, op: 0.45 })}
+    ${grid.map(([y, t]) => `
+      <line x1="72" y1="${y}" x2="584" y2="${y}" stroke="${LINE}" stroke-width="1.2"/>
+      ${mono(62, y + 4, t, { size: 8.5, op: 0.35, anchor: 'end' })}`).join('')}
+    ${months.map((m, i) => mono(72 + i * 46.5, 318, m, { size: 8.5, op: 0.3, anchor: 'middle' })).join('')}
+    <path d="${before}" fill="none" stroke="${RED}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+      stroke-dasharray="700">
+      <animate attributeName="stroke-dashoffset" values="700;700;0;0" keyTimes="0;0.04;0.32;1"
+        dur="${dur}s" repeatCount="indefinite" calcMode="spline" keySplines="0 0 1 1;0.3 0 0.2 1;0 0 1 1"/>
+    </path>
+    <path d="M 305 178 L 351 225" fill="none" stroke="${P.main}" stroke-width="2.5" stroke-dasharray="5 5" opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.34;0.38;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+    </path>
+    <path d="${after}" fill="none" stroke="${P.main}" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"
+      stroke-dasharray="300">
+      <animate attributeName="stroke-dashoffset" values="300;300;0;0" keyTimes="0;0.38;0.6;1"
+        dur="${dur}s" repeatCount="indefinite" calcMode="spline" keySplines="0 0 1 1;0.3 0 0.2 1;0 0 1 1"/>
+    </path>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.34;0.4;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      <line x1="328" y1="96" x2="328" y2="306" stroke="${P.main}" stroke-width="1.6" stroke-dasharray="4 4"/>
+      ${mono(336, 108, 'OPENLINE FROM JULY', { size: 8.5, op: 0.5, fill: P.deep })}
+    </g>
+    ${cards.map(([k, v, col], i) => {
+      const x = 72 + i * 174;
+      const on = 0.62 + i * 0.08;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.05).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${card(x, 336, 164, 80, { r: 13, fill: i === 1 ? P.wash : WHITE, stroke: i === 1 ? P.main : LINE, sw: i === 1 ? 2 : 1.5 })}
+        ${mono(x + 20, 364, k, { size: 8.5, op: 0.42 })}
+        ${num(x + 20, 396, v, { size: 17, fill: col })}
+      </g>`;
+    }).join('')}
+    ${mono(40, 444, 'THE SAVING IS THE HEADLINE \u00b7 THE FLAT LINE IS WHY FINANCE SIGNS', { size: 9, op: 0.35 })}`;
+    return { svg: wrap(inner), pills: pB('Predictable spend') };
+  },
+};
+
+export const bizThreePromises = {
+  id: 'biz-promises',
+  name: 'Three Promises',
+  family: 'Typographic',
+  tagline: 'The subhead, with each claim answered',
+  desc:
+    'No illustration at all. The subhead promises three things \u2014 costs down 75%, admin headaches gone, ' +
+    '190+ countries \u2014 and each is set large with the figure that supports it underneath: $47,000 on a ' +
+    '25-person team, 85% less admin time and two hours to set up, 200+ network partners. A blue rule ' +
+    'draws under each claim as it is answered.',
+  pros: [
+    'Answers the heading directly instead of illustrating around it',
+    'Every supporting figure is already published on this page',
+    'Cheapest option here to build, translate and keep accurate',
+  ],
+  cons: [
+    'Type only \u2014 if Paul wants to see the product, this shows none of it',
+    'Sits next to a headline, so the section risks reading as two headlines',
+    'Very little motion beyond three rules and three fades',
+  ],
+  scores: { story: 4, motion: 2, perf: 5, mobile: 5, brand: 4, ease: 5 },
+  build: (uid) => {
+    const dur = 10;
+    const rows = [
+      ['Costs down 75%', 'ON A 25-PERSON TEAM TRAVELLING THREE TIMES A YEAR', '$47,000'],
+      ['Admin headaches, gone', 'AND TWO HOURS TO SET UP, NOT TWO WEEKS', '85%'],
+      ['190+ countries', 'PREMIUM NETWORK PARTNERS BEHIND THE COVERAGE', '200+'],
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(300, 220, 250, uid)}
+    ${mono(56, 58, 'THE SUBHEAD MAKES THREE PROMISES', { size: 9.5, op: 0.45 })}
+    ${rows.map(([claim, proof, fig], i) => {
+      const y = 132 + i * 96;
+      const on = 0.06 + i * 0.16;
+      return `<g>
+        <line x1="56" y1="${y - 42}" x2="584" y2="${y - 42}" stroke="${LINE}" stroke-width="1.2"/>
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.05).toFixed(3)};1"
+            dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+          <text x="56" y="${y}" font-size="31" font-weight="700" fill="${INK}">${claim}</text>
+        </g>
+        <rect x="56" y="${y + 10}" width="0" height="4" rx="2" fill="${P.main}">
+          <animate attributeName="width" values="0;0;168;168" keyTimes="0;${(on + 0.05).toFixed(3)};${(on + 0.11).toFixed(3)};1"
+            dur="${dur}s" repeatCount="indefinite" calcMode="spline" keySplines="0 0 1 1;0.4 0 0.2 1;0 0 1 1"/>
+        </rect>
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${(on + 0.09).toFixed(3)};${(on + 0.14).toFixed(3)};1"
+            dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+          ${mono(56, y + 36, proof, { size: 9, op: 0.5, fill: P.deep })}
+          ${num(584, y, fig, { size: 26, anchor: 'end' })}
+        </g>
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.74;0.82;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${mono(56, 424, 'EVERY FIGURE HERE IS ALREADY ON THIS PAGE \u00b7 NONE OF IT IS IN THE PICTURE', { size: 9, op: 0.38 })}
+    </g>`;
+    return { svg: wrap(inner), pills: pB('The claims, answered') };
+  },
+};
+
 /* ── registry ── */
-export const BIZ_HERO_VARIANTS = [bizCurrent, teamMap, invoice, onboard, opsFeed, oneInvoice, bizExpenses, bizLanded, bizPolicy, bizWhereTheyAre, bizTheSaving];
+export const BIZ_HERO_VARIANTS = [bizCurrent, teamMap, invoice, onboard, opsFeed, oneInvoice, bizExpenses, bizLanded, bizPolicy, bizWhereTheyAre, bizTheSaving, bizCaseStudy, bizPerGig, bizInTheirHand, bizFlatLine, bizThreePromises];

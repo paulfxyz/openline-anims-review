@@ -798,8 +798,403 @@ export const oneOrHundred = {
   },
 };
 
+/* ══════════════════════════════════════════════════════════════════════════
+   ROUND TWO — options 11–15. Axes the first ten left alone: the trading
+   day as a chronology, settlement terms as a price, the reasons in prose,
+   where the signals come from, and type with no chart at all.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* 11 ── The Session (INST) */
+export const theSession = {
+  id: 'ob-session',
+  name: 'The Session',
+  family: 'A · institutional',
+  tagline: 'One route, twenty-four hours, and what moved it when',
+  desc:
+    'The width used as a clock rather than a diagram. Twenty-four hourly candles for JP · Tier-1 ' +
+    'draw left to right from an open of 0.927 to a last of 0.870, and three annotations land on ' +
+    'the hours that caused the moves — competing quotes at 04:00, a Kyushu weather advisory at ' +
+    '11:00, a congestion window clearing at 19:00. The summary panel closes on the same −6.2% ' +
+    'the live book already shows for the route.',
+  pros: ['The only option with a time axis, which is what a wide band is for', 'Annotations tie named signals to specific price moves', 'Familiar to anyone who has read an intraday chart'],
+  cons: ['Needs a third decimal to be legible hourly, while the rest of the page quotes two', 'Twenty-four candles is a lot of geometry for a phone', 'One route only — says nothing about the other 189'],
+  scores: { story: 5, motion: 4, perf: 4, mobile: 2, brand: 5, ease: 3 },
+  build: () => {
+    const closes = [0.930, 0.929, 0.934, 0.940, 0.933, 0.925, 0.918, 0.922, 0.914, 0.906, 0.899,
+      0.912, 0.908, 0.900, 0.893, 0.888, 0.894, 0.886, 0.879, 0.868, 0.861, 0.866, 0.872, 0.870];
+    const open0 = 0.927;
+    const wick = [0.004, 0.002, 0.006, 0.003];
+    const x0 = 72, cw = 26, step = 38;
+    const yTop = 82, yBot = 288, lo = 0.852, hi = 0.948;
+    const sy = (v) => yBot - ((v - lo) / (hi - lo)) * (yBot - yTop);
+    const bars = closes.map((c, i) => {
+      const o = i === 0 ? open0 : closes[i - 1];
+      const hiV = Math.max(o, c) + wick[i % 4];
+      const loV = Math.min(o, c) - wick[(i + 2) % 4];
+      return { i, o, c, hiV, loV, x: x0 + i * step, up: c >= o };
+    });
+    const notes = [
+      [4, 'A FOURTH COUNTERPARTY STARTED QUOTING', 'PRICING &amp; SPREAD · 24'],
+      [11, 'SEVERE WEATHER ADVISORY · KYUSHU', 'GEOPOLITICAL &amp; CLIMATE RISK · 18'],
+      [19, 'CONGESTION WINDOW CLEARED · 419 Mbps', 'QUALITY OF SERVICE · 31'],
+    ];
+    const stats = [['OPEN', '0.927'], ['HIGH', '0.943'], ['LOW', '0.858'], ['LAST', '0.870'],
+      ['CHANGE', '−6.2%'], ['VOLUME', '268.4 TB'], ['PRINTS', '96']];
+    return {
+      pills: noPills,
+      svg: wB(`
+        ${rect(0, 0, W, H, { fill: INST.ground, r: 0 })}
+        ${glow(`400`, `0`, `380`, 0.5)}
+        ${lab(24, 28, 'JP · TIER-1 · THE SESSION · 00:00 → 23:00', INST.text, { size: 10 })}
+        ${lab(W - 24, 28, 'USD / GB · AXIS TRUNCATED AT 0.852', INST.faint, { a: 'end' })}
+
+        ${[0.86, 0.88, 0.90, 0.92, 0.94].map(v => `
+          <line x1="${x0 - 20}" y1="${sy(v).toFixed(1)}" x2="${W - 300}" y2="${sy(v).toFixed(1)}"
+            stroke="${INST.line}" stroke-dasharray="2 6"/>
+          ${lab(x0 - 28, sy(v) + 3, v.toFixed(2), INST.faint, { size: 8, a: 'end' })}`).join('')}
+
+        ${bars.map(b => {
+          const beg = (b.i * 0.16).toFixed(2);
+          const top = sy(Math.max(b.o, b.c)), bot = sy(Math.min(b.o, b.c));
+          const bh = Math.max(bot - top, 2).toFixed(1);
+          const col = b.up ? INST.up : INST.down;
+          return `<g opacity="0">
+            <animate attributeName="opacity" values="0;1;1" keyTimes="0;0.03;1" dur="14s"
+              begin="${beg}s" repeatCount="indefinite" fill="freeze"/>
+            <line x1="${b.x + cw / 2}" y1="${sy(b.hiV).toFixed(1)}" x2="${b.x + cw / 2}" y2="${sy(b.loV).toFixed(1)}"
+              stroke="${col}" stroke-width="1.2" opacity="0.7"/>
+            <rect x="${b.x}" y="${top.toFixed(1)}" width="${cw}" height="${bh}" rx="2" fill="${col}" opacity="0.9"/>
+          </g>`;
+        }).join('')}
+
+        ${[0, 6, 12, 18, 23].map(h => lab(x0 + h * step + cw / 2, 306,
+          String(h).padStart(2, '0') + ':00', INST.faint, { size: 8, a: 'middle' })).join('')}
+        <line x1="${x0 - 20}" y1="292" x2="${W - 300}" y2="292" stroke="${INST.line}"/>
+
+        ${notes.map(([h, line, fam], i) => {
+          const x = x0 + h * step + cw / 2;
+          const on = (0.28 + i * 0.12).toFixed(3);
+          const onE = (0.32 + i * 0.12).toFixed(3);
+          const ty = 330 + i * 30;
+          return `<g opacity="0">
+            <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on};${onE};1" dur="14s"
+              repeatCount="indefinite" fill="freeze"/>
+            <line x1="${x}" y1="${yTop}" x2="${x}" y2="292" stroke="${INST.gold}" stroke-width="1"
+              stroke-dasharray="2 4" opacity="0.6"/>
+            <circle cx="${x}" cy="${yTop}" r="3.4" fill="${INST.gold}"/>
+            <circle cx="32" cy="${ty - 4}" r="3" fill="${INST.gold}"/>
+            ${lab(44, ty, String(h).padStart(2, '0') + ':00 · ' + line, INST.dim, { size: 9 })}
+            ${lab(560, ty, fam, INST.faint, { size: 8 })}
+          </g>`;
+        }).join('')}
+
+        ${rect(W - 280, 60, 256, 300, { fill: INST.panel, r: 8 })}
+        ${rect(W - 280, 60, 256, 2, { fill: INST.gold, r: 0, op: 0.35 })}
+        ${lab(W - 256, 88, 'SESSION SUMMARY', INST.gold, { size: 8.5, op: 0.9 })}
+        ${stats.map(([k, v], i) => {
+          const y = 118 + i * 34;
+          const on = (0.62 + i * 0.035).toFixed(3);
+          const onE = (0.65 + i * 0.035).toFixed(3);
+          const col = k === 'CHANGE' ? INST.down : k === 'LAST' ? INST.gold : INST.text;
+          const size = k === 'LAST' || k === 'CHANGE' ? 20 : 15;
+          return `
+          ${lab(W - 256, y, k, INST.faint, { size: 8 })}
+          <g opacity="0">
+            <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on};${onE};1" dur="14s"
+              repeatCount="indefinite" fill="freeze"/>
+            ${t(W - 48, y + 4, v, { m: true, size, w: 700, a: 'end', fill: col })}
+          </g>`;
+        }).join('')}
+
+        ${lab(24, H - 14, 'PRICES MOVE WHEN THE UNDERLYING CONDITIONS MOVE, NOT WHEN A CONTRACT COMES UP FOR RENEWAL',
+          INST.faint, { size: 9 })}`),
+    };
+  },
+};
+
+/* 12 ── Same Capacity, Four Terms (FIN) */
+export const fourTerms = {
+  id: 'ob-terms',
+  name: 'Four Terms',
+  family: 'B · fintech-clean',
+  tagline: 'Same route, same volume, four prices',
+  desc:
+    'Eight terabytes on DE · Tier-1, quoted four ways: 0.58 against a ninety-day commitment, ' +
+    '0.61 paid upfront, 0.63 at T+14, 0.66 at T+30. Eight basis points of spread on identical ' +
+    'capacity, decided entirely by who pays when. It is the only option that answers the ' +
+    'question a buyer asks after reading the six families — why is my price different from ' +
+    'theirs — and it draws the liquidity family the other options treat as one bar among six.',
+  pros: ['Explains price differences between buyers without accusing anyone', 'Makes settlement terms feel like an instrument, which is the page\u2019s claim', 'Four figures, no chart literacy needed'],
+  cons: ['Covers one signal family out of six', 'Four near-identical cards is a static composition', 'The eight-basis-point spread has to hold up commercially'],
+  scores: { story: 4, motion: 2, perf: 5, mobile: 4, brand: 4, ease: 5 },
+  build: (uid) => {
+    const sh = `<defs><filter id="${uid}-sh" x="-20%" y="-20%" width="140%" height="140%">` +
+      `<feDropShadow dx="0" dy="5" stdDeviation="9" flood-color="#0F172A" flood-opacity="0.07"/></filter></defs>`;
+    const cards = [
+      ['COMMITTED · 90 DAYS', '0.58', '−3 bp', 0.0, 'Upfront, 90-day commitment', 'None'],
+      ['PAID UPFRONT', '0.61', 'BASE', 0.375, 'Settles T+0', 'None'],
+      ['DEFERRED · T+14', '0.63', '+2 bp', 0.625, 'Settles in 14 days', '8.0 TB for 14 days'],
+      ['DEFERRED · T+30', '0.66', '+5 bp', 1.0, 'Settles in 30 days', '8.0 TB for 30 days'],
+    ];
+    const cwid = 296, gap = 16, x0 = 24;
+    return {
+      pills: noPills,
+      svg: wB(`
+        ${rect(0, 0, W, H, { fill: FIN.ground, r: 0 })}
+        ${sh}
+        ${lab(24, 34, 'THE SAME 8.0 TB ON DE · TIER-1, QUOTED FOUR WAYS', FIN.faint, { size: 9 })}
+        ${lab(W - 24, 34, 'LIQUIDITY ARRANGEMENTS · 12 SIGNALS', FIN.accent, { size: 9, a: 'end' })}
+
+        ${cards.map(([term, px, delta, frac, settles, exposure], i) => {
+          const x = x0 + i * (cwid + gap);
+          const beg = (i * 0.8).toFixed(2);
+          const isBase = delta === 'BASE';
+          const dCol = isBase ? FIN.faint : delta[0] === '+' ? FIN.up : FIN.accent;
+          const dWash = isBase ? FIN.rise : delta[0] === '+' ? '#E8F6F0' : FIN.accentSoft;
+          const barW = (216 * (0.18 + frac * 0.82)).toFixed(0);
+          return `<g opacity="0">
+            <animate attributeName="opacity" values="0;1;1" keyTimes="0;0.07;1" dur="11s"
+              begin="${beg}s" repeatCount="indefinite" fill="freeze"/>
+            <g filter="url(#${uid}-sh)">${rect(x, 54, cwid, 250, { fill: FIN.panel, r: 16, stroke: FIN.line })}</g>
+            ${lab(x + 26, 86, term, FIN.faint, { size: 8.5 })}
+            ${t(x + 26, 152, px, { m: true, size: 54, w: 700, fill: isBase ? FIN.text : FIN.accent })}
+            ${rect(x + 182, 118, 88, 26, { fill: dWash, r: 13 })}
+            ${t(x + 226, 135, delta, { m: true, size: 11, w: 700, a: 'middle', fill: dCol })}
+            ${rect(x + 26, 172, 216, 6, { fill: FIN.rise, r: 3 })}
+            <rect x="${x + 26}" y="172" width="0" height="6" rx="3" fill="${FIN.accent}" opacity="0.8">
+              <animate attributeName="width" values="0;${barW};${barW}" keyTimes="0;0.22;1" dur="11s"
+                begin="${beg}s" repeatCount="indefinite" fill="freeze"/></rect>
+            ${lab(x + 26, 206, 'SETTLES', FIN.faint, { size: 7.5 })}
+            ${t(x + 26, 226, settles, { size: 12, w: 600, fill: FIN.text })}
+            ${lab(x + 26, 254, 'EXPOSURE CARRIED', FIN.faint, { size: 7.5 })}
+            ${t(x + 26, 274, exposure, { size: 12, w: 600, fill: exposure === 'None' ? FIN.up : FIN.accent })}
+          </g>`;
+        }).join('')}
+
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.48;0.56;1" dur="11s"
+            repeatCount="indefinite" fill="freeze"/>
+          <path d="M ${x0 + 26} 330 L ${x0 + 26} 342 L ${x0 + 3 * (cwid + gap) + 120} 342 L ${x0 + 3 * (cwid + gap) + 120} 330"
+            fill="none" stroke="${FIN.lineHard}" stroke-width="1.4"/>
+          ${t(W / 2, 366, 'Eight basis points between the cheapest and dearest terms on identical capacity.',
+            { size: 14, a: 'middle', fill: FIN.text })}
+        </g>
+        ${lab(24, H - 14, 'PAID UPFRONT AND PAID LATER ARE DIFFERENT INSTRUMENTS AND PRICE DIFFERENTLY',
+          FIN.faint, { size: 8.5 })}
+        ${lab(W - 24, H - 14, 'SETTLEMENT TERMS ARE PART OF THE QUOTE, NOT A FOOTNOTE', FIN.faint, { size: 8.5, a: 'end' })}`),
+    };
+  },
+};
+
+/* 13 ── The Reason Feed (FIN) */
+export const reasonFeed = {
+  id: 'ob-reasons',
+  name: 'The Reason Feed',
+  family: 'B · fintech-clean',
+  tagline: 'Every reprice, in a sentence',
+  desc:
+    'No chart. The mid sits large on the left and the right two thirds carry the last nine ' +
+    'reprices as plain English — time, family, signed adjustment, and one line saying what ' +
+    'changed. “A fourth counterparty started quoting the route, −1 bp.” It is the section\u2019s ' +
+    'content read aloud rather than diagrammed, and it is the only option where the reader ' +
+    'learns what a signal actually is by reading one.',
+  pros: ['Names causes in language a non-technical reader follows', 'Makes 109 signals concrete by showing nine of them firing', 'Reads as a product surface someone could subscribe to'],
+  cons: ['Nine sentences is the most reading of any option here', 'No shape — nothing to grasp at a glance from across a room', 'Every line has to be a claim the engine could really produce'],
+  scores: { story: 5, motion: 3, perf: 5, mobile: 3, brand: 4, ease: 4 },
+  build: (uid) => {
+    const sh = `<defs><filter id="${uid}-sh" x="-20%" y="-20%" width="140%" height="140%">` +
+      `<feDropShadow dx="0" dy="5" stdDeviation="9" flood-color="#0F172A" flood-opacity="0.07"/></filter></defs>`;
+    const feed = [
+      ['19:04', 'QUALITY OF SERVICE', '−2 bp', 'Congestion window in Tokyo cleared'],
+      ['18:41', 'PRICING &amp; SPREAD', '−1 bp', 'A fourth counterparty now quoting'],
+      ['17:58', 'LIQUIDITY', '+1 bp', 'Buyer moved from upfront to T+30'],
+      ['16:12', 'GEOPOLITICAL RISK', '+4 bp', 'Severe weather advisory, Kyushu'],
+      ['15:30', 'COMPLIANCE', '0 bp', 'Standing re-verified, unchanged'],
+      ['14:22', 'TIER &amp; STANDING', '−1 bp', 'Seller promoted to full MVNO'],
+      ['13:05', 'QUALITY OF SERVICE', '−1 bp', 'Attach held at 98.9% at peak'],
+      ['11:40', 'PRICING &amp; SPREAD', '−2 bp', 'Competing quote at 0.86 withdrawn'],
+      ['09:15', 'LIQUIDITY', '+1 bp', 'Commitment cut from 12 TB to 8 TB'],
+    ];
+    const colX = [424, 712, 1000], colW = 256;
+    return {
+      pills: noPills,
+      svg: wB(`
+        ${rect(0, 0, W, H, { fill: FIN.ground, r: 0 })}
+        ${sh}
+        <g filter="url(#${uid}-sh)">${rect(24, 24, 368, 372, { fill: FIN.panel, r: 16, stroke: FIN.line })}</g>
+        ${lab(56, 62, 'JP · TIER-1 · COMPOSED MID', FIN.faint, { size: 9 })}
+        ${repricing(352, 150, ['0.87', '0.86', '0.88', '0.87'], { fill: FIN.accent, size: 76, w: 700, dur: 12 })}
+        ${lab(56, 176, 'USD / GB', FIN.faint, { size: 8.5 })}
+        ${rect(56, 200, 304, 1, { fill: FIN.line, r: 0 })}
+        ${lab(56, 228, 'CHANGE TODAY', FIN.faint, { size: 8.5 })}
+        ${t(352, 234, '−6.2%', { m: true, size: 26, w: 700, a: 'end', fill: FIN.accent })}
+        ${lab(56, 268, 'REPRICES TODAY', FIN.faint, { size: 8.5 })}
+        ${t(352, 274, '1,206', { m: true, size: 26, w: 700, a: 'end', fill: FIN.text })}
+        ${rect(56, 300, 304, 1, { fill: FIN.line, r: 0 })}
+        ${t(56, 330, 'Every reprice is recorded with the', { size: 13, fill: FIN.dim })}
+        ${t(56, 350, 'signal that caused it.', { size: 13, fill: FIN.dim })}
+        <circle cx="56" cy="372" r="4" fill="${FIN.up}">
+          <animate attributeName="opacity" values="0.35;1;0.35" keyTimes="0;0.5;1" dur="2.4s" repeatCount="indefinite"/></circle>
+        ${lab(70, 376, 'LIVE', FIN.faint, { size: 8 })}
+
+        ${lab(424, 40, 'THE LAST NINE OF 1,206 REPRICES TODAY', FIN.faint, { size: 9 })}
+        ${lab(W - 24, 40, 'NEWEST FIRST', FIN.faint, { size: 9, a: 'end' })}
+
+        ${feed.map(([tm, fam, d, line], i) => {
+          const col = (i / 3) | 0, row = i % 3;
+          const x = colX[col], y = 58 + row * 118;
+          const beg = (i * 0.45).toFixed(2);
+          const dCol = d === '0 bp' ? FIN.faint : d[0] === '+' ? FIN.up : FIN.accent;
+          return `<g opacity="0">
+            <animate attributeName="opacity" values="0;1;1" keyTimes="0;0.06;1" dur="12s"
+              begin="${beg}s" repeatCount="indefinite" fill="freeze"/>
+            ${rect(x, y, colW, 104, { fill: FIN.panel, r: 12, stroke: FIN.line })}
+            ${i === 0 ? `${rect(x, y, 3, 104, { fill: FIN.accent, r: 1.5 })}` : ''}
+            ${lab(x + 20, y + 26, tm, FIN.dim, { size: 10 })}
+            ${t(x + colW - 20, y + 30, d, { m: true, size: 16, w: 700, a: 'end', fill: dCol })}
+            ${lab(x + 20, y + 48, fam, FIN.faint, { size: 7.5 })}
+            ${t(x + 20, y + 76, line.length > 34 ? line.slice(0, 33) + '…' : line, { size: 12.5, w: 500, fill: FIN.text })}
+            ${rect(x + 20, y + 88, colW - 40, 1, { fill: FIN.line, r: 0 })}
+          </g>`;
+        }).join('')}
+        ${lab(424, H - 14, 'THE BOOK RECORDS NOT ONLY THE NEW PRICE BUT WHAT CHANGED TO CAUSE IT', FIN.faint, { size: 8.5 })}`),
+    };
+  },
+};
+
+/* 14 ── Where the Signals Come From (INST) */
+export const signalSources = {
+  id: 'ob-source',
+  name: 'Where They Come From',
+  family: 'A · institutional',
+  tagline: 'Six sources behind the six families',
+  desc:
+    'Every other option shows the signals arriving. This one shows where they arrive from: real ' +
+    'user and affiliate sessions, operator feeds, sanctions and regulatory registries, ' +
+    'meteorological services, the counterparty registry and the settlement ledger — with the ' +
+    'families each one feeds, its refresh cadence, and how long since it was last read. The ' +
+    'six rows account for all 109 signals.',
+  pros: ['Answers the provenance question due diligence asks first', 'The refresh bars make cadence a fact rather than a word', 'Adds information to the page instead of restating it'],
+  cons: ['The six sources are inferred from the signal names and need confirming', 'A table is the least visual option on the board', 'Publishing a last-read time invites someone to check it'],
+  scores: { story: 4, motion: 3, perf: 5, mobile: 3, brand: 4, ease: 4 },
+  build: () => {
+    const rows = [
+      ['Live sessions', 'Throughput, attach, latency and loss sampled from real user and affiliate sessions', 'QUALITY OF SERVICE', 31, 'CONTINUOUS', '0s', 1.8],
+      ['Operator feeds', 'Wholesale rates and competing quotes, direct from MNO and MVNO counterparties', 'PRICING &amp; SPREAD', 24, 'ON QUOTE', '2s', 2.6],
+      ['Public registries', 'Sanctions exposure and regulatory change, from published registers', 'GEOPOLITICAL RISK', 8, 'DAILY', '4h', 7.5],
+      ['Meteorological services', 'Severe weather and grid stability advisories for every route\u2019s footprint', 'GEOPOLITICAL RISK', 10, 'HOURLY', '18m', 5.5],
+      ['Counterparty registry', 'KYC and KYB state, jurisdiction, minimum level held and delivery record', 'COMPLIANCE · TIER', 24, 'ON CHANGE', '3d', 9],
+      ['Settlement ledger', 'Upfront and deferred arrangements, windows, commitment size and credit terms', 'LIQUIDITY', 12, 'PER TRADE', '11s', 4],
+    ];
+    return {
+      pills: noPills,
+      svg: wB(`
+        ${rect(0, 0, W, H, { fill: INST.ground, r: 0 })}
+        ${glow(`240`, `0`, `340`, 0.5)}
+        ${lab(24, 28, 'WHERE THE SIGNALS COME FROM', INST.text, { size: 10 })}
+        ${lab(W - 24, 28, '109 SIGNALS · SIX FAMILIES · SIX SOURCES', INST.faint, { a: 'end' })}
+
+        ${lab(24, 66, 'SOURCE', INST.faint, { size: 7.5 })}
+        ${lab(268, 66, 'WHAT IT CARRIES', INST.faint, { size: 7.5 })}
+        ${lab(760, 66, 'FEEDS', INST.faint, { size: 7.5 })}
+        ${lab(948, 66, 'CADENCE', INST.faint, { size: 7.5 })}
+        ${lab(1060, 66, 'FRESHNESS', INST.faint, { size: 7.5 })}
+        ${lab(W - 24, 66, 'LAST READ', INST.faint, { size: 7.5, a: 'end' })}
+        <line x1="24" y1="76" x2="${W - 24}" y2="76" stroke="${INST.line}"/>
+
+        ${rows.map(([nm, what, fam, n, cad, last, rate], i) => {
+          const y = 88 + i * 48;
+          const beg = (i * 0.5).toFixed(2);
+          return `<g opacity="0">
+            <animate attributeName="opacity" values="0;1;1" keyTimes="0;0.05;1" dur="12s"
+              begin="${beg}s" repeatCount="indefinite" fill="freeze"/>
+            ${rect(24, y, W - 48, 42, { fill: i % 2 ? 'rgba(255,255,255,0.025)' : 'none', r: 4 })}
+            <circle cx="38" cy="${y + 21}" r="3.4" fill="${INST.gold}">
+              <animate attributeName="opacity" values="1;0.18;0.18;1" keyTimes="0;0.14;0.9;1"
+                dur="${rate}s" repeatCount="indefinite"/></circle>
+            ${t(54, y + 26, nm, { size: 13, w: 600, fill: INST.text })}
+            ${t(268, y + 26, what, { size: 11.5, fill: INST.dim })}
+            ${lab(760, y + 25, fam, INST.gold, { size: 7.5, op: 0.9 })}
+            ${t(930, y + 26, n + ' sig', { m: true, size: 11, a: 'end', fill: INST.faint })}
+            ${lab(948, y + 25, cad, INST.dim, { size: 8 })}
+            ${rect(1060, y + 18, 112, 5, { fill: 'rgba(255,255,255,0.08)', r: 2.5 })}
+            <rect x="1060" y="${y + 18}" width="112" height="5" rx="2.5" fill="${INST.up}" opacity="0.7">
+              <animate attributeName="width" values="112;0;112" keyTimes="0;0.86;1"
+                dur="${rate}s" repeatCount="indefinite"/></rect>
+            ${t(W - 24, y + 26, last, { m: true, size: 12, w: 600, a: 'end', fill: INST.text })}
+          </g>`;
+        }).join('')}
+
+        <line x1="24" y1="384" x2="${W - 24}" y2="384" stroke="${INST.line}"/>
+        ${lab(24, H - 12, 'MEASURED ON THE GROUND, NOT PROMISED ON A RATE CARD', INST.dim, { size: 9 })}
+        ${lab(W - 24, H - 12, 'NOT EVERY SOURCE REFRESHES AT THE SAME RATE', INST.faint, { size: 9, a: 'end' })}`),
+    };
+  },
+};
+
+/* 15 ── One Line (INST) */
+export const oneLine = {
+  id: 'ob-oneline',
+  name: 'One Line',
+  family: 'A · institutional',
+  tagline: 'The sentence, set large, with the counts doing the work',
+  desc:
+    'The section\u2019s own lead sentence across the full width, and beneath it the six family ' +
+    'names set at sizes proportional to their signal counts — quality of service twice the ' +
+    'weight of tier and standing — each lighting in turn as the mid reprices on the right. No ' +
+    'panels, no cells, no chart. It is the option to pick if the band should introduce the six ' +
+    'cards below rather than replace them.',
+  pros: ['Sits above the existing card grid without competing with it', 'Type size carries the counts, so the ranking reads instantly', 'Almost nothing to build or to load'],
+  cons: ['Adds no information the heading does not already give', 'Weighting by count implies importance by count, which is not the same thing', 'Looks thin if it has to carry the section alone'],
+  scores: { story: 3, motion: 2, perf: 5, mobile: 4, brand: 4, ease: 5 },
+  build: () => {
+    const fams = FAMS.map((f, i) => [SHORT[i], f[2]]);
+    const colW = 202, x0 = 32;
+    return {
+      pills: noPills,
+      svg: wB(`
+        ${rect(0, 0, W, H, { fill: INST.ground, r: 0 })}
+        ${glow(`${W / 2}`, `40`, `420`, 0.55)}
+        ${lab(32, 52, 'THE BOOK', INST.faint, { size: 9 })}
+        ${lab(W - 32, 52, 'JP · TIER-1 · USD / GB', INST.faint, { size: 9, a: 'end' })}
+
+        ${t(32, 128, 'Over a hundred signals feed every quote,', { size: 40, w: 700, fill: INST.text })}
+        ${t(32, 176, 'in six families.', { size: 40, w: 700, fill: INST.gold })}
+
+        <line x1="936" y1="84" x2="936" y2="192" stroke="${INST.line}"/>
+        ${lab(976, 112, 'COMPOSED MID', INST.faint, { size: 9 })}
+        ${repricing(W - 32, 176, ['0.87', '0.86', '0.88', '0.87'], { fill: INST.gold, size: 64, w: 700, dur: 12 })}
+
+        ${fams.map(([nm, n], i) => {
+          const x = x0 + i * colW;
+          const size = (17 + n * 0.55).toFixed(1);
+          const on = (0.08 + i * 0.13).toFixed(3);
+          const onE = (0.13 + i * 0.13).toFixed(3);
+          return `<g>
+            ${t(x, 268, nm, { size, w: 700, fill: INST.rise })}
+            <g opacity="0">
+              <animate attributeName="opacity" values="0;0;1;1;1" keyTimes="0;${on};${onE};0.92;1"
+                dur="12s" repeatCount="indefinite" fill="freeze"/>
+              ${t(x, 268, nm, { size, w: 700, fill: INST.text })}
+            </g>
+            ${rect(x, 282, colW - 28, 2, { fill: 'rgba(255,255,255,0.08)', r: 1 })}
+            <rect x="${x}" y="282" width="0" height="2" fill="${INST.gold}">
+              <animate attributeName="width" values="0;0;${colW - 28};${colW - 28}" keyTimes="0;${on};${onE};1"
+                dur="12s" repeatCount="indefinite" fill="freeze"/></rect>
+            ${t(x, 308, n + ' signals', { m: true, size: 12, fill: INST.faint })}
+          </g>`;
+        }).join('')}
+
+        <line x1="32" y1="350" x2="${W - 32}" y2="350" stroke="${INST.line}"/>
+        ${lab(32, 382, 'EVERY ONE OF THEM FEEDS THE SAME NUMBER, AND IT IS RECOMPUTED WHILE YOU READ THIS', INST.dim, { size: 9 })}
+        ${lab(W - 32, 382, 'REPRICED CONTINUOUSLY', INST.faint, { size: 9, a: 'end' })}`),
+    };
+  },
+};
+
 export const OMDM_BOOK_VARIANTS = [
   bookCurrent,
   signalFloor, sixLanes, waterfall, signalMatrix, contribution,
   cardsAlive, composer, flowToPrice, theRail, oneOrHundred,
+  theSession, fourTerms, reasonFeed, signalSources, oneLine,
 ];

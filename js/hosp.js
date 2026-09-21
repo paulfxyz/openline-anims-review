@@ -811,6 +811,340 @@ export const hZeroUpfront = {
   },
 };
 
+/* ══ HOSP · 11–15 ══════════════════════════════════════════════════ */
+
+export const hLanguages = {
+  id: 'h-lang',
+  name: 'In Their Language',
+  family: 'Typographic',
+  tagline: 'One welcome line, twenty languages',
+  desc:
+    'No illustration at all. The welcome-card line \u2014 \u201cYou are already online. No password, no ' +
+    'front desk\u201d \u2014 is set large and rewritten in a new language roughly every two seconds, while ' +
+    'twenty ticks fill along the bottom. The page promises instructions and support in 20+ languages ' +
+    'and nothing on it shows that; here the copy is the whole artwork.',
+  pros: [
+    'The only option with nothing to draw, so nothing can look wrong at any width',
+    'Uses a feature the page lists but never illustrates',
+    'An international guest sees their own language inside four seconds',
+  ],
+  cons: [
+    'Six languages are shown and twenty are claimed, so the ticks carry the rest',
+    'Every line needs a native check before it ships',
+    'No revenue figure anywhere in it',
+  ],
+  scores: { story: 4, motion: 3, perf: 5, mobile: 5, brand: 3, ease: 5 },
+  build: (uid) => {
+    const dur = 13;
+    const langs = [
+      ['ENGLISH', 'You are already online.', 'No password, no front desk'],
+      ['PORTUGU\u00caS', 'J\u00e1 est\u00e1 online.', 'Sem palavra-passe, sem fila'],
+      ['ESPA\u00d1OL', 'Ya est\u00e1 conectado.', 'Sin contrase\u00f1a, sin esperas'],
+      ['DEUTSCH', 'Sie sind schon online.', 'Kein Passwort, keine Rezeption'],
+      ['FRAN\u00c7AIS', 'Vous \u00eates d\u00e9j\u00e0 connect\u00e9.', 'Pas de mot de passe, pas d\u2019attente'],
+      ['ITALIANO', 'Sei gi\u00e0 online.', 'Nessuna password, nessuna coda'],
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(290, 230, 240, uid)}
+    ${mono(40, 50, 'THE WELCOME CARD \u00b7 PRINTED IN THE GUEST\u2019S LANGUAGE', { size: 9.5, op: 0.45 })}
+    <line x1="56" y1="172" x2="150" y2="172" stroke="${P.main}" stroke-width="3" stroke-linecap="round"/>
+    ${langs.map(([code, line, sub], i) => {
+      const on = 0.01 + i * 0.163;
+      const off = on + 0.148;
+      const kt = `0;${on.toFixed(4)};${(on + 0.012).toFixed(4)};${(off - 0.012).toFixed(4)};${off.toFixed(4)};1`;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="${kt}" dur="${dur}s" repeatCount="indefinite"/>
+        ${mono(56, 152, code, { size: 10, op: 0.6, fill: P.deep })}
+        <text x="56" y="216" font-size="30" font-weight="700" fill="${INK}">${line}</text>
+        <text x="56" y="250" font-size="15" font-weight="600" fill="${INK}" opacity="0.5">${sub}</text>
+      </g>`;
+    }).join('')}
+    ${mono(56, 292, 'LANGUAGES IN THE WELCOME FOLDER', { size: 9, op: 0.35 })}
+    ${Array.from({ length: 20 }, (_, i) => {
+      const a = (0.01 + i * 0.048).toFixed(4);
+      const b = (0.03 + i * 0.048).toFixed(4);
+      return `<rect x="${56 + i * 27}" y="306" width="17" height="7" rx="3.5" fill="${P.main}" opacity="0.14">
+        <animate attributeName="opacity" values="0.14;0.14;1;1" keyTimes="0;${a};${b};1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      </rect>`;
+    }).join('')}
+    ${card(40, 348, 560, 92, { r: 18 })}
+    ${label(64, 390, 'The guest never reads an instruction in a second language', { size: 16.5 })}
+    ${mono(64, 418, 'JAPANESE \u00b7 KOREAN \u00b7 ARABIC \u00b7 MANDARIN \u00b7 HINDI \u00b7 AND FIFTEEN MORE', { size: 9, op: 0.4 })}`;
+    return { svg: wrap(inner), pills: pH('20+ languages', 'No desk translation') };
+  },
+};
+
+export const hConcierge = {
+  id: 'h-concierge',
+  name: 'The Concierge Screen',
+  family: 'Product interface',
+  tagline: 'The portal the front desk actually uses',
+  desc:
+    'The concierge portal itself, mid-shift: tonight\u2019s arrivals listed by room, origin and length of ' +
+    'stay, and a cursor issuing an eSIM to three of them in turn. Each row flips to Delivered and a QR ' +
+    'appears for the welcome folder. It is the only option that shows the software a property is being ' +
+    'asked to log into rather than a symbol for the benefit.',
+  pros: [
+    'Answers the question a GM asks second: what does my team have to do',
+    'Shows the product exists, which no other option here does',
+    'One row per guest makes bulk issuing obvious without saying \u201cbulk\u201d',
+  ],
+  cons: [
+    'Commits us to a UI that must match what actually ships',
+    'Small table type is the first thing to fail on a narrow screen',
+    'Less emotive than a guest or a revenue figure',
+  ],
+  scores: { story: 5, motion: 4, perf: 5, mobile: 3, brand: 3, ease: 3 },
+  build: (uid) => {
+    const dur = 12;
+    const rows = [
+      ['412', 'Osaka', '3 nights', 0.14],
+      ['318', 'S\u00e3o Paulo', '2 nights', 0.42],
+      ['907', 'Seoul', '5 nights', 0.68],
+      ['204', 'Munich', '1 night', -1],
+    ];
+    const qr = Array.from({ length: 25 }, (_, i) => {
+      const c = i % 5, r = Math.floor(i / 5);
+      return (i * 7) % 3 ? `<rect x="${c * 8}" y="${r * 8}" width="7" height="7" fill="${INK}"/>` : '';
+    }).join('');
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 220, 250, uid)}
+    ${mono(40, 50, 'CONCIERGE PORTAL \u00b7 TONIGHT\u2019S ARRIVALS', { size: 9.5, op: 0.45 })}
+    ${panel(40, 64, 560, 300, { r: 16 })}
+    ${mono(68, 96, 'ARRIVALS', { size: 9.5, op: 1, fill: P.deep })}
+    ${mono(156, 96, 'eSIMS', { size: 9.5, op: 0.32 })}
+    ${mono(222, 96, 'REPORTS', { size: 9.5, op: 0.32 })}
+    <rect x="68" y="104" width="64" height="3" rx="1.5" fill="${P.main}"/>
+    <line x1="41" y1="114" x2="599" y2="114" stroke="${LINE}" stroke-width="1.5"/>
+    ${rows.map(([room, city, nights, at], i) => {
+      const y = 126 + i * 56;
+      const issued = at >= 0;
+      const a = issued ? at : 0;
+      return `<g>
+        ${card(60, y, 520, 44, { r: 10 })}
+        <text x="78" y="${y + 27}" font-size="13" font-weight="700" fill="${INK}" opacity="0.75"
+          style="font-family:${MONO}">${room}</text>
+        ${label(134, y + 28, city, { size: 13.5 })}
+        ${mono(286, y + 28, nights, { size: 9, op: 0.35 })}
+        <g${issued ? ' opacity="1"' : ''}>
+          ${issued ? `<animate attributeName="opacity" values="1;1;0;0" keyTimes="0;${a.toFixed(3)};${(a + 0.02).toFixed(3)};1"
+            dur="${dur}s" repeatCount="indefinite" fill="freeze"/>` : ''}
+          <rect x="430" y="${y + 7}" width="132" height="30" rx="15" fill="${P.main}"/>
+          <text x="496" y="${y + 27}" text-anchor="middle" font-size="10" font-weight="700" fill="${WHITE}"
+            letter-spacing="0.8" style="font-family:${MONO}">ISSUE eSIM</text>
+        </g>
+        ${issued ? `<g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${(a + 0.02).toFixed(3)};${(a + 0.05).toFixed(3)};1"
+            dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+          <rect x="430" y="${y + 7}" width="132" height="30" rx="15" fill="${GREEN_SOFT}"/>
+          <text x="496" y="${y + 27}" text-anchor="middle" font-size="10" font-weight="700" fill="${GREEN_TEXT}"
+            letter-spacing="0.8" style="font-family:${MONO}">DELIVERED</text>
+        </g>` : ''}
+      </g>`;
+    }).join('')}
+    <g opacity="0.9">
+      <path d="M 0 0 L 0 16 L 4.5 11.5 L 8 18 L 11 16.5 L 7.5 10 L 13 9.5 Z" fill="${INK}" stroke="${WHITE}" stroke-width="1.2"/>
+      <animateMotion dur="${dur}s" repeatCount="indefinite" calcMode="linear"
+        keyPoints="0;0.712;0.712;0.856;0.856;1;1" keyTimes="0;0.12;0.3;0.4;0.56;0.66;1"
+        path="M 300 348 L 496 152 L 496 208 L 496 264"/>
+    </g>
+    ${card(40, 380, 560, 62, { r: 14, fill: P.wash, stroke: P.main, sw: 1.8 })}
+    <g transform="translate(62 391)">${qr}</g>
+    ${label(128, 404, 'QR sent to the guest and printed for the welcome folder', { size: 13.5 })}
+    ${mono(128, 424, 'THREE ROOMS ISSUED IN UNDER A MINUTE \u00b7 NO STAFF TRAINING BEYOND THIS SCREEN', { size: 8.5, op: 0.45 })}`;
+    return { svg: wrap(inner), pills: pH('Issued at the desk', 'Concierge portal') };
+  },
+};
+
+export const hPartnerWords = {
+  id: 'h-words',
+  name: 'What Partners Say',
+  family: 'Editorial',
+  tagline: 'Two partner quotes, set as the artwork',
+  desc:
+    'The page already carries two partner quotes further down \u2014 a TripAdvisor rating going from 4.3 ' +
+    'to 4.8, and an extra $3,200 a month from premium packages \u2014 and the hero ignores both. This sets ' +
+    'them as large pull quotes, one at a time, with the figure lifted out beneath. It is a property ' +
+    'owner talking to a property owner, which is the most persuasive voice available here.',
+  pros: [
+    'Uses the page\u2019s own evidence instead of inventing a number',
+    'Peer proof outperforms a feature claim with this buyer',
+    'Nothing to illustrate, so it is cheap and safe at every size',
+  ],
+  cons: [
+    'Both quotes are unattributed on the live page and need a named property',
+    'Two quotes make a short loop with only two beats',
+    'Repeats copy the reader will meet again lower down the page',
+  ],
+  scores: { story: 5, motion: 2, perf: 5, mobile: 5, brand: 4, ease: 5 },
+  build: (uid) => {
+    const dur = 15;
+    const quotes = [
+      [['Adding eSIMs to our welcome packages', 'has been a game-changer. International', 'guests love it, and our TripAdvisor', 'rating jumped from 4.3 to 4.8.'],
+        '4.3 \u2192 4.8', 'TRIPADVISOR RATING AFTER ONE SEASON', 'CITY HOTEL \u00b7 EUROPE'],
+      [['We\u2019ve generated an extra $3,200 a month', 'in revenue by offering premium eSIM', 'packages. Our guests appreciate not', 'having to hunt for local SIM cards.'],
+        '+$3,200', 'ADDITIONAL REVENUE, PER MONTH', 'RESORT \u00b7 ASIA PACIFIC'],
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(300, 210, 250, uid)}
+    ${mono(40, 50, 'IN A PARTNER\u2019S OWN WORDS', { size: 9.5, op: 0.45 })}
+    <text x="52" y="168" font-size="110" font-weight="700" fill="${P.main}" opacity="0.16">\u201c</text>
+    ${quotes.map(([lines, fig, figNote, who], i) => {
+      const on = i === 0 ? 0.02 : 0.52;
+      const off = on + 0.44;
+      const kt = `0;${on.toFixed(3)};${(on + 0.03).toFixed(3)};${(off - 0.03).toFixed(3)};${off.toFixed(3)};1`;
+      return `<g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="${kt}" dur="${dur}s" repeatCount="indefinite"/>
+        ${lines.map((ln, k) => `<text x="78" y="${128 + k * 36}" font-size="21" font-weight="600" fill="${INK}" opacity="0.88">${ln}</text>`).join('')}
+        ${mono(78, 298, who, { size: 9, op: 0.38 })}
+        ${card(40, 328, 560, 108, { r: 18, fill: P.wash, stroke: P.main, sw: 2 })}
+        <text x="68" y="398" font-size="46" font-weight="700" fill="${P.deep}" style="font-family:${MONO}">${fig}</text>
+        ${mono(68, 420, figNote, { size: 9, op: 0.5, fill: P.deep })}
+      </g>`;
+    }).join('')}`;
+    return { svg: wrap(inner), pills: pH('4.3 \u2192 4.8 rating', '+$3,200 a month') };
+  },
+};
+
+export const hModels = {
+  id: 'h-models',
+  name: 'Pick Your Model',
+  family: 'Deal structure',
+  tagline: 'Room rate, upsell, or commission',
+  desc:
+    'A property does not ask what an eSIM is, it asks how the money works. The three partnership ' +
+    'models the page offers sit side by side \u2014 bundled into the room rate, sold as a premium ' +
+    'upgrade, or sold to the guest for 20\u201330% commission \u2014 with what each includes and what each ' +
+    'returns on a 120-room property. A highlight moves through them so all three get read.',
+  pros: [
+    'Answers the commercial question instead of restating the benefit',
+    'Lets an owner self-select before they speak to sales',
+    'The 20\u201330% commission band is on the page but never in the hero',
+  ],
+  cons: [
+    'Three columns is the most text of any option in this board',
+    'The monthly figures are modelled, not measured, and must be labelled so',
+    'A pricing table in a hero may look like it belongs further down',
+  ],
+  scores: { story: 4, motion: 3, perf: 5, mobile: 3, brand: 3, ease: 4 },
+  build: (uid) => {
+    const dur = 12;
+    const cols = [
+      ['Welcome Package', 'IN THE ROOM RATE', ['1\u20135 GB, stay length', 'QR in the folder', 'Branded sign-up page'], '+\u20ac1,240', 'EVERY ARRIVING GUEST'],
+      ['Premium Suite', 'PAID UPGRADE', ['10\u201320 GB, 30 days', 'Digital concierge', 'White-label brand'], '+\u20ac980', 'SUITES AND LONG STAYS'],
+      ['Partnership', 'COMMISSION 20\u201330%', ['Guest buys direct', 'Nothing on invoice', 'Monthly report'], '+\u20ac620', 'NO INVENTORY, NO RISK'],
+    ];
+    const inner = `
+    ${dots(uid)}
+    ${bloom(320, 220, 250, uid)}
+    ${mono(40, 50, 'THREE WAYS TO PUT IT ON THE BILL', { size: 9.5, op: 0.45 })}
+    ${cols.map(([nm, frame, bullets, fig, note], i) => {
+      const x = 40 + i * 192;
+      const on = 0.06 + i * 0.3;
+      return `<g>
+        ${card(x, 84, 176, 276, { r: 16 })}
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1;0;0"
+            keyTimes="0;${on.toFixed(3)};${(on + 0.03).toFixed(3)};${(on + 0.25).toFixed(3)};${(on + 0.28).toFixed(3)};1"
+            dur="${dur}s" repeatCount="indefinite"/>
+          ${card(x, 84, 176, 276, { r: 16, fill: P.wash, stroke: P.main, sw: 2.5 })}
+        </g>
+        ${label(x + 20, 118, nm, { size: 15 })}
+        ${mono(x + 20, 138, frame, { size: 8.5, op: 0.5, fill: P.deep })}
+        ${bullets.map((b, k) => `${tick(x + 18, 172 + k * 34, '', {})}
+          <text x="${x + 34}" y="${176 + k * 34}" font-size="11" font-weight="600" fill="${INK}" opacity="0.7">${b}</text>`).join('')}
+        <line x1="${x + 20}" y1="286" x2="${x + 156}" y2="286" stroke="${LINE}" stroke-width="1.5"/>
+        ${num(x + 20, 324, fig, { size: 24 })}
+        ${mono(x + 20, 344, note, { size: 8, op: 0.38 })}
+      </g>`;
+    }).join('')}
+    ${card(40, 376, 560, 64, { r: 16, fill: INK, stroke: INK })}
+    ${label(64, 404, 'Same eSIM, three ways to earn from it', { size: 15, fill: WHITE })}
+    ${mono(64, 426, 'MODELLED ON A 120-ROOM PROPERTY AT 44% ATTACHMENT', { size: 8.5, op: 0.45, fill: WHITE })}
+    ${num(576, 412, '\u20ac2,840', { size: 22, anchor: 'end', fill: P.main })}`;
+    return { svg: wrap(inner), pills: pH('Three deal models', '20\u201330% commission') };
+  },
+};
+
+export const hAfterCheckout = {
+  id: 'h-after',
+  name: 'After They Leave',
+  family: 'Geography',
+  tagline: 'The guest checks out, the eSIM keeps earning',
+  desc:
+    'A route runs out of the property and across the map \u2014 Lisbon, Seville, Tangier, Marrakesh \u2014 ' +
+    'with the guest still on the eSIM the hotel gave them. Each top-up they buy on the road pays the ' +
+    'property its commission, days after they have gone. Nothing else in this hero suggests the revenue ' +
+    'continues past the checkout date, and the 200+ network claim is what makes it possible.',
+  pros: [
+    'A genuinely new commercial idea: revenue with no guest in the building',
+    'The only option with geography in it, which suits a travel audience',
+    'Makes the 200+ networks line do commercial work instead of sitting as a badge',
+  ],
+  cons: [
+    'Depends on commission surviving after checkout, which must be true',
+    'The map is schematic rather than accurate geography',
+    'Two top-ups is a small number to build a revenue claim on',
+  ],
+  scores: { story: 5, motion: 4, perf: 5, mobile: 4, brand: 4, ease: 3 },
+  build: (uid) => {
+    const dur = 12;
+    const route = 'M 96 214 Q 172 150 248 178 Q 326 208 404 222 Q 480 238 556 190';
+    const stops = [['96', '214', 'Lisbon', 'YOUR PROPERTY'], ['248', '178', 'Seville', 'DAY 6'], ['404', '222', 'Tangier', 'DAY 9'], ['556', '190', 'Marrakesh', 'DAY 11']];
+    const ledger = [
+      ['Night 4 \u00b7 checkout', 'Guest keeps the eSIM', '', 0.30],
+      ['Day 6 \u00b7 Seville', '5 GB top-up', '+\u20ac2.40', 0.46],
+      ['Day 11 \u00b7 Marrakesh', '10 GB top-up', '+\u20ac4.80', 0.62],
+    ];
+    const inner = `
+    ${dots(uid)}
+    <ellipse cx="190" cy="122" rx="196" ry="74" fill="${P.soft}" opacity="0.5"/>
+    <ellipse cx="484" cy="250" rx="224" ry="52" fill="${P.soft}" opacity="0.5"/>
+    ${bloom(300, 200, 240, uid)}
+    ${mono(40, 50, 'ONE GUEST, AFTER CHECKOUT \u00b7 200+ NETWORKS', { size: 9.5, op: 0.45 })}
+    <path d="${route}" fill="none" stroke="${LINE}" stroke-width="3"/>
+    <path d="${route}" fill="none" stroke="${P.main}" stroke-width="3.5" stroke-linecap="round"
+      stroke-dasharray="560" stroke-dashoffset="560">
+      <animate attributeName="stroke-dashoffset" values="560;0;0" keyTimes="0;0.62;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+    </path>
+    <circle r="6" fill="${P.deep}">
+      <animateMotion dur="${dur}s" repeatCount="indefinite" keyPoints="0;1;1" keyTimes="0;0.62;1" calcMode="linear" path="${route}"/>
+    </circle>
+    ${stops.map(([x, y, nm, note], i) => {
+      const on = 0.02 + i * 0.2;
+      return `<g>
+        <circle cx="${x}" cy="${y}" r="8" fill="${WHITE}" stroke="${LINE}" stroke-width="2.5"/>
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.04).toFixed(3)};1"
+            dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+          <circle cx="${x}" cy="${y}" r="8" fill="${i ? P.main : INK}"/>
+          ${label(x, Number(y) - 22, nm, { size: 13.5, anchor: 'middle' })}
+          ${mono(x, Number(y) + 28, note, { size: 8, anchor: 'middle', op: 0.42 })}
+        </g>
+      </g>`;
+    }).join('')}
+    ${ledger.map(([when, what, amt, on], i) => `
+      <g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.04).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${card(40, 268 + i * 48, 560, 42, { r: 11, fill: amt ? P.wash : WHITE, stroke: amt ? P.main : LINE, sw: amt ? 1.8 : 1.5 })}
+        ${label(64, 294 + i * 48, when, { size: 13 })}
+        ${mono(240, 294 + i * 48, what, { size: 9, op: 0.42 })}
+        ${amt ? num(576, 295 + i * 48, amt, { size: 16, anchor: 'end' }) : mono(576, 294 + i * 48, 'NO ROOM, NO COST', { size: 8.5, anchor: 'end', op: 0.35 })}
+      </g>`).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.76;0.84;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${card(40, 412, 560, 40, { r: 11, fill: GREEN_SOFT, stroke: GREEN_SOFT })}
+      ${label(64, 438, 'Commission on every top-up, for as long as they travel', { size: 13, fill: GREEN_TEXT })}
+      ${mono(576, 438, '20\u201330%', { size: 11, anchor: 'end', op: 0.75, fill: GREEN_TEXT })}
+    </g>`;
+    return { svg: wrap(inner), pills: pH('Earns after checkout', '200+ networks') };
+  },
+};
+
 /* ── registries ── */
 export const HOSP_VARIANTS = [hCurrent, checkin, revenue, propTypes, roomBoard, reviewLift, hAncillary, hArrival, hFrontDesk, hPortfolio,
-  hZeroUpfront];
+  hZeroUpfront, hLanguages, hConcierge, hPartnerWords, hModels, hAfterCheckout];

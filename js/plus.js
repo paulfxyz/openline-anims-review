@@ -1935,11 +1935,1152 @@ export const kyNoSelfie = {
   },
 };
 
+/* ══ LOUNGE · 11–15 ═════════════════════════════════════════════════ */
+
+export const lgAppPass = {
+  id: 'lg-app',
+  name: 'Pass On Screen',
+  family: 'Product demo',
+  tagline: 'Find it, show it, walk in',
+  desc:
+    'The panel is one tall handset running the pass itself: the lounge list for Lisbon T1 with walk ' +
+    'times and an OPEN badge, then the pass with its code and a guest already on it, then the desk ' +
+    'admitting two people. The section promises access with \u201cno additional fees or booking ' +
+    'required\u201d and this is the only option that shows what the reader will actually be holding.',
+  pros: [
+    'A 574\u00d7642 box is the exact shape of a phone held upright',
+    'Shows the product doing the thing rather than a symbol for it',
+    'Walk times and an OPEN badge answer \u201cis it near my gate, is it open now?\u201d',
+    'Carries the guest allowance without a second layout',
+  ],
+  cons: [
+    'Commits to a screen design that does not exist yet',
+    'A light screen on a dark panel is a strong tonal break',
+    'Small interface type is the first thing to fail at 390px',
+  ],
+  scores: { story: 4, motion: 4, perf: 4, mobile: 3, brand: 4, ease: 3 },
+  build: (uid) => {
+    const dur = 12;
+    const rows = [
+      ['ANA Lounge', 'T1 airside \u00b7 6 min walk', 'OPEN'],
+      ['Aspire Lounge', 'T1 mezzanine \u00b7 9 min', 'OPEN'],
+      ['Sala VIP', 'T2 \u00b7 shuttle', 'CLOSED'],
+    ];
+    const qr = Array.from({ length: 64 }, (_, k) => {
+      const cx = k % 8, cy = Math.floor(k / 8);
+      const on = (cx * 3 + cy * 5 + ((cx * cy) % 4)) % 5 < 2;
+      return on ? `<rect x="${cx * 18}" y="${cy * 18}" width="16" height="16" rx="2" fill="#131826"/>` : '';
+    }).join('');
+    const inner = `
+    ${bg(uid, 574, 642)}
+    ${glow(287, 300, 250, uid)}
+    ${m(34, 40, 'LOUNGE ACCESS, IN THE APP', { size: 9.5, op: 0.5 })}
+    <g transform="translate(143 56)">
+      ${dcard(0, 0, 288, 540, { r: 32, fill: '#0A0E18', stroke: 'rgba(255,255,255,0.4)', sw: 2.5 })}
+      <rect x="114" y="14" width="60" height="8" rx="4" fill="#1A2030"/>
+      <rect x="10" y="30" width="268" height="498" rx="24" fill="#F7FBF8"/>
+      <g transform="translate(10 30)">
+
+        <!-- 1 · the lounge list -->
+        <g opacity="1">
+          <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.28;0.32;1" dur="${dur}s" repeatCount="indefinite"/>
+          <text x="22" y="42" font-size="9" font-weight="700" letter-spacing="1.1" fill="#7C8A80" style="font-family:${MONO}">LIS \u00b7 TERMINAL 1</text>
+          <text x="22" y="70" font-size="17" font-weight="800" fill="#131826">Lounges near you</text>
+          <rect x="22" y="86" width="224" height="34" rx="11" fill="#EBF1EC"/>
+          <circle cx="42" cy="103" r="6" fill="none" stroke="#7C8A80" stroke-width="1.8"/>
+          <path d="M 46 107 l 5 5" stroke="#7C8A80" stroke-width="1.8" stroke-linecap="round"/>
+          <text x="58" y="107" font-size="11" font-weight="600" fill="#7C8A80">Lisbon Airport</text>
+          ${rows.map(([nm2, sub, badge], i) => {
+      const y = 138 + i * 76;
+      const shut = badge === 'CLOSED';
+      const on = 0.03 + i * 0.05;
+      return `
+            <g opacity="0">
+              <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.03).toFixed(3)};1"
+                dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+              <rect x="22" y="${y}" width="224" height="62" rx="13" fill="#FFFFFF" stroke="${shut ? '#E2E8E3' : '#CFE3D5'}" stroke-width="1.5"/>
+              <text x="38" y="${y + 26}" font-size="12.5" font-weight="800" fill="${shut ? '#9AA6A0' : '#131826'}">${nm2}</text>
+              <text x="38" y="${y + 45}" font-size="9.5" font-weight="600" fill="#7C8A80">${sub}</text>
+              <rect x="${shut ? 186 : 192}" y="${y + 13}" width="${shut ? 46 : 40}" height="17" rx="8.5"
+                fill="${shut ? '#EFEFEF' : 'rgba(34,197,94,0.16)'}"/>
+              <text x="${shut ? 209 : 212}" y="${y + 25}" font-size="8" font-weight="700" letter-spacing="0.8"
+                text-anchor="middle" fill="${shut ? '#9AA6A0' : GRN_DEEP}" style="font-family:${MONO}">${badge}</text>
+            </g>`;
+    }).join('')}
+          <text x="22" y="440" font-size="10.5" font-weight="700" fill="${GRN_DEEP}">Included with Openline+</text>
+          <text x="22" y="458" font-size="9.5" font-weight="600" fill="#7C8A80">No fee, no booking</text>
+        </g>
+
+        <!-- 2 · the pass -->
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.28;0.32;0.6;0.64;1" dur="${dur}s" repeatCount="indefinite"/>
+          <text x="22" y="42" font-size="9" font-weight="700" letter-spacing="1.1" fill="#7C8A80" style="font-family:${MONO}">ANA LOUNGE \u00b7 LIS T1</text>
+          <text x="22" y="70" font-size="17" font-weight="800" fill="#131826">Show this at the desk</text>
+          <rect x="46" y="88" width="176" height="176" rx="14" fill="#FFFFFF" stroke="#DCE5DF" stroke-width="1.5"/>
+          <g transform="translate(63 105)">${qr}</g>
+          <rect x="46" y="88" width="176" height="4" fill="${O}" opacity="0.85">
+            <animate attributeName="y" values="88;260;88" dur="2.6s" repeatCount="indefinite"/>
+          </rect>
+          <circle cx="34" cy="296" r="9" fill="rgba(34,197,94,0.18)"/>
+          <path d="M 30 296 l 2.8 3 l 5 -5.8" fill="none" stroke="${GRN_DEEP}" stroke-width="2" stroke-linecap="round"/>
+          <text x="52" y="300" font-size="12" font-weight="700" fill="#131826">You, plus one guest</text>
+          <text x="22" y="330" font-size="10.5" font-weight="600" fill="#7C8A80">Valid for this departure only</text>
+          <rect x="22" y="352" width="224" height="40" rx="12" fill="#131826"/>
+          <text x="134" y="377" font-size="12" font-weight="800" text-anchor="middle" fill="#FFFFFF">Open the pass</text>
+        </g>
+
+        <!-- 3 · admitted -->
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.6;0.64;1" dur="${dur}s" repeatCount="indefinite"/>
+          <circle cx="134" cy="150" r="46" fill="${GRN}"/>
+          <path d="M 120 150 l 10 11 l 20 -24" fill="none" stroke="#FFFFFF" stroke-width="5"
+            stroke-linecap="round" stroke-linejoin="round"/>
+          <text x="134" y="234" font-size="19" font-weight="800" text-anchor="middle" fill="#131826">Welcome in</text>
+          <text x="134" y="258" font-size="9.5" font-weight="700" letter-spacing="1.1" text-anchor="middle"
+            fill="#7C8A80" style="font-family:${MONO}">2 ADMITTED \u00b7 09:14</text>
+          <rect x="22" y="290" width="224" height="88" rx="13" fill="#ECFAF0" stroke="#CFE3D5" stroke-width="1.5"/>
+          <text x="40" y="318" font-size="12" font-weight="800" fill="#131826">Fast track at Gate A12</text>
+          <text x="40" y="338" font-size="10" font-weight="600" fill="#7C8A80">Boarding in 40 minutes</text>
+          <text x="40" y="360" font-size="10" font-weight="700" fill="${GRN_DEEP}">Shower and hot food included</text>
+        </g>
+      </g>
+    </g>
+    ${m(287, 620, 'INCLUDED WITH THE SUBSCRIPTION \u00b7 NO BOOKING REQUIRED', { size: 9, anchor: 'middle', op: 0.4 })}`;
+    return { svg: wL(inner), pills: noPills };
+  },
+};
+
+export const lgFlap = {
+  id: 'lg-flap',
+  name: 'Departures Board',
+  family: 'Typographic',
+  tagline: 'The status column flips in your favour',
+  desc:
+    'A split-flap departures board fills the panel. Six departures sit in the usual rows, and the ' +
+    'status column reads SECURITY 38 MIN on every one of them until the flaps turn over and each ' +
+    'line changes to FAST TRACK \u00b7 4 MIN, then LOUNGE OPEN. No illustration, no scene \u2014 the ' +
+    'type is the artwork, and the airport supplies the typeface.',
+  pros: [
+    'A departures board is already a tall column of rows, so the box is filled by the form itself',
+    'Reads at a glance and survives being shrunk to a compare tile',
+    'The flip is one gesture repeated six times, which is cheap to build and never confusing',
+    'Ownable: nothing else on the site looks like terminal signage',
+  ],
+  cons: [
+    'Six rows of small type is the least warm option on the board',
+    'Split-flap is a well-used device in travel marketing',
+    'Real flap mechanics would need heavier animation than this approximates',
+  ],
+  scores: { story: 4, motion: 4, perf: 5, mobile: 4, brand: 4, ease: 4 },
+  build: (uid) => {
+    const dur = 11;
+    const flights = [
+      ['TP 412', 'SINGAPORE', '11:40'],
+      ['BA 505', 'LONDON', '12:05'],
+      ['EK 192', 'DUBAI', '12:30'],
+      ['AF 1025', 'PARIS', '12:55'],
+      ['LX 2077', 'ZURICH', '13:20'],
+      ['UA 78', 'NEW YORK', '13:45'],
+    ];
+    const inner = `
+    ${bg(uid, 574, 642)}
+    ${glow(287, 300, 240, uid)}
+    ${m(34, 42, 'TERMINAL 1 \u00b7 DEPARTURES', { size: 9.5, op: 0.5 })}
+    ${t(34, 76, 'Your status column', { size: 21 })}
+    ${dcard(28, 96, 518, 458, { r: 14, fill: '#080C14', stroke: 'rgba(255,255,255,0.12)' })}
+    ${m(48, 126, 'FLIGHT', { size: 8, op: 0.3 })}
+    ${m(132, 126, 'DESTINATION', { size: 8, op: 0.3 })}
+    ${m(526, 126, 'STATUS', { size: 8, op: 0.3, anchor: 'end' })}
+    <path d="M 48 136 H 526" stroke="${W}" stroke-width="1" opacity="0.1"/>
+    ${flights.map(([code, dest, time], i) => {
+      const y = 152 + i * 66;
+      const on = 0.14 + i * 0.09;
+      return `
+      <g>
+        ${dcard(40, y, 494, 52, { r: 7, fill: 'rgba(255,255,255,0.03)', stroke: 'rgba(255,255,255,0.07)', sw: 1 })}
+        ${m(56, y + 32, code, { size: 11, op: 0.55 })}
+        ${t(132, y + 33, dest, { size: 15 })}
+        ${m(330, y + 32, time, { size: 10.5, op: 0.4 })}
+        <g opacity="1">
+          <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;${on.toFixed(3)};${(on + 0.02).toFixed(3)};1"
+            dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+          ${m(518, y + 32, 'SECURITY 38 MIN', { size: 10, anchor: 'end', op: 0.35 })}
+        </g>
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${(on + 0.02).toFixed(3)};${(on + 0.04).toFixed(3)};1"
+            dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+          ${m(518, y + 32, 'FAST TRACK \u00b7 4 MIN', { size: 10, anchor: 'end', op: 1, fill: O })}
+        </g>
+        <rect x="360" y="${y + 6}" width="166" height="0" rx="3" fill="${O}" opacity="0.7">
+          <animate attributeName="height" values="0;0;40;0;0" keyTimes="0;${on.toFixed(3)};${(on + 0.02).toFixed(3)};${(on + 0.045).toFixed(3)};1"
+            dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        </rect>
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.76;0.84;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${dcard(28, 572, 518, 46, { r: 12, fill: 'rgba(255,83,20,0.13)', stroke: O, sw: 2 })}
+      ${m(50, 600, 'LOUNGE', { size: 10, op: 0.55 })}
+      ${m(526, 600, 'OPEN \u00b7 GATE A12 \u00b7 NO BOOKING', { size: 10, anchor: 'end', op: 1, fill: O })}
+    </g>
+    ${m(34, 634, 'EVERY DEPARTURE, THE SAME TWO WORDS', { size: 9, op: 0.3 })}`;
+    return { svg: wL(inner), pills: noPills };
+  },
+};
+
+export const lgQuoted = {
+  id: 'lg-quote',
+  name: 'Six-Hour Layover',
+  family: 'Editorial',
+  tagline: 'One member, one bad connection, one sentence',
+  desc:
+    'A cream card fills the panel and carries a single quotation set large, line by line: a six-hour ' +
+    'connection that used to mean a bench now means a shower and a desk. Beneath it, an attribution ' +
+    'and three terms in small type. It is the only light surface anywhere on this page, and the only ' +
+    'option that lets a person say what the perk is for.',
+  pros: [
+    'Light on a dark page is the strongest contrast available in this block',
+    'A tall card is the natural shape for a stacked pull quote',
+    'Sells the moment the perk matters instead of listing what it contains',
+    'Almost nothing to draw, so it is fast and it never breaks',
+  ],
+  cons: [
+    'Needs a real member quote; invented testimony is not usable',
+    'Very little motion, which will read as static beside the other options',
+    'A light panel may fight the dark section it sits in',
+  ],
+  scores: { story: 5, motion: 2, perf: 5, mobile: 5, brand: 4, ease: 5 },
+  build: (uid) => {
+    const dur = 10;
+    const lines = ['A six-hour connection', 'in Doha used to mean', 'a bench and a bad', 'sandwich. Now it means', 'a shower and a desk.'];
+    const inner = `
+    ${bg(uid, 574, 642)}
+    ${glow(287, 260, 240, uid)}
+    ${m(34, 40, 'FROM A MEMBER', { size: 9.5, op: 0.5 })}
+    ${dcard(30, 58, 514, 446, { r: 20, fill: '#F6F3EC', stroke: 'rgba(255,255,255,0.5)', sw: 1 })}
+    <text x="60" y="140" font-size="64" font-weight="800" fill="${O}" opacity="0.9">&#8220;</text>
+    ${lines.map((ln, i) => {
+      const on = 0.06 + i * 0.09;
+      return `
+      <g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.05).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        <text x="62" y="${176 + i * 46}" font-size="25" font-weight="800" fill="#131826">${ln}</text>
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.56;0.64;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      <path d="M 62 428 H 200" stroke="#131826" stroke-width="2" opacity="0.25"/>
+      <text x="62" y="460" font-size="11" font-weight="700" letter-spacing="1.1" fill="#6B7280" style="font-family:${MONO}">OPENLINE+ MEMBER</text>
+      <text x="62" y="478" font-size="11" font-weight="700" letter-spacing="1.1" fill="#6B7280" style="font-family:${MONO}">14 FLIGHTS THIS YEAR</text>
+    </g>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.7;0.8;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${chip(30, 528, 132, 'NO DAY PASS', { op: 1 })}
+      ${chip(172, 528, 132, 'NO BOOKING', { op: 1 })}
+      ${chip(314, 528, 168, 'FAST TRACK INCLUDED', { op: 1, stroke: O, color: O_SOFT })}
+    </g>
+    ${m(34, 606, 'THE PERK IS BOUGHT FOR ONE BAD DAY A YEAR', { size: 9, op: 0.35 })}`;
+    return { svg: wL(inner), pills: noPills };
+  },
+};
+
+export const lgSection = {
+  id: 'lg-section',
+  name: 'Cross-Section',
+  family: 'Spatial',
+  tagline: 'Two routes up the same building',
+  desc:
+    'The terminal is drawn as a cutaway, kerb at the bottom and gate at the top, with security and ' +
+    'the lounge as floors in between. Two routes climb it: a grey one that stalls in the security ' +
+    'hall with the crowd, and an orange one that goes up the fast lane, through the lounge floor and ' +
+    'out to the gate. It is a plan of the building rather than a list of steps.',
+  pros: [
+    'A building in section is the one subject that genuinely needs 642px of height',
+    'Puts the lounge and fast track in one picture, which the section title requires',
+    'The stalled grey route makes the comparison without a word of copy',
+    'No numbers to keep accurate',
+  ],
+  cons: [
+    'An architectural diagram is colder than a scene or a device',
+    'The floor plan is invented; no real terminal is laid out like this',
+    'The two routes need careful drawing or they read as a circuit diagram',
+  ],
+  scores: { story: 4, motion: 4, perf: 5, mobile: 3, brand: 4, ease: 3 },
+  build: (uid) => {
+    const dur = 9;
+    const floors = [
+      [84, 'GATE A12', 'boarding, first group'],
+      [196, 'LOUNGE', 'shower \u00b7 hot food \u00b7 desk'],
+      [336, 'SECURITY', 'two lanes, one terminal'],
+      [466, 'CHECK-IN', 'bags, kerbside'],
+    ];
+    const route = 'M 150 552 V 520 H 452 V 300 H 330 V 150';
+    const inner = `
+    ${bg(uid, 574, 642)}
+    ${glow(287, 320, 250, uid)}
+    ${m(34, 40, 'THE SAME BUILDING, TWO WAYS UP', { size: 9.5, op: 0.5 })}
+    ${dcard(40, 62, 494, 520, { r: 16, fill: 'rgba(255,255,255,0.03)' })}
+    ${floors.map(([y, lab, sub]) => `
+      <path d="M 40 ${y} H 534" stroke="${W}" stroke-width="1.2" opacity="0.1"/>
+      ${m(60, y + 26, lab, { size: 9.5, op: 0.55 })}
+      ${m(60, y + 44, sub, { size: 8.5, op: 0.28 })}`).join('')}
+
+    <!-- lounge floor fittings -->
+    <g>
+      ${[0, 1, 2].map(i => `<rect x="${232 + i * 42}" y="250" width="32" height="26" rx="7" fill="${O}" opacity="0.22"/>`).join('')}
+      <path d="M 386 250 v 26 M 380 262 h 12" stroke="${O}" stroke-width="2" opacity="0.3" stroke-linecap="round"/>
+    </g>
+
+    <!-- security hall: the crowd -->
+    ${Array.from({ length: 12 }, (_, i) => {
+      const cx2 = 206 + (i % 6) * 26;
+      const cy2 = 402 + Math.floor(i / 6) * 26;
+      return `<circle cx="${cx2}" cy="${cy2}" r="6" fill="${W}" opacity="0.18"/>`;
+    }).join('')}
+    ${m(206, 452, 'GENERAL \u00b7 38 MIN', { size: 8.5, op: 0.35 })}
+    <path d="M 452 424 V 344" stroke="${O}" stroke-width="12" opacity="0.14" stroke-linecap="round"/>
+    ${m(470, 384, 'FAST LANE', { size: 8.5, op: 0.8, fill: O_SOFT })}
+    ${m(470, 400, '4 MIN', { size: 8.5, op: 0.5 })}
+
+    <!-- grey route, stalling -->
+    <path d="M 150 552 V 520 H 180 V 440" stroke="${W}" stroke-width="3" opacity="0.2"
+      stroke-dasharray="7 7" fill="none" stroke-linecap="round"/>
+    <circle cx="180" cy="440" r="6" fill="${W}" opacity="0.3">
+      <animate attributeName="cy" values="444;436;444" dur="3s" repeatCount="indefinite"/>
+    </circle>
+
+    <!-- orange route -->
+    <path d="${route}" stroke="${O}" stroke-width="3.2" fill="none" opacity="0.35" stroke-linecap="round"/>
+    <path d="${route}" stroke="${O}" stroke-width="3.2" fill="none" stroke-dasharray="900" stroke-dashoffset="900" stroke-linecap="round">
+      <animate attributeName="stroke-dashoffset" values="900;0;0" keyTimes="0;0.7;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+    </path>
+    <circle r="7" fill="${O}">
+      <animateMotion dur="${dur}s" repeatCount="indefinite" keyPoints="0;1;1" keyTimes="0;0.7;1" calcMode="linear" path="${route}"/>
+    </circle>
+    <g transform="translate(150 572)">
+      ${m(0, 0, 'KERB', { size: 8.5, anchor: 'middle', op: 0.4 })}
+    </g>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.72;0.8;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${gtick(330, 132, '', { fill: GRN_LIT })}
+      ${m(34, 606, 'UP THE SIDE OF THE CROWD, THROUGH THE LOUNGE, ONTO THE PLANE', { size: 9, op: 0.45, fill: O })}
+    </g>
+    ${m(34, 630, 'LOUNGE AND FAST TRACK ARE THE SAME JOURNEY', { size: 9, op: 0.28 })}`;
+    return { svg: wL(inner), pills: noPills };
+  },
+};
+
+export const lgMetal = {
+  id: 'lg-card',
+  name: 'The Member Card',
+  family: 'Single gesture',
+  tagline: 'One object, held upright, nothing else',
+  desc:
+    'One card, almost the full height of the panel, tilting slowly with a light sweeping across it. ' +
+    'Three lines are etched into it \u2014 lounge access, security fast track, priority boarding \u2014 ' +
+    'with a name and a member date at the foot. There is no sequence and nothing to read in order: it ' +
+    'is a single premium object, which is the register this tier is missing.',
+  pros: [
+    'The most upmarket frame on the board, which is what this tier asks for',
+    'One object, so it holds up as a still and at tile size',
+    'A tall card fits a tall panel with no padding anywhere',
+    'Cheap to build and impossible to misread',
+  ],
+  cons: [
+    'Says nothing and proves nothing \u2014 pure register, no argument',
+    'Implies a physical card, which Openline does not issue',
+    'Least informative option on the board by a distance',
+  ],
+  scores: { story: 2, motion: 3, perf: 5, mobile: 5, brand: 5, ease: 5 },
+  build: (uid) => {
+    const perks = ['AIRPORT LOUNGE ACCESS', 'SECURITY FAST TRACK', 'PRIORITY BOARDING'];
+    const inner = `
+    <defs>
+      <linearGradient id="mc-${uid}" x1="0" y1="0" x2="0.6" y2="1">
+        <stop offset="0" stop-color="#22293A"/>
+        <stop offset="0.55" stop-color="#121724"/>
+        <stop offset="1" stop-color="#2A1A12"/>
+      </linearGradient>
+      <linearGradient id="ms-${uid}" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="${W}" stop-opacity="0"/>
+        <stop offset="0.5" stop-color="${W}" stop-opacity="0.22"/>
+        <stop offset="1" stop-color="${W}" stop-opacity="0"/>
+      </linearGradient>
+      <clipPath id="mk-${uid}"><rect x="137" y="84" width="300" height="470" rx="26"/></clipPath>
+    </defs>
+    ${bg(uid, 574, 642)}
+    ${glow(287, 320, 260, uid)}
+    ${m(34, 40, 'OPENLINE+ MEMBERSHIP', { size: 9.5, op: 0.5 })}
+    <g>
+      <animateTransform attributeName="transform" type="rotate" values="-1.1 287 320;1.1 287 320;-1.1 287 320"
+        keyTimes="0;0.5;1" dur="9s" repeatCount="indefinite"/>
+      <rect x="137" y="84" width="300" height="470" rx="26" fill="url(#mc-${uid})"
+        stroke="rgba(255,255,255,0.22)" stroke-width="2"/>
+      <rect x="137" y="84" width="300" height="470" rx="26" fill="none" stroke="${O}" stroke-width="1" opacity="0.4"/>
+      <g clip-path="url(#mk-${uid})">
+        <rect x="-160" y="84" width="150" height="470" fill="url(#ms-${uid})">
+          <animateTransform attributeName="transform" type="translate" values="0 0;760 0;760 0"
+            keyTimes="0;0.45;1" dur="7s" repeatCount="indefinite"/>
+        </rect>
+      </g>
+      <circle cx="171" cy="126" r="7" fill="${O}"/>
+      ${t(188, 131, 'OPENLINE+', { size: 19 })}
+      <g transform="translate(378 112)">
+        <rect width="38" height="28" rx="5" fill="${O}" opacity="0.28" stroke="${O}" stroke-width="1.2"/>
+        ${[0, 1, 2].map(i => `<path d="M 6 ${8 + i * 7} H 32" stroke="${O_SOFT}" stroke-width="1.2" opacity="0.7"/>`).join('')}
+      </g>
+      <path d="M 171 160 H 403" stroke="${W}" stroke-width="1" opacity="0.14"/>
+      ${perks.map((p, i) => `
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${(0.05 + i * 0.07).toFixed(3)};${(0.11 + i * 0.07).toFixed(3)};1"
+            dur="9s" repeatCount="indefinite" fill="freeze"/>
+          ${m(171, 214 + i * 64, p, { size: 10.5, op: 0.85, fill: O_SOFT })}
+          <path d="M 171 ${228 + i * 64} H 403" stroke="${O}" stroke-width="1.4" opacity="0.28"/>
+        </g>`).join('')}
+      ${m(171, 446, 'PAUL M. FERREIRA', { size: 12.5, op: 0.85 })}
+      ${m(171, 468, 'MEMBER SINCE 2026', { size: 8.5, op: 0.4 })}
+      ${m(403, 468, 'VALID WORLDWIDE', { size: 8.5, op: 0.4, anchor: 'end' })}
+      <g transform="translate(171 502)">
+        ${[0, 1, 2, 3].map(i => `<rect x="${i * 9}" y="${-4 - i * 4}" width="5" height="${8 + i * 4}" rx="1.5" fill="${GRN_LIT}" opacity="0.8"/>`).join('')}
+      </g>
+      ${m(403, 506, 'CONNECTED', { size: 8.5, op: 0.5, anchor: 'end', fill: GRN_LIT })}
+    </g>
+    ${m(287, 594, 'NO DAY PASS \u00b7 NO BOOKING \u00b7 GUEST INCLUDED', { size: 9.5, anchor: 'middle', op: 0.5, fill: O_SOFT })}
+    ${m(287, 618, 'INCLUDED WITH THE SUBSCRIPTION', { size: 9, anchor: 'middle', op: 0.3 })}`;
+    return { svg: wL(inner), pills: noPills };
+  },
+};
+
+
+/* ══ NOMAD · 11–15 ══════════════════════════════════════════════════ */
+
+export const nmDualEsim = {
+  id: 'nm-dualesim',
+  name: 'No App Required',
+  family: 'Product demo',
+  tagline: 'Two eSIMs, added in the phone\u2019s own settings',
+  desc:
+    'The plan is two eSIMs \u2014 one for the number, one for the data \u2014 and the page says it ' +
+    'needs no app. This shows that literally: the handset\u2019s own mobile-data settings, a QR code ' +
+    'scanned, then both lines listed and active, OPENLINE VOICE carrying +351 and OPENLINE DATA on ' +
+    '30GB of 5G+ in Bangkok. It is the only option that explains the dual-eSIM setup the page requires.',
+  pros: [
+    'Shows the product\u2019s actual architecture, which no other option touches',
+    'Uses the page\u2019s own claims: dual eSIM, no app, 30GB 5G+',
+    'A phone held upright is exactly a 574\u00d7656 box',
+    'Answers the practical question: what do I do after I pay?',
+  ],
+  cons: [
+    'Imitates a specific operating system\u2019s settings, which dates and may need redrawing',
+    'Setup is a dull subject next to a year of travel',
+    'Small system-UI type is the first thing to suffer at 390px',
+  ],
+  scores: { story: 4, motion: 4, perf: 4, mobile: 3, brand: 3, ease: 3 },
+  build: (uid) => {
+    const dur = 12;
+    const qr = Array.from({ length: 49 }, (_, k) => {
+      const cx = k % 7, cy = Math.floor(k / 7);
+      const on = (cx * 5 + cy * 3 + ((cx + cy) % 3)) % 5 < 2;
+      return on ? `<rect x="${cx * 20}" y="${cy * 20}" width="18" height="18" rx="2" fill="#131826"/>` : '';
+    }).join('');
+    const inner = `
+    ${bg(uid, 574, 656)}
+    ${glow(287, 320, 250, uid)}
+    ${m(34, 40, 'SETUP, IN THE PHONE\u2019S OWN SETTINGS', { size: 9.5, op: 0.5 })}
+    <g transform="translate(143 56)">
+      ${dcard(0, 0, 288, 552, { r: 32, fill: '#0A0E18', stroke: 'rgba(255,255,255,0.4)', sw: 2.5 })}
+      <rect x="114" y="14" width="60" height="8" rx="4" fill="#1A2030"/>
+      <rect x="10" y="30" width="268" height="510" rx="24" fill="#F4F6F4"/>
+      <g transform="translate(10 30)">
+
+        <!-- 1 · add eSIM -->
+        <g opacity="1">
+          <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.26;0.3;1" dur="${dur}s" repeatCount="indefinite"/>
+          <text x="22" y="44" font-size="10" font-weight="700" letter-spacing="1.1" fill="#8A948C" style="font-family:${MONO}">SETTINGS</text>
+          <text x="22" y="74" font-size="19" font-weight="800" fill="#131826">Mobile Data</text>
+          <rect x="18" y="94" width="232" height="52" rx="12" fill="#FFFFFF"/>
+          <text x="36" y="118" font-size="12.5" font-weight="700" fill="#131826">Add eSIM</text>
+          <text x="36" y="136" font-size="10" font-weight="600" fill="#8A948C">Scan the code from Openline</text>
+          <path d="M 228 120 l 7 -7 l -7 -7" stroke="#B6BEB8" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <rect x="52" y="168" width="164" height="164" rx="14" fill="#FFFFFF" stroke="#DDE3DE" stroke-width="1.5"/>
+          <g transform="translate(66 182)">${qr}</g>
+          <rect x="52" y="168" width="164" height="3.5" fill="${O}" opacity="0.9">
+            <animate attributeName="y" values="168;328;168" dur="2.4s" repeatCount="indefinite"/>
+          </rect>
+          <text x="134" y="366" font-size="11" font-weight="700" text-anchor="middle" fill="#8A948C">No app to download</text>
+        </g>
+
+        <!-- 2 · installing -->
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.26;0.3;0.5;0.54;1" dur="${dur}s" repeatCount="indefinite"/>
+          <text x="22" y="44" font-size="10" font-weight="700" letter-spacing="1.1" fill="#8A948C" style="font-family:${MONO}">ACTIVATING</text>
+          <text x="22" y="74" font-size="19" font-weight="800" fill="#131826">Adding two plans</text>
+          <rect x="22" y="104" width="224" height="10" rx="5" fill="#E3E8E4"/>
+          <rect x="22" y="104" width="0" height="10" rx="5" fill="${GRN}">
+            <animate attributeName="width" values="0;224;224" keyTimes="0;0.46;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+          </rect>
+          <text x="22" y="140" font-size="10.5" font-weight="700" fill="#8A948C">38 seconds</text>
+          ${[['OPENLINE VOICE', 'calls & SMS'], ['OPENLINE DATA', '30GB 5G+ global']].map(([lab, sub], i) => `
+            <g opacity="0">
+              <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${(0.33 + i * 0.05).toFixed(3)};${(0.37 + i * 0.05).toFixed(3)};1"
+                dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+              <rect x="22" y="${170 + i * 74}" width="224" height="62" rx="13" fill="#FFFFFF" stroke="#DDE3DE" stroke-width="1.5"/>
+              <circle cx="46" cy="${201 + i * 74}" r="9" fill="rgba(34,197,94,0.18)"/>
+              <path d="M 42 ${201 + i * 74} l 2.8 3 l 5 -5.8" fill="none" stroke="${GRN_DEEP}" stroke-width="2" stroke-linecap="round"/>
+              <text x="64" y="${196 + i * 74}" font-size="11" font-weight="800" letter-spacing="0.9" fill="#131826" style="font-family:${MONO}">${lab}</text>
+              <text x="64" y="${214 + i * 74}" font-size="10" font-weight="600" fill="#8A948C">${sub}</text>
+            </g>`).join('')}
+          <g opacity="0">
+            <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.43;0.46;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+            <text x="22" y="352" font-size="11" font-weight="700" fill="#131826">Attaching to AIS · Bangkok</text>
+            <text x="22" y="372" font-size="10" font-weight="600" fill="#8A948C">Nothing to install, nothing to collect</text>
+            <text x="22" y="400" font-size="10" font-weight="600" fill="#8A948C">Your old SIM stays where it is</text>
+          </g>
+        </g>
+
+        <!-- 3 · both active -->
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.5;0.54;1" dur="${dur}s" repeatCount="indefinite"/>
+          <text x="22" y="44" font-size="10" font-weight="700" letter-spacing="1.1" fill="#8A948C" style="font-family:${MONO}">BOTH LINES ACTIVE</text>
+          <text x="22" y="74" font-size="19" font-weight="800" fill="#131826">One phone, two eSIMs</text>
+          <rect x="18" y="96" width="232" height="104" rx="14" fill="#FFFFFF" stroke="#DDE3DE" stroke-width="1.5"/>
+          <rect x="18" y="96" width="4" height="104" rx="2" fill="${O}"/>
+          <text x="38" y="124" font-size="9.5" font-weight="700" letter-spacing="1.1" fill="${O}" style="font-family:${MONO}">OPENLINE VOICE</text>
+          <text x="38" y="152" font-size="17" font-weight="800" fill="#131826">+351 912 04 88</text>
+          <text x="38" y="176" font-size="10" font-weight="600" fill="#8A948C">Unlimited calls &amp; SMS</text>
+          <rect x="18" y="212" width="232" height="104" rx="14" fill="#FFFFFF" stroke="#DDE3DE" stroke-width="1.5"/>
+          <rect x="18" y="212" width="4" height="104" rx="2" fill="${GRN}"/>
+          <text x="38" y="240" font-size="9.5" font-weight="700" letter-spacing="1.1" fill="${GRN_DEEP}" style="font-family:${MONO}">OPENLINE DATA</text>
+          <text x="38" y="268" font-size="17" font-weight="800" fill="#131826">30GB \u00b7 5G+</text>
+          <text x="38" y="292" font-size="10" font-weight="600" fill="#8A948C">Bangkok \u00b7 AIS \u00b7 then unlimited at 1mbps</text>
+          <g transform="translate(200 268)">
+            ${[0, 1, 2, 3].map(i => `<rect x="${i * 8}" y="${-2 - i * 4}" width="5" height="${6 + i * 4}" rx="1.5" fill="${GRN_DEEP}"/>`).join('')}
+          </g>
+          <text x="22" y="356" font-size="11" font-weight="700" fill="#131826">Default voice line: Openline Voice</text>
+          <text x="22" y="376" font-size="10" font-weight="600" fill="#8A948C">Keep your old SIM in the other slot</text>
+        </g>
+      </g>
+    </g>
+    ${m(287, 634, 'TWO eSIMS, ONE HANDSET, NO APP TO INSTALL', { size: 9, anchor: 'middle', op: 0.4 })}`;
+    return { svg: wN(inner), pills: noPills };
+  },
+};
+
+export const nmThread = {
+  id: 'nm-thread',
+  name: 'The Thread',
+  family: 'Editorial',
+  tagline: 'Nobody had to be told a new number',
+  desc:
+    'A year of messages arriving on one line, read as a transcript: a landlord in Tbilisi, a bank ' +
+    'code, a client asking for ten minutes, a friend who still has the number from 2019. Each has a ' +
+    'city and a month beside it. The argument is made by the senders rather than by a diagram \u2014 ' +
+    'none of them was ever sent an update.',
+  pros: [
+    'Human voices instead of labels, which nothing else on this board does',
+    'A message thread is a vertical object, so the height is the format',
+    'Shows the cost of a changed number without naming a single feature',
+    'Very cheap to draw and legible at any size',
+  ],
+  cons: [
+    'Invented messages have to sound real or the whole thing collapses',
+    'A bank code appears here and in the identity option',
+    'Most of the panel is set text, so it reads quietly',
+  ],
+  scores: { story: 5, motion: 3, perf: 5, mobile: 5, brand: 4, ease: 5 },
+  build: (uid) => {
+    const dur = 12;
+    const msgs = [
+      ['Mum', 'Landed yet? Same number I hope', 'JAN \u00b7 LISBON', false],
+      ['Landlord', 'Keys at six, flat 4B', 'MAR \u00b7 TBILISI', false],
+      ['You', 'On my way \u2014 ten minutes', 'MAR \u00b7 TBILISI', true],
+      ['Bank', 'Code 4471. Never share this.', 'JUL \u00b7 BANGKOK', false],
+      ['Ana (2019)', 'Still this number? Coffee?', 'NOV \u00b7 MEDELL\u00cdN', false],
+    ];
+    const inner = `
+    ${bg(uid, 574, 656)}
+    ${glow(287, 300, 240, uid)}
+    ${m(34, 42, 'ONE LINE \u00b7 TWELVE MONTHS', { size: 9.5, op: 0.5 })}
+    ${t(34, 76, 'The same thread all year', { size: 21 })}
+    ${msgs.map(([who, text, place, mine], i) => {
+      const y = 104 + i * 98;
+      const on = 0.06 + i * 0.14;
+      const x = mine ? 200 : 34;
+      const wid = mine ? 340 : 400;
+      return `
+      <g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.05).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${dcard(x, y, wid, 76, mine
+          ? { r: 16, fill: 'rgba(255,83,20,0.13)', stroke: O, sw: 1.6 }
+          : { r: 16 })}
+        ${m(x + 22, y + 26, who.toUpperCase(), { size: 8.5, op: mine ? 0.8 : 0.45, fill: mine ? O_SOFT : W })}
+        ${t(x + 22, y + 54, text, { size: 14, op: 0.9, weight: 600 })}
+        ${m(x + wid - 22, y + 26, place, { size: 8, anchor: 'end', op: 0.32 })}
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.8;0.88;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${dcard(34, 596, 506, 44, { r: 12, fill: 'rgba(34,197,94,0.1)', stroke: GRN, sw: 1.6 })}
+      ${m(56, 624, 'NEW NUMBERS SENT OUT THIS YEAR', { size: 9, op: 0.6 })}
+      ${t(516, 626, '0', { size: 20, anchor: 'end', fill: GRN_LIT })}
+    </g>`;
+    return { svg: wN(inner), pills: noPills };
+  },
+};
+
+export const nmSetInType = {
+  id: 'nm-type',
+  name: 'Set In Type',
+  family: 'Typographic',
+  tagline: 'One sentence, one word changing',
+  desc:
+    'No illustration at all. One sentence is set large down the panel \u2014 \u201cI have worked from ' +
+    'LISBON and my number has not changed once\u201d \u2014 and only the city swaps, six times, on a ' +
+    'thin orange rule. Beneath it, one line of small type counts the countries, the carriers and the ' +
+    'reissues. The copy is the artwork.',
+  pros: [
+    'The lightest thing on the board: no artwork to draw or maintain',
+    'One swapping word is a single idea, which is rare here',
+    'Large type fills a tall panel better than any small graphic',
+    'Impossible to misread at any width',
+  ],
+  cons: [
+    'No product, no interface, no proof \u2014 it asks to be believed',
+    'Type this large leaves no room to qualify anything',
+    'Sits oddly if the section beside it is already text-heavy',
+  ],
+  scores: { story: 4, motion: 3, perf: 5, mobile: 5, brand: 4, ease: 5 },
+  build: (uid) => {
+    const cities = ['LISBON', 'BALI', 'MEDELL\u00cdN', 'TBILISI', 'BANGKOK', 'CAPE TOWN'];
+    const per = 2.2;
+    const dur = cities.length * per;
+    const seg = 1 / cities.length;
+    const inner = `
+    ${bg(uid, 574, 656)}
+    ${glow(180, 300, 250, uid)}
+    ${m(34, 44, 'SIX MOVES, ONE LINE', { size: 9.5, op: 0.45 })}
+    ${t(34, 156, 'I have worked', { size: 27, op: 0.5 })}
+    ${t(34, 192, 'from', { size: 27, op: 0.5 })}
+    <g>
+      ${cities.map((c, i) => `
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.01;${(seg - 0.015).toFixed(3)};${seg.toFixed(3)};1"
+            dur="${dur}s" begin="${(i * per).toFixed(2)}s" repeatCount="indefinite"/>
+          <text x="34" y="268" font-size="50" font-weight="800" fill="${O}">${c}</text>
+        </g>`).join('')}
+    </g>
+    <path d="M 34 290 H 34" stroke="${O}" stroke-width="3" stroke-linecap="round">
+      <animate attributeName="d" values="M 34 290 H 34;M 34 290 H 390;M 34 290 H 390" keyTimes="0;0.16;1"
+        dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+    </path>
+    ${t(34, 360, 'and my number', { size: 27, op: 0.5 })}
+    ${t(34, 396, 'has not changed', { size: 27, op: 0.5 })}
+    ${t(34, 478, 'once.', { size: 50 })}
+    <path d="M 34 540 H 540" stroke="${W}" stroke-width="1.2" opacity="0.14"/>
+    ${m(34, 576, 'SIX COUNTRIES', { size: 10, op: 0.55 })}
+    ${m(224, 576, 'FIVE CARRIERS', { size: 10, op: 0.55 })}
+    ${m(540, 576, 'ZERO REISSUES', { size: 10, op: 1, anchor: 'end', fill: GRN_LIT })}
+    ${m(34, 624, 'NO CONTRACTS \u00b7 NO ROAMING BILLS \u00b7 ONE eSIM', { size: 9, op: 0.3 })}`;
+    return { svg: wN(inner), pills: noPills };
+  },
+};
+
+export const nmLanded = {
+  id: 'nm-landed',
+  name: 'Forty Seconds',
+  family: 'Arrival',
+  tagline: 'Wheels down to online, on a cream card',
+  desc:
+    'One moment instead of a year: the aircraft lands at 06:40 in Bangkok and the phone is on the ' +
+    'network before the seatbelt sign goes off. A large timer settles at forty seconds, and under it ' +
+    'the four things arrival used to mean \u2014 find a shop, queue with a passport, text everyone a ' +
+    'new number \u2014 are struck out. The whole panel is cream, the only light surface in the block.',
+  pros: [
+    'Light on a dark page makes it the first option the eye lands on',
+    'A single arrival is easier to picture than twelve months of travel',
+    'Time-to-online is a number nothing else on this board uses',
+    'The struck-out chores carry the pain in half the space of a full list',
+  ],
+  cons: [
+    'Forty seconds has to match real attach times or it is a lie',
+    'Four struck-out lines echo the problem-and-answer option',
+    'A cream panel may look like a different site section',
+  ],
+  scores: { story: 5, motion: 3, perf: 5, mobile: 5, brand: 3, ease: 4 },
+  build: (uid) => {
+    const dur = 10;
+    const chores = [
+      'Find a SIM shop in arrivals',
+      'Queue at a counter with your passport',
+      'Text everyone a new number',
+      'Hope the bank still reaches you',
+    ];
+    const inner = `
+    ${bg(uid, 574, 656)}
+    ${glow(287, 300, 240, uid)}
+    ${dcard(28, 44, 518, 552, { r: 22, fill: '#F6F4EF', stroke: 'rgba(255,255,255,0.55)', sw: 1 })}
+    <text x="58" y="90" font-size="10" font-weight="700" letter-spacing="1.2" fill="#8A8578" style="font-family:${MONO}">06:40 \u00b7 BANGKOK \u00b7 WHEELS DOWN</text>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;1;1" keyTimes="0;0.06;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      <text x="58" y="196" font-size="78" font-weight="800" fill="#131826">00:40</text>
+      <text x="58" y="226" font-size="10.5" font-weight="700" letter-spacing="1.2" fill="#8A8578" style="font-family:${MONO}">FROM LANDING TO ONLINE</text>
+    </g>
+    <rect x="58" y="248" width="458" height="10" rx="5" fill="#E4E1D8"/>
+    <rect x="58" y="248" width="0" height="10" rx="5" fill="${GRN}">
+      <animate attributeName="width" values="0;458;458" keyTimes="0;0.24;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"
+        calcMode="spline" keySplines="0.4 0 0.2 1;0 0 1 1"/>
+    </rect>
+    <text x="58" y="306" font-size="15" font-weight="800" fill="#131826">Things you did not have to do</text>
+    ${chores.map((c, i) => {
+      const y = 348 + i * 48;
+      const on = 0.3 + i * 0.1;
+      return `
+      <g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.04).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        <text x="58" y="${y}" font-size="14" font-weight="600" fill="#6E6A5E">${c}</text>
+        <path d="M 56 ${y - 5} H 56" stroke="${RD}" stroke-width="2.2" stroke-linecap="round">
+          <animate attributeName="d" values="M 56 ${y - 5} H 56;M 56 ${y - 5} H ${58 + c.length * 7.3};M 56 ${y - 5} H ${58 + c.length * 7.3}"
+            keyTimes="0;${(on + 0.07).toFixed(3)};1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        </path>
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.74;0.82;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      <rect x="58" y="536" width="458" height="42" rx="12" fill="#E8F6EC"/>
+      <circle cx="82" cy="557" r="9" fill="rgba(34,197,94,0.25)"/>
+      <path d="M 78 557 l 2.8 3 l 5 -5.8" fill="none" stroke="${GRN_DEEP}" stroke-width="2.1" stroke-linecap="round"/>
+      <text x="100" y="562" font-size="12.5" font-weight="700" fill="#14532D">Online before the seatbelt sign went off</text>
+    </g>
+    ${m(34, 628, 'THE FIRST TEN MINUTES IN A NEW COUNTRY', { size: 9, op: 0.4 })}`;
+    return { svg: wN(inner), pills: noPills };
+  },
+};
+
+export const nmDeadSims = {
+  id: 'nm-sims',
+  name: 'Dead SIMs',
+  family: 'Single gesture',
+  tagline: 'The pile you used to carry',
+  desc:
+    'One eSIM glows at the top of the panel. Under it, eight plastic SIM cards drop into a heap, each ' +
+    'labelled with the carrier and the year it stopped mattering \u2014 MEO 2021, Telkomsel 2022, ' +
+    'Claro 2023. Eight cards is eight numbers and eight rounds of telling everybody. The pile does ' +
+    'the arguing; there is nothing else in the frame.',
+  pros: [
+    'One gesture, no reading, and it lands in under two seconds',
+    'A growing heap is exactly what a tall panel wants to hold',
+    'The dated labels make it specific rather than a generic pile of plastic',
+    'Memorable in a way a table of rows is not',
+  ],
+  cons: [
+    'Leads with clutter, which sits awkwardly on a premium tier',
+    'Overlaps the \u201cnew SIM in every country\u201d line used elsewhere on the board',
+    'Carries no figure beyond the count of cards',
+  ],
+  scores: { story: 4, motion: 4, perf: 4, mobile: 4, brand: 3, ease: 4 },
+  build: (uid) => {
+    const dur = 11;
+    const sims = [
+      ['MEO \u00b7 2021', 158, 526, -7],
+      ['TELKOMSEL \u00b7 2022', 298, 516, 6],
+      ['CLARO \u00b7 2023', 196, 462, -13],
+      ['MAGTI \u00b7 2023', 346, 454, 10],
+      ['VODACOM \u00b7 2024', 168, 400, 4],
+      ['AIS \u00b7 2024', 330, 392, -9],
+      ['O2 \u00b7 2025', 238, 342, 12],
+      ['ORANGE \u00b7 2025', 372, 332, -4],
+    ];
+    const card = (lab) => `
+      <path d="M 8 0 H 96 L 122 26 V 68 A 8 8 0 0 1 114 76 H 8 A 8 8 0 0 1 0 68 V 8 A 8 8 0 0 1 8 0 Z"
+        fill="#1B2130" stroke="rgba(255,255,255,0.16)" stroke-width="1.4"/>
+      <rect x="14" y="16" width="34" height="26" rx="4" fill="${W}" opacity="0.14"/>
+      ${[0, 1, 2].map(i => `<path d="M 18 ${22 + i * 8} H 44" stroke="${W}" stroke-width="1.2" opacity="0.2"/>`).join('')}
+      <text x="14" y="62" font-size="7.5" font-weight="700" letter-spacing="0.9" fill="${W}" opacity="0.4" style="font-family:${MONO}">${lab}</text>`;
+    const inner = `
+    ${bg(uid, 574, 656)}
+    ${glow(287, 170, 220, uid)}
+    ${m(34, 42, 'EIGHT YEARS OF PLASTIC', { size: 9.5, op: 0.5 })}
+    <g transform="translate(287 158)">
+      ${dcard(-52, -72, 104, 144, { r: 16, fill: 'rgba(255,83,20,0.12)', stroke: O, sw: 2 })}
+      <g transform="translate(-26 -46)">
+        <rect width="52" height="40" rx="6" fill="none" stroke="${O_SOFT}" stroke-width="2"/>
+        ${[0, 1, 2].map(i => `<path d="M 8 ${10 + i * 10} H 44" stroke="${O_SOFT}" stroke-width="1.6" opacity="0.7"/>`).join('')}
+      </g>
+      ${m(0, 22, 'ONE eSIM', { size: 10.5, anchor: 'middle', op: 1, fill: O })}
+      ${m(0, 44, '190+ COUNTRIES', { size: 8.5, anchor: 'middle', op: 0.5 })}
+      <circle r="76" fill="none" stroke="${O}" stroke-width="2" opacity="0">
+        <animate attributeName="r" values="56;104" dur="3s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.5;0" dur="3s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+    ${m(287, 262, 'REPLACES ALL OF THIS', { size: 9, anchor: 'middle', op: 0.35 })}
+    ${sims.map(([lab, x, y, rot], i) => {
+      const on = (0.1 + i * 0.075).toFixed(3);
+      const start = `${x} ${y - 230}`;
+      const end = `${x} ${y}`;
+      return `
+      <g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on};${(parseFloat(on) + 0.01).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        <g>
+          <animateTransform attributeName="transform" type="translate" values="${start};${start};${end};${end}"
+            keyTimes="0;${on};${(parseFloat(on) + 0.055).toFixed(3)};1" dur="${dur}s" repeatCount="indefinite"
+            fill="freeze" calcMode="spline" keySplines="0 0 1 1;0.3 0 0.4 1;0 0 1 1"/>
+          <g transform="rotate(${rot} 61 38)">${card(lab)}</g>
+        </g>
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.78;0.86;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${m(34, 632, 'EIGHT CARDS \u00b7 EIGHT NUMBERS \u00b7 EIGHT TIMES YOU TOLD EVERYONE', { size: 9.5, op: 0.55, fill: O })}
+    </g>`;
+    return { svg: wN(inner), pills: noPills };
+  },
+};
+
+
+/* ══ KYC · 11–15 ════════════════════════════════════════════════════ */
+
+export const kyAsked = {
+  id: 'ky-qa',
+  name: 'Asked And Answered',
+  family: 'Editorial',
+  tagline: 'Three questions in plain sentences',
+  desc:
+    'No diagram. The three questions a reader actually has are printed with their answers: why a ' +
+    'passport is needed, whether the document is kept, and whether the anonymous eSIM is still ' +
+    'available. Each answer is two short sentences. It treats the reader as somebody deciding rather ' +
+    'than somebody being processed.',
+  pros: [
+    'Answers objections in the reader\u2019s own words instead of illustrating a process',
+    'Protects the anonymous product in writing, which the section copy needs',
+    'Nothing to draw, so it never breaks and reads perfectly at 390px',
+    'Easy for legal to review line by line',
+  ],
+  cons: [
+    'Text beside text: the block already has copy in the right-hand cell',
+    'Barely animated, so it will look inert next to the timed options',
+    'Every word has to be signed off, which slows changes later',
+  ],
+  scores: { story: 5, motion: 1, perf: 5, mobile: 5, brand: 3, ease: 5 },
+  build: (uid) => {
+    const dur = 11;
+    const qa = [
+      ['Why do you need my passport?', 'A real number is issued in a real name.', 'Regulators require the name to be checked first.'],
+      ['Do you keep it?', 'No. The document is checked, then deleted.', 'What stays is a pass, a fail and a date.'],
+      ['Can I stay anonymous instead?', 'Yes \u2014 the standard eSIM asks for nothing.', 'It simply cannot carry a phone number.'],
+    ];
+    const inner = `
+    ${bg(uid, 574, 432, GRN)}
+    ${glow(200, 200, 220, uid)}
+    ${m(30, 42, 'BEFORE YOU UPLOAD ANYTHING', { size: 9.5, op: 0.5 })}
+    ${t(30, 76, 'Three fair questions', { size: 19 })}
+    ${qa.map(([q, a1, a2], i) => {
+      const y = 100 + i * 96;
+      const on = 0.06 + i * 0.16;
+      return `
+      <g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.06).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        <rect x="30" y="${y}" width="3.5" height="78" rx="2" fill="${GRN}"/>
+        ${t(52, y + 22, q, { size: 15 })}
+        ${t(52, y + 46, a1, { size: 12.5, op: 0.6, weight: 500 })}
+        ${t(52, y + 66, a2, { size: 12.5, op: 0.6, weight: 500 })}
+      </g>`;
+    }).join('')}
+    ${m(30, 408, 'NO DIAGRAM REQUIRED \u2014 THESE ARE THE ONLY THREE QUESTIONS', { size: 9, op: 0.35 })}`;
+    return { svg: wK(inner), pills: noPills };
+  },
+};
+
+export const kyNormal = {
+  id: 'ky-normal',
+  name: 'Done This Before',
+  family: 'Reframe',
+  tagline: 'The same check as a bank, from your sofa',
+  desc:
+    'Four sign-ups in a row: a bank account, a Spanish SIM bought over a counter, a hire car, and ' +
+    'Openline+. The first three want a passport, an address and a deposit, in person. The last wants ' +
+    'a passport, a selfie and a card, in eighty-five seconds, from wherever the reader is sitting. ' +
+    'KYC stops looking like an Openline demand and starts looking like the smallest version of it.',
+  pros: [
+    'Reframes the objection instead of explaining it away',
+    'Every reader has passed at least two of these checks already',
+    'The last row wins on effort, not on argument',
+    'A wide panel takes four comparison rows without compression',
+  ],
+  cons: [
+    'Comparing yourself to a bank invites the comparison to continue',
+    'The in-person detail for a Spanish SIM varies by country',
+    'Says nothing about what happens to the documents',
+  ],
+  scores: { story: 5, motion: 3, perf: 5, mobile: 5, brand: 4, ease: 5 },
+  build: (uid) => {
+    const dur = 10;
+    const rows = [
+      ['Opening a bank account', 'PASSPORT \u00b7 ADDRESS \u00b7 SELFIE', 'IN BRANCH', false],
+      ['Buying a SIM in Spain', 'PASSPORT \u00b7 IN PERSON', 'AT A COUNTER', false],
+      ['Hiring a car', 'LICENCE \u00b7 CARD \u00b7 DEPOSIT', 'AT THE DESK', false],
+      ['Openline+', 'PASSPORT \u00b7 SELFIE \u00b7 CARD', '85 SECONDS, AT HOME', true],
+    ];
+    const inner = `
+    ${bg(uid, 574, 432, GRN)}
+    ${glow(320, 200, 220, uid)}
+    ${m(30, 42, 'CHECKS YOU HAVE ALREADY PASSED', { size: 9.5, op: 0.5 })}
+    ${t(30, 76, 'You have done this before', { size: 19 })}
+    ${rows.map(([nm2, what, where, ours], i) => {
+      const y = 98 + i * 68;
+      const on = 0.08 + i * 0.16;
+      return `
+      <g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.06).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        ${dcard(30, y, 514, 56, ours
+          ? { r: 12, fill: 'rgba(34,197,94,0.12)', stroke: GRN, sw: 2 }
+          : { r: 12 })}
+        ${ours
+          ? gtick(56, y + 28, '', { fill: GRN_LIT })
+          : `<circle cx="56" cy="${y + 28}" r="9" fill="rgba(255,255,255,0.07)"/>
+             <path d="M 52 ${y + 28} l 2.6 3 l 5.4 -6" fill="none" stroke="${W}" stroke-width="2" opacity="0.4" stroke-linecap="round"/>`}
+        ${t(80, y + 26, nm2, { size: 14, op: ours ? 1 : 0.8 })}
+        ${m(80, y + 44, what, { size: 8.5, op: ours ? 0.6 : 0.35, fill: ours ? GRN_LIT : W })}
+        ${m(520, y + 33, where, { size: 9.5, anchor: 'end', op: ours ? 1 : 0.4, fill: ours ? GRN_LIT : W })}
+      </g>`;
+    }).join('')}
+    ${m(30, 408, 'THE LIGHTEST CHECK ON THE LIST, AND THE ONLY ONE YOU CAN DO IN BED', { size: 9, op: 0.35 })}`;
+    return { svg: wK(inner), pills: noPills };
+  },
+};
+
+export const kyCert = {
+  id: 'ky-cert',
+  name: 'In Your Name',
+  family: 'Single gesture',
+  tagline: 'The check produces a credential, not a file',
+  desc:
+    'One cream certificate, centred, with a name, a number and a verification date set on it, and a ' +
+    'green seal that presses down at the end. Nothing is scanned, queued or explained. The point is ' +
+    'that the end of verification is a document in your name rather than a folder of your documents ' +
+    'in somebody else\u2019s.',
+  pros: [
+    'The only upmarket object in the block, which is what this tier lacks',
+    'Light on dark makes it the strongest single frame on the board',
+    'A seal pressing down is one satisfying beat, with a clear end',
+    'Holds up perfectly as a still image and at tile size',
+  ],
+  cons: [
+    'Openline issues no certificate, so the object is a metaphor',
+    'Explains nothing about the process, the privacy or the reason',
+    'A certificate can read as institutional rather than premium',
+  ],
+  scores: { story: 3, motion: 3, perf: 5, mobile: 5, brand: 5, ease: 4 },
+  build: (uid) => {
+    const dur = 9;
+    const inner = `
+    ${bg(uid, 574, 432, GRN)}
+    ${glow(287, 200, 230, uid)}
+    ${dcard(40, 46, 494, 326, { r: 12, fill: '#F7F4EC', stroke: 'rgba(255,255,255,0.6)', sw: 1 })}
+    <rect x="56" y="62" width="462" height="294" rx="8" fill="none" stroke="#C9C2AE" stroke-width="1.2"/>
+    <path d="M 56 96 q 58 -18 115 0 t 115 0 t 115 0 t 115 0" fill="none" stroke="#C9C2AE" stroke-width="1" opacity="0.6"/>
+    <text x="287" y="132" font-size="9.5" font-weight="700" letter-spacing="2" text-anchor="middle" fill="#8A8375" style="font-family:${MONO}">OPENLINE+ MEMBERSHIP RECORD</text>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;1;1" keyTimes="0;0.1;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      <text x="287" y="188" font-size="27" font-weight="800" text-anchor="middle" fill="#131826">PAUL M. FERREIRA</text>
+      <text x="287" y="218" font-size="15" font-weight="700" letter-spacing="1.4" text-anchor="middle" fill="${GRN_DEEP}" style="font-family:${MONO}">+351 912 04 88</text>
+    </g>
+    <path d="M 140 240 H 434" stroke="#C9C2AE" stroke-width="1.2"/>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.24;0.34;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      <text x="90" y="274" font-size="8.5" font-weight="700" letter-spacing="1.1" fill="#8A8375" style="font-family:${MONO}">ISSUED 12 MAR 2026</text>
+      <text x="90" y="294" font-size="8.5" font-weight="700" letter-spacing="1.1" fill="#8A8375" style="font-family:${MONO}">FULL KYC \u00b7 LISBON, PT</text>
+      <text x="90" y="330" font-size="12.5" font-weight="700" fill="#3F3A2E">A number issued to a person, not an alias.</text>
+    </g>
+    <g transform="translate(446 296)" opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.44;0.5;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      <g>
+        <animateTransform attributeName="transform" type="scale" values="2.1;1;1" keyTimes="0;0.06;1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze" additive="sum"/>
+        <circle r="38" fill="rgba(34,197,94,0.14)" stroke="${GRN_DEEP}" stroke-width="2.4"/>
+        <circle r="31" fill="none" stroke="${GRN_DEEP}" stroke-width="1" opacity="0.6"/>
+        <path d="M -9 0 l 6 7 l 13 -15" fill="none" stroke="${GRN_DEEP}" stroke-width="3"
+          stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="0" y="24" font-size="7.5" font-weight="700" letter-spacing="1.3" text-anchor="middle" fill="${GRN_DEEP}" style="font-family:${MONO}">VERIFIED</text>
+      </g>
+    </g>
+    ${m(30, 408, 'THE CHECK ENDS IN A CREDENTIAL, NOT A FOLDER OF YOUR DOCUMENTS', { size: 9, op: 0.35 })}`;
+    return { svg: wK(inner), pills: noPills };
+  },
+};
+
+export const kyChain = {
+  id: 'ky-chain',
+  name: 'Who Sees What',
+  family: 'Mechanism',
+  tagline: 'Openline never receives the document',
+  desc:
+    'Three parties across the panel: you, a certified verifier, and Openline. The passport travels ' +
+    'from you to the verifier and stops there; only a pass flag carries on to Openline, whose column ' +
+    'shows the document crossed out. It answers the question the page raises by selling an anonymous ' +
+    'product elsewhere \u2014 who is actually looking at this.',
+  pros: [
+    'Names the party that holds the document, which nothing else on the board does',
+    'Three columns is the natural use of a 574\u00d7432 landscape box',
+    'A flag crossing the last gap instead of a document is a single clear beat',
+    'Strongest privacy claim available if it is true',
+  ],
+  cons: [
+    'Only usable if verification really is outsourced to a certified vendor',
+    'Introduces a third party the reader had not thought about',
+    'Close in spirit to the sealed-record option, though the mechanism differs',
+  ],
+  scores: { story: 5, motion: 4, perf: 5, mobile: 3, brand: 4, ease: 3 },
+  build: (uid) => {
+    const dur = 9;
+    const doc = (o = {}) => `
+      <rect x="-30" y="-20" width="60" height="40" rx="5" fill="${o.fill || '#F7FBF8'}" stroke="rgba(255,255,255,0.4)" stroke-width="1.4"/>
+      <rect x="-22" y="-12" width="16" height="16" rx="3" fill="#CBD5CE"/>
+      <rect x="0" y="-11" width="22" height="4" rx="2" fill="#CBD5CE"/>
+      <rect x="0" y="-3" width="16" height="4" rx="2" fill="#DCE3DD"/>
+      <rect x="-22" y="8" width="44" height="4" rx="2" fill="#DCE3DD"/>`;
+    const inner = `
+    ${bg(uid, 574, 432, GRN)}
+    ${glow(287, 200, 230, uid)}
+    ${m(30, 42, 'WHO HOLDS WHAT', { size: 9.5, op: 0.5 })}
+    ${t(30, 76, 'We never receive it', { size: 19 })}
+
+    <!-- you -->
+    ${dcard(24, 96, 158, 224, { r: 14 })}
+    ${m(44, 124, 'YOU', { size: 9, op: 0.5 })}
+    <g transform="translate(103 186)">${doc()}</g>
+    ${t(44, 258, 'Hold the original', { size: 12, op: 0.75, weight: 600 })}
+    ${m(44, 280, 'IT NEVER LEAVES YOUR DEVICE', { size: 8, op: 0.32 })}
+    ${m(44, 296, 'UNENCRYPTED', { size: 8, op: 0.32 })}
+
+    <!-- verifier -->
+    ${dcard(208, 96, 158, 224, { r: 14, fill: 'rgba(34,197,94,0.07)', stroke: GRN, sw: 1.6 })}
+    ${m(228, 124, 'CERTIFIED VERIFIER', { size: 9, op: 0.75, fill: GRN_LIT })}
+    <g transform="translate(287 186)" opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.24;0.3;0.52;0.58;1" dur="${dur}s" repeatCount="indefinite"/>
+      ${doc()}
+    </g>
+    <g transform="translate(287 186)" opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.56;0.62;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      <circle r="24" fill="none" stroke="${GRN_LIT}" stroke-width="2.2" stroke-dasharray="3 5"/>
+      ${m(0, 4, 'DELETED', { size: 8.5, anchor: 'middle', op: 1, fill: GRN_LIT })}
+    </g>
+    ${t(228, 258, 'ISO 27001 \u00b7 eIDAS', { size: 12, op: 0.75, weight: 600 })}
+    ${m(228, 280, 'CHECKS IT, THEN DELETES IT', { size: 8, op: 0.32 })}
+    ${m(228, 296, 'WITHIN MINUTES', { size: 8, op: 0.32 })}
+
+    <!-- openline -->
+    ${dcard(392, 96, 158, 224, { r: 14 })}
+    ${m(412, 124, 'OPENLINE', { size: 9, op: 0.5 })}
+    <g transform="translate(471 186)" opacity="0.4">
+      ${doc()}
+      <path d="M -34 -24 L 34 24" stroke="${RD}" stroke-width="3" stroke-linecap="round"/>
+    </g>
+    <g transform="translate(412 246)" opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.72;0.78;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${dcard(0, 0, 118, 28, { r: 8, fill: 'rgba(34,197,94,0.16)', stroke: GRN, sw: 1.4 })}
+      ${m(59, 19, 'verified: true', { size: 9, anchor: 'middle', op: 1, fill: GRN_LIT })}
+    </g>
+    ${m(412, 280, 'NEVER RECEIVES', { size: 8, op: 0.32 })}
+    ${m(412, 296, 'THE DOCUMENT ITSELF', { size: 8, op: 0.32 })}
+
+    <!-- the two hops -->
+    <path d="M 186 186 H 204" stroke="${W}" stroke-width="1.6" opacity="0.25" stroke-dasharray="4 4"/>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.12;0.16;0.26;0.3;1" dur="${dur}s" repeatCount="indefinite"/>
+      <g transform="translate(150 186) scale(0.5)">${doc()}</g>
+      <animateTransform attributeName="transform" type="translate" values="0 0;0 0;138 0;138 0"
+        keyTimes="0;0.14;0.26;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+    </g>
+    <path d="M 370 186 H 388" stroke="${GRN}" stroke-width="1.6" opacity="0.35" stroke-dasharray="4 4"/>
+    <circle r="5" fill="${GRN_LIT}" opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.62;0.66;0.74;0.78;1" dur="${dur}s" repeatCount="indefinite"/>
+      <animateMotion dur="${dur}s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.64;0.74;1" calcMode="linear" path="M 370 186 H 388"/>
+    </circle>
+    ${m(30, 408, 'THE ONLY THING WE ARE TOLD IS WHETHER YOU PASSED', { size: 9, op: 0.35 })}`;
+    return { svg: wK(inner), pills: noPills };
+  },
+};
+
+export const kyOnce = {
+  id: 'ky-once',
+  name: 'Once, Then Never',
+  family: 'Frequency',
+  tagline: 'One check in month one, nothing since',
+  desc:
+    'The unspoken fear about verification is not the first check, it is being asked again every time ' +
+    'something changes. This runs the timeline: full KYC at sign-up, eighty-five seconds, then a new ' +
+    'eSIM, a new country, a renewal and a second number \u2014 each one passing with no check and no ' +
+    'seconds spent. One large figure holds the point: one, ever.',
+  pros: [
+    'Answers the question the other options leave open: will you keep asking?',
+    'A horizontal timeline is the right use of a wide panel',
+    'Turns a one-off cost into an obviously finite one',
+    'Cheap, legible and easy to keep honest',
+  ],
+  cons: [
+    'Re-verification is sometimes legally required, so the claim needs a caveat',
+    'Repeats the eighty-five-second figure used by the speed option',
+    'Four identical no-check markers is a repetitive beat',
+  ],
+  scores: { story: 4, motion: 4, perf: 5, mobile: 4, brand: 4, ease: 4 },
+  build: (uid) => {
+    const dur = 10;
+    const events = [['NEW eSIM', 'MONTH 3'], ['NEW COUNTRY', 'MONTH 6'], ['RENEWAL', 'MONTH 12'], ['SECOND NUMBER', 'MONTH 18']];
+    const inner = `
+    ${bg(uid, 574, 432, GRN)}
+    ${glow(287, 200, 220, uid)}
+    ${m(30, 42, 'HOW OFTEN WE ASK', { size: 9.5, op: 0.5 })}
+    ${dcard(30, 62, 300, 96, { r: 13, fill: 'rgba(34,197,94,0.1)', stroke: GRN, sw: 2 })}
+    ${m(52, 92, 'MONTH 1 \u00b7 SIGN-UP', { size: 9, op: 0.65, fill: GRN_LIT })}
+    ${t(52, 124, 'Full KYC, 85 seconds', { size: 16 })}
+    ${m(52, 146, 'PASSPORT \u00b7 SELFIE \u00b7 CARD', { size: 8.5, op: 0.4 })}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;1;1" keyTimes="0;0.08;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${t(544, 128, '1', { size: 64, anchor: 'end', fill: GRN_LIT })}
+      ${m(544, 152, 'CHECK, EVER', { size: 9, anchor: 'end', op: 0.55 })}
+    </g>
+    <path d="M 48 236 H 540" stroke="${W}" stroke-width="2" opacity="0.1"/>
+    <path d="M 48 236 H 48" stroke="${GRN}" stroke-width="2.4" stroke-linecap="round">
+      <animate attributeName="d" values="M 48 236 H 48;M 48 236 H 540;M 48 236 H 540" keyTimes="0;0.6;1"
+        dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+    </path>
+    <circle cx="48" cy="236" r="7" fill="${GRN}"/>
+    ${m(48, 214, 'VERIFIED', { size: 8.5, anchor: 'middle', op: 0.6, fill: GRN_LIT })}
+    ${events.map(([lab, when], i) => {
+      const x = 152 + i * 124;
+      const on = 0.22 + i * 0.12;
+      return `
+      <g opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;${on.toFixed(3)};${(on + 0.05).toFixed(3)};1"
+          dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+        <circle cx="${x}" cy="236" r="6" fill="#131826" stroke="${GRN}" stroke-width="2"/>
+        ${m(x, 214, when, { size: 8, anchor: 'middle', op: 0.32 })}
+        ${m(x, 274, lab, { size: 8.5, anchor: 'middle', op: 0.75 })}
+        ${m(x, 296, 'NO CHECK', { size: 8.5, anchor: 'middle', op: 1, fill: GRN_LIT })}
+        ${m(x, 316, '0 SECONDS', { size: 8, anchor: 'middle', op: 0.3 })}
+      </g>`;
+    }).join('')}
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.76;0.84;1" dur="${dur}s" repeatCount="indefinite" fill="freeze"/>
+      ${m(30, 368, 'EIGHTEEN MONTHS, ONE VERIFICATION', { size: 10, op: 0.6, fill: GRN_LIT })}
+      ${m(30, 392, 'WE ASK AGAIN ONLY IF THE LAW MAKES US', { size: 9, op: 0.35 })}
+    </g>`;
+    return { svg: wK(inner), pills: noPills };
+  },
+};
+
 /* ── registries ── */
 export const LOUNGE_VARIANTS = [lgCurrent, lgTwoLanes, lgDoor, lgItinerary, lgCost, lgMap, lgUpgrade, lgDelay, lgQueue, lgNetwork,
-  lgWhoIsIn];
+  lgWhoIsIn, lgAppPass, lgFlap, lgQuoted, lgSection, lgMetal];
 export const NOMAD_VARIANTS = [nmCurrent, nmCities, nmLockout, nmYear, nmDesk, nmPassport, nmClock, nmMonthEnd, nmCall, nmTaxHome,
-  nmTwoNumbers];
+  nmTwoNumbers, nmDualEsim, nmThread, nmSetInType, nmLanded, nmDeadSims];
 export const KYC_VARIANTS = [kyCurrent, kyFourChecks, kyTwoDoors, kyLiveness, kySealed,
   kyRegistry, kyCommunity, kyWhatWeKeep, kyNinetySeconds, kyRefused,
-  kyNoSelfie];
+  kyNoSelfie, kyAsked, kyNormal, kyCert, kyChain, kyOnce];

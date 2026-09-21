@@ -47,7 +47,7 @@ export const BOARDS = [
   /* ── /multiple-tier1 ─────────────────────────────────────────── */
   {
     key: 'tier1', page: 'Multiple Tier-1', path: '/multiple-tier1', section: 'Hero',
-    count: 10, accent: TONES.cyan, special: 'tier1',
+    count: 15, accent: TONES.cyan, special: 'tier1',
     problem: 'The chip sits still and one comet crosses every five seconds — most visitors see a static picture.',
   },
   {
@@ -550,8 +550,8 @@ export const BOARDS = [
   /* ── /login · the Aloha icon ──────────────────────────────────────── */
   {
     key: 'aloha', page: 'Login', path: '/login', section: 'The "Aloha!" icon',
-    short: 'Aloha icon', count: 20, accent: TONES.orange, special: 'icons',
-    problem: 'One small swaying figure in a 56px badge — and twenty alternatives to weigh it against.',
+    short: 'Aloha icon', count: 30, accent: TONES.orange, special: 'icons',
+    problem: 'One small swaying figure in a 56px badge — and thirty alternatives to weigh it against.',
     cfg: {
       thinking: {
         title: 'The first thing anybody sees after clicking Sign in',
