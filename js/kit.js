@@ -187,3 +187,27 @@ export const pill = (tone, html, pos) => ({ tone, html, pos });
    live page actually gives the animation and draw to that canvas. */
 export const boxWrap = (w, h) => (inner) =>
   `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="xMidYMid meet" aria-hidden="true" style="width:100%;height:100%">${inner}</svg>`;
+
+/* ── OMDM: two documented style systems ───────────────────────────────────
+   Direction A — INST (institutional): a dark navy trading surface. Gold is
+   the only warm colour and is reserved for the instrument itself. Bid/ask
+   semantics carry green/red. Monospace for every number.
+   Direction B — FIN (fintech-clean): a light cool surface. Indigo is the
+   single accent, no gold, generous rounding, soft elevation. Sans for
+   labels, monospace kept only for figures.
+   Both are documented in STYLE-OMDM.md at the repo root.                  */
+export const INST = {
+  ground: '#0A1122', panel: '#101A31', rise: '#16223D', line: 'rgba(255,255,255,0.10)',
+  lineHard: 'rgba(255,255,255,0.20)', text: '#E8EDF7', dim: '#8595B4', faint: '#5A6B8C',
+  gold: '#C8A24A', goldDim: 'rgba(200,162,74,0.22)', up: '#2FA37A', down: '#D85560',
+};
+export const FIN = {
+  ground: '#F7F9FC', panel: '#FFFFFF', rise: '#EEF2F9', line: '#E2E8F2',
+  lineHard: '#C8D3E6', text: '#0F172A', dim: '#5A6880', faint: '#93A0B8',
+  accent: '#3B5BDB', accentSoft: '#E7EBFC', up: '#0F7A55', down: '#C0343E',
+};
+/* the OMDM hero scene measured on the live page: 576 x 460 (ar 1.252) */
+export const OMDM_HERO = { w: 576, h: 460 };
+/* net-new blocks, boxes chosen to sit in the page's 1280px container */
+export const OMDM_BOOK = { w: 1280, h: 420, layout: 'wide' };
+export const OMDM_CTRL = { w: 624, h: 440 };

@@ -18,6 +18,8 @@ import { C1_VARIANTS, C2_VARIANTS, C3_VARIANTS, WIDE, SMALL } from './iot-cells.
 import { LOUNGE_VARIANTS, NOMAD_VARIANTS, KYC_VARIANTS, LOUNGE_BOX, NOMAD_BOX, KYC_BOX } from './plus.js';
 import { PRIN_VARIANTS, TEAM_VARIANTS } from './about.js';
 import { PRIN_EXTRA, TEAM_EXTRA } from './about2.js';
+import { OMDM_HERO_VARIANTS } from './omdm-hero.js';
+import { OMDM_HERO } from './kit.js';
 import { ICONS } from './icons.js';
 import { buildIconBoard } from './iconboard.js';
 
@@ -619,6 +621,48 @@ export const BOARDS = [
         { k: 'If the goal is warmth', h: '6 · Passport Pages', d: 'The most literal and most charming reading of the section title, and it works as a still frame before any motion starts.' },
         { k: 'If the goal is the statistic', h: '10 · Straight to the Author', d: 'Converts the engineering ratio into a two-hour fix, which is the only form of that fact a traveller cares about.' },
         { k: 'If the goal is scale', h: '9 · Where We Hired', d: 'Keeps the headcount the page is proud of and adds the geography that makes it interesting.' },
+      ],
+    },
+  },
+
+
+  /* ── /omdm-market ───────────────────────────────────────────────── */
+  {
+    key: 'omhero', page: 'OMDM Market', path: '/omdm-market', section: 'Hero — the live book',
+    short: 'Hero', count: 10, accent: TONES.market,
+    variants: OMDM_HERO_VARIANTS, embed: OMDM_HERO,
+    problem: 'A static order book on consumer-orange, on a page whose whole claim is that prices never stop moving.',
+    cfg: {
+      kicker: 'OMDM™ — Openline Mobile Data Market', heading: 'Mobile data,', headingAccent: 'priced like a market',
+      lead: 'Wholesale data run as a continuous market — every route quoted, repriced and settled against more than a hundred live signals.',
+      bullets: ['<b>Real box</b> — 576 × 460, measured on the live scene',
+        '<b>Two characters</b> — options 1–5 institutional navy, 6–10 fintech-clean',
+        '<b>Both documented</b> — tokens and rules in STYLE-OMDM.md',
+        '<b>Job</b> — make the page prove the one thing it asserts'],
+      keptIdentical: [
+        'The OMDM™ wordmark and the eyebrow line',
+        'Every word of the headline and the lead paragraph',
+        'Bid / ask / change / depth as the column order',
+        'The four stat cards and the two buttons below the hero',
+        'The six signal-family names and their counts',
+      ],
+      embed: OMDM_HERO,
+      thinking: {
+        title: 'The page argues for continuous pricing and then shows a frozen table',
+        lead: 'The hero panel is the only real visual on /omdm-market and it does not move. Everything below it — continuous quoting, a hundred signals, repricing against live conditions — is asserted in prose and contradicted by the artwork. The orange compounds it: a wholesale venue that counterparties are asked to be verified for reads, at a glance, like a holiday data plan.',
+        jobs: [
+          { t: 'Move, or stop claiming movement', d: 'If the copy says every route is repriced continuously, the hero has to reprice. This is the one non-negotiable.' },
+          { t: 'Pick a character and document it', d: 'The page is borrowing the consumer brand. Both candidate surfaces are built and written down so whichever wins can be handed straight to implementation.' },
+          { t: 'Set up the sections below', d: 'The hero should hand off to the signals section and the controls section rather than duplicating the headline.' },
+          { t: 'Do not fake data', d: 'Every number drawn here has to be one Openline can stand behind, because an institutional reader will check it.' },
+        ],
+      },
+      pick: [
+        { k: 'My pick', h: '1 · The Book', d: 'The literal answer to the literal problem: the panel already on the page, on the navy surface, actually quoting. It is the least clever option and the hardest to argue against.' },
+        { k: 'If the goal is differentiation', h: '2 · Two Sides', d: 'The only option that shows supply meeting demand and a trade printing at the cross. No competitor hero looks like this.' },
+        { k: 'If the goal is credibility', h: '3 · The Tape', d: 'Prints rather than quotes. Evidence instead of a promise, and it proves the audit claim for free.' },
+        { k: 'If the goal is sales', h: '5 · A Guess and an Answer', d: 'Draws the best line of copy on the site and puts a number on what the rate card costs. Screenshot-ready for a deck.' },
+        { k: 'If the page stays light', h: '7 · The Board', d: 'Same information as option 1 on white. Worth loading back to back with it — that comparison is the whole surface decision.' },
       ],
     },
   },
