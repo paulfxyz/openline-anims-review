@@ -240,7 +240,7 @@ const thirtySeconds = {
   desc:
     'The smallest change that fixes the honesty problem. Identical artwork, but every loop is ' +
     'collapsed onto one nine-second clock: the scan line crosses the code exactly once, a ring ' +
-    'fills beneath it, the pill counts 30s down to ONLINE, and only then does "Connected · ' +
+    'fills beneath it, the pill counts 30s down to Online, and only then does "Connected · ' +
     'Tier-1 · 5G" land and the Wi-Fi arcs start. Then it rests for three full seconds before ' +
     'starting again. The headline claim stops being an assertion and becomes something a visitor ' +
     'can sit and watch happen.',
@@ -304,7 +304,7 @@ const thirtySeconds = {
         </g>
 
         ${rect(165, 11, 117, 28, { fill: OR, r: 14 })}
-        ${seq(223, 29, ['ONLINE IN 30s', 'ONLINE IN 21s', 'ONLINE IN 12s', 'ONLINE IN 4s', 'ONLINE', 'ONLINE'], dur, {
+        ${seq(223, 29, ['Online in 30s', 'Online in 21s', 'Online in 12s', 'Online in 4s', 'Online', 'Online'], dur, {
         size: 11.5, w: 700, a: 'middle', fill: WHITE,
         kt: ['0', '0.14', '0.30', '0.46', '0.62', '0.80'],
       })}
