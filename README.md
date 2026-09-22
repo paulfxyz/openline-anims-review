@@ -8,10 +8,10 @@ dependencies, no framework.
 
 **`index.html`** — the review app. 30 boards, each covering one animation slot on
 one page of the live site. Every board opens on option 0, a faithful replica of
-what currently ships (bugs included), followed by the proposed alternatives — 15
-on most boards, 5 on the newest. Each proposal carries a family, a tagline, a
-rationale, pros and cons, and scores for story, motion, performance, mobile,
-brand and ease. A comparison matrix sits below each board.
+what currently ships (bugs included), followed by 15 proposed alternatives. Each
+proposal carries a family, a tagline, a rationale, pros and cons, and scores for
+story, motion, performance, mobile, brand and ease. A comparison matrix sits
+below each board.
 
 Boards are grouped by the page they affect: Multiple Tier-1, Global eSIM, Home,
 Network, Business, Hospitality, IoT, Openline+, Login, About, OMDM Market, Blog,
@@ -32,8 +32,10 @@ on the live page, so nothing looks better here than it would in production.
 light ground, a single blue accent, monospaced numerals. Notes in
 `STYLE-OMDM.md`.
 
-Recommendation panels on the older boards were written when those boards carried
-10 options, so they do not consider options 11–15. The boards say so in the UI.
+Recommendation panels on most boards were written when those boards carried 10
+options, so they do not consider options 11–15; the boards say so in the UI. The
+Home › "Why choose Openline?" panel is the exception — its recommendation was
+written against all fifteen.
 
 **`producthunt.html`** — a full redesign of `/producthunt`. The hero is kept
 exactly as it ships; everything below is rebuilt, and the claim flow becomes a

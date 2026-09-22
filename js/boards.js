@@ -230,7 +230,7 @@ export const BOARDS = [
 
   {
     key: 'homewhy', page: 'Home', path: '/home', section: 'Why choose Openline? — the product panel',
-    short: 'Why choose', count: 5, accent: TONES.orange, variants: HOME_WHY_VARIANTS,
+    short: 'Why choose', count: 15, accent: TONES.orange, variants: HOME_WHY_VARIANTS,
     embed: HOME_WHY_BOX,
     problem: 'The only cell in a six-cell comparison grid that compares nothing — a phone on six unsynchronised loops, none of which ever finish.',
     cfg: {
@@ -255,8 +255,11 @@ export const BOARDS = [
       },
       pick: [
         { k: 'My pick', h: '2 · Both, Not Either', d: 'It is the only option that argues the sentence printed directly above the grid, and it turns the odd cell out into a peer of the five comparison cards beside it. Replace the illustrative competitor positions with something defensible before it ships — as drawn it is a market claim.' },
-        { k: 'If the change has to be small', d: '1 · Thirty Seconds. Identical artwork, one clock, and the 30-second claim becomes something you can watch. No new argument, but the honesty problem goes away and nothing else about the card moves.' },
-        { k: 'If reliability is the priority', d: '3 · The Handover. The operator name changes three times, the signal holds at 4/4 and the line never breaks. It proves the multi-Tier-1 claim the grid makes two cells to the left and never shows.' },
+        { k: 'Runner-up', h: '6 · The Install', d: 'If the section is meant to sell rather than argue, this is the stronger one. It answers the objection the pill raises — how many taps is this, and what am I agreeing to — and it is the only option that shows the product actually working end to end.' },
+        { k: 'If the change has to be small', d: '7 · One Tap, or 1 · Thirty Seconds. One Tap is the least invasive change on the board: same artwork, same words, the scan simply happens once and stops. Thirty Seconds goes one step further and makes the 30-second claim watchable.' },
+        { k: 'If reliability is the priority', d: '15 · Signal, All Day. Reliability is a claim about time, which is exactly why a still image fails here. Twenty-four bars that never break prove it; 3 · The Handover proves the switching mechanism instead, and 8 · Across the Border proves it for travellers specifically.' },
+        { k: 'If it has to work at a glance', d: '11 · The Odometer. The largest type on the board and the only option legible in half a second on a phone. It commits the section to a printed price, which is the trade.' },
+        { k: 'Note on this board', d: 'Unlike the other boards here, this recommendation was written with all fifteen options in front of it rather than the first ten.' },
       ],
     },
   },
