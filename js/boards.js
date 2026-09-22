@@ -6,6 +6,7 @@ import { TONES } from './kit.js';
 import { WHAT_VARIANTS } from './esim-what.js';
 import { TRAVEL_VARIANTS } from './esim-travel.js';
 import { REFERRAL_VARIANTS } from './referral.js';
+import { HOME_WHY_VARIANTS, HOME_WHY_BOX } from './home-why.js';
 import { NET_HERO_VARIANTS, WHY_VARIANTS } from './network.js';
 import { AI_VARIANTS } from './t1-sections.js';
 import { MARKET_VARIANTS } from './t1-market.js';
@@ -223,6 +224,39 @@ export const BOARDS = [
         { k: 'My pick', h: '4 · Two Wallets', d: 'Perfect symmetry answers the only question anyone has — do I really get the same as them — and rising numbers are the most persuasive motion available next to a form. It is also the calmest, which matters when the real call to action is the email field beside it.' },
         { k: 'If the goal is virality', d: '1 · Chain Reaction. The only option that shows the upside growing past one friend. Check it against the programme\'s actual cap before shipping.' },
         { k: 'If the goal is credibility', d: '5 · Referral Ledger. A money claim is more believable as an account statement than as an illustration, and it quietly signals that other people are already doing this.' },
+      ],
+    },
+  },
+
+  {
+    key: 'homewhy', page: 'Home', path: '/home', section: 'Why choose Openline? — the product panel',
+    short: 'Why choose', count: 5, accent: TONES.orange, variants: HOME_WHY_VARIANTS,
+    embed: HOME_WHY_BOX,
+    problem: 'The only cell in a six-cell comparison grid that compares nothing — a phone on six unsynchronised loops, none of which ever finish.',
+    cfg: {
+      kicker: 'The Openline difference', heading: 'Why choose', headingAccent: 'Openline?',
+      lead: 'You shouldn\'t have to choose between cheap or reliable. Openline gives you both.',
+      bullets: ['<b>Five cells argue</b> Openline against Others — this one does not',
+        '<b>"Online in 30s"</b> is the most checkable claim on the card',
+        '<b>Six loops</b> run at 2.2s, 2.6s, 3s, 5.5s, 6s and 7s',
+        '<b>The same panel</b> appears again lower down, in "Get Connected"'],
+      keptIdentical: kept('#FF5314', '#E23D00', [
+        'Same 300\u00d7374 card, 12px radius and 2px orange border',
+        'Same warm scene wash and the two chips at the bottom left',
+      ]),
+      thinking: {
+        title: 'Five cells make an argument and the sixth shows a device',
+        lead: 'The grid above this panel is a comparison table in disguise: icon, claim, what Openline does, what Others do. Five cells follow that shape. This one breaks it — and it is the cell with the most room and the strongest position in the grid.',
+        jobs: [
+          { t: 'Make the claim checkable', d: '"Online in 30s" is printed on the card and nothing on screen ever measures thirty seconds. The scan line crosses the code forever and no profile is ever installed, so the one falsifiable promise here quietly undermines itself.' },
+          { t: 'Argue the headline, not the product', d: 'The sentence above the grid is "you shouldn\'t have to choose between cheap or reliable". That trade-off is the section\'s whole thesis and no cell in the grid draws it. This panel has the space to.' },
+          { t: 'Resolve, then rest', d: 'Six loops at 2.2 to 7 seconds never align, so the card is permanently in motion and never at a conclusion. One clock with a pause at the end reads as deliberate rather than decorative.' },
+        ],
+      },
+      pick: [
+        { k: 'My pick', h: '2 · Both, Not Either', d: 'It is the only option that argues the sentence printed directly above the grid, and it turns the odd cell out into a peer of the five comparison cards beside it. Replace the illustrative competitor positions with something defensible before it ships — as drawn it is a market claim.' },
+        { k: 'If the change has to be small', d: '1 · Thirty Seconds. Identical artwork, one clock, and the 30-second claim becomes something you can watch. No new argument, but the honesty problem goes away and nothing else about the card moves.' },
+        { k: 'If reliability is the priority', d: '3 · The Handover. The operator name changes three times, the signal holds at 4/4 and the line never breaks. It proves the multi-Tier-1 claim the grid makes two cells to the left and never shows.' },
       ],
     },
   },

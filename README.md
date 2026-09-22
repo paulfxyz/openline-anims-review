@@ -6,17 +6,24 @@ dependencies, no framework.
 
 ## What's in it
 
-**`index.html`** — the review app. 28 boards, each covering one animation slot on
+**`index.html`** — the review app. 30 boards, each covering one animation slot on
 one page of the live site. Every board opens on option 0, a faithful replica of
-what currently ships (bugs included), followed by 10 proposed alternatives. Each
-proposal carries a family, a tagline, a rationale, pros and cons, and scores for
-story, motion, performance, mobile, brand and ease. A comparison matrix sits
-below each board.
+what currently ships (bugs included), followed by the proposed alternatives — 15
+on most boards, 5 on the newest. Each proposal carries a family, a tagline, a
+rationale, pros and cons, and scores for story, motion, performance, mobile,
+brand and ease. A comparison matrix sits below each board.
 
-Boards are grouped by the page they affect: Multiple Tier-1, Global eSIM,
-Referral, Network, Business, Hospitality, IoT, Openline+, Login, About, OMDM
-Market, Blog, Contact and Affiliate. One board is an icon set rather than
-animations (20 Aloha badge options).
+Boards are grouped by the page they affect: Multiple Tier-1, Global eSIM, Home,
+Network, Business, Hospitality, IoT, Openline+, Login, About, OMDM Market, Blog,
+Contact and Affiliate. One board is an icon set rather than animations (31 Aloha
+badge options).
+
+**`choice.html`** (`/choice`) — the selection walkthrough. It steps through every
+board one at a time, renders all of that board's options live side by side, and
+asks for one pick per section, by click or number key. Picks persist in
+`localStorage`, and the summary screen at the end emits both a Markdown table and
+a machine-readable JSON block to copy back. It reads the same board registry as
+the review app, so it can never drift out of sync with it.
 
 Every animation is embedded at the real measured size of the box it would occupy
 on the live page, so nothing looks better here than it would in production.
@@ -24,6 +31,9 @@ on the live page, so nothing looks better here than it would in production.
 **`omdm.html`** — a full redesign of `/omdm-market` in a fintech-clean direction:
 light ground, a single blue accent, monospaced numerals. Notes in
 `STYLE-OMDM.md`.
+
+Recommendation panels on the older boards were written when those boards carried
+10 options, so they do not consider options 11–15. The boards say so in the UI.
 
 **`producthunt.html`** — a full redesign of `/producthunt`. The hero is kept
 exactly as it ships; everything below is rebuilt, and the claim flow becomes a
