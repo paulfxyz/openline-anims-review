@@ -582,3 +582,275 @@ button { font: inherit; color: inherit; }
   .ch-card, .ch-barfill { transition: none; }
   .ch-card:hover { transform: none; }
 }
+
+/* ══ 1:1 viewer ══════════════════════════════════════════════════════
+   Opened by clicking the artwork on a card. The stage is set to the real
+   measured box in px and only scaled when the viewport cannot hold it, in
+   which case the header says what percentage you are looking at.
+   `.ch-zoom[hidden]` needs the explicit display:none because the rule
+   below sets display:block and would otherwise outrank the UA sheet — the
+   same trap the footer hit earlier.                                      */
+
+.ch-zoom { display: block; position: fixed; inset: 0; z-index: 90; }
+.ch-zoom[hidden] { display: none !important; }
+
+body.is-zoomed { overflow: hidden; }
+
+.zm-back {
+  position: absolute;
+  inset: 0;
+  background: rgba(11, 11, 15, .62);
+  backdrop-filter: blur(3px);
+  animation: zmFade .16s ease-out;
+}
+
+@keyframes zmFade { from { opacity: 0 } to { opacity: 1 } }
+@keyframes zmRise { from { opacity: 0; transform: translateY(10px) } to { opacity: 1; transform: none } }
+
+.zm-panel {
+  position: absolute;
+  inset: 24px;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 30px 80px rgba(11, 11, 15, .35);
+  overflow: hidden;
+  animation: zmRise .2s cubic-bezier(.2, .8, .2, 1);
+}
+
+.zm-panel:focus { outline: none; }
+
+/* ── bar ── */
+
+.zm-bar {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--line2);
+}
+
+.zm-num {
+  display: grid;
+  place-items: center;
+  min-width: 30px;
+  height: 30px;
+  padding: 0 8px;
+  border-radius: 8px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  flex: none;
+}
+
+.zm-num.is-live { background: var(--line2); color: var(--dim); font-size: 10px; letter-spacing: .08em; }
+
+.zm-titles { display: grid; line-height: 1.3; min-width: 0; }
+.zm-titles b { font-size: 16px; font-weight: 750; }
+.zm-titles span { font-size: 12px; color: var(--faint); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.zm-size {
+  margin-left: auto;
+  padding: 5px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 11px;
+  color: var(--dim);
+  white-space: nowrap;
+  flex: none;
+}
+
+.zm-nav { display: flex; align-items: center; gap: 4px; flex: none; }
+
+.zm-ib {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  font-size: 17px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background .12s, border-color .12s;
+}
+
+.zm-ib:hover { background: #F6F7F9; border-color: var(--ink); }
+
+.zm-of {
+  min-width: 46px;
+  text-align: center;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 11.5px;
+  color: var(--faint);
+}
+
+.zm-close {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 8px;
+  background: var(--line2);
+  font-size: 14px;
+  cursor: pointer;
+  flex: none;
+  transition: background .12s, color .12s;
+}
+
+.zm-close:hover { background: var(--ink); color: #fff; }
+
+/* ── body ── */
+
+.zm-body { display: grid; grid-template-columns: 1fr 330px; min-height: 0; }
+
+.zm-stagewrap {
+  display: grid;
+  place-items: center;
+  padding: 26px;
+  min-width: 0;
+  overflow: auto;
+  background:
+    linear-gradient(45deg, #F1F2F5 25%, transparent 25%, transparent 75%, #F1F2F5 75%),
+    linear-gradient(45deg, #F1F2F5 25%, transparent 25%, transparent 75%, #F1F2F5 75%),
+    #FAFAFB;
+  background-size: 18px 18px;
+  background-position: 0 0, 9px 9px;
+}
+
+/* The stage is the real box. transform-origin center keeps a fitted option
+   centred in the checkerboard rather than drifting to a corner. */
+.zm-stage {
+  position: relative;
+  flex: none;
+  background: #fff;
+  box-shadow: 0 8px 26px rgba(11, 11, 15, .14);
+  overflow: hidden;
+}
+
+.zm-stage > svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+.zm-stage.tone-dark { background: linear-gradient(135deg, #1A1526, #0D0B14 50%, #241A38); }
+.zm-stage.tone-plus { background: linear-gradient(160deg, #2A1A18, #131826 45%, #241A16); }
+.zm-stage.tone-orange { background: linear-gradient(135deg, #FF5314, #F0651F 55%, #FF8A4C); }
+.zm-stage.tone-plusgreen { background: linear-gradient(160deg, #122A1F, #131826 45%, #102A20); }
+
+/* Aloha badges: true size plus a magnified reference, side by side. */
+.zm-stage.is-ic { width: auto; height: auto; background: none; box-shadow: none; overflow: visible; }
+.zm-icons { display: flex; align-items: flex-end; gap: 46px; }
+.zm-iconcell { display: grid; justify-items: center; gap: 12px; }
+.zm-ic { display: grid; place-items: center; background: #fff; border-radius: 12px; box-shadow: 0 6px 20px rgba(11, 11, 15, .12); }
+.zm-ic > svg { width: 100% !important; height: 100% !important; position: static !important; inset: auto !important; }
+.zm-iclab { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 10.5px; color: var(--faint); }
+
+/* ── side ── */
+
+.zm-side {
+  border-left: 1px solid var(--line2);
+  /* extra bottom padding so the last score row does not sit flush against
+     the scroll boundary and read as clipped */
+  padding: 20px 20px 30px;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.zm-fam {
+  display: inline-block;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: var(--line2);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.zm-tag { margin: 12px 0 0; font-size: 15px; font-weight: 650; line-height: 1.4; }
+.zm-desc { margin: 10px 0 0; font-size: 13.5px; line-height: 1.62; color: var(--dim); }
+
+.zm-list { margin-top: 17px; }
+.zm-lt { font-size: 10.5px; font-weight: 750; letter-spacing: .07em; text-transform: uppercase; color: var(--faint); }
+.zm-list ul { margin: 7px 0 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+.zm-list li { position: relative; padding-left: 16px; font-size: 12.5px; line-height: 1.5; color: var(--dim); }
+.zm-list li::before { position: absolute; left: 0; top: -1px; font-weight: 700; }
+.zm-list.is-pro li::before { content: '+'; color: var(--good); }
+.zm-list.is-con li::before { content: '−'; color: #C2410C; }
+
+.zm-scores { margin-top: 19px; display: grid; gap: 7px; }
+.zm-score { display: grid; grid-template-columns: 54px 1fr 16px; align-items: center; gap: 9px; }
+.zm-sk { font-size: 10.5px; text-transform: capitalize; color: var(--faint); }
+.zm-sbar { height: 5px; border-radius: 3px; background: var(--line2); overflow: hidden; }
+.zm-sbar > i { display: block; height: 100%; border-radius: 3px; background: var(--acc); }
+.zm-sv { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 10.5px; color: var(--faint); text-align: right; }
+
+/* ── foot ── */
+
+.zm-foot {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--line2);
+  background: #FCFCFD;
+}
+
+.zm-hint { font-size: 12px; color: var(--faint); }
+
+.zm-pick {
+  margin-left: auto;
+  padding: 10px 18px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .13s, transform .1s;
+}
+
+.zm-pick:hover { transform: translateY(-1px); }
+.zm-pick.is-on { background: var(--good); }
+
+/* ── the hint on each card's artwork ── */
+
+.ch-zoomhint {
+  position: absolute;
+  right: 9px;
+  bottom: 9px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: rgba(11, 11, 15, .8);
+  color: #fff;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 10.5px;
+  letter-spacing: .03em;
+  opacity: 0;
+  transform: translateY(3px);
+  transition: opacity .15s, transform .15s;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.ch-zoomhint > svg { width: 12px; height: 12px; }
+
+.ch-frame[data-zoom] { cursor: zoom-in; }
+.ch-card:hover .ch-zoomhint,
+.ch-frame[data-zoom]:hover .ch-zoomhint { opacity: 1; transform: none; }
+
+@media (max-width: 1080px) {
+  .zm-panel { inset: 12px; }
+  .zm-body { grid-template-columns: 1fr; grid-template-rows: 1fr auto; }
+  .zm-side { border-left: 0; border-top: 1px solid var(--line2); max-height: 38vh; }
+  .zm-titles span, .zm-hint { display: none; }
+}
