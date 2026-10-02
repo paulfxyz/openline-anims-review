@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Openline QA — your picks, in context</title>
+<meta name="description" content="Every chosen Openline animation, placed back in the page it belongs to." />
+<meta name="robots" content="noindex" />
+<link rel="stylesheet" href="/qa/hub.css" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230B0B0F'/%3E%3Cpath d='M16 7a9 9 0 1 0 9 9' fill='none' stroke='%23fff' stroke-width='4' stroke-linecap='round'/%3E%3Ccircle cx='24' cy='8' r='3.4' fill='%23FF5314'/%3E%3C/svg%3E" />
+</head>
+<body>
+
+<header class="hb-head">
+  <a class="hb-brand" href="/qa">
+    <svg viewBox="0 0 32 32" aria-label="Openline">
+      <path d="M16 5a11 11 0 1 0 11 11" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+      <circle cx="25.5" cy="6.5" r="4" fill="#FF5314"/>
+    </svg>
+    <span><b>Openline QA</b><small>Picks in context</small></span>
+  </a>
+  <nav class="hb-links">
+    <a href="/choice">Re-run /choice</a>
+    <a href="/">All review boards</a>
+  </nav>
+</header>
+
+<main class="hb-main">
+  <section class="hb-hero">
+    <p class="hb-kick" id="hb-kick">—</p>
+    <h1>Your picks, back in the pages they belong to.</h1>
+    <p class="hb-lead">Each page below is a copy of the live site with your chosen animation dropped into its real slot.
+      Open a page, tweak anything with the panel, then copy the result back to me.</p>
+    <ol class="hb-how">
+      <li><b>Open a page.</b> Every animated slot carries a black label with the option number.</li>
+      <li><b>Tune it.</b> Click a label or press <kbd>Q</kbd> for the panel: swap the option, compare against what ships today, recolour the site, leave a note.</li>
+      <li><b>Send it back.</b> “Copy for Computer” puts everything — picks, notes, colour — on your clipboard.</li>
+    </ol>
+  </section>
+
+  <section class="hb-sec">
+    <div class="hb-sechead">
+      <h2>Colour</h2>
+      <p>One theme for every page and every animation. Lightness is kept, so pale tints stay pale.</p>
+    </div>
+    <div id="hb-theme"></div>
+  </section>
+
+  <section class="hb-sec">
+    <div class="hb-sechead">
+      <h2>Pages</h2>
+      <p id="hb-count">—</p>
+    </div>
+    <div class="hb-pages" id="hb-pages"></div>
+  </section>
+
+  <section class="hb-sec">
+    <div class="hb-sechead">
+      <h2>Send it back</h2>
+      <p>Paste this into the chat. It carries every pick, every note and the colour theme.</p>
+    </div>
+    <div class="hb-export">
+      <textarea id="hb-md" readonly spellcheck="false"></textarea>
+      <div class="hb-exbtns">
+        <button type="button" class="hb-btn is-main" id="hb-copy">Copy for Computer</button>
+        <button type="button" class="hb-btn" id="hb-reset">Reset to my /choice picks</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="hb-sec hb-notes">
+    <div class="hb-sechead"><h2>How these pages are made</h2></div>
+    <ul>
+      <li>Each page is a capture of <a href="https://openline-revisions-hub.vercel.app/home">openline-revisions-hub</a> at 1440px wide, with its scripts removed. Text, images and layout are real; menus, tabs and forms don't respond.</li>
+      <li>The animations are the live option code from the review boards — edit an option there and it changes here too.</li>
+      <li>The blog hero is one slot with two boards drawn for it (Hero and Video cover). The panel flips between them.</li>
+      <li>Recolouring moves every accent around the colour wheel. Photos, raster logos and the Lottie hero art can't be recoloured.</li>
+    </ul>
+  </section>
+</main>
+
+<div class="hb-toast" id="hb-toast" hidden></div>
+
+<div id="overview" hidden></div>
+<div id="boards" hidden></div>
+<nav id="nav-pages" hidden></nav>
+<nav id="nav-sections" hidden></nav>
+
+<script type="module" src="/qa/hub.js"></script>
+</body>
+</html>

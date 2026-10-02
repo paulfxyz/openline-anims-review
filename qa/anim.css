@@ -1,0 +1,75 @@
+/* Generated from /css/style.css — only the classes option artwork uses
+   internally, scoped under .qa-mount so nothing leaks into the captured
+   page. Regenerate rather than edit. */
+@keyframes bob { 0%,100% { transform: translateY(-6px); } 50% { transform: translateY(2px); } }
+.qa-mount .lane .live {opacity: 0; transition: opacity .45s ease;}
+.qa-mount .lane.on .live {opacity: 1;}
+.qa-mount .lane .halo {display: none;}
+.qa-mount .lane.on .halo {display: block;}
+.qa-mount .lane .node {fill: #3D3D46; transition: fill .45s ease, r .45s ease;}
+.qa-mount .lane.on .node {fill: var(--cyan);}
+.qa-mount .lane .tag {transition: opacity .45s ease, fill .45s ease;}
+.qa-mount .lane.on .tag {fill: var(--cyan-deep); opacity: 1;}
+.qa-mount .lane.on .meta {opacity: .62;}
+.qa-mount .flash {transform-origin: 0 0; animation: flash .95s cubic-bezier(.2,.7,.3,1) forwards;}
+@keyframes flash {
+  from { transform: translate(400px,280px) scale(.72); opacity: .55; }
+  to   { transform: translate(400px,280px) scale(1.7); opacity: 0; }
+}
+.qa-mount .card .shell {transition: opacity .4s ease, stroke .4s ease;}
+.qa-mount .card .ring, .qa-mount .card .won {transition: opacity .4s ease;}
+.qa-mount .card.on .shell {opacity: 1; stroke: var(--cyan);}
+.qa-mount .card.on .ring {opacity: 1;}
+.qa-mount .card.on .won {opacity: 1;}
+.qa-mount .fl .up, .qa-mount .fl .down {opacity: 0; transition: opacity .35s ease;}
+.qa-mount .fl.on .up {opacity: 1;}
+.qa-mount .fl.dead .down {opacity: 1;}
+.qa-mount .fl .node {transition: fill .3s ease;}
+.qa-mount .fl.on .node {fill: #06B6D4;}
+.qa-mount .fl.dead .node {fill: #EF4444;}
+.qa-mount .fl.dead .cross {opacity: 1 !important; transition: opacity .2s ease;}
+.qa-mount .fl .cname, .qa-mount .fl .cstate {transition: opacity .3s ease, fill .3s ease;}
+.qa-mount .fl.on .cname {fill: #0891B2; opacity: 1;}
+.qa-mount .fl.on .cstate {fill: #0891B2; opacity: .85;}
+.qa-mount .fl.dead .cname {fill: #EF4444; opacity: .9;}
+.qa-mount .fl.dead .cstate {fill: #EF4444; opacity: 1;}
+.qa-mount svg .marker {transition: transform .5s cubic-bezier(.2,.7,.3,1);}
+.qa-mount .wcard {transition: transform .55s cubic-bezier(.2,.7,.3,1), opacity .55s ease;}
+.qa-mount .wcard .face, .qa-mount .wcard .wactive {transition: opacity .45s ease;}
+.qa-mount .wcard.front .face {opacity: 1;}
+.qa-mount .wcard.front .wactive {opacity: .9;}
+.qa-mount .wcard.front .wname, .qa-mount .wcard.front .wmeta {fill: #fff;}
+.qa-mount .wcard.front .wmeta {opacity: .8;}
+.qa-mount .wcard .wbar, .qa-mount .wcard .wchip, .qa-mount .wcard .wtrace {transition: fill .45s ease, stroke .45s ease, opacity .45s ease;}
+.qa-mount .wcard.front .wbar {fill: #fff;}
+.qa-mount .wcard.front .wchip {fill: #fff; opacity: .32;}
+.qa-mount .wcard.front .wtrace {stroke: #fff; opacity: .6;}
+.qa-mount .nm .up, .qa-mount .nm .cone {opacity: 0; transition: opacity .4s ease;}
+.qa-mount .nm.on .up, .qa-mount .nm.on .cone {opacity: 1;}
+.qa-mount .nm .mname, .qa-mount .nm .mping {transition: opacity .4s ease, fill .4s ease;}
+.qa-mount .nm.on .mname {fill: #E23D00; opacity: 1;}
+.qa-mount .nm.on .mping {opacity: 0.7;}
+.qa-mount .igc {position: relative; display: block; width: 100%; height: 100%; padding: 0; border: 0;
+  background: none; cursor: pointer; border-radius: 16px; overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  
+  pointer-events: auto;
+  transition: transform .24s cubic-bezier(.2,.7,.3,1), box-shadow .24s ease;}
+.qa-mount .igc > svg {display: block; width: 100%; height: 100%;}
+.qa-mount .igc:hover {transform: translateY(-3px); box-shadow: 0 24px 48px rgba(11,11,15,.28);}
+.qa-mount .igc:active {transform: translateY(-1px) scale(.995);}
+.qa-mount .igc:focus-visible {outline: 3px solid var(--acc, #FF5314); outline-offset: 3px;}
+.qa-mount .igc-flat:hover {transform: none; box-shadow: none;}
+.qa-mount .igc-flash {position: absolute; inset: 0; display: grid; place-items: center;
+  background: rgba(11,11,15,.88); opacity: 0; pointer-events: none;
+  transition: opacity .18s ease;}
+.qa-mount .igc-flash > span {font-family: ui-monospace, Menlo, monospace; font-size: 12px; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase; color: #fff;
+  border: 1.5px solid rgba(255,255,255,.3); border-radius: 999px; padding: 11px 20px;
+  background: rgba(255,255,255,.08); transform: scale(.94); transition: transform .18s ease;}
+.qa-mount .igc-on .igc-flash {opacity: 1;}
+.qa-mount .igc-on .igc-flash > span {transform: scale(1);}
+@media (prefers-reduced-motion: reduce) {
+  .qa-mount .igc, .qa-mount .igc-flash, .qa-mount .igc-flash > span { transition: none; }
+  .qa-mount .igc:hover { transform: none; }
+}

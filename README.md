@@ -88,3 +88,22 @@ constants are initialised before use.
 
 Setting `chosen: <index>` on a board marks the selected option with a badge, a
 tick in the nav, a highlighted matrix row, and makes it the default on load.
+
+## /qa — picks in context
+
+[`/qa`](https://openline-anims-review.vercel.app/qa) puts every chosen option back into the page it belongs to.
+
+- **15 pages** (`/qa/home`, `/qa/multiple-tier1`, … `/qa/affiliate`) are static captures of
+  openline-revisions-hub at 1440px with scripts removed. Each animated slot is marked
+  `data-qa-slot="<board key>"` and the picked option is mounted into it at the slot's real size.
+- **Defaults** come from `qa/selections.json` (the /choice export). Changes live in
+  `localStorage` (`openline-qa-v1`) and never touch that file.
+- **Panel** (`Q`): swap option, compare with what ships today, leave a note, flip the shared blog
+  slot between its two boards. Labels (`O`) sit on every slot.
+- **Colour**: `qa/recolor.js` moves accents around the OKLCH wheel (lightness kept, neutrals
+  untouched) across the site stylesheet, inline styles, SVG paint and SMIL values. Presets plus a
+  custom picker; "every accent" or "Openline orange only"; status green/red/amber can be kept.
+- **Export**: "Copy for Computer" gives a Markdown table + machine-readable JSON (picks, notes, theme).
+- Option code is imported from `/js` — the same registry as the boards and /choice — so an edit
+  to an option shows up in /qa with no copy to update.
+- Re-capture: `qa/tools/capture.py` then `qa/tools/build.py`.

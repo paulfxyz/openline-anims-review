@@ -1,0 +1,114 @@
+/* /qa — the hub: every page, every pick as a live thumbnail, the shared
+   colour theme and the export. */
+
+import {
+  PAGES, STEPS, loadBase, loadState, saveState, optOf, baseOpt, resetPicks,
+  themeObj, themeLabel, renderOption, exportMD, makeMapper, esc,
+} from './core.js';
+import { paintTree } from './paint.js';
+import { renderThemeControls } from './themeui.js';
+
+const TONE_BG = {
+  dark: 'linear-gradient(135deg, #1A1526, #0D0B14 50%, #241A38)',
+  plus: 'linear-gradient(160deg, #2A1A18, #131826 45%, #241A16)',
+  orange: 'linear-gradient(135deg, #FF5314, #F0651F 55%, #FF8A4C)',
+  plusgreen: 'linear-gradient(160deg, #122A1F, #131826 45%, #102A20)',
+};
+
+let state;
+let map = null;
+
+const pagesBox = document.getElementById('hb-pages');
+const themeBox = document.getElementById('hb-theme');
+const mdBox = document.getElementById('hb-md');
+
+function thumb(key) {
+  const s = STEPS[key];
+  const opt = optOf(state, key);
+  const r = renderOption(key, opt);
+  const o = s.opts[opt];
+  if (o.isIcon) {
+    return `<span class="hb-frame is-ic"><span class="hb-icbadge"><span class="hb-ic">${r.html}</span></span></span>`;
+  }
+  const bg = s.tone ? `background:${TONE_BG[s.tone]};` : '';
+  return `<span class="hb-frame" style="--cyan:#06B6D4;--cyan-deep:#0891B2;--ink:#0B0B0F;${bg}"><span class="qa-mount">${r.html}</span></span>`;
+}
+
+function renderPages() {
+  let total = 0, changed = 0;
+  pagesBox.innerHTML = PAGES.map((p, pi) => {
+    const keys = p.slots.flatMap((sl) => sl.boards || [sl.key]);
+    total += keys.length;
+    const items = keys.map((key) => {
+      const s = STEPS[key];
+      const opt = optOf(state, key);
+      const ch = opt !== baseOpt(key);
+      if (ch) changed++;
+      const note = state.notes[key];
+      return `<a class="hb-pick" href="/qa/${p.slug}#qa-${key}">
+        ${thumb(key)}
+        <span class="hb-pmeta">
+          <span class="hb-psec">${esc(s.section)}</span>
+          <span class="hb-pname"><b>${opt === 0 ? 'LIVE' : opt}</b>${esc(s.opts[opt].name)}</span>
+          ${ch ? `<span class="hb-flag">changed from ${baseOpt(key)}</span>` : ''}
+          ${note ? `<span class="hb-note">“${esc(note)}”</span>` : ''}
+        </span>
+      </a>`;
+    }).join('');
+    return `<article class="hb-page">
+      <a class="hb-pagehead" href="/qa/${p.slug}">
+        <span class="hb-pn">${String(pi + 1).padStart(2, '0')}</span>
+        <span class="hb-pt"><b>${esc(p.title)}</b><code>${esc(p.path)}</code></span>
+        <span class="hb-open">Open page →</span>
+      </a>
+      <div class="hb-picks">${items}</div>
+    </article>`;
+  }).join('');
+  document.getElementById('hb-count').textContent =
+    `${PAGES.length} pages · ${total} picks${changed ? ` · ${changed} changed since /choice` : ''}`;
+  paintTree(pagesBox, map);
+}
+
+function renderTheme() {
+  renderThemeControls(themeBox, state, (light) => { applyTheme(); if (!light) renderTheme(); renderExport(); });
+}
+
+function applyTheme() {
+  map = makeMapper(themeObj(state));
+  paintTree(pagesBox, map);
+}
+
+function renderExport() {
+  mdBox.value = exportMD(state);
+  document.getElementById('hb-kick').textContent = `${themeLabel(state)}`;
+}
+
+let tt = 0;
+function toast(m) {
+  const t = document.getElementById('hb-toast');
+  t.textContent = m; t.hidden = false; clearTimeout(tt); tt = setTimeout(() => { t.hidden = true; }, 2200);
+}
+
+async function boot() {
+  await loadBase();
+  state = loadState();
+  renderTheme();
+  applyTheme();
+  renderPages();
+  renderExport();
+
+  document.getElementById('hb-copy').addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(mdBox.value); }
+    catch { mdBox.select(); document.execCommand('copy'); }
+    toast('Copied — paste it into the chat');
+  });
+  document.getElementById('hb-reset').addEventListener('click', () => {
+    if (!confirm('Reset every pick and note back to your /choice selections? The colour theme is kept.')) return;
+    resetPicks(state); renderPages(); renderExport();
+  });
+  /* coming back from a page: reflect anything changed there */
+  window.addEventListener('pageshow', (e) => { if (e.persisted) { state = loadState(); renderTheme(); applyTheme(); renderPages(); renderExport(); } });
+  void saveState;
+}
+
+boot();

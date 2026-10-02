@@ -1,0 +1,156 @@
+{
+ "v": 1,
+ "at": "2026-10-02 02:58",
+ "picks": {
+  "tier1": {
+   "opt": 3,
+   "name": "Price Auction",
+   "note": ""
+  },
+  "t1ai": {
+   "opt": 3,
+   "name": "Neural Sweep",
+   "note": ""
+  },
+  "t1market": {
+   "opt": 5,
+   "name": "Ticker Tape",
+   "note": ""
+  },
+  "t1access": {
+   "opt": 1,
+   "name": "Operator Roster",
+   "note": ""
+  },
+  "what": {
+   "opt": 1,
+   "name": "Etch & Activate",
+   "note": ""
+  },
+  "travel": {
+   "opt": 3,
+   "name": "Trip Tape",
+   "note": ""
+  },
+  "referral": {
+   "opt": 3,
+   "name": "Link in Flight",
+   "note": ""
+  },
+  "homewhy": {
+   "opt": 3,
+   "name": "The Handover",
+   "note": ""
+  },
+  "nethero": {
+   "opt": 6,
+   "name": "Network HUD",
+   "note": ""
+  },
+  "why": {
+   "opt": 3,
+   "name": "Feature Stack",
+   "note": ""
+  },
+  "bizhero": {
+   "opt": 2,
+   "name": "Invoice Showdown",
+   "note": ""
+  },
+  "bizneeds": {
+   "opt": 1,
+   "name": "Console Tabs",
+   "note": ""
+  },
+  "hosp": {
+   "opt": 3,
+   "name": "Every Property Type",
+   "note": ""
+  },
+  "iotwide": {
+   "opt": 6,
+   "name": "The Shelf, Collapsed",
+   "note": ""
+  },
+  "iotchip": {
+   "opt": 1,
+   "name": "The Tray Ejects",
+   "note": ""
+  },
+  "iotdark": {
+   "opt": 1,
+   "name": "Night Side",
+   "note": ""
+  },
+  "pluslounge": {
+   "opt": 1,
+   "name": "Two Lanes, One Clock",
+   "note": ""
+  },
+  "plusnomad": {
+   "opt": 1,
+   "name": "Six Cities, One Number",
+   "note": ""
+  },
+  "pluskyc": {
+   "opt": 0,
+   "name": "Current",
+   "note": ""
+  },
+  "aloha": {
+   "opt": 6,
+   "name": "Globe & Pin",
+   "note": ""
+  },
+  "prin": {
+   "opt": 3,
+   "name": "Switches We Left Off",
+   "note": ""
+  },
+  "team": {
+   "opt": 3,
+   "name": "Against the Industry",
+   "note": ""
+  },
+  "omhero": {
+   "opt": 7,
+   "name": "The Board",
+   "note": ""
+  },
+  "ombook": {
+   "opt": 6,
+   "name": "Cards, Alive",
+   "note": ""
+  },
+  "omctrl": {
+   "opt": 6,
+   "name": "Onboarding",
+   "note": ""
+  },
+  "blog": {
+   "opt": 2,
+   "name": "Topic Picker",
+   "note": ""
+  },
+  "blogv": {
+   "opt": 6,
+   "name": "The Long Read",
+   "note": ""
+  },
+  "install": {
+   "opt": 3,
+   "name": "Chapter Deck",
+   "note": ""
+  },
+  "contact": {
+   "opt": 10,
+   "name": "Two Doors",
+   "note": ""
+  },
+  "affil": {
+   "opt": 3,
+   "name": "What You Actually Get",
+   "note": ""
+  }
+ }
+}
