@@ -1,0 +1,34 @@
+[
+ [
+  "How quickly will I receive my eSIM?",
+  "Your eSIM is delivered instantly via email as soon as your payment is confirmed. You'll receive a QR code that you can scan to install the eSIM on your device. The entire process typically takes less than 2 minutes."
+ ],
+ [
+  "What if my eSIM doesn't work?",
+  "If you experience any connectivity issues, our 24/7 support team is here to help. We'll troubleshoot with you step-by-step and if needed, provide a replacement eSIM at no extra cost. Our average resolution time is under 10 minutes."
+ ],
+ [
+  "Can I get a refund if I haven't used my data?",
+  "Yes! We offer a full refund if you haven't activated your eSIM yet. Once activated, we offer prorated refunds for unused data within the first 7 days. Simply contact our support team and we'll process your refund immediately."
+ ],
+ [
+  "How do I install an eSIM?",
+  "Installing an eSIM is simple: 1) Make sure your device is eSIM compatible, 2) Scan the QR code we send you, 3) Follow the on-screen instructions to add the eSIM profile. We have detailed setup guides for iPhone, Android, and other devices in our knowledge base."
+ ],
+ [
+  "Which carriers will I connect to?",
+  "Your Openline eSIM automatically connects to 50+ Tier-1 carriers in each country. We use AI-powered network switching to always connect you to the strongest available network. You can view the specific carriers for each country in our network coverage page."
+ ],
+ [
+  "Can I use my eSIM in multiple countries?",
+  "Yes! Our regional and global eSIM plans work across multiple countries. For example, our Europe plan works in 35+ countries, and our Global plan works in 190+ countries. Your eSIM will automatically connect to the best network as you travel."
+ ],
+ [
+  "What happens when I run out of data?",
+  "You'll receive notifications when you've used 80% and 95% of your data. Once you run out, you can easily top up through our app or website. Your existing eSIM profile stays active, so you just add more data to the same eSIM."
+ ],
+ [
+  "Is my payment information secure?",
+  "Absolutely. We use Stripe for payment processing, which is certified to PCI Service Provider Level 1 - the highest level of security in the payments industry. We never store your full credit card details on our servers."
+ ]
+]

@@ -291,3 +291,47 @@ body.qa-drawer-open .qa-drawer { transform: none; visibility: visible; box-shado
   .qa-dock-page { min-width: 0; }
   .qa-dock-t { padding: 0 11px; }
 }
+
+/* ── dock: current / redesign ── */
+.qa-dock-seg { display: flex; gap: 2px; padding: 3px; border-radius: 11px; background: rgba(255, 255, 255, .1); }
+.qa-dock-seg a {
+  display: grid; place-items: center; height: 34px; padding: 0 12px; border-radius: 8px;
+  color: rgba(255, 255, 255, .7) !important; text-decoration: none !important; font-size: 13.5px; font-weight: 650;
+}
+.qa-dock-seg a:hover { color: #fff !important; }
+.qa-dock-seg a.is-on { background: #fff; color: #0B0B0F !important; }
+
+/* ── page identity card ── */
+.qa-ident { display: flex; gap: 12px; align-items: flex-start; padding: 14px; border: 1px solid var(--ql); border-radius: 12px; opacity: .55; }
+.qa-ident.is-on { opacity: 1; border-color: var(--qi); }
+.qa-ident-dots i { width: 20px; height: 20px; }
+.qa-ident-t { display: grid; gap: 4px; }
+.qa-ident-t b { font-size: 15px; }
+.qa-ident-t span { font-size: 13px; line-height: 1.5; color: var(--qd); }
+.qa-hint-box { margin: 0 0 12px; padding: 10px 12px; border-radius: 10px; background: #F6F7F9; color: var(--qd); }
+
+/* ══ Newsprint identity (blog) ═══════════════════════════════════════
+   Editorial voice: serif headlines, paper ground, square corners, rules
+   instead of shadows. The colour itself comes from the recolour pass. */
+body.qa-journal { background: #FBFAF7; }
+body.qa-journal h1, body.qa-journal h2, body.qa-journal h3 {
+  font-family: Newsreader, "Iowan Old Style", Georgia, serif !important;
+  font-weight: 600 !important;
+  letter-spacing: -.015em !important;
+}
+body.qa-journal h1 { font-weight: 700 !important; line-height: 1.02 !important; }
+body.qa-journal section { background-image: none !important; }
+body.qa-journal section.bg-white, body.qa-journal .bg-white:not(header *):not(#qa-ui *) { background-color: #FBFAF7 !important; }
+body.qa-journal [class*="rounded"]:not(header *):not(#qa-ui *):not(.rounded-full) { border-radius: 3px !important; }
+body.qa-journal [class*="shadow"]:not(header *):not(#qa-ui *) { box-shadow: none !important; }
+body.qa-journal [class*="shadow"]:not(header *):not(#qa-ui *):not(button):not(a) { outline: 1px solid rgba(17, 17, 17, .14); }
+body.qa-journal [data-qa-slot] svg text[font-weight="700"],
+body.qa-journal [data-qa-slot] svg text[font-weight="800"] { font-family: Newsreader, Georgia, serif; }
+
+/* backdrop mode for the modal builder */
+body.qa-bare #qa-ui { display: none !important; }
+body.qa-bare [data-qa-slot] { outline: none !important; }
+
+/* boards.js renders its overview into these hosts on import and un-hides
+   #overview; they must never show on a /qa page */
+#overview, #boards, #nav-pages, #nav-sections { display: none !important; }

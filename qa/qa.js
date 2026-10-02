@@ -9,14 +9,17 @@
 
 import {
   PAGES, STEPS, loadBase, loadState, saveState, optOf, baseOpt, resetPicks,
-  themeObj, themeLabel, renderOption, exportMD, makeMapper, esc,
+  themeObj, themeLabel, renderOption, exportMD, makeMapper, esc, styleFor,
 } from './core.js';
-import { paintSiteCss, paintTree } from './paint.js';
+import { paintSiteCss, paintTree, watchMutations } from './paint.js';
 import { renderThemeControls } from './themeui.js';
 
 const slug = document.body.dataset.qaPage;
 const PAGE = PAGES.find((p) => p.slug === slug);
 const pIdx = PAGES.indexOf(PAGE);
+const STYLE = styleFor(slug);
+const STYLE_KEY = slug.replace('-redesign', '');
+const styleOn = () => !!STYLE && state.pageStyle[STYLE_KEY] !== false;
 
 /* Stage tones, as inline style so the recolour pass reaches them too. */
 const TONE_BG = {
@@ -123,10 +126,23 @@ function fitSlot(rec) {
 /* ── Theme ─────────────────────────────────────────────────────────── */
 
 async function applyTheme(rerender = true) {
-  map = makeMapper(themeObj(state));
+  /* a page identity, while on, replaces the site-wide theme on its page */
+  const on = styleOn();
+  map = makeMapper(on ? STYLE : themeObj(state));
+  document.body.classList.toggle('qa-journal', on && STYLE.cls === 'qa-journal');
+  if (on && STYLE.cls === 'qa-journal') ensureJournalFont();
   await paintSiteCss(map);
   paintTree(document.body, map, inUI);
   if (rerender) renderTheme();
+}
+
+function ensureJournalFont() {
+  if (document.getElementById('qa-journal-font')) return;
+  const l = document.createElement('link');
+  l.id = 'qa-journal-font';
+  l.rel = 'stylesheet';
+  l.href = 'https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600;6..72,700&display=swap';
+  document.head.appendChild(l);
 }
 
 /* ── Tags floating over each slot ──────────────────────────────────── */
@@ -155,7 +171,7 @@ function tagText(rec) {
 
 /* ── Drawer ────────────────────────────────────────────────────────── */
 
-let ui, drawer, themeBox, slotBox, footBox;
+let ui, drawer, themeBox, slotBox, footBox, identBox;
 
 function buildUI() {
   ui = document.createElement('div');
@@ -170,6 +186,11 @@ function buildUI() {
       <button type="button" class="qa-dock-b" data-act="prev" title="Previous page">‹</button>
       <span class="qa-dock-page">${esc(PAGE.title)}<small>${pIdx + 1} / ${PAGES.length}</small></span>
       <button type="button" class="qa-dock-b" data-act="next" title="Next page">›</button>
+      ${PAGE.redesign || PAGE.redesignOf ? `<span class="qa-dock-sep"></span>
+      <span class="qa-dock-seg">
+        <a href="/qa/${PAGE.redesignOf || PAGE.slug}" class="${PAGE.redesignOf ? '' : 'is-on'}">Current</a>
+        <a href="/qa/${PAGE.redesign || PAGE.slug}" class="${PAGE.redesignOf ? 'is-on' : ''}">Redesign</a>
+      </span>` : ''}
       <span class="qa-dock-sep"></span>
       <button type="button" class="qa-dock-t" data-act="outline" title="Show slot labels (O)">Labels</button>
       <button type="button" class="qa-dock-t is-main" data-act="drawer" title="Open the panel (Q)">Panel</button>
@@ -184,9 +205,13 @@ function buildUI() {
       </div>
       <div class="qa-dr-body">
         <section class="qa-sec">
-          <h3>On this page <span>${PAGE.slots.length} slot${PAGE.slots.length > 1 ? 's' : ''}</span></h3>
+          <h3>On this page <span>${PAGE.slots.length ? `${PAGE.slots.length} slot${PAGE.slots.length > 1 ? 's' : ''}` : 'no animation picks'}</span></h3>
           <div id="qa-slots"></div>
         </section>
+        ${STYLE ? `<section class="qa-sec">
+          <h3>Page identity <span>this page only</span></h3>
+          <div id="qa-ident"></div>
+        </section>` : ''}
         <section class="qa-sec">
           <h3>Colour <span>applies to every page</span></h3>
           <div id="qa-theme"></div>
@@ -201,6 +226,7 @@ function buildUI() {
   themeBox = ui.querySelector('#qa-theme');
   slotBox = ui.querySelector('#qa-slots');
   footBox = ui.querySelector('#qa-foot');
+  identBox = ui.querySelector('#qa-ident');
 
   ui.querySelectorAll('[data-act]').forEach((b) => {
     b.addEventListener('click', () => act(b.dataset.act));
@@ -222,7 +248,7 @@ function syncChrome() {
 }
 
 function renderSlots() {
-  slotBox.innerHTML = '';
+  slotBox.innerHTML = recs.length ? '' : `<p class="qa-hint">No animation board targets this page. It is here for its page identity${STYLE ? ` (${esc(STYLE.name)})` : ''}: every existing animation on it is recoloured with the page.</p>`;
   recs.forEach((rec) => {
     const key = activeBoard(rec);
     const s = STEPS[key];
@@ -302,6 +328,28 @@ function renderSlots() {
 
 function renderTheme() {
   renderThemeControls(themeBox, state, (light) => { applyTheme(!light); renderFoot(); });
+  if (styleOn()) {
+    const n = document.createElement('p');
+    n.className = 'qa-hint qa-hint-box';
+    n.textContent = `The ${STYLE.name} identity is on for this page, so the site-wide colour below applies everywhere else. Switch the identity off to preview it here.`;
+    themeBox.prepend(n);
+  }
+  renderIdent();
+}
+
+function renderIdent() {
+  if (!identBox) return;
+  const on = styleOn();
+  identBox.innerHTML = `
+    <div class="qa-ident${on ? ' is-on' : ''}">
+      <span class="qa-sw-dots qa-ident-dots">${STYLE.sw.map((c) => `<i style="background:${c}"></i>`).join('')}</span>
+      <span class="qa-ident-t"><b>${esc(STYLE.name)}</b><span>${esc(STYLE.note)}</span></span>
+    </div>
+    <label class="qa-check"><input type="checkbox" data-ident ${on ? 'checked' : ''}> Use this identity on ${esc(PAGE.title.replace(' — redesign', ''))}</label>`;
+  identBox.querySelector('[data-ident]').addEventListener('change', (e) => {
+    if (e.target.checked) delete state.pageStyle[STYLE_KEY]; else state.pageStyle[STYLE_KEY] = false;
+    saveState(state); applyTheme(); renderFoot();
+  });
 }
 
 function renderFoot() {
@@ -352,6 +400,9 @@ function openCard(rec) {
 /* ── Boot ──────────────────────────────────────────────────────────── */
 
 async function boot() {
+  /* ?bare — the page with its picks but none of the QA chrome; used as the
+     backdrop behind the modal builder */
+  if (new URLSearchParams(location.search).has('bare')) document.body.classList.add('qa-bare');
   await loadBase();
   state = loadState();
 
@@ -377,6 +428,9 @@ async function boot() {
       isIcon: key === 'aloha', hero: !!def.hero, pillHost: null,
     };
     if (rec.hero) rec.sibs = [...el.parentElement.children].filter((n) => n !== el);
+    /* the Why-choose card floats its own chips beside the scene's wrapper;
+       they belong to what ships today, so they go while a proposal shows */
+    if (def.hideUp) { const up = el.parentElement; rec.sibs = [...up.parentElement.children].filter((n) => n !== up); }
     el.id = el.id || `qa-${key}`;
     const tag = document.createElement('button');
     tag.type = 'button';
@@ -392,6 +446,7 @@ async function boot() {
 
   syncChrome();
   renderSlots();
+  watchMutations(document.body, () => map, (el) => !!(el.closest && el.closest('[data-qa-slot]')));
   await applyTheme();
   renderFoot();
   layoutTags();

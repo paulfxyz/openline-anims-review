@@ -107,3 +107,15 @@ tick in the nav, a highlighted matrix row, and makes it the default on load.
 - Option code is imported from `/js` — the same registry as the boards and /choice — so an edit
   to an option shows up in /qa with no copy to update.
 - Re-capture: `qa/tools/capture.py` then `qa/tools/build.py`.
+
+### /qa additions
+
+- **Page identities** (`PAGE_STYLES` in `qa/core.js`): Network → Corporate blue (royal blue on navy ink),
+  Security → Vault teal, AdBlocking → Ultraviolet, Unlimited → Hot magenta, Blog → Newsprint (mono,
+  serif headlines, square corners). Each recolours its page and the animations on it; switchable per page.
+- **Features pages** `/qa/security`, `/qa/adblocking`, `/qa/unlimited` captured (no boards; here for identity).
+- **Redesigns** `/qa/about-redesign`, `/qa/contact-redesign`: every piece of the live copy kept, new layout,
+  plain HTML/CSS on the captured header/footer. Source in `qa/redesign/`, built by `qa/tools/redesign.py`.
+- **Modal builder** `/qa/modals`: 8 types, 249 generated + 31 Aloha animated icons (`qa/icons-lib.js`),
+  8 content block types, 0–2 CTAs, format options, preview over a real page or a phone; copy HTML or for Computer.
+- Home › Why choose: board embed is now the real 407 × 302 slot; 3 · The Handover redrawn for it.

@@ -21,14 +21,17 @@ export { PRESETS, makeMapper, recolor };
    only slot two boards were drawn for. */
 export const PAGES = [
   { slug: 'home', title: 'Home', path: '/home', slots: [
-    { key: 'homewhy', w: 407, h: 302 }, { key: 'referral', w: 576, h: 520 }] },
+    { key: 'homewhy', w: 407, h: 302, hideUp: true }, { key: 'referral', w: 576, h: 520 }] },
   { slug: 'multiple-tier1', title: 'Multiple Tier-1', path: '/multiple-tier1', slots: [
     { key: 'tier1', hero: true, w: 576, h: 420 }, { key: 't1ai', w: 584, h: 560 },
     { key: 't1market', w: 584, h: 440 }, { key: 't1access', w: 584, h: 470 }] },
   { slug: 'global-esim', title: 'Global eSIM', path: '/global-esim', slots: [
     { key: 'what', w: 584, h: 420 }, { key: 'travel', w: 584, h: 520 }] },
-  { slug: 'network', title: 'Network', path: '/network', slots: [
+  { slug: 'network', title: 'Network', path: '/network', group: 'Features', slots: [
     { key: 'nethero', hero: true, w: 576, h: 420 }, { key: 'why', w: 592, h: 430 }] },
+  { slug: 'security', title: 'Security', path: '/security', group: 'Features', slots: [] },
+  { slug: 'adblocking', title: 'AdBlocking', path: '/adblocking', group: 'Features', slots: [] },
+  { slug: 'unlimited', title: 'Unlimited', path: '/unlimited', group: 'Features', slots: [] },
   { slug: 'business', title: 'Business', path: '/business', slots: [
     { key: 'bizhero', w: 576, h: 560 }, { key: 'bizneeds', w: 584, h: 440 }] },
   { slug: 'hospitality', title: 'Hospitality', path: '/hospitality', slots: [
@@ -39,7 +42,9 @@ export const PAGES = [
     { key: 'pluslounge', w: 574, h: 642 }, { key: 'plusnomad', w: 574, h: 656 }, { key: 'pluskyc', w: 574, h: 440 }] },
   { slug: 'login', title: 'Login', path: '/login', slots: [
     { key: 'aloha', w: 56, h: 56 }] },
-  { slug: 'about', title: 'About', path: '/about', slots: [
+  { slug: 'about', title: 'About', path: '/about', redesign: 'about-redesign', slots: [
+    { key: 'prin', w: 592, h: 430 }, { key: 'team', w: 592, h: 480 }] },
+  { slug: 'about-redesign', title: 'About — redesign', path: '/about', redesignOf: 'about', slots: [
     { key: 'prin', w: 592, h: 430 }, { key: 'team', w: 592, h: 480 }] },
   { slug: 'omdm-market', title: 'OMDM Market', path: '/omdm-market', slots: [
     { key: 'omhero', w: 576, h: 460 }, { key: 'ombook', w: 1232, h: 404 }, { key: 'omctrl', w: 624, h: 440 }] },
@@ -47,13 +52,40 @@ export const PAGES = [
     { key: 'blog', w: 576, h: 540, boards: ['blog', 'blogv'] }] },
   { slug: 'installation-guide', title: 'Installation Guide', path: '/installation-guide', slots: [
     { key: 'install', w: 576, h: 324 }] },
-  { slug: 'contact', title: 'Contact', path: '/contact', slots: [
+  { slug: 'contact', title: 'Contact', path: '/contact', redesign: 'contact-redesign', slots: [
     { key: 'contact', hero: true, w: 576, h: 420 }] },
+  { slug: 'contact-redesign', title: 'Contact — redesign', path: '/contact', redesignOf: 'contact', slots: [
+    { key: 'contact', w: 576, h: 420 }] },
   { slug: 'affiliate', title: 'Affiliate', path: '/affiliate', slots: [
     { key: 'affil', hero: true, w: 576, h: 420 }] },
 ];
 
-export const pageOf = (key) => PAGES.find((p) => p.slots.some((s) => (s.boards || [s.key]).includes(key)));
+export const pageOf = (key) => PAGES.find((p) => !p.redesignOf && p.slots.some((s) => (s.boards || [s.key]).includes(key)));
+
+/* ── Page identities ───────────────────────────────────────────────── */
+
+/* A page identity is a colour (and sometimes a type) treatment proposed for
+   one page. It applies to the captured page AND the animations on it, and
+   while it is on it takes precedence over the site-wide theme. */
+export const PAGE_STYLES = {
+  network: { id: 'ps-network', name: 'Corporate blue', hex: '#1E40AF', scope: 'all', keepStatus: true, ink: 264, inkC: 0.07,
+    sw: ['#1E3A8A', '#1E40AF', '#2563EB'],
+    note: 'Royal blue accents over navy ink: dark blue for depth, royal blue for action, corporate rather than consumer.' },
+  security: { id: 'ps-security', name: 'Vault teal', hex: '#0F766E', scope: 'all', keepStatus: true, ink: 190, inkC: 0.05,
+    sw: ['#134E4A', '#0F766E', '#14B8A6'],
+    note: 'Deep teal: protective and calm, clearly apart from the green used for "connected" states.' },
+  adblocking: { id: 'ps-adblocking', name: 'Ultraviolet', hex: '#6D28D9', scope: 'all', keepStatus: true, ink: 292, inkC: 0.05,
+    sw: ['#4C1D95', '#6D28D9', '#8B5CF6'],
+    note: 'Ultraviolet: filtering and shielding, distinct from every other Features page.' },
+  unlimited: { id: 'ps-unlimited', name: 'Hot magenta', hex: '#DB2777', scope: 'all', keepStatus: true, ink: 350, inkC: 0.04,
+    sw: ['#831843', '#DB2777', '#F472B6'],
+    note: 'Hot magenta: energy and abundance for the no-limits page.' },
+  blog: { id: 'ps-blog', name: 'Newsprint', hex: '#111111', scope: 'all', chroma: 0, keepStatus: false, cls: 'qa-journal',
+    sw: ['#111111', '#6B6B6B', '#FBFAF7'],
+    note: 'Black and white, serif headlines, square corners, no drop shadows — an editorial voice for the blog.' },
+};
+
+export const styleFor = (slug) => PAGE_STYLES[slug.replace('-redesign', '')] || null;
 
 /* ── Boards, normalised exactly like /choice does ──────────────────── */
 
@@ -97,6 +129,7 @@ export function loadState() {
   s.notes = s.notes || {};
   s.live = s.live || {};
   s.shared = s.shared || {};
+  s.pageStyle = s.pageStyle || {};   // slug -> false when switched off
   s.theme = s.theme || { id: 'original' };
   if (s.outline == null) s.outline = true;
   if (s.drawer == null) s.drawer = false;   // closed: hero slots sit on the right
@@ -144,7 +177,7 @@ const pad = (n) => String(n).padStart(2, '0');
 const stamp = () => { const d = new Date(); return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`; };
 
 export function exportMD(state) {
-  const order = PAGES.flatMap((p) => p.slots.flatMap((sl) => sl.boards || [sl.key]));
+  const order = PAGES.filter((p) => !p.redesignOf).flatMap((p) => p.slots.flatMap((sl) => sl.boards || [sl.key]));
   const rows = [];
   const picks = {};
   let changed = 0;
@@ -168,12 +201,14 @@ export function exportMD(state) {
     '',
     `**Colour theme:** ${themeLabel(state)}`,
     '',
+    `**Page identities:** ${Object.entries(PAGE_STYLES).map(([k, v]) => `${k} → ${v.name}${state.pageStyle[k] === false ? ' (off)' : ''}`).join(' · ')}`,
+    '',
     '| Page | Section | Board | Choice | Changed | Note |',
     '| --- | --- | --- | --- | --- | --- |',
     ...rows,
     '',
     '<!-- machine-readable, do not edit by hand',
-    JSON.stringify({ v: 2, src: 'qa', at: stamp(), theme: { id: t.id, hex: t.hex || null, scope: t.scope || null, keepStatus: t.keepStatus !== false }, picks }),
+    JSON.stringify({ v: 2, src: 'qa', at: stamp(), pageStyles: Object.fromEntries(Object.keys(PAGE_STYLES).map((k) => [k, state.pageStyle[k] !== false])), theme: { id: t.id, hex: t.hex || null, scope: t.scope || null, keepStatus: t.keepStatus !== false }, picks }),
     '-->',
     '',
   ].join('\n');

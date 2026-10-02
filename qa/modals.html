@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Modal builder — Openline QA</title>
+<meta name="robots" content="noindex" />
+<link rel="stylesheet" href="/qa/hub.css" />
+<link rel="stylesheet" href="/qa/modals.css" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230B0B0F'/%3E%3Cpath d='M16 7a9 9 0 1 0 9 9' fill='none' stroke='%23fff' stroke-width='4' stroke-linecap='round'/%3E%3Ccircle cx='24' cy='8' r='3.4' fill='%23FF5314'/%3E%3C/svg%3E" />
+</head>
+<body class="mb-body">
+
+<header class="hb-head">
+  <a class="hb-brand" href="/qa">
+    <svg viewBox="0 0 32 32" aria-label="Openline">
+      <path d="M16 5a11 11 0 1 0 11 11" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+      <circle cx="25.5" cy="6.5" r="4" fill="#FF5314"/>
+    </svg>
+    <span><b>Modal builder</b><small>Openline QA</small></span>
+  </a>
+  <nav class="hb-links">
+    <a href="/qa">All pages</a>
+  </nav>
+</header>
+
+<div class="mb-app">
+  <aside class="mb-controls" id="mb-controls" aria-label="Modal settings"></aside>
+  <section class="mb-stage" aria-label="Preview">
+    <div class="mb-stagebar" id="mb-stagebar"></div>
+    <div class="mb-canvas" id="mb-canvas">
+      <iframe class="mb-backdrop-page" id="mb-page" title="Page behind the modal" tabindex="-1" aria-hidden="true"></iframe>
+      <div class="mb-scrim" id="mb-scrim"></div>
+      <div class="mb-frame" id="mb-frame"><div id="mb-modal"></div></div>
+    </div>
+  </section>
+</div>
+
+<div class="mb-picker" id="mb-picker" hidden></div>
+<div class="hb-toast" id="hb-toast" hidden></div>
+
+<script type="module" src="/qa/modals.js"></script>
+</body>
+</html>

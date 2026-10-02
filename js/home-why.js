@@ -1,5 +1,9 @@
 /* ─────────────────────────────────────────────────────────────────────────
-   /home — the product panel inside "Why choose Openline?" (300 × 374).
+   /home — the product panel inside "Why choose Openline?".
+
+   Real slot at 1440px: 407 × 302 (the scene inside a 411 × 306 card with a
+   2px orange border). Options 0–2 and 4–15 were drawn for an earlier
+   300 × 374 measurement; 3 · The Handover is redrawn for the real slot.
 
    The section is a six-cell grid. Five cells are orange Openline-vs-Others
    comparison cards; the sixth — this one — is a white-ish panel holding a
@@ -445,45 +449,70 @@ const theHandover = {
   ],
   scores: { story: 5, motion: 5, perf: 5, mobile: 5, brand: 4, ease: 4 },
   build: (uid) => {
+    /* Drawn for the real slot: 407 × 302 inside the live card's 2px orange
+       border. The card supplies the border and rounding, so this fills the
+       scene edge to edge and draws no frame of its own. */
+    const SW = 407, SH = 302;
     const dur = 12;
     const CARRIERS = ['Vodafone', 'Orange', 'T-Mobile'];
+    const L0 = 20, L1 = 387, LY = 206;
+    const span = L1 - L0;
     const bars = (x, y) => [0, 1, 2, 3].map((i) =>
       `<rect x="${x + i * 7}" y="${y - (i + 1) * 4}" width="4.5" height="${(i + 1) * 4}" rx="1" fill="${GRND}"/>`).join('');
+    const segs = CARRIERS.concat(CARRIERS[0]);
     return {
       pills: noPills,
-      svg: w(`
-        ${shell(uid)}
+      svg: boxWrap(SW, SH)(`
+        <defs>
+          <linearGradient id="${uid}-scene" x1="0" y1="0" x2="0.7" y2="1">
+            <stop offset="0" stop-color="${OR}" stop-opacity="0.08"/>
+            <stop offset="0.6" stop-color="#FFFFFF" stop-opacity="1"/>
+          </linearGradient>
+        </defs>
+        <rect x="0" y="0" width="${SW}" height="${SH}" fill="${GND}"/>
+        <rect x="0" y="0" width="${SW}" height="${SH}" fill="url(#${uid}-scene)"/>
 
-        ${lab(20, 30, 'ONE CONNECTION', { size: 9, w: 700, fill: ORD, ls: 1.4 })}
-        ${t(20, 50, 'Three networks underneath it.', { size: 11, fill: MUT })}
+        ${lab(L0, 30, 'ONE CONNECTION', { size: 9, w: 700, fill: ORD, ls: 1.4 })}
+        ${t(L0, 48, 'Three networks underneath it.', { size: 11, fill: MUT })}
 
-        ${rect(20, 66, 260, 96, { fill: 'rgba(255,255,255,0.8)', stroke: 'rgba(11,11,15,0.09)', r: 10 })}
+        ${rect(L0, 64, 214, 94, { fill: 'rgba(255,255,255,0.85)', stroke: 'rgba(11,11,15,0.09)', r: 10 })}
+        ${lab(L0 + 16, 86, 'OPERATOR', { size: 7.5, fill: MUT2 })}
+        ${seq(L0 + 16, 112, segs, dur, { size: 18, w: 700, fill: INK, kt: ['0', '0.25', '0.5', '0.75'] })}
+        ${lab(L0 + 16, 132, 'TIER-1 · 5G', { size: 8, fill: MUT })}
+        ${lab(L0 + 198, 86, 'SIGNAL', { size: 7.5, fill: MUT2, a: 'end' })}
+        <g transform="translate(${L0 + 170} 126)">${bars(0, 0)}</g>
+        ${lab(L0 + 198, 142, '4/4', { size: 8, fill: GRN, w: 700, a: 'end' })}
 
-        ${lab(36, 88, 'OPERATOR', { size: 7.5, fill: MUT2 })}
-        ${seq(36, 112, CARRIERS.concat(CARRIERS[0]), dur, { size: 17, w: 700, fill: INK, kt: ['0', '0.25', '0.5', '0.75'] })}
-        ${seq(36, 130, ['Tier-1 · 5G', 'Tier-1 · 5G', 'Tier-1 · 5G', 'Tier-1 · 5G'], dur, { m: true, size: 8.5, fill: MUT, kt: ['0', '0.25', '0.5', '0.75'] })}
+        ${rect(246, 64, 141, 94, { fill: GRNW, r: 10 })}
+        ${lab(262, 86, 'DROPS', { size: 7.5, fill: GRN, op: 0.7 })}
+        ${t(262, 124, '0', { size: 34, w: 800, fill: GRN })}
+        <circle cx="371" cy="82" r="3.4" fill="${GRND}">
+          <animate attributeName="opacity" values="1;0.35;1" keyTimes="0;0.5;1" dur="2s" repeatCount="indefinite"/>
+        </circle>
+        ${t(262, 145, 'Connected throughout', { size: 10, w: 700, fill: GRN })}
 
-        <g transform="translate(232 126)">${bars(0, 0)}</g>
-        ${lab(232, 88, 'SIGNAL', { size: 7.5, fill: MUT2 })}
-        ${lab(264, 142, '4/4', { size: 8, fill: GRN, w: 700, a: 'end' })}
-
-        ${rect(20, 176, 260, 40, { fill: GRNW, r: 10 })}
-        <circle cx="38" cy="196" r="3.4" fill="${GRND}"/>
-        ${t(50, 200, 'Connected the whole time', { size: 12, w: 700, fill: GRN })}
-
-        ${lab(20, 244, 'HANDOVERS', { size: 7.5, fill: MUT2 })}
-        <line x1="20" y1="264" x2="280" y2="264" stroke="${GRND}" stroke-width="3" stroke-linecap="round"/>
+        ${lab(L0, 186, 'HANDOVERS', { size: 7.5, fill: MUT2 })}
+        ${lab(L1, 186, '3 PER LOOP · 0 GAPS', { size: 7.5, fill: MUT2, a: 'end' })}
+        <line x1="${L0}" y1="${LY}" x2="${L1}" y2="${LY}" stroke="${GRND}" stroke-width="3" stroke-linecap="round"/>
         ${[0.25, 0.5, 0.75].map((f) => `
-          <g>
-            <line x1="${20 + f * 260}" y1="256" x2="${20 + f * 260}" y2="272" stroke="${OR}" stroke-width="2"/>
-            ${lab(20 + f * 260, 286, 'SWITCH', { size: 6.5, fill: OR, a: 'middle' })}
-          </g>`).join('')}
-        <circle cx="20" cy="264" r="5" fill="${OR}">
-          <animate attributeName="cx" values="20;280" keyTimes="0;1" dur="${dur}s" repeatCount="indefinite"/>
+          <line x1="${(L0 + f * span).toFixed(1)}" y1="${LY - 8}" x2="${(L0 + f * span).toFixed(1)}" y2="${LY + 8}"
+            stroke="${OR}" stroke-width="2"/>`).join('')}
+        ${segs.map((c, i) => {
+          const cx = (L0 + (i + 0.5) * span / 4).toFixed(1);
+          /* the segment the dot is in lights up, the rest stay muted */
+          const vals = [0, 1, 2, 3].map((j) => (j === i ? '1' : '0.35'));
+          vals.push(i === 0 ? '1' : '0.35');
+          return `<text x="${cx}" y="${LY + 22}" font-family="${MO}" font-size="7.5" font-weight="700"
+            letter-spacing="1" fill="${OR}" text-anchor="middle" opacity="0.35">${c.toUpperCase()}
+            <animate attributeName="opacity" values="${vals.join(';')}" keyTimes="0;0.25;0.5;0.75;1"
+              dur="${dur}s" repeatCount="indefinite" calcMode="discrete"/></text>`;
+        }).join('')}
+        <circle cx="${L0}" cy="${LY}" r="5.5" fill="${OR}">
+          <animate attributeName="cx" values="${L0};${L1}" keyTimes="0;1" dur="${dur}s" repeatCount="indefinite"/>
         </circle>
 
-        ${t(20, 322, 'No drop, no reconnect, nothing to do.', { size: 11, fill: MUT })}
-        ${t(20, 344, 'Always on the strongest network.', { size: 12, w: 700, fill: INK })}`),
+        ${t(L0, 260, 'No drop, no reconnect, nothing to do.', { size: 11, fill: MUT })}
+        ${t(L0, 280, 'Always on the strongest network.', { size: 12.5, w: 700, fill: INK })}`),
     };
   },
 };
@@ -1464,4 +1493,8 @@ export const HOME_WHY_VARIANTS = [
   theOdometer, theGauge, twoScreens, theStack, signalAllDay,
 ];
 
-export const HOME_WHY_BOX = { w: W, h: H };
+/* The real slot, measured on the live page at 1440px: the scene inside the
+   card's 2px border is 407 × 302. The Handover is drawn for it; the other
+   options are still drawn for the earlier 300 × 374 measurement and
+   letterbox inside it until they are redrawn. */
+export const HOME_WHY_BOX = { w: 407, h: 302 };

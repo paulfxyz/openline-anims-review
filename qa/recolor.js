@@ -100,7 +100,7 @@ function familyOf(H) {
    errors stay red — they are signals, not brand.
    chroma: multiplier; 0 gives a monochrome site. */
 export function makeMapper(theme) {
-  if (!theme || theme.id === 'original') return null;
+  if (!theme || (theme.id === 'original' && theme.ink == null)) return null;
   /* A theme is anchored on one target colour. Its hue is where the accents
      go; its lightness and chroma, relative to Openline orange, say how much
      darker/lighter and how much more or less vivid they become. Shifts are
@@ -112,6 +112,8 @@ export function makeMapper(theme) {
   const cm = theme.chroma != null ? theme.chroma : (theme.hex ? Math.min(1.25, t.C / BRAND.C) : 1);
   const scope = theme.scope || 'all';
   const keep = theme.keepStatus !== false;
+  const ink = theme.ink != null ? theme.ink : null;
+  const inkC = theme.inkC != null ? theme.inkC : 0.05;
   const cache = new Map();
 
   return (r, g, b) => {
@@ -142,6 +144,11 @@ export function makeMapper(theme) {
         const nL = Math.min(0.99, Math.max(0.05, L + dL * wgt));
         out = oklchToRgb(nL, C * cm, (target + off + 360) % 360);
       }
+    }
+    /* ink: tint the near-blacks (body text, dark panels, footers) towards
+       a hue, so a corporate page reads navy rather than charcoal */
+    if (!out && ink != null && C < 0.05 && L < 0.42) {
+      out = oklchToRgb(Math.min(0.5, L + 0.015), Math.max(C, inkC * Math.min(1, 0.35 + L * 2)), ink);
     }
     cache.set(key, out);
     return out;

@@ -3,9 +3,9 @@
 
 import {
   PAGES, STEPS, loadBase, loadState, saveState, optOf, baseOpt, resetPicks,
-  themeObj, themeLabel, renderOption, exportMD, makeMapper, esc,
+  themeObj, themeLabel, renderOption, exportMD, makeMapper, esc, styleFor,
 } from './core.js';
-import { paintTree } from './paint.js';
+import { paintTree, watchMutations } from './paint.js';
 import { renderThemeControls } from './themeui.js';
 
 const TONE_BG = {
@@ -36,16 +36,19 @@ function thumb(key) {
 
 function renderPages() {
   let total = 0, changed = 0;
-  pagesBox.innerHTML = PAGES.map((p, pi) => {
+  const href = (slug) => `/qa/${slug}`;
+  pagesBox.innerHTML = PAGES.filter((p) => !p.redesignOf).map((p, pi) => {
     const keys = p.slots.flatMap((sl) => sl.boards || [sl.key]);
     total += keys.length;
+    const st = styleFor(p.slug);
+    const stOn = st && state.pageStyle[p.slug] !== false;
     const items = keys.map((key) => {
       const s = STEPS[key];
       const opt = optOf(state, key);
       const ch = opt !== baseOpt(key);
       if (ch) changed++;
       const note = state.notes[key];
-      return `<a class="hb-pick" href="/qa/${p.slug}#qa-${key}">
+      return `<a class="hb-pick" href="${href(p.slug)}#qa-${key}">
         ${thumb(key)}
         <span class="hb-pmeta">
           <span class="hb-psec">${esc(s.section)}</span>
@@ -55,18 +58,34 @@ function renderPages() {
         </span>
       </a>`;
     }).join('');
-    return `<article class="hb-page">
-      <a class="hb-pagehead" href="/qa/${p.slug}">
+    const ident = st ? `<span class="hb-ident${stOn ? '' : ' is-off'}" title="${esc(st.note)}">
+      <span class="qa-sw-dots">${st.sw.map((c) => `<i style="background:${c}"></i>`).join('')}</span>${esc(st.name)}${stOn ? '' : ' · off'}</span>` : '';
+    return `<article class="hb-page" data-slug="${p.slug}">
+      <div class="hb-pagehead">
         <span class="hb-pn">${String(pi + 1).padStart(2, '0')}</span>
-        <span class="hb-pt"><b>${esc(p.title)}</b><code>${esc(p.path)}</code></span>
-        <span class="hb-open">Open page →</span>
-      </a>
-      <div class="hb-picks">${items}</div>
+        <a class="hb-pt" href="${href(p.slug)}"><b>${esc(p.title)}</b><code>${esc(p.path)}</code>${p.group ? `<small>${esc(p.group)}</small>` : ''}</a>
+        ${ident}
+        ${p.redesign ? `<a class="hb-open is-alt" href="${href(p.redesign)}">Redesign →</a>` : ''}
+        <a class="hb-open" href="${href(p.slug)}">Open page →</a>
+      </div>
+      ${items ? `<div class="hb-picks">${items}</div>`
+        : `<p class="hb-empty">No animation board on this page — it is here for its page identity. Every animation already on it is recoloured with the page.</p>`}
     </article>`;
   }).join('');
   document.getElementById('hb-count').textContent =
-    `${PAGES.length} pages · ${total} picks${changed ? ` · ${changed} changed since /choice` : ''}`;
-  paintTree(pagesBox, map);
+    `${PAGES.filter((p) => !p.redesignOf).length} pages + 2 redesigns · ${total} picks${changed ? ` · ${changed} changed since /choice` : ''}`;
+  paintPages();
+}
+
+/* each page card is painted with that page's identity when it has one,
+   so the thumbnails match what the page itself will show */
+function paintPages() {
+  const global = makeMapper(themeObj(state));
+  pagesBox.querySelectorAll('.hb-page').forEach((art) => {
+    const st = styleFor(art.dataset.slug);
+    const m = st && state.pageStyle[art.dataset.slug] !== false ? makeMapper(st) : global;
+    paintTree(art.querySelector('.hb-picks') || art, m);
+  });
 }
 
 function renderTheme() {
@@ -75,7 +94,7 @@ function renderTheme() {
 
 function applyTheme() {
   map = makeMapper(themeObj(state));
-  paintTree(pagesBox, map);
+  paintPages();
 }
 
 function renderExport() {
@@ -96,6 +115,7 @@ async function boot() {
   applyTheme();
   renderPages();
   renderExport();
+  watchMutations(pagesBox, () => map);
 
   document.getElementById('hb-copy').addEventListener('click', async () => {
     try { await navigator.clipboard.writeText(mdBox.value); }
