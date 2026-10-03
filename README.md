@@ -130,7 +130,7 @@ tick in the nav, a highlighted matrix row, and makes it the default on load.
   search engine `qa/support/search.mjs` from openline-kb). Opened by `data-ol-open` markup, `#kb` / `#compat=`
   hashes, `Openline.open()`, or ⌘K; the page documents each with live examples.
 - Home › Why choose: board embed is now the real 407 × 302 slot; 3 · The Handover redrawn for it.
-- **Page menu**: the page name in the bottom dock opens a filterable list of all 20 pages plus the tools
+- **Page menu**: the page name in the bottom dock opens a filterable list of all 21 pages plus the tools
   (type to filter, ↑ ↓ to move, Enter to go, Esc to close).
 - Home › Referral: 3 · Link in Flight redrawn for its real 576 × 520 slot, with no background of its own
   so it sits on the box's flat orange (slot `clear: true`); a four-beat ticker fills the middle; its dotted field fades in from 0% at the left edge to 100% at the right.
@@ -171,11 +171,32 @@ tick in the nav, a highlighted matrix row, and makes it the default on load.
 
 ### /qa retained redesigns
 
-Only the earlier About and Contact alternatives are retained. The later batch of
+The earlier About and Contact alternatives are retained, together with the
+separately requested Product Hunt redesign added to QA on October 4. The later batch of
 16 alternatives was removed at Paul's request, including its generator and
-dedicated assets. The review is back to 18 original product pages plus these two
+dedicated assets. The review now contains 18 original product pages plus these three
 redesigns. Shared typography, page identities, modal/chat tools and the Openline+
 nomad animation fixes are preserved. No `/delivery` has been created.
+
+### /qa/producthunt: existing redesign in context
+
+The existing [Product Hunt redesign](https://openline-anims-review.vercel.app/producthunt) now has a
+QA route at `/qa/producthunt`. The root source page, stylesheet, script and Kitty asset are untouched.
+Run `python3 qa/tools/producthunt.py` to rebuild the QA copy and combined page stylesheet.
+
+- Preserves the existing design and page sections rather than creating another alternative.
+- Adds the shared dock/page menu, page-level panel notes, full change export, colour preview and support.
+  The navigation has 21 entries: 18 original pages and three explicitly retained/requested redesigns.
+- Uses the actual Openline mark and native UI stack. Decorative monospace styling is normalised;
+  coupon strings stay monospaced. CTA arrows use the same subtle motion and reduced-motion fallback.
+- Marks the campaign as a draft and replaces “Launching this September” with an unconfirmed launch-date
+  label rather than guessing a new date. Rewards, example pricing, eligibility, review timing and
+  platform-policy compatibility remain unapproved campaign concepts.
+- The QA-only native claim dialog validates URL/email format, checks the Product Hunt hostname for
+  that lane, and animates a simulated review. It generates only a visibly non-redeemable `DEMO-PH-10-…`
+  string. No proof link is opened, no email/reward is sent, and no claim details enter storage or a backend.
+- Closing cancels pending work; clipboard denial gets selectable fallback text, not a false “Copied”
+  confirmation. Modal state headings, focus containment, keyboard access and mobile layout are tested.
 
 ### /qa/start: purchase code to eSIM
 

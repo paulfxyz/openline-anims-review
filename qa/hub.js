@@ -67,14 +67,15 @@ function renderPages() {
         <a class="hb-pt" href="${href(p.slug)}"><b>${esc(p.title)}</b><code>${esc(p.path)}</code>${p.group ? `<small>${esc(p.group)}</small>` : ''}</a>
         ${ident}
         ${p.redesign ? `<a class="hb-open is-alt" href="${href(p.redesign)}">Redesign →</a>` : ''}
+        ${p.sourcePath ? `<a class="hb-open is-alt" href="${p.sourcePath}" target="_blank" rel="noopener">Original ↗︎</a>` : ''}
         <a class="hb-open" href="${href(p.slug)}">Open page →</a>
       </div>
       ${items ? `<div class="hb-picks">${items}</div>`
-        : `<p class="hb-empty">No animation board on this page — it is here for its page identity. Every animation already on it is recoloured with the page.</p>`}
+        : `<p class="hb-empty">${p.pageNote ? esc(p.pageNote) : 'No animation board on this page — it is here for its page identity. Every animation already on it is recoloured with the page.'}</p>`}
     </article>`;
   }).join('');
   document.getElementById('hb-count').textContent =
-    `${PAGES.filter((p) => !p.redesignOf).length} pages + ${PAGES.filter((p) => p.redesignOf).length} redesigns · ${total} picks${changed ? ` · ${changed} changed since /choice` : ''}`;
+    `${PAGES.filter((p) => !p.redesignOf && !p.standaloneRedesign).length} pages + ${PAGES.filter((p) => p.redesignOf || p.standaloneRedesign).length} redesigns · ${total} picks${changed ? ` · ${changed} changed since /choice` : ''}`;
   paintPages();
 }
 

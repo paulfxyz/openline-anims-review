@@ -281,6 +281,7 @@ function buildUI() {
         <a href="/qa/${PAGE.redesignOf || PAGE.slug}" class="${PAGE.redesignOf ? '' : 'is-on'}">Current</a>
         <a href="/qa/${PAGE.redesign || PAGE.slug}" class="${PAGE.redesignOf ? 'is-on' : ''}">Redesign</a>
       </span>` : ''}
+      ${PAGE.sourcePath ? `<span class="qa-dock-sep"></span><a class="qa-dock-t qa-dock-source" href="${PAGE.sourcePath}" target="_blank" rel="noopener" title="Open the preserved source redesign">Original ↗︎</a>` : ''}
       <span class="qa-dock-sep"></span>
       <button type="button" class="qa-dock-t" data-act="outline" title="Show slot labels (O)">Labels</button>
       <button type="button" class="qa-dock-t is-main" data-act="drawer" title="Open the panel (Q)">Panel</button>
@@ -367,7 +368,7 @@ function togglePageMenu(force) {
     return `<a role="menuitem" class="qa-pm-i${p.slug === slug ? ' is-cur' : ''}${p.redesignOf ? ' is-sub' : ''}" href="/qa/${p.slug}" data-q="${esc((p.title + ' ' + p.path + ' ' + (p.group || '')).toLowerCase())}">
       <span class="qa-pm-n">${String(i + 1).padStart(2, '0')}</span>
       <span class="qa-pm-t"><b>${esc(p.title)}</b><small>${esc(p.path)}${p.group ? ` · ${esc(p.group)}` : ''}</small></span>
-      <span class="qa-pm-m">${st ? `<i class="qa-pm-sw" style="background:${st.sw[1]}" title="${esc(st.name)}"></i>` : ''}${n ? `${n} pick${n > 1 ? 's' : ''}` : 'identity'}</span>
+      <span class="qa-pm-m">${st ? `<i class="qa-pm-sw" style="background:${st.sw[1]}" title="${esc(st.name)}"></i>` : ''}${n ? `${n} pick${n > 1 ? 's' : ''}` : p.standaloneRedesign ? 'redesign' : 'identity'}</span>
     </a>`;
   };
   menu.innerHTML = `
@@ -416,7 +417,7 @@ function syncChrome() {
 }
 
 function renderSlots() {
-  slotBox.innerHTML = recs.length ? '' : `<p class="qa-hint">No animation board targets this page. It is here for its page identity${STYLE ? ` (${esc(STYLE.name)})` : ''}: every existing animation on it is recoloured with the page.</p>`;
+  slotBox.innerHTML = recs.length ? '' : PAGE.pageNote ? `<p class="qa-hint">${esc(PAGE.pageNote)}</p>` : `<p class="qa-hint">No animation board targets this page. It is here for its page identity${STYLE ? ` (${esc(STYLE.name)})` : ''}: every existing animation on it is recoloured with the page.</p>`;
   recs.forEach((rec) => {
     const key = activeBoard(rec);
     const s = STEPS[key];

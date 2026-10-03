@@ -60,6 +60,8 @@ export const PAGES = [
     { key: 'contact', w: 576, h: 420 }] },
   { slug: 'affiliate', title: 'Affiliate', path: '/affiliate', slots: [
     { key: 'affil', hero: true, w: 576, h: 420, clearFill: true }] },
+  { slug: 'producthunt', title: 'Product Hunt — redesign', path: '/producthunt', group: 'Launch', standaloneRedesign: true, sourcePath: '/producthunt', slots: [],
+    pageNote: 'The existing Product Hunt redesign, now in QA: Kitty hero, reward lanes, pricing ladder, eligibility table and a clearly labelled claim simulation. Its page animations are built in, not selectable board slots. Review the design and flow, then leave page notes below.' },
 ];
 
 export const pageOf = (key) => PAGES.find((p) => !p.redesignOf && p.slots.some((s) => (s.boards || [s.key]).includes(key)));
