@@ -1,16 +1,18 @@
+@import url('/qa/typography.css');
+
 /* Openline support surfaces — KB modal, compatibility modal, chat.
    Self-contained: no Tailwind, no site tokens, safe to drop on any page. */
 
 :root {
   --ol-or: #FF5314; --ol-or2: #FF6616; --ol-ink: #0B0B0F; --ol-ink2: #3A3F47; --ol-mute: #6B7079;
   --ol-line: #E9E6E2; --ol-soft: #F6F4F1; --ol-cream: #FFF5EE; --ol-ok: #12A150; --ol-no: #D92D20;
-  --ol-font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", "Noto Sans", Roboto, sans-serif;
+  --ol-font: var(--ol-font-sans);
 }
 html.ols-lock { overflow: hidden; }
 .ols-overlay, .olc { font-family: var(--ol-font); color: var(--ol-ink); -webkit-font-smoothing: antialiased; line-height: 1.5; letter-spacing: 0; }
 .ols-overlay *, .olc * { box-sizing: border-box; }
 .ols-overlay button, .olc button { font: inherit; color: inherit; cursor: pointer; }
-.ols-overlay code, .olc code { font-family: ui-monospace, Menlo, monospace; font-size: .9em; background: var(--ol-soft); padding: 1px 6px; border-radius: 6px; }
+.ols-overlay code, .olc code { font-family: var(--ol-font-mono); font-size: .9em; background: var(--ol-soft); padding: 1px 6px; border-radius: 6px; }
 
 /* ── Modal shell (KB + compat) ─────────────────────────────────────── */
 .ols-overlay { position: fixed; inset: 0; z-index: 2147483600; display: flex; align-items: center; justify-content: center; padding: 24px; }

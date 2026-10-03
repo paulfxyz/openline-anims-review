@@ -353,7 +353,12 @@ const OPENERS = {
 };
 
 window.Openline = Object.assign(window.Openline || {}, {
-  open: (kind, o = {}) => (OPENERS[kind] ? OPENERS[kind](o) : null),
+  open: (kind, o = {}) => {
+    // Chat also needs the shared typography when opened from a captured page
+    // before either help modal has loaded this stylesheet.
+    ensureCss();
+    return OPENERS[kind] ? OPENERS[kind](o) : null;
+  },
   close: () => closeShell(),
 });
 

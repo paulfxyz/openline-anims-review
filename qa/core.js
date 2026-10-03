@@ -86,7 +86,7 @@ export const PAGE_STYLES = {
     note: 'Selected. Greyscale like the rest of the page: the purple accents become steel and graphite, the dark cell a neutral gunmetal. Green "online" states and the orange brand stay.' },
   blog: { id: 'ps-blog', name: 'Newsprint', hex: '#111111', scope: 'all', chroma: 0, keepStatus: false, cls: 'qa-journal',
     sw: ['#111111', '#6B6B6B', '#FBFAF7'],
-    note: 'Black and white, serif headlines, square corners, no drop shadows — an editorial voice for the blog.' },
+    note: 'Black and white, Openline typography, square corners, no drop shadows — an editorial voice for the blog.' },
 };
 
 export const styleFor = (slug) => PAGE_STYLES[slug.replace('-redesign', '')] || null;

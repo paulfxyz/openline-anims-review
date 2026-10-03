@@ -112,7 +112,7 @@ tick in the nav, a highlighted matrix row, and makes it the default on load.
 
 - **Page identities** (`PAGE_STYLES` in `qa/core.js`): Network → Corporate blue (royal blue on navy ink),
   Security → Vault teal, AdBlocking → Ultraviolet, Unlimited → Hot magenta, Blog → Newsprint (mono,
-  serif headlines, square corners). Each recolours its page and the animations on it; switchable per page.
+  Openline typography, square corners). Each recolours its page and the animations on it; switchable per page.
 - **Features pages** `/qa/security`, `/qa/adblocking`, `/qa/unlimited` captured (no boards; here for identity).
 - **Redesigns** `/qa/about-redesign`, `/qa/contact-redesign`: every piece of the live copy kept, new layout,
   plain HTML/CSS on the captured header/footer. Source in `qa/redesign/`, built by `qa/tools/redesign.py`.
@@ -144,3 +144,19 @@ tick in the nav, a highlighted matrix row, and makes it the default on load.
   in `qa/selections.json` (`pageStyles`), shown as Selected in the panel, hub and export, and restored by Reset.
 - Referral board (`/` → Home › Refer a friend box): option 3's dotted field runs past its 576 × 520 frame so
   the 640 × 460 board stage has no bands, and inside the orange box the stage takes the box's own orange.
+
+### /qa typography
+
+- **Reference:** the computed interface font on [Openline](https://openline.com) and the
+  [revisions hub](https://openline-revisions-hub.vercel.app/home) uses the native
+  `ui-sans-serif, system-ui, sans-serif` stack with emoji fallbacks. Play is reserved for the wordmark.
+- **One shared stack:** `qa/typography.css` covers captured pages, About/Contact redesigns, the review
+  dock, page menu, hub, animation text, modal builder, chat and help modals. `qa/typography.js`
+  mirrors the stacks for standalone copied modal HTML and embedded illustration SVGs.
+- **No substitute interface fonts:** Inter-first declarations and decorative monospace labels have
+  been removed. Blog keeps its monochrome editorial layout but uses the same Openline family rather
+  than loading Newsreader. Real code snippets, keyboard hints, redemption codes and OTP fields retain
+  a shared monospace stack; numeric animation text uses tabular figures in the main family.
+- **Scope:** font-family changes are confined to `/qa`; the original animation boards are unchanged.
+  Font sizes, animation timing and page identities are preserved. Rebuild redesign HTML with
+  `python3 qa/tools/redesign.py` after changing `qa/redesign/rd.css`.

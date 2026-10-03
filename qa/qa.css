@@ -1,3 +1,4 @@
+@import url('/qa/typography.css');
 @import url('/qa/anim.css');
 /* ══════════════════════════════════════════════════════════════════════
    /qa chrome — the dock, the drawer and the slot labels.
@@ -13,7 +14,7 @@
   --ql2: #F2F3F6;
   --qa: #FF5314;
   --qg: #16A34A;
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-family: var(--ol-font-sans);
   color: var(--qi);
   -webkit-font-smoothing: antialiased;
 }
@@ -48,7 +49,7 @@ body.qa-outline [data-qa-slot] { outline: 2px dashed rgba(11, 11, 15, .55); outl
 @keyframes qaBob { 0%, 100% { transform: translateY(-6px); } 50% { transform: translateY(2px); } }
 .qa-pill {
   display: inline-flex; align-items: center; gap: 6px; padding: 8px 13px; border-radius: 999px;
-  font: 700 12px/1.2 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font: 700 12px/1.2 var(--ol-font-sans);
   white-space: nowrap; box-shadow: 0 14px 30px rgba(15, 23, 42, .18);
 }
 .qa-pill .ic { width: 14px; height: 14px; }
@@ -141,14 +142,14 @@ body.qa-drawer-open .qa-dock { transform: translateX(calc(-50% - 210px)); }
   display: grid; grid-template-rows: auto 1fr; overflow: hidden;
   background: #fff; color: #0B0B0F; border-radius: 18px;
   box-shadow: 0 30px 80px -20px rgba(11, 11, 15, .5), 0 0 0 1px rgba(11, 11, 15, .08);
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-family: var(--ol-font-sans);
   animation: qaPm .18s cubic-bezier(.2, .8, .2, 1);
 }
 @keyframes qaPm { from { opacity: 0; transform: translate(-50%, 8px); } }
 .qa-pm-head { display: flex; align-items: center; gap: 8px; padding: 12px; border-bottom: 1px solid #ECEDF1; }
 .qa-pm-q { flex: 1; min-width: 0; height: 42px; padding: 0 14px; border: 1.5px solid #E2E4EA; border-radius: 12px; font: inherit; font-size: 15px; outline: 0; color: #0B0B0F; background: #fff; }
 .qa-pm-q:focus { border-color: #0B0B0F; }
-.qa-pm-head kbd { font: 600 11px/1 ui-monospace, Menlo, monospace; color: #8A90A0; border: 1px solid #E2E4EA; border-radius: 6px; padding: 4px 6px; }
+.qa-pm-head kbd { font: 600 11px/1 var(--ol-font-mono); color: #8A90A0; border: 1px solid #E2E4EA; border-radius: 6px; padding: 4px 6px; }
 .qa-pm-list { overflow-y: auto; padding: 6px 6px 10px; }
 .qa-pm-h { padding: 12px 10px 6px; font-size: 11.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #8A90A0; }
 .qa-pm-i { display: grid; grid-template-columns: 26px 1fr auto; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 11px; text-decoration: none; color: inherit; outline: 0; }
@@ -156,7 +157,7 @@ body.qa-drawer-open .qa-dock { transform: translateX(calc(-50% - 210px)); }
 .qa-pm-i.is-cur { background: #0B0B0F; color: #fff; }
 .qa-pm-i.is-cur small, .qa-pm-i.is-cur .qa-pm-n, .qa-pm-i.is-cur .qa-pm-m { color: rgba(255, 255, 255, .62); }
 .qa-pm-i.is-sub { padding-left: 26px; }
-.qa-pm-n { font: 600 12px/1 ui-monospace, Menlo, monospace; color: #A3A8B5; }
+.qa-pm-n { font: 600 12px/1 var(--ol-font-sans); font-variant-numeric: tabular-nums; color: #A3A8B5; }
 .qa-pm-t { display: grid; min-width: 0; }
 .qa-pm-t b { font-size: 15px; font-weight: 650; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .qa-pm-t small { font-size: 12.5px; color: #8A90A0; }
@@ -197,7 +198,7 @@ body.qa-drawer-open .qa-drawer { transform: none; visibility: visible; box-shado
   display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
   padding: 22px 22px 16px; border-bottom: 1px solid var(--ql2);
 }
-.qa-dr-kick { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; color: var(--qf); }
+.qa-dr-kick { font-family: var(--ol-font-sans); font-size: 12px; color: var(--qf); }
 .qa-dr-head h2 { margin: 4px 0 0; font-size: 24px; font-weight: 800; letter-spacing: -.02em; line-height: 1.1; }
 
 .qa-x {
@@ -240,7 +241,7 @@ body.qa-drawer-open .qa-drawer { transform: none; visibility: visible; box-shado
 .qa-pickrow { display: grid; grid-template-columns: 40px 1fr 40px; gap: 6px; }
 .qa-pickrow select {
   width: 100%; height: 40px; padding: 0 10px; border: 1px solid var(--ql); border-radius: 10px;
-  background: #fff; color: var(--qi); font: 600 14px/1 Inter, ui-sans-serif, system-ui, sans-serif; cursor: pointer;
+  background: #fff; color: var(--qi); font: 600 14px/1 var(--ol-font-sans); cursor: pointer;
 }
 .qa-ib {
   height: 40px; border: 1px solid var(--ql); border-radius: 10px; background: #fff;
@@ -266,7 +267,7 @@ body.qa-drawer-open .qa-drawer { transform: none; visibility: visible; box-shado
 .qa-card textarea {
   display: block; width: 100%; margin-top: 12px; padding: 10px 12px;
   border: 1px solid var(--ql); border-radius: 10px; resize: vertical;
-  font: 14px/1.45 Inter, ui-sans-serif, system-ui, sans-serif; color: var(--qi); background: #FCFCFD;
+  font: 14px/1.45 var(--ol-font-sans); color: var(--qi); background: #FCFCFD;
 }
 .qa-card textarea:focus { outline: none; border-color: var(--qi); background: #fff; }
 
@@ -335,6 +336,25 @@ body.qa-drawer-open .qa-drawer { transform: none; visibility: visible; box-shado
 .qa-dock-seg a:hover { color: #fff !important; }
 .qa-dock-seg a.is-on { background: #fff; color: #0B0B0F !important; }
 
+/* Keep page names and every dock control inside narrow viewports. */
+@media (max-width: 600px) {
+  .qa-dock {
+    display: grid;
+    grid-template-columns: 34px 24px minmax(0, 1fr) 24px 48px 52px;
+    width: calc(100vw - 24px); gap: 3px;
+  }
+  .qa-dock-sep { display: none; }
+  .qa-dock > * { grid-row: 1; }
+  .qa-dock-home { padding: 0; justify-content: center; }
+  .qa-dock-home span { display: none; }
+  .qa-dock-b { width: 24px; padding: 0; }
+  #qa-ui .qa-dock-page { min-width: 0; padding: 5px 2px; font-size: 13px; }
+  .qa-dock-page > span { max-width: 100%; text-align: center; }
+  .qa-dock-page svg { flex: none; }
+  #qa-ui .qa-dock-t { padding: 0 6px; font-size: 12px; }
+  .qa-dock-seg { grid-row: 2; grid-column: 1 / -1; justify-content: center; }
+}
+
 /* ── page identity card ── */
 .qa-ident { display: flex; gap: 12px; align-items: flex-start; padding: 14px; border: 1px solid var(--ql); border-radius: 12px; opacity: .55; }
 .qa-ident.is-on { opacity: 1; border-color: var(--qi); }
@@ -345,11 +365,11 @@ body.qa-drawer-open .qa-drawer { transform: none; visibility: visible; box-shado
 .qa-hint-box { margin: 0 0 12px; padding: 10px 12px; border-radius: 10px; background: #F6F7F9; color: var(--qd); }
 
 /* ══ Newsprint identity (blog) ═══════════════════════════════════════
-   Editorial voice: serif headlines, paper ground, square corners, rules
+   Editorial voice: Openline typography, paper ground, square corners, rules
    instead of shadows. The colour itself comes from the recolour pass. */
 body.qa-journal { background: #FBFAF7; }
 body.qa-journal h1, body.qa-journal h2, body.qa-journal h3 {
-  font-family: Newsreader, "Iowan Old Style", Georgia, serif !important;
+  font-family: var(--ol-font-sans) !important;
   font-weight: 600 !important;
   letter-spacing: -.015em !important;
 }
@@ -359,8 +379,6 @@ body.qa-journal section.bg-white, body.qa-journal .bg-white:not(header *):not(#q
 body.qa-journal [class*="rounded"]:not(header *):not(#qa-ui *):not(.rounded-full) { border-radius: 3px !important; }
 body.qa-journal [class*="shadow"]:not(header *):not(#qa-ui *) { box-shadow: none !important; }
 body.qa-journal [class*="shadow"]:not(header *):not(#qa-ui *):not(button):not(a) { outline: 1px solid rgba(17, 17, 17, .14); }
-body.qa-journal [data-qa-slot] svg text[font-weight="700"],
-body.qa-journal [data-qa-slot] svg text[font-weight="800"] { font-family: Newsreader, Georgia, serif; }
 
 /* backdrop mode for the modal builder */
 body.qa-bare #qa-ui { display: none !important; }

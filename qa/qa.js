@@ -227,19 +227,9 @@ async function applyTheme(rerender = true) {
   const on = styleOn();
   map = makeMapper(on ? STYLE : themeObj(state));
   document.body.classList.toggle('qa-journal', on && STYLE.cls === 'qa-journal');
-  if (on && STYLE.cls === 'qa-journal') ensureJournalFont();
   await paintSiteCss(map);
   paintTree(document.body, map, inUI);
   if (rerender) renderTheme();
-}
-
-function ensureJournalFont() {
-  if (document.getElementById('qa-journal-font')) return;
-  const l = document.createElement('link');
-  l.id = 'qa-journal-font';
-  l.rel = 'stylesheet';
-  l.href = 'https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600;6..72,700&display=swap';
-  document.head.appendChild(l);
 }
 
 /* ── Tags floating over each slot ──────────────────────────────────── */

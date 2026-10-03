@@ -61,7 +61,7 @@
 
 .mb-in {
   display: block; width: 100%; padding: 11px 13px; border: 1px solid var(--ql); border-radius: 11px;
-  background: #fff; font: 15px/1.45 Inter, ui-sans-serif, system-ui, sans-serif; color: var(--qi); resize: vertical;
+  background: #fff; font: 15px/1.45 var(--ol-font-sans); color: var(--qi); resize: vertical;
 }
 .mb-in:focus { outline: none; border-color: var(--qi); }
 .mb-lab { display: grid; gap: 6px; margin-top: 10px; font-size: 13px; font-weight: 650; color: var(--qd); }

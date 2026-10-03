@@ -20,7 +20,7 @@ body {
   margin: 0;
   background: #FAFAFB;
   color: var(--qi);
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-family: var(--ol-font-sans);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -28,7 +28,7 @@ a { color: inherit; }
 button, select, textarea, input { font: inherit; color: inherit; }
 kbd {
   display: inline-block; padding: 1px 7px; border: 1px solid var(--ql); border-bottom-width: 2px; border-radius: 6px;
-  background: #fff; font: 600 13px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+  background: #fff; font: 600 13px/1.4 var(--ol-font-mono);
 }
 
 /* ── head ── */
@@ -102,7 +102,7 @@ kbd {
   padding: 18px 22px; text-decoration: none; border-bottom: 1px solid var(--ql2);
 }
 .hb-pagehead:hover { background: #FCFCFD; }
-.hb-pn { font: 700 13px/1 ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--qf); }
+.hb-pn { font: 700 13px/1 var(--ol-font-sans); font-variant-numeric: tabular-nums; color: var(--qf); }
 .hb-pt { display: flex; align-items: baseline; gap: 12px; flex: 1; min-width: 0; text-decoration: none; }
 .hb-pt small { font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--qf); }
 .hb-pt b { font-size: 20px; font-weight: 800; letter-spacing: -.01em; }
@@ -148,12 +148,12 @@ kbd {
 .hb-export { display: grid; gap: 12px; }
 .hb-export textarea {
   width: 100%; height: 260px; padding: 16px 18px; border: 1px solid var(--ql); border-radius: 16px; resize: vertical;
-  background: #fff; color: var(--qd); font: 13px/1.55 ui-monospace, SFMono-Regular, Menlo, monospace;
+  background: #fff; color: var(--qd); font: 13px/1.55 var(--ol-font-mono);
 }
 .hb-exbtns { display: flex; gap: 10px; flex-wrap: wrap; }
 .hb-btn {
   height: 48px; padding: 0 22px; border: 1px solid var(--ql); border-radius: 12px; background: #fff;
-  font: 700 15px/1 Inter, ui-sans-serif, system-ui, sans-serif; color: var(--qi); cursor: pointer;
+  font: 700 15px/1 var(--ol-font-sans); color: var(--qi); cursor: pointer;
 }
 .hb-btn:hover { border-color: var(--qi); }
 .hb-btn.is-main { background: var(--qi); border-color: var(--qi); color: #fff; }

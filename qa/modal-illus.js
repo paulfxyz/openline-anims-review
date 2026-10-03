@@ -3,9 +3,12 @@
    reads when cropped to a square. Returned as data: URIs so an exported
    modal stays self-contained. */
 
+import { FONT_SANS } from './typography.js';
+
 const OR = '#FF5314', ORD = '#E23D00', ORS = '#FFE4D6', ORW = '#FFF7F3', INK = '#0B0B0F', MUT = '#C9CCD4', GR = '#16A34A';
 
 const wrap = (inner, bg = ORW) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 240">
+  <style>text { font-family: ${FONT_SANS}; font-variant-numeric: tabular-nums; }</style>
   <rect width="560" height="240" fill="${bg}"/>
   <g opacity=".5">${Array.from({ length: 14 }, (_, i) => Array.from({ length: 7 }, (_, j) =>
     `<circle cx="${20 + i * 40}" cy="${16 + j * 36}" r="1.4" fill="${INK}" opacity=".18"/>`).join('')).join('')}</g>

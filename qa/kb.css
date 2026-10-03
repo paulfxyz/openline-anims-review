@@ -1,8 +1,11 @@
 /* /qa/kb — how the knowledge-base and compatibility modals are opened. */
 
 .kd { max-width: 1240px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 48px) 120px; }
+.kd-demo, .kd-way, .kd-card { min-width: 0; }
+.kd-demo { grid-template-columns: minmax(0, 1fr); }
+.kd-mock { min-width: 0; }
 .kd-hero { padding: 72px 0 40px; }
-.kd-eyebrow { margin: 0 0 14px; font: 700 13px/1 ui-monospace, Menlo, monospace; color: #FF5314; letter-spacing: .04em; }
+.kd-eyebrow { margin: 0 0 14px; font: 700 13px/1 var(--ol-font-sans); color: #FF5314; letter-spacing: .04em; }
 .kd-hero h1 { margin: 0; font-size: clamp(38px, 5.4vw, 64px); line-height: 1.02; letter-spacing: -.035em; font-weight: 800; max-width: 16ch; }
 .kd-hero h1 em { font-style: normal; color: #FF5314; }
 .kd-lede { margin: 22px 0 0; max-width: 62ch; font-size: 19px; line-height: 1.6; color: var(--qd); }
@@ -17,7 +20,7 @@
 
 .kd-sec { padding-top: 64px; }
 .kd-sh { display: flex; gap: 18px; align-items: baseline; margin-bottom: 26px; }
-.kd-sh > span { font: 700 14px/1 ui-monospace, Menlo, monospace; color: var(--qf); }
+.kd-sh > span { font: 700 14px/1 var(--ol-font-sans); font-variant-numeric: tabular-nums; color: var(--qf); }
 .kd-sh h2 { margin: 0; font-size: 30px; letter-spacing: -.02em; line-height: 1.15; }
 .kd-sh p { margin: 8px 0 0; font-size: 16.5px; color: var(--qd); }
 
@@ -63,11 +66,11 @@
 .kd-way > p { margin: 8px 0 16px; font-size: 15.5px; line-height: 1.55; color: var(--qd); }
 .kd-rows { display: grid; gap: 6px; }
 .kd-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 8px 8px 12px; border-radius: 12px; background: #F6F6F8; }
-.kd-row code { font: 500 13.5px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--qi); overflow-wrap: anywhere; }
+.kd-row code { font: 500 13.5px/1.4 var(--ol-font-mono); color: var(--qi); overflow-wrap: anywhere; }
 .kd-row > button, .kd-row > a { flex: none; height: 34px; padding: 0 14px; border-radius: 999px; border: 0; background: #0B0B0F; color: #fff; font-weight: 700; font-size: 13.5px; cursor: pointer; text-decoration: none; display: inline-grid; place-items: center; }
 .kd-row > button:hover, .kd-row > a:hover { background: #FF5314; }
 .kd-muted { color: var(--qf); font-size: 13.5px; }
-.kd-pre { margin: 0 0 12px; padding: 16px 18px; border-radius: 14px; background: #0B0B0F; color: #F4F4F6; font: 500 14px/1.55 ui-monospace, Menlo, monospace; overflow-x: auto; }
+.kd-pre { margin: 0 0 12px; padding: 16px 18px; border-radius: 14px; background: #0B0B0F; color: #F4F4F6; font: 500 14px/1.55 var(--ol-font-mono); overflow-x: auto; }
 
 .kd-notes ul { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .kd-notes li { padding: 20px 22px; border-radius: 18px; background: #fff; border: 1px solid var(--ql); font-size: 16px; line-height: 1.6; color: var(--qd); }
@@ -79,7 +82,7 @@
 }
 @media (max-width: 720px) {
   .kd-hero { padding-top: 44px; }
-  .kd-cards, .kd-demos, .kd-ways, .kd-notes ul { grid-template-columns: 1fr; }
+  .kd-cards, .kd-demos, .kd-ways, .kd-notes ul { grid-template-columns: minmax(0, 1fr); }
   .kd-sh h2 { font-size: 25px; }
   .kd-row { flex-direction: column; align-items: stretch; }
   .kd-row > button, .kd-row > a { width: 100%; }

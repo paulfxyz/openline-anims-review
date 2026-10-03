@@ -11,6 +11,7 @@ import { ICONS as LIB, GLYPHS, MOTIONS, iconSVG, glyphSVG } from './icons-lib.js
 import { ICONS as ALOHA } from '/js/icons.js';
 import { TEMPLATES, TEMPLATE_CATS } from './modal-templates.js';
 import { ILLUS, resolveSrc } from './modal-illus.js';
+import { FONT_SANS, FONT_MONO } from './typography.js';
 
 const STORE = 'openline-qa-modal-v1';
 const LOCAL = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
@@ -69,8 +70,8 @@ function save() {
 
 const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const rich = (s) => esc(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/~~(.+?)~~/g, '<s style="opacity:.55">$1</s>');
-const FONT = 'ui-sans-serif, system-ui, -apple-system, \'Segoe UI\', Roboto, sans-serif';
-const MONO = 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace';
+const FONT = FONT_SANS;
+const MONO = FONT_MONO;
 
 function renderIcon(c, T, uid) {
   if (c.iconStyle === 'none') return '';
@@ -139,7 +140,7 @@ export function renderModal(c, uid = 'm') {
           <span style="font-size:13px;font-weight:650;color:${ink}">${rich(b.label)}</span>
           <input placeholder="${esc(b.text)}" style="height:48px;padding:0 14px;border:1.5px solid ${line};border-radius:${Math.max(8, R - 8)}px;background:${dark ? 'rgba(255,255,255,0.04)' : '#FFFFFF'};color:${ink};font:600 17px ${MONO};letter-spacing:.1em;outline:none"></label>`;
       case 'note':
-        return `<p style="margin:0;font-size:12.5px;line-height:1.5;color:${mut};font-family:${MONO}">${rich(b.text)}</p>`;
+        return `<p style="margin:0;font-size:12.5px;line-height:1.5;color:${mut};font-family:${FONT}">${rich(b.text)}</p>`;
       case 'image': {
         const src = resolveSrc(b.src);
         if (!src) return '';
@@ -153,7 +154,7 @@ export function renderModal(c, uid = 'm') {
             <div style="width:24px;height:18px;border-radius:4px;background:rgba(255,255,255,.85);box-shadow:inset 0 0 0 1.5px rgba(11,11,15,.25)"></div></div>
           <div style="flex:1;min-width:0"><div style="font-size:16px;font-weight:800">${rich(b.country)}</div>
             <div style="font-size:13.5px;opacity:.75;margin-top:2px">${rich(b.plan)}</div>
-            <div style="font:600 11px ${MONO};letter-spacing:.06em;opacity:.55;margin-top:5px;text-transform:uppercase">${rich(b.meta)}</div></div>
+            <div style="font:600 11px ${FONT};letter-spacing:.06em;opacity:.55;margin-top:5px;text-transform:uppercase">${rich(b.meta)}</div></div>
           ${b.status ? `<span style="flex:none;padding:6px 10px;border-radius:999px;font:700 11.5px ${FONT};${/active|ready/i.test(b.status) ? 'background:rgba(74,222,128,.16);color:#4ADE80' : 'background:rgba(255,255,255,.12);color:#FFFFFF'}">${rich(b.status)}</span>` : ''}
         </div>`;
       case 'steps':
@@ -171,7 +172,7 @@ export function renderModal(c, uid = 'm') {
         return `<div style="display:grid;justify-items:center;gap:10px;padding:18px;border-radius:${Math.max(10, R - 6)}px;background:${soft}">
           <div style="padding:12px;border-radius:12px;background:#FFFFFF"><svg viewBox="0 0 147 147" width="168" height="168" fill="#0B0B0F" aria-label="QR code">${cells}${fin(0, 0)}${fin(98, 0)}${fin(0, 98)}</svg></div>
           ${b.label ? `<div style="font-size:14px;font-weight:700;color:${ink}">${rich(b.label)}</div>` : ''}
-          ${b.text ? `<div style="font:12px/1.4 ${MONO};color:${mut};text-align:center">${rich(b.text)}</div>` : ''}</div>`;
+          ${b.text ? `<div style="font:12px/1.4 ${FONT};color:${mut};text-align:center">${rich(b.text)}</div>` : ''}</div>`;
       }
       case 'choice':
         return `<div style="display:grid;gap:8px;text-align:left" role="radiogroup">${lines.map((x, i) => {
@@ -215,9 +216,9 @@ export function renderModal(c, uid = 'm') {
   const cover = coverSrc ? `<div style="margin:-${pad}px -${pad}px ${c.iconStyle === 'none' ? 0 : -(+c.iconSize || 72) / 2 - 8}px;height:${c.size === 'lg' ? 220 : 180}px;border-radius:${R}px ${R}px 0 0;overflow:hidden;background:${soft}">
       <img src="${esc(coverSrc)}" alt="" style="display:block;width:100%;height:100%;object-fit:cover"></div>` : '';
 
-  return `<div role="dialog" aria-modal="true" aria-labelledby="${uid}-t" style="position:relative;box-sizing:border-box;width:100%;max-width:${W}px;padding:${c.size === 'sm' ? 26 : 32}px;border-radius:${R}px;background:${bg};color:${ink};font-family:${FONT};
+  return `<div id="${uid}-dialog" role="dialog" aria-modal="true" aria-labelledby="${uid}-t" style="position:relative;box-sizing:border-box;width:100%;max-width:${W}px;padding:${c.size === 'sm' ? 26 : 32}px;border-radius:${R}px;background:${bg};color:${ink};font-family:${FONT};
     box-shadow:0 30px 80px rgba(11,11,15,${dark ? 0.6 : 0.28}),0 0 0 1px ${line};text-align:${ta};animation:olmIn .42s cubic-bezier(.2,.9,.25,1.12) both">
-    <style>@keyframes olmIn{from{opacity:0;transform:translateY(14px) scale(.96)}to{opacity:1;transform:none}}@keyframes olmProg{from{transform:scaleX(0)}to{transform:scaleX(1)}}@media (prefers-reduced-motion:reduce){[role=dialog],[role=dialog] *{animation:none!important}}</style>
+    <style>#${uid}-dialog :is(button,input,textarea,select){font-family:inherit}@keyframes olmIn{from{opacity:0;transform:translateY(14px) scale(.96)}to{opacity:1;transform:none}}@keyframes olmProg{from{transform:scaleX(0)}to{transform:scaleX(1)}}@media (prefers-reduced-motion:reduce){[role=dialog],[role=dialog] *{animation:none!important}}</style>
     ${c.close ? `<button type="button" aria-label="Close" style="position:absolute;top:14px;right:14px;width:34px;height:34px;display:grid;place-items:center;border:0;border-radius:50%;z-index:2;background:${coverSrc ? 'rgba(255,255,255,0.92)' : (dark ? 'rgba(255,255,255,0.08)' : '#F2F3F6')};color:${coverSrc ? '#0B0B0F' : mut};cursor:pointer">${glyphSVG('x', { size: 16, sw: 2.4 })}</button>` : ''}
     <div style="display:grid;gap:18px">
       ${cover}
