@@ -94,6 +94,9 @@ function familyOf(H) {
 
 /* scope:
      'brand'  — only the Openline orange family moves (the brand colour)
+     'families' — only the hue families listed in theme.families move
+                (theme.floor lowers the chroma floor, so tinted near-blacks
+                of that family move too)
      'all'    — every page accent moves onto the target hue, so cyan Tier-1,
                 purple IoT and green Affiliate all become one colour
    keepStatus: leave greens, reds and saturated ambers alone so "connected" stays green and
@@ -129,10 +132,11 @@ export function makeMapper(theme) {
       || (L > 0.88 && H > 30 && H < 82);
     /* brand washes (#FFF7F3 and friends) are barely chromatic but clearly
        orange; anything else that faint is a neutral and stays put */
-    const floor = isBrand ? 0.006 : 0.05;
+    const fams = scope === 'families' ? theme.families || [] : null;
+    const floor = fams ? (fams.includes(fam.k) ? (theme.floor != null ? theme.floor : 0.05) : 9) : isBrand ? 0.006 : 0.05;
     if (C >= floor) {
       const isStatus = fam.k === 'green' || fam.k === 'red' || (H >= 62 && H < 100 && C > 0.1);
-      let move = scope === 'all' ? true : isBrand;
+      let move = fams ? fams.includes(fam.k) : scope === 'all' ? true : isBrand;
       if (keep && isStatus && !isBrand) move = false;
       if (move) {
         /* keep a colour's offset inside its own family so gradients survive;

@@ -256,95 +256,142 @@ export const linkFlight = {
   pros: ['Answers "what actually happens after I get the link?"', 'Mirrors the form directly beside it, so the panel feels connected to it', 'Four beats keep the loop alive without racing', 'The copy-cursor moment is a small, satisfying detail'],
   cons: ['Most literal of the five — less brand, more tutorial', 'The link text needs to stay generic, not a real code'],
   scores: { story: 5, motion: 4, perf: 4, mobile: 3, brand: 4, ease: 3 },
+  /* Drawn for the real slot: the right half of the orange box on /home is
+     576 × 520 at 1440px. No background of its own — the artwork sits
+     straight on the box's flat orange, so there is no second orange. */
   build: (uid) => {
+    const RW = 576, RH = 520;
     const inner = `
-    ${wdots(uid)}
-    ${mono(40, 46, 'COPY · SEND · INSTALL · BOTH PAID', { size: 10.5, fill: W, op: 0.55 })}
+    <defs>
+      <pattern id="wd-${uid}" width="22" height="22" patternUnits="userSpaceOnUse">
+        <circle cx="1.8" cy="1.8" r="1.6" fill="${W}" opacity="0.13"/>
+      </pattern>
+      <radialGradient id="wb-${uid}" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="${W}" stop-opacity="0.16"/>
+        <stop offset="100%" stop-color="${W}" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <rect x="0" y="0" width="${RW}" height="${RH}" fill="url(#wd-${uid})"/>
+    <circle cx="300" cy="262" r="250" fill="url(#wb-${uid})"/>
 
-    <!-- step 1: the link pill + cursor -->
-    <g transform="translate(46 118)">
-      <rect x="0" y="0" width="266" height="46" rx="23" fill="${W}"/>
-      <text x="22" y="29" font-size="13" font-weight="700" fill="${G.ink}" opacity="0.75"
+    ${mono(44, 62, 'HOW THE US$5 REACHES YOU BOTH', { size: 11, fill: W, op: 0.62 })}
+
+    <!-- step 1: the link pill -->
+    <g transform="translate(44 96)">
+      <rect x="0" y="0" width="300" height="54" rx="27" fill="${W}"/>
+      <text x="24" y="33" font-size="14.5" font-weight="700" fill="${G.ink}" opacity="0.78"
         style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace">openline.com/r/OPENLINE5</text>
-      <g transform="translate(240 23)">
-        <circle r="17" fill="${G.ink}"/>
-        <g transform="translate(-7 -7)" fill="none" stroke="${W}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="3" y="3" width="9" height="11" rx="2"/><path d="M 1 10 V 2 a 1 1 0 0 1 1 -1 h 8"/>
+      <g transform="translate(272 27)">
+        <circle r="20" fill="${G.ink}"/>
+        <g transform="translate(-8 -8)" fill="none" stroke="${W}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3.5" y="3.5" width="10" height="12" rx="2"/><path d="M 1 11 V 2.5 a 1.2 1.2 0 0 1 1.2 -1.2 h 9"/>
         </g>
       </g>
-      <!-- copied flash -->
       <g opacity="0">
         <animate attributeName="opacity" values="0;0;1;0;0" dur="6.4s" keyTimes="0;0.10;0.16;0.26;1" repeatCount="indefinite"/>
-        <rect x="0" y="0" width="266" height="46" rx="23" fill="none" stroke="${MINT}" stroke-width="3"/>
-        <rect x="186" y="-32" width="84" height="26" rx="13" fill="${MINT}"/>
-        <text x="228" y="-14" text-anchor="middle" font-size="11" font-weight="700" fill="${MINT_T}"
+        <rect x="0" y="0" width="300" height="54" rx="27" fill="none" stroke="${MINT}" stroke-width="3"/>
+        <rect x="214" y="-36" width="92" height="28" rx="14" fill="${MINT}"/>
+        <text x="260" y="-17" text-anchor="middle" font-size="11.5" font-weight="700" fill="${MINT_T}"
           style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace">COPIED</text>
       </g>
     </g>
-    <!-- cursor -->
+    <!-- cursor: rests below the pill, taps copy, returns -->
     <g>
       <animateTransform attributeName="transform" type="translate" dur="6.4s" repeatCount="indefinite"
-        keyTimes="0;0.09;0.16;0.24;1" values="220,212; 288,150; 288,150; 220,212; 220,212"
+        keyTimes="0;0.09;0.16;0.24;1" values="238,182; 318,128; 318,128; 238,182; 238,182"
         calcMode="spline" keySplines="0.3 0 0.2 1;0 0 1 1;0.3 0 0.2 1;0 0 1 1"/>
-      <path d="M 0 0 L 0 17 L 4.5 12.5 L 7.5 19 L 10.5 17.5 L 7.5 11 L 13.5 10.5 Z"
-        fill="${G.ink}" stroke="${W}" stroke-width="1.6"/>
+      <path d="M 0 0 L 0 19 L 5 14 L 8.4 21.4 L 11.8 19.8 L 8.4 12.4 L 15 11.8 Z"
+        fill="${G.ink}" stroke="${W}" stroke-width="1.7"/>
     </g>
 
-    <!-- step 2: the message in flight -->
+    <!-- the four beats, lit in turn -->
+    ${[['1', 'COPY', 0.04, 0.26], ['2', 'SEND', 0.26, 0.46], ['3', 'INSTALL', 0.46, 0.62], ['4', 'PAID', 0.62, 0.95]].map(([n, t, a, b], i) => {
+      const x = 44 + i * 76, w = 70;
+      const kt = `0;${a};${(a + 0.01).toFixed(2)};${b};${(b + 0.01).toFixed(2)};1`;
+      return `<g transform="translate(${x} 232)">
+        <rect width="${w}" height="34" rx="17" fill="${W}" opacity="0.14"/>
+        <g opacity="0"><animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="${kt}" dur="6.4s" repeatCount="indefinite"/>
+          <rect width="${w}" height="34" rx="17" fill="${W}"/></g>
+        <text x="${w / 2}" y="21.5" text-anchor="middle" font-size="10" font-weight="700" letter-spacing="0.8" fill="${W}"
+          style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace">${n} ${t}<animate attributeName="fill" values="${W};${W};${G.ink};${G.ink};${W};${W}" keyTimes="${kt}" dur="6.4s" repeatCount="indefinite" calcMode="discrete"/></text>
+      </g>`;
+    }).join('')}
+
+    <!-- step 2: the message in flight, pill to phone -->
+    <path d="M 344 124 C 404 126 432 160 440 188" fill="none" stroke="${W}" stroke-width="2"
+      stroke-dasharray="2 7" stroke-linecap="round" opacity="0.5"/>
     <g opacity="0">
       <animate attributeName="opacity" values="0;0;1;1;0;0" dur="6.4s" keyTimes="0;0.24;0.28;0.44;0.48;1" repeatCount="indefinite"/>
       <animateMotion dur="6.4s" repeatCount="indefinite" keyTimes="0;0.26;0.46;1" keyPoints="0;0;1;1"
-        calcMode="linear" path="M 200 200 C 300 210 380 232 438 244"/>
-      <g transform="translate(-34 -20)">
-        <rect x="0" y="0" width="68" height="40" rx="12" fill="${W}"/>
-        <path d="M 12 52 L 12 36 L 26 40 Z" fill="${W}"/>
-        <rect x="12" y="12" width="44" height="4" rx="2" fill="${G.deep}" opacity="0.55"/>
-        <rect x="12" y="22" width="30" height="4" rx="2" fill="${G.deep}" opacity="0.3"/>
+        calcMode="linear" path="M 344 124 C 404 126 432 160 440 188"/>
+      <g transform="translate(-36 -22)">
+        <rect x="0" y="0" width="72" height="44" rx="13" fill="${W}"/>
+        <path d="M 13 56 L 13 39 L 28 43 Z" fill="${W}"/>
+        <rect x="13" y="13" width="46" height="4.5" rx="2.2" fill="${G.deep}" opacity="0.55"/>
+        <rect x="13" y="24" width="32" height="4.5" rx="2.2" fill="${G.deep}" opacity="0.3"/>
       </g>
     </g>
 
     <!-- step 3: the friend's phone -->
-    <g transform="translate(452 246)">
-      <rect x="-44" y="-96" width="88" height="192" rx="18" fill="${G.ink}"/>
-      <rect x="-39" y="-91" width="78" height="182" rx="14" fill="#17171C"/>
-      <rect x="-13" y="-85" width="26" height="5" rx="2.5" fill="#000" opacity="0.8"/>
-      ${mono(0, -52, 'INVITED BY', { size: 8, anchor: 'middle', fill: W, op: 0.4 })}
+    <g transform="translate(452 282)">
+      <rect x="-60" y="-118" width="120" height="236" rx="24" fill="${G.ink}"/>
+      <rect x="-54" y="-112" width="108" height="224" rx="19" fill="#17171C"/>
+      <rect x="-16" y="-104" width="32" height="7" rx="3.5" fill="#000" opacity="0.85"/>
+      ${mono(0, -66, 'INVITED BY YOU', { size: 8.5, anchor: 'middle', fill: W, op: 0.42 })}
       <g opacity="0">
         <animate attributeName="opacity" values="0;0;1;1;0" dur="6.4s" keyTimes="0;0.46;0.54;0.94;1" repeatCount="indefinite"/>
-        <rect x="-26" y="-30" width="52" height="40" rx="9" fill="${G.orange}"/>
-        <path d="M -9 -11 L -3 -4 L 10 -18" fill="none" stroke="${W}" stroke-width="3"
+        <rect x="-32" y="-42" width="64" height="50" rx="12" fill="${G.orange}"/>
+        <path d="M -12 -18 L -4 -9 L 13 -27" fill="none" stroke="${W}" stroke-width="3.6"
           stroke-linecap="round" stroke-linejoin="round"/>
-        ${mono(0, 32, 'eSIM ACTIVE', { size: 8, anchor: 'middle', fill: G.orange, op: 0.95 })}
+        ${mono(0, 30, 'eSIM ACTIVE', { size: 9, anchor: 'middle', fill: G.orange, op: 0.95 })}
       </g>
-      <g transform="translate(0 62)">
-        <rect x="-30" y="-12" width="60" height="24" rx="12" fill="${W}" opacity="0.12"/>
-        ${mono(0, 4, '+US$5', { size: 9.5, anchor: 'middle', fill: W, op: 0.75 })}
+      <g transform="translate(0 74)">
+        <rect x="-36" y="-14" width="72" height="28" rx="14" fill="${W}" opacity="0.12"/>
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;1;1;0" dur="6.4s" keyTimes="0;0.56;0.62;0.94;1" repeatCount="indefinite"/>
+          <rect x="-36" y="-14" width="72" height="28" rx="14" fill="${MINT}"/>
+        </g>
+        <text y="4.5" text-anchor="middle" font-size="11" font-weight="700" fill="${W}" opacity="0.8"
+          style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace">+US$5
+          <animate attributeName="fill" values="${W};${W};${MINT_T};${MINT_T};${W}" dur="6.4s" keyTimes="0;0.56;0.62;0.94;1" repeatCount="indefinite" calcMode="discrete"/></text>
       </g>
     </g>
-    ${label(452, 372, 'Your friend', { size: 14, fill: W, anchor: 'middle' })}
+    ${label(452, 432, 'Your friend', { size: 15, fill: W, anchor: 'middle' })}
 
-    <!-- step 4: your balance -->
-    <g transform="translate(46 326)">
-      <rect x="0" y="0" width="242" height="60" rx="16" fill="${G.ink}"/>
-      ${mono(20, 25, 'YOUR CREDIT', { size: 9, fill: W, op: 0.45 })}
-      <text x="20" y="48" font-size="22" font-weight="700" fill="${W}"
+    <!-- step 4: your balance, fed from the friend's side -->
+    <path d="M 392 358 C 368 358 362 358 344 358" fill="none" stroke="${W}" stroke-width="2"
+      stroke-dasharray="2 7" stroke-linecap="round" opacity="0.5"/>
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1;0;0" dur="6.4s" keyTimes="0;0.54;0.57;0.62;0.64;1" repeatCount="indefinite"/>
+      <animateMotion dur="6.4s" repeatCount="indefinite" keyTimes="0;0.55;0.63;1" keyPoints="0;0;1;1"
+        calcMode="linear" path="M 392 358 L 344 358"/>
+      <circle r="9" fill="${MINT}"/>
+      <text y="3.6" text-anchor="middle" font-size="10" font-weight="800" fill="${MINT_T}">$</text>
+    </g>
+    <g transform="translate(44 316)">
+      <rect x="0" y="0" width="300" height="84" rx="20" fill="${G.ink}"/>
+      ${mono(24, 32, 'YOUR CREDIT', { size: 10, fill: W, op: 0.5 })}
+      <text x="24" y="64" font-size="27" font-weight="700" fill="${W}"
         style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace"><tspan data-role="bal2">US$0</tspan></text>
       <g opacity="0">
-        <animate attributeName="opacity" values="0;0;1;1;0" dur="6.4s" keyTimes="0;0.56;0.62;0.94;1" repeatCount="indefinite"/>
-        ${creditBadge(198, 30)}
+        <animate attributeName="opacity" values="0;0;1;1;0" dur="6.4s" keyTimes="0;0.62;0.66;0.94;1" repeatCount="indefinite"/>
+        ${creditBadge(240, 42)}
       </g>
     </g>
-    ${mono(46, 414, 'THEY SAVE US$5 · SO DO YOU', { size: 10, fill: W, op: 0.5 })}`;
+    ${mono(44, 444, 'THEY SAVE US$5 · SO DO YOU', { size: 11, fill: W, op: 0.62 })}`;
 
     return {
-      svg: gWrap(inner),
-      pills: pillsR('The whole flow'),
+      svg: `<svg viewBox="0 0 ${RW} ${RH}" preserveAspectRatio="xMidYMid meet" aria-hidden="true" style="width:100%;height:100%">${inner}</svg>`,
+      pills: [gPill('ink', `${gIcon('zap')}The whole flow`, { top: '28px', right: '30px' })],
       init(root) {
         const bal = root.querySelector('[data-role="bal2"]');
         if (!bal) return null;
-        const seq = ['US$0', 'US$0', 'US$0', 'US$5', 'US$5'];
-        let k = 0;
-        const id = setInterval(() => { bal.textContent = seq[k % seq.length]; k++; }, 1280);
+        /* in step with the 6.4s loop: US$5 lands at 0.66 */
+        const t0 = performance.now();
+        const id = setInterval(() => {
+          const p = ((performance.now() - t0) / 6400) % 1;
+          bal.textContent = p >= 0.64 && p < 0.97 ? 'US$5' : 'US$0';
+        }, 120);
         return () => clearInterval(id);
       },
     };

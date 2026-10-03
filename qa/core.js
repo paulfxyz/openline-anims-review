@@ -21,7 +21,7 @@ export { PRESETS, makeMapper, recolor };
    only slot two boards were drawn for. */
 export const PAGES = [
   { slug: 'home', title: 'Home', path: '/home', slots: [
-    { key: 'homewhy', w: 407, h: 302, hideUp: true }, { key: 'referral', w: 576, h: 520 }] },
+    { key: 'homewhy', w: 407, h: 302, hideUp: true }, { key: 'referral', w: 576, h: 520, clear: true }] },
   { slug: 'multiple-tier1', title: 'Multiple Tier-1', path: '/multiple-tier1', slots: [
     { key: 'tier1', hero: true, w: 576, h: 420 }, { key: 't1ai', w: 584, h: 560 },
     { key: 't1market', w: 584, h: 440 }, { key: 't1access', w: 584, h: 470 }] },
@@ -53,11 +53,11 @@ export const PAGES = [
   { slug: 'installation-guide', title: 'Installation Guide', path: '/installation-guide', slots: [
     { key: 'install', w: 576, h: 324 }] },
   { slug: 'contact', title: 'Contact', path: '/contact', redesign: 'contact-redesign', slots: [
-    { key: 'contact', hero: true, w: 576, h: 420 }] },
+    { key: 'contact', hero: true, w: 576, h: 420, clearFill: true }] },
   { slug: 'contact-redesign', title: 'Contact — redesign', path: '/contact', redesignOf: 'contact', slots: [
     { key: 'contact', w: 576, h: 420 }] },
   { slug: 'affiliate', title: 'Affiliate', path: '/affiliate', slots: [
-    { key: 'affil', hero: true, w: 576, h: 420 }] },
+    { key: 'affil', hero: true, w: 576, h: 420, clearFill: true }] },
 ];
 
 export const pageOf = (key) => PAGES.find((p) => !p.redesignOf && p.slots.some((s) => (s.boards || [s.key]).includes(key)));
@@ -80,6 +80,10 @@ export const PAGE_STYLES = {
   unlimited: { id: 'ps-unlimited', name: 'Hot magenta', hex: '#DB2777', scope: 'all', keepStatus: true, ink: 350, inkC: 0.04,
     sw: ['#831843', '#DB2777', '#F472B6'],
     note: 'Hot magenta: energy and abundance for the no-limits page.' },
+  iot: { id: 'ps-iot', name: 'Chrome', hex: '#6B7280', scope: 'families', families: ['purple', 'indigo'], floor: 0.012,
+    chroma: 0.06, keepStatus: true, sheen: true,
+    sw: ['#1F2329', '#6B7280', '#D1D5DB'],
+    note: 'Greyscale like the rest of the page: the purple accents become steel and graphite, the dark cell a neutral gunmetal. Green "online" states and the orange brand stay.' },
   blog: { id: 'ps-blog', name: 'Newsprint', hex: '#111111', scope: 'all', chroma: 0, keepStatus: false, cls: 'qa-journal',
     sw: ['#111111', '#6B6B6B', '#FBFAF7'],
     note: 'Black and white, serif headlines, square corners, no drop shadows — an editorial voice for the blog.' },

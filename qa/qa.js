@@ -13,6 +13,7 @@ import {
 } from './core.js';
 import { paintSiteCss, paintTree, watchMutations } from './paint.js';
 import { renderThemeControls } from './themeui.js';
+import { hexToHue } from './recolor.js';
 
 const slug = document.body.dataset.qaPage;
 const PAGE = PAGES.find((p) => p.slug === slug);
@@ -70,14 +71,19 @@ function mount(rec) {
     } else {
       /* the custom properties the artwork's shared classes read, inline so
          the recolour pass reaches them like everything else */
-      const st = `--cyan:#06B6D4;--cyan-deep:#0891B2;--ink:#0B0B0F;--orange:#FF5314;${s.tone ? `background:${TONE_BG[s.tone]};` : ''}`;
+      const clear = rec.def && rec.def.clear;
+      const st = `--cyan:#06B6D4;--cyan-deep:#0891B2;--ink:#0B0B0F;--orange:#FF5314;${s.tone && !clear ? `background:${TONE_BG[s.tone]};` : ''}`;
       el.innerHTML = `<div class="qa-mount bd-stage" style="${st}">${r.html}</div>`;
+      /* a clear slot shows the box it sits in (the orange referral box) —
+         neither the stage tone nor the scene's own wash goes on top */
+      if (clear) el.style.background = 'transparent';
       /* hold the slot to the proportions it had on the live page (the
          original content defined its height, and the mount is absolutely
          positioned) — a ratio rather than a pixel height, so it still fits
          when the capture reflows on a phone */
       fitSlot(rec);
       if (getComputedStyle(el).position === 'static') el.style.position = 'relative';
+      fitArt(rec, el.firstElementChild);
       if (r.init) {
         const c = r.init(el.firstElementChild);
         if (typeof c === 'function') rec.cleanup = c;
@@ -104,12 +110,126 @@ function mount(rec) {
       }).join('');
       (rec.hero ? el.parentElement : el).appendChild(host);
       rec.pillHost = host;
+      if (!rec.hero) rowPills(host, el);
     }
   }
 
+  if (styleOn() && STYLE.sheen && !state.live[key]) chromeSheen(el);
   paintTree(rec.hero ? el.parentElement : el, map);
   el.classList.toggle('qa-showing-live', !!state.live[key]);
   layoutTags();
+}
+
+/* Two badges stacked in the top-right corner land on the artwork's first
+   row of content (the About toggles, the Team bars). Where they fit, the
+   second one sits beside the first instead, on the same line. */
+function rowPills(host, el) {
+  const slots = [...host.children];
+  const tr = slots.filter((n) => n.style.right && n.style.top);
+  if (tr.length !== 2) return;
+  const [a, b] = tr.sort((x, y) => parseFloat(x.style.top) - parseFloat(y.style.top));
+  const wa = a.getBoundingClientRect().width, wb = b.getBoundingClientRect().width;
+  const W = el.getBoundingClientRect().width;
+  if (!wa || wa + wb + 8 > W * 0.72) return;
+  b.style.top = a.style.top;
+  b.style.right = `${parseFloat(a.style.right) + wa + 8}px`;
+}
+
+/* Chrome: the saturated solids of the replaced hue (the eSIM chip, the
+   module) take a brushed-metal gradient instead of a flat grey. Marked
+   before the recolour pass, while their hue can still be read. */
+function chromeSheen(el) {
+  el.querySelectorAll('svg').forEach((svg, si) => {
+    const hits = [...svg.querySelectorAll('rect, circle, path, ellipse, polygon')].filter((n) => {
+      const f = (n.getAttribute('fill') || '').trim();
+      if (!/^#[0-9a-f]{6}$/i.test(f)) return false;
+      const { L, C, H } = hexToHue(f);
+      return C > 0.12 && H > 270 && H < 320 && L > 0.35 && L < 0.7;
+    });
+    if (!hits.length) return;
+    const id = `qa-chrome-${Math.random().toString(36).slice(2, 8)}-${si}`;
+    const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+    defs.innerHTML = `<linearGradient id="${id}" x1="0" y1="0" x2="0.35" y2="1">
+      <stop offset="0" stop-color="#B9BEC6"/><stop offset="0.42" stop-color="#6B717A"/>
+      <stop offset="0.5" stop-color="#4E545C"/><stop offset="0.78" stop-color="#7A8089"/><stop offset="1" stop-color="#3D4249"/></linearGradient>`;
+    svg.insertBefore(defs, svg.firstChild);
+    hits.forEach((n) => n.setAttribute('fill', `url(#${id})`));
+  });
+}
+
+/* ── Context fit ───────────────────────────────────────────────────
+
+   Most options were drawn on a 640 × 460 board stage, but the slots they
+   land in are 576 × 520, 584 × 560 and so on. Letterboxed, the artwork
+   floats in a band with its dotted field stopping short and dead space
+   above and below. Here the viewBox is re-cut to the slot's own shape
+   around what is actually drawn (with even padding), zooming in a little
+   where the drawing had spare margin, and the full-bleed background
+   layers are stretched to the new frame so the field runs edge to edge.
+   Options already drawn for their real slot are left exactly as they are.
+
+   def.fit: false opts out; def.pad overrides the padding (in viewBox
+   units); def.clearFill makes an opaque full-bleed panel transparent so
+   the artwork sits on the page, as the live hero art does. */
+function fitArt(rec, mount) {
+  const svg = mount && mount.querySelector(':scope > svg');
+  const def = rec.def || {};
+  if (!svg || !svg.viewBox || !svg.viewBox.baseVal || !svg.viewBox.baseVal.width) return;
+  const vb = svg.viewBox.baseVal;
+  const V = { x: vb.x, y: vb.y, w: vb.width, h: vb.height };
+  const full = (n) => {
+    if (n.tagName !== 'rect') return false;
+    const w = n.getAttribute('width'), h = n.getAttribute('height');
+    const num = (v, ref) => (String(v).endsWith('%') ? (parseFloat(v) / 100) * ref : parseFloat(v));
+    return num(w, V.w) >= V.w * 0.98 && num(h, V.h) >= V.h * 0.98 && (+n.getAttribute('x') || 0) <= V.x + 1 && (+n.getAttribute('y') || 0) <= V.y + 1;
+  };
+  const bleed = [...svg.querySelectorAll(':scope > rect, :scope > g > rect')].filter(full);
+  if (def.clearFill) {
+    bleed.forEach((n) => { const f = (n.getAttribute('fill') || '').trim(); if (f && !f.startsWith('url(')) n.setAttribute('fill', 'none'); });
+    /* the soft corner blobs drawn with that panel would be cut by the
+       slot's edge once the panel is gone */
+    [...svg.querySelectorAll(':scope > circle')].forEach((c) => { if (+c.getAttribute('opacity') <= 0.08) c.remove(); });
+  }
+  if (def.fit === false) return;
+  const arS = rec.w / rec.h, arV = V.w / V.h;
+  if (Math.abs(arS / arV - 1) < 0.03) return;
+
+  /* what is drawn, in viewBox units, from the rendered boxes */
+  const sr = svg.getBoundingClientRect();
+  if (!sr.width) return;
+  const k = Math.min(sr.width / V.w, sr.height / V.h);
+  const ox = sr.left + (sr.width - V.w * k) / 2, oy = sr.top + (sr.height - V.h * k) / 2;
+  let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+  [...svg.children].forEach((n) => {
+    if (n.tagName === 'defs' || n.tagName === 'style' || full(n)) return;
+    if (n.tagName === 'circle' && +n.getAttribute('r') > V.w * 0.28) return;   // blooms
+    const b = n.getBoundingClientRect();
+    if (!b.width && !b.height) return;
+    x0 = Math.min(x0, V.x + (b.left - ox) / k); y0 = Math.min(y0, V.y + (b.top - oy) / k);
+    x1 = Math.max(x1, V.x + (b.right - ox) / k); y1 = Math.max(y1, V.y + (b.bottom - oy) / k);
+  });
+  if (!isFinite(x0)) return;
+  x0 = Math.max(V.x, x0); y0 = Math.max(V.y, y0); x1 = Math.min(V.x + V.w, x1); y1 = Math.min(V.y + V.h, y1);
+  const pad = def.pad != null ? def.pad : V.w * 0.055;
+  let bw = x1 - x0 + pad * 2, bh = y1 - y0 + pad * 2;
+  /* grow the short side to the slot's shape */
+  if (bw / bh > arS) bh = bw / arS; else bw = bh * arS;
+  /* never zoom past 1.2× of the drawing's own scale, so type stays the
+     size it was designed at, give or take */
+  const minW = Math.max(V.w, V.h * arS) / 1.2;
+  if (bw < minW) { bw = minW; bh = bw / arS; }
+  const cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
+  let nx = cx - bw / 2, ny = cy - bh / 2;
+  /* stay inside the original frame where it is big enough to allow it */
+  if (bw <= V.w) nx = Math.min(Math.max(nx, V.x), V.x + V.w - bw);
+  if (bh <= V.h) ny = Math.min(Math.max(ny, V.y), V.y + V.h - bh);
+  const N = { x: +nx.toFixed(1), y: +ny.toFixed(1), w: +bw.toFixed(1), h: +bh.toFixed(1) };
+  svg.setAttribute('viewBox', `${N.x} ${N.y} ${N.w} ${N.h}`);
+  bleed.forEach((n) => {
+    n.setAttribute('x', Math.min(N.x, V.x)); n.setAttribute('y', Math.min(N.y, V.y));
+    n.setAttribute('width', Math.max(N.x + N.w, V.x + V.w) - Math.min(N.x, V.x));
+    n.setAttribute('height', Math.max(N.y + N.h, V.y + V.h) - Math.min(N.y, V.y));
+  });
 }
 
 /* Height follows width at the live slot's proportions. Set in pixels, not
@@ -433,6 +553,17 @@ async function boot() {
     /* the Why-choose card floats its own chips beside the scene's wrapper;
        they belong to what ships today, so they go while a proposal shows */
     if (def.hideUp) { const up = el.parentElement; rec.sibs = [...up.parentElement.children].filter((n) => n !== up); }
+    /* elsewhere the live page floats its own badges over the card's edges
+       (absolute siblings, like the blog's "Updated Daily"); a proposal brings
+       its own, so the live ones step aside rather than doubling up */
+    if (!rec.sibs) {
+      rec.sibs = [...el.parentElement.children].filter((n) => {
+        if (n === el || n.tagName === 'STYLE' || n.tagName === 'SCRIPT') return false;
+        const r = n.getBoundingClientRect();
+        return getComputedStyle(n).position === 'absolute' && r.width * r.height < 60000;
+      });
+    }
+    rec.def = def;
     el.id = el.id || `qa-${key}`;
     const tag = document.createElement('button');
     tag.type = 'button';

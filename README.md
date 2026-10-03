@@ -130,3 +130,12 @@ tick in the nav, a highlighted matrix row, and makes it the default on load.
   search engine `qa/support/search.mjs` from openline-kb). Opened by `data-ol-open` markup, `#kb` / `#compat=`
   hashes, `Openline.open()`, or ⌘K; the page documents each with live examples.
 - Home › Why choose: board embed is now the real 407 × 302 slot; 3 · The Handover redrawn for it.
+- Home › Referral: 3 · Link in Flight redrawn for its real 576 × 520 slot, with no background of its own
+  so it sits on the box's flat orange (slot `clear: true`); a four-beat ticker fills the middle.
+- **Context fit** (`fitArt` in `qa/qa.js`): options drawn on the 640 × 460 board stage have their viewBox
+  re-cut to the slot's shape around what is drawn (even padding, ≤ 1.2× zoom) and their full-bleed layers
+  stretched, so dotted fields run edge to edge. `clearFill` drops opaque panels on hero art (Contact,
+  Affiliate). Live badges beside a slot step aside when a proposal brings its own; two top-right badges
+  share one row.
+- **IoT identity** Chrome: purple/indigo become steel and graphite (`scope: 'families'` in `qa/recolor.js`),
+  saturated solids take a brushed-metal gradient (`sheen`).
