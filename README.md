@@ -230,7 +230,7 @@ use the shared native UI stack, Openline's orange/ink palette and the live site'
   The former sample financial/user values and Live badges were removed from this section rather
   than hidden with CSS, so expanding never presents fabricated metrics as actual results.
 - Team locations are New York, Lisbon, Warsaw, Ankara, Bristol, Berlin, Paris, Singapore and Bali.
-  City badges replace invented employee initials; the footer says “Nine cities, one team.”
+  Location badges replace invented employee initials; the footer says “Nine locations, one team.”
   Local clocks use native `Intl.DateTimeFormat` with IANA zones, including
   [Asia/Makassar for Bali](https://time.is/Bali,_Bali),
   [Europe/Istanbul for Ankara](https://time.is/Ankara) and

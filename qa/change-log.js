@@ -37,7 +37,7 @@ export const QA_CHANGES = [
     delivery: 'Collapsed by default. Expanding shows the three dashboard cards with locked placeholders only, not financial figures. Prior sample revenue, margin, growth, active-user and retention numbers and Live badges were removed from this section, not merely blurred. No metrics API or publication date is implied.' },
   { id: 'about-team-cities', title: 'Team roster: nine supplied locations', pages: ['about-redesign'], status: 'Implemented in QA', route: '/qa/about-redesign',
     summary: 'The local-time roster now lists New York, Lisbon, Warsaw, Ankara, Bristol, Berlin, Paris, Singapore and Bali in the supplied order, with city badges instead of fictional staff initials.',
-    delivery: 'Nine cities, one team replaces the old six-timezone claim. Clocks use IANA zones with daylight-saving rules where applicable; Ankara uses Europe/Istanbul, Bristol Europe/London and Bali Asia/Makassar. The currently selected team animation remains unchanged.' },
+    delivery: 'Nine locations, one team replaces the old six-timezone claim. Clocks use IANA zones with daylight-saving rules where applicable; Ankara uses Europe/Istanbul, Bristol Europe/London and Bali Asia/Makassar. The currently selected team animation remains unchanged.' },
   { id: 'contact-layout', title: 'Retained Contact redesign', pages: ['contact', 'contact-redesign'], status: 'QA alternative', route: '/qa/contact-redesign',
     summary: 'The earlier Contact redesign remains alongside the original, with contact methods, support process, chat preview and global support block.',
     delivery: 'Only this retained Contact alternative receives the latest channel/widget redesign; the original capture is a comparison reference.' },
