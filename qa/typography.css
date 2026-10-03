@@ -22,7 +22,6 @@ code, pre, kbd, samp { font-family: var(--ol-font-mono); }
 .qa-mount svg tspan,
 .qa-ic svg text,
 .qa-ic svg tspan,
-.rx-main svg text,
 .rd svg text {
   font-family: var(--ol-font-sans) !important;
   font-variant-numeric: tabular-nums;

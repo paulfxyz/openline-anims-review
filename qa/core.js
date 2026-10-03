@@ -61,24 +61,6 @@ export const PAGES = [
     { key: 'affil', hero: true, w: 576, h: 420, clearFill: true }] },
 ];
 
-/* Every product page has a separate alternative in /qa. The hand-built
-   About / Contact variants above are retained; other alternatives share
-   picks and identities with their source, but own their new slot wrappers. */
-for (let i = PAGES.length - 1; i >= 0; i--) {
-  const page = PAGES[i];
-  if (page.redesignOf || page.redesign) continue;
-  page.redesign = `${page.slug}-redesign`;
-  const slots = page.slots.map(({ hero, hideUp, ...slot }) => ({ ...slot }));
-  PAGES.splice(i + 1, 0, {
-    ...page,
-    slug: page.redesign,
-    title: `${page.title} — redesign`,
-    redesign: undefined,
-    redesignOf: page.slug,
-    slots,
-  });
-}
-
 export const pageOf = (key) => PAGES.find((p) => !p.redesignOf && p.slots.some((s) => (s.boards || [s.key]).includes(key)));
 
 /* ── Page identities ───────────────────────────────────────────────── */
