@@ -176,3 +176,19 @@ Only the earlier About and Contact alternatives are retained. The later batch of
 dedicated assets. The review is back to 18 original product pages plus these two
 redesigns. Shared typography, page identities, modal/chat tools and the Openline+
 nomad animation fixes are preserved. No `/delivery` has been created.
+
+### /qa/start: purchase code to eSIM
+
+Standalone process extra inspired by the current [Openline /start](https://openline.com/start),
+not another batch of alternative marketing pages. `qa/start.html`, `start.css` and `start.js`
+use the shared native UI stack, Openline's orange/ink palette and the live site's logo mark.
+
+- Three-part code entry with uppercase/whitespace normalization, validation, clear and sample-code controls.
+- Read-only code check → sample Japan plan → explicit activation confirmation → animated code-to-profile reveal.
+- The confirmation follows Paul's requested rule: activation starts validity immediately and removes gifting eligibility.
+  It defaults to “Not yet” and requires an explicit readiness checkbox before confirming.
+- Gift flow copies a clearly labelled example message; it never sends a message. Account links use the existing `/qa/login`.
+- Error controls cover unknown, already-used and connection-error codes plus a recoverable demo activation failure.
+- No real redemption/provisioning/account API calls, no persistent code storage and no installable eSIM QR.
+  The code format and plan/profile data are demonstration fixtures, not verified production validation rules.
+- Accessible native dialogs, keyboard handling, reduced-motion treatment, and mobile layouts.

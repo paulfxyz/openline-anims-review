@@ -333,6 +333,7 @@ function act(a) {
 /* ── Page menu (the page name in the dock) ───────────────────────── */
 
 const TOOLS = [
+  { slug: 'start', title: 'Purchase code → eSIM', path: '/qa/start' },
   { slug: 'modals', title: 'Modal builder', path: '/qa/modals' },
   { slug: 'chat', title: 'Support chat', path: '/qa/chat' },
   { slug: 'kb', title: 'Help modals', path: '/qa/kb' },
@@ -363,7 +364,7 @@ function togglePageMenu(force) {
       <div class="qa-pm-h">Pages · ${PAGES.length}</div>
       ${PAGES.map(row).join('')}
       <div class="qa-pm-h">Tools</div>
-      ${TOOLS.map((t) => `<a role="menuitem" class="qa-pm-i" href="${t.path}" data-q="${esc(t.title.toLowerCase())} tool"><span class="qa-pm-n">·</span><span class="qa-pm-t"><b>${esc(t.title)}</b><small>${esc(t.path)}</small></span><span class="qa-pm-m"></span></a>`).join('')}
+      ${TOOLS.map((t) => `<a role="menuitem" class="qa-pm-i" href="${t.path}" data-q="${esc((t.title + ' ' + t.path).toLowerCase())} tool"><span class="qa-pm-n">·</span><span class="qa-pm-t"><b>${esc(t.title)}</b><small>${esc(t.path)}</small></span><span class="qa-pm-m"></span></a>`).join('')}
       <a role="menuitem" class="qa-pm-i" href="/qa" data-q="hub all pages home"><span class="qa-pm-n">·</span><span class="qa-pm-t"><b>All pages</b><small>/qa</small></span><span class="qa-pm-m"></span></a>
     </div>`;
   ui.appendChild(menu);

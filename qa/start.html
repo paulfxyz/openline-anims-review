@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex">
+  <meta name="description" content="An interactive Openline purchase-code and eSIM activation preview. No real codes are redeemed.">
+  <title>Purchase code to eSIM · Openline QA</title>
+  <link rel="icon" href="/qa/assets/start-brand-mark.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Play:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/qa/typography.css">
+  <link rel="stylesheet" href="/qa/start.css">
+</head>
+<body class="sp-body">
+  <a class="sp-skip" href="#sp-main">Skip to purchase code</a>
+  <header class="sp-header">
+    <a class="sp-brand" href="/qa/home" aria-label="Openline home">
+      <img src="/qa/assets/start-brand-mark.png" alt="" width="32" height="32"><span>Openline</span>
+    </a>
+    <nav class="sp-nav" aria-label="Main navigation">
+      <a href="/qa/home">Destinations</a>
+      <details><summary>Features <span aria-hidden="true">⌄</span></summary><div>
+        <a href="/qa/global-esim">Global eSIM</a><a href="/qa/network">Network</a>
+        <a href="/qa/security">Security</a><a href="/qa/adblocking">AdBlocking</a><a href="/qa/unlimited">Unlimited usage</a>
+      </div></details>
+      <details><summary>Pro <span aria-hidden="true">⌄</span></summary><div>
+        <a href="/qa/business">Business</a><a href="/qa/hospitality">Hospitality</a><a href="/qa/iot">IoT</a>
+      </div></details>
+      <details><summary>Resources <span aria-hidden="true">⌄</span></summary><div>
+        <a href="/qa/installation-guide">Installation guide</a><a href="/qa/blog">Blog</a><a href="/qa/contact-redesign">Contact</a>
+      </div></details>
+      <a class="sp-plus" href="/qa/openline-plus">Openline+ <small>BETA</small></a>
+    </nav>
+    <a class="sp-account" href="/qa/login"><span data-icon="user"></span><span>My account</span></a>
+  </header>
+
+  <div class="sp-reviewbar">
+    <a href="/qa#qa-extras">← All /qa extras</a>
+    <span><i></i> Interactive preview <b>Nothing is redeemed or activated</b></span>
+  </div>
+
+  <main id="sp-main" class="sp-main">
+    <ol class="sp-steps" aria-label="Activation progress">
+      <li data-step="entry" aria-current="step"><span>1</span>Enter code</li>
+      <li data-step="review"><span>2</span>Review plan</li>
+      <li data-step="success"><span>3</span>Your eSIM</li>
+    </ol>
+
+    <div id="sp-stage" data-state="entry">
+      <section class="sp-entry" id="sp-entry" aria-labelledby="sp-entry-title">
+        <div class="sp-key sp-symbol" data-icon="key" aria-hidden="true"></div>
+        <p class="sp-eyebrow">One code. Your next connection.</p>
+        <h1 id="sp-entry-title">Enter your purchase code</h1>
+        <p class="sp-lead">Your eSIM is waiting. Check your plan first,<br class="sp-desktop"> then decide when to make it yours.</p>
+        <form id="sp-code-form" class="sp-code-form" novalidate autocomplete="off">
+          <label for="sp-code">Purchase code</label>
+          <div class="sp-input-wrap">
+            <input id="sp-code" name="purchase-code" type="text" maxlength="44"
+              placeholder="GAZE19-MULCH29-NYMPH13" autocapitalize="characters" spellcheck="false"
+              aria-describedby="sp-code-help sp-code-error" autocomplete="off">
+            <button type="button" class="sp-clear" id="sp-clear" aria-label="Clear purchase code" hidden><span data-icon="x"></span></button>
+          </div>
+          <div class="sp-input-caption"><span id="sp-code-help">Three parts, separated by hyphens.</span><button type="button" class="sp-link" id="sp-example">Use example code</button></div>
+          <div class="sp-error" id="sp-code-error" role="alert" hidden></div>
+          <button class="sp-btn sp-primary sp-check-button" id="sp-check" type="submit"><span>Check my code</span><span class="sp-next" aria-hidden="true">→</span></button>
+          <p class="sp-safe"><span data-icon="lock"></span>Checking your code won’t start your plan.</p>
+        </form>
+        <p class="sp-email-note"><span data-icon="mail"></span><span>Find your purchase code after a successful payment, or in your confirmation email if you linked your purchase to one.</span></p>
+        <div class="sp-paths">
+          <button type="button" class="sp-path" id="sp-entry-gift"><span class="sp-path-icon" data-icon="gift"></span><span><b>A connection worth gifting</b><small>Give someone your unused purchase code.</small></span><span aria-hidden="true">↗︎</span></button>
+          <a class="sp-path" href="/qa/login"><span class="sp-path-icon" data-icon="user"></span><span><b>Everything in one place</b><small>Go to your account and manage your eSIMs.</small></span><span aria-hidden="true">↗︎</span></a>
+        </div>
+      </section>
+
+      <section id="sp-review" class="sp-review" aria-labelledby="sp-review-title" hidden>
+        <div class="sp-symbol is-small is-found" data-icon="receipt"></div>
+        <p class="sp-eyebrow">Purchase code found <span class="sp-demo-tag">Sample result</span></p>
+        <h1 id="sp-review-title" tabindex="-1">Your plan. Your choice.</h1>
+        <p class="sp-lead">Nothing has started yet. Keep it for your trip,<br class="sp-desktop"> give it to someone, or activate it now.</p>
+        <article class="sp-ticket" aria-label="Sample plan details">
+          <div class="sp-ticket-head"><span class="sp-japan" aria-label="Japan"></span><div><small>Openline data eSIM</small><h2>Japan</h2></div><span class="sp-status">Not activated</span></div>
+          <dl class="sp-specs"><div><dt>Data</dt><dd>10 GB</dd></div><div><dt>Validity</dt><dd>30 days</dd></div><div><dt>Network</dt><dd>4G / 5G</dd></div></dl>
+          <div class="sp-ticket-code"><span>Purchase code</span><code data-current-code></code><button type="button" class="sp-icon-button" data-copy-code aria-label="Copy purchase code"><span data-icon="copy"></span></button></div>
+        </article>
+        <div class="sp-timing-note"><span data-icon="clock"></span><p><b>Travelling later? You can wait.</b> The plan starts when you confirm activation, not when you check this code.</p></div>
+        <div id="sp-review-error" class="sp-error" role="alert" hidden></div>
+        <div class="sp-review-actions">
+          <button type="button" class="sp-btn sp-primary" id="sp-open-confirm"><span data-icon="esim"></span>Activate for myself <span aria-hidden="true">→</span></button>
+          <button type="button" class="sp-btn sp-secondary" id="sp-review-gift"><span data-icon="gift"></span>Gift this code</button>
+        </div>
+        <div class="sp-review-bottom"><button type="button" class="sp-link" id="sp-change-code">Use a different code</button><a href="/qa/login">Go to my account <span aria-hidden="true">↗︎</span></a></div>
+      </section>
+
+      <section id="sp-creating" class="sp-creating" aria-labelledby="sp-creating-title" hidden>
+        <p class="sp-eyebrow">Making it yours</p>
+        <h1 id="sp-creating-title" tabindex="-1">A code becomes a connection.</h1>
+        <p class="sp-lead" id="sp-motion-copy" aria-live="polite">Creating your eSIM profile…</p>
+        <div class="sp-transfer" aria-hidden="true">
+          <div class="sp-orbit"></div><div class="sp-orbit is-inner"></div>
+          <div class="sp-code-parts"><code></code><code></code><code></code></div>
+          <div class="sp-chip"><span data-icon="esim"></span><span>Openline</span><i></i></div>
+          <div class="sp-signal-bars"><i></i><i></i><i></i><i></i></div>
+        </div>
+        <div class="sp-progress" role="progressbar" aria-label="Creating demo eSIM" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span></span></div>
+        <ol class="sp-build-steps"><li data-build="0"><i></i>Code confirmed</li><li data-build="1"><i></i>Profile created</li><li data-build="2"><i></i>Ready to install</li></ol>
+      </section>
+
+      <section id="sp-success" class="sp-success" aria-labelledby="sp-success-title" hidden>
+        <div class="sp-symbol is-success" data-icon="check-circle"></div>
+        <p class="sp-eyebrow">Demo activation complete</p>
+        <h1 id="sp-success-title" tabindex="-1">Meet your new eSIM.</h1>
+        <p class="sp-lead">Your plan has started. Your profile is ready to install<br class="sp-desktop"> on a compatible phone.</p>
+        <article class="sp-profile" aria-label="Demo Openline eSIM profile">
+          <div class="sp-profile-top"><span class="sp-wordmark">Openline</span><span class="sp-profile-state"><i></i>Active</span></div>
+          <div class="sp-profile-main"><div><span>Japan</span><h2>10 <small>GB</small></h2><p>30 days · Data only</p></div><span class="sp-profile-chip" data-icon="esim"></span></div>
+          <div class="sp-profile-foot"><span>PROFILE <code>OL-DEMO-2048</code></span><span>4G / 5G</span></div>
+        </article>
+        <div class="sp-active-note"><span data-icon="clock"></span><div><b>Your 30 days start now.</b><span>Demo validity ends <time id="sp-valid-until"></time>. This code can no longer be gifted.</span></div></div>
+        <div class="sp-review-actions">
+          <button type="button" class="sp-btn sp-primary" id="sp-install"><span data-icon="qr"></span>View install instructions</button>
+          <a class="sp-btn sp-secondary" href="/qa/login"><span data-icon="user"></span>Go to my account</a>
+        </div>
+        <button class="sp-link sp-details-link" type="button" id="sp-details">View eSIM details</button>
+      </section>
+    </div>
+
+    <div class="sp-help-line"><span>Made for iPhone and Android.</span><button type="button" class="sp-link" data-ol-open="compat">Check my device</button><i></i><button type="button" class="sp-link" data-ol-open="chat">Need a hand?</button></div>
+    <details class="sp-demo-controls">
+      <summary>Preview controls <span>Try the different states</span></summary>
+      <div><label>Code response<select id="sp-scenario"><option value="ready">Ready to activate</option><option value="not-found">Code not found</option><option value="used">Already activated</option><option value="network">Connection error</option><option value="activation-error">Activation failure</option></select></label><button type="button" class="sp-btn sp-secondary" id="sp-reset">Reset preview</button></div>
+      <p>All plan details and the eSIM profile are fictional. No code is sent to Openline, stored persistently, redeemed, or activated.</p>
+    </details>
+  </main>
+
+  <footer class="sp-footer"><a class="sp-brand" href="/qa/home"><img src="/qa/assets/start-brand-mark.png" alt="" width="24" height="24"><span>Openline</span></a><span>© 2026 Openline, Inc.</span><a href="/qa#qa-extras">Back to review</a></footer>
+
+  <dialog id="sp-confirm" class="sp-dialog" aria-labelledby="sp-confirm-title" aria-describedby="sp-confirm-copy">
+    <button class="sp-dialog-close sp-icon-button" type="button" data-close aria-label="Close confirmation"><span data-icon="x"></span></button>
+    <div class="sp-symbol is-warning" data-icon="clock"></div>
+    <p class="sp-eyebrow">One quick check</p><h2 id="sp-confirm-title">Ready to start your plan?</h2>
+    <p id="sp-confirm-copy">Activating creates your eSIM profile for you. Make sure now is the right time.</p>
+    <div class="sp-consequences">
+      <div><span data-icon="clock"></span><p><b>The 30-day clock starts immediately.</b><span>Not when you land or install the eSIM.</span></p></div>
+      <div><span data-icon="gift"></span><p><b>This code can’t be gifted afterwards.</b><span>It will have been used to create your profile.</span></p></div>
+    </div>
+    <p class="sp-wait-note">Travelling later? Choose “Not yet” and keep the purchase code until you’re ready.</p>
+    <label class="sp-consent"><input id="sp-consent" type="checkbox"><span>I’m ready to start this plan now.</span></label>
+    <div class="sp-dialog-actions"><button class="sp-btn sp-secondary" type="button" data-close autofocus>Not yet</button><button class="sp-btn sp-primary" type="button" id="sp-confirm-activate" disabled>Yes, activate now</button></div>
+    <p class="sp-dialog-demo">Interactive preview only. This will not activate a real eSIM.</p>
+  </dialog>
+
+  <dialog id="sp-gift" class="sp-dialog" aria-labelledby="sp-gift-title">
+    <button class="sp-dialog-close sp-icon-button" type="button" data-close aria-label="Close gifting"><span data-icon="x"></span></button>
+    <div class="sp-symbol" data-icon="gift"></div><p class="sp-eyebrow">Good things travel</p><h2 id="sp-gift-title">Give them a connection.</h2>
+    <p>Send the purchase code, not an activated eSIM. They can redeem it when they’re ready to travel.</p>
+    <div class="sp-gift-code"><span>Your gift</span><code data-current-code></code><small>Japan · 10 GB · 30 days <b>Sample plan</b></small></div>
+    <p class="sp-private"><span data-icon="lock"></span>Whoever has this code can redeem it. Share it privately.</p>
+    <button type="button" class="sp-btn sp-primary sp-wide" id="sp-copy-gift"><span data-icon="copy"></span>Copy gift message</button>
+    <button type="button" class="sp-link sp-wide sp-keep" data-close>Keep it for later instead</button>
+    <p class="sp-dialog-demo">Copying doesn’t send a message or activate the plan.</p>
+  </dialog>
+
+  <dialog id="sp-install-dialog" class="sp-dialog" aria-labelledby="sp-install-title">
+    <button class="sp-dialog-close sp-icon-button" type="button" data-close aria-label="Close installation"><span data-icon="x"></span></button>
+    <p class="sp-eyebrow">The next step</p><h2 id="sp-install-title">Put your eSIM on your phone.</h2>
+    <div class="sp-qr-demo"><span data-icon="qr"></span><b>DEMO PROFILE</b></div>
+    <p class="sp-install-warning">This is a preview, not an installable QR code. A real eSIM QR would appear here after successful activation.</p>
+    <dl class="sp-detail-list"><div><dt>Profile</dt><dd>OL-DEMO-2048</dd></div><div><dt>Plan</dt><dd>Japan · 10 GB · 30 days</dd></div><div><dt>Status</dt><dd>Active in this preview</dd></div></dl>
+    <button type="button" class="sp-btn sp-primary sp-wide" id="sp-open-guide">Open installation guide <span aria-hidden="true">→</span></button>
+    <p class="sp-dialog-demo">You can also find your eSIM and installation details in your account.</p>
+  </dialog>
+
+  <div class="sp-toast" id="sp-toast" role="status" hidden></div>
+  <textarea id="sp-copy-fallback" class="sp-copy-fallback" aria-label="Message to copy manually" readonly hidden></textarea>
+  <script type="module" src="/qa/start.js"></script>
+</body>
+</html>
