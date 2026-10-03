@@ -680,9 +680,9 @@ button.rd-step { width:100%; color:var(--ink); font-family:var(--ol-font-sans); 
       <div class="rd-startup-notice">
         <span class="rd-startup-lock"><i data-ic="lock"></i></span>
         <div class="rd-startup-copy"><span class="rd-startup-status">Not public yet</span><h3>A little longer. Then, full transparency.</h3><p>Revenue, margins and active users are staying locked while we get our public metrics ready. The results are coming very, very soon.</p></div>
-        <button type="button" class="rd-startup-toggle" id="rd-startup-toggle" aria-expanded="false" aria-controls="rd-startup-results"><span data-startup-toggle-label>Show results preview</span><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="m5 8 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button type="button" class="rd-startup-toggle" id="rd-startup-toggle" aria-expanded="true" aria-controls="rd-startup-results"><span data-startup-toggle-label>Hide results preview</span><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="m5 8 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       </div>
-      <div id="rd-startup-results" class="rd-startup-results" hidden>
+      <div id="rd-startup-results" class="rd-startup-results">
         <p class="rd-startup-preview-note">A look at what’s coming. The figures stay locked until we publish them.</p>
         <div class="rd-grid3">
           <article class="rd-metric is-locked">
@@ -708,7 +708,7 @@ button.rd-step { width:100%; color:var(--ink); font-family:var(--ol-font-sans); 
           </article>
         </div>
       </div>
-      <noscript><p class="rd-startup-preview-note">The public results are locked and coming very soon. Enable JavaScript to preview the dashboard layout.</p></noscript>
+      <noscript><p class="rd-startup-preview-note">The public results are locked and coming very soon. Enable JavaScript to hide or show this layout preview.</p></noscript>
     </div>
   </div>
 </section>
