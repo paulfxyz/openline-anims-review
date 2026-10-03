@@ -12,6 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Play:wght@700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/qa/typography.css">
   <link rel="stylesheet" href="/qa/start.css">
+  <link rel="stylesheet" href="/qa/start-profile.css">
 </head>
 <body class="sp-body">
   <a class="sp-skip" href="#sp-main">Skip to purchase code</a>
@@ -115,13 +116,14 @@
         <p class="sp-lead">Your plan has started. Your profile is ready to install<br class="sp-desktop"> on a compatible phone.</p>
         <article class="sp-profile" aria-label="Demo Openline eSIM profile">
           <div class="sp-profile-top"><span class="sp-wordmark">Openline</span><span class="sp-profile-state"><i></i>Active</span></div>
-          <div class="sp-profile-main"><div><span>Japan</span><h2>10 <small>GB</small></h2><p>30 days · Data only</p></div><span class="sp-profile-chip" data-icon="esim"></span></div>
+          <div class="sp-profile-main"><div><span id="sp-profile-label">Japan</span><h2>10 <small>GB</small></h2><p>30 days · Data only</p></div><span class="sp-profile-chip" data-icon="esim"></span></div>
           <div class="sp-profile-foot"><span>PROFILE <code>OL-DEMO-2048</code></span><span>4G / 5G</span></div>
         </article>
+        <p class="sp-profile-organised" id="sp-profile-organised" hidden></p>
         <div class="sp-active-note"><span data-icon="clock"></span><div><b>Your 30 days start now.</b><span>Demo validity ends <time id="sp-valid-until"></time>. This code can no longer be gifted.</span></div></div>
         <div class="sp-review-actions">
-          <button type="button" class="sp-btn sp-primary" id="sp-install"><span data-icon="qr"></span>View install instructions</button>
-          <a class="sp-btn sp-secondary" href="/qa/login"><span data-icon="user"></span>Go to my account</a>
+          <button type="button" class="sp-btn sp-primary" id="sp-install"><span data-icon="qr"></span>Set up my eSIM <span aria-hidden="true">→</span></button>
+          <button type="button" class="sp-btn sp-secondary" id="sp-organise"><span data-icon="folder"></span>Label &amp; folder</button>
         </div>
         <button class="sp-link sp-details-link" type="button" id="sp-details">View eSIM details</button>
       </section>
@@ -131,7 +133,7 @@
     <details class="sp-demo-controls">
       <summary>Preview controls <span>Try the different states</span></summary>
       <div><label>Code response<select id="sp-scenario"><option value="ready">Ready to activate</option><option value="not-found">Code not found</option><option value="used">Already activated</option><option value="network">Connection error</option><option value="activation-error">Activation failure</option></select></label><button type="button" class="sp-btn sp-secondary" id="sp-reset">Reset preview</button></div>
-      <p>All plan details and the eSIM profile are fictional. No code is sent to Openline, stored persistently, redeemed, or activated.</p>
+      <p>All plan details and the eSIM profile are fictional. No purchase code is sent to Openline, stored persistently, redeemed, or activated. A label and folder can be saved in this browser tab for the demo, not to a real account.</p>
     </details>
   </main>
 
@@ -163,14 +165,84 @@
     <p class="sp-dialog-demo">Copying doesn’t send a message or activate the plan.</p>
   </dialog>
 
-  <dialog id="sp-install-dialog" class="sp-dialog" aria-labelledby="sp-install-title">
-    <button class="sp-dialog-close sp-icon-button" type="button" data-close aria-label="Close installation"><span data-icon="x"></span></button>
-    <p class="sp-eyebrow">The next step</p><h2 id="sp-install-title">Put your eSIM on your phone.</h2>
-    <div class="sp-qr-demo"><span data-icon="qr"></span><b>DEMO PROFILE</b></div>
-    <p class="sp-install-warning">This is a preview, not an installable QR code. A real eSIM QR would appear here after successful activation.</p>
-    <dl class="sp-detail-list"><div><dt>Profile</dt><dd>OL-DEMO-2048</dd></div><div><dt>Plan</dt><dd>Japan · 10 GB · 30 days</dd></div><div><dt>Status</dt><dd>Active in this preview</dd></div></dl>
-    <button type="button" class="sp-btn sp-primary sp-wide" id="sp-open-guide">Open installation guide <span aria-hidden="true">→</span></button>
-    <p class="sp-dialog-demo">You can also find your eSIM and installation details in your account.</p>
+  <dialog id="sp-install-dialog" class="sp-dialog sp-profile-dialog" aria-labelledby="sp-install-title">
+    <button class="sp-dialog-close sp-icon-button" type="button" data-close aria-label="Close eSIM setup"><span data-icon="x"></span></button>
+    <header class="spf-header"><p class="sp-eyebrow">Your connection, ready to go <span class="sp-demo-tag">Demo profile</span></p><h2 id="sp-install-title" tabindex="-1">Your eSIM details.</h2><p id="spf-subtitle">Scan the QR or use the manual details. Both belong to the same profile.</p></header>
+    <nav class="spf-nav" aria-label="Finish your eSIM setup">
+      <button type="button" data-profile-step="details" aria-current="step"><span>1</span>eSIM details</button>
+      <button type="button" data-profile-step="setup"><span>2</span>Setup &amp; connect</button>
+      <button type="button" data-profile-step="organise"><span>3</span>Make it yours</button>
+    </nav>
+    <div class="spf-content">
+      <section id="spf-details" aria-label="eSIM installation details">
+        <div class="spf-detail-grid">
+          <div class="spf-qr-card">
+            <span class="spf-mini-plan"><span class="sp-japan" aria-hidden="true"></span><span><b>Japan</b><small>10 GB · 30 days</small></span></span>
+            <div class="spf-qr"><img src="/qa/assets/start-demo-qr.png" width="224" height="224" alt="Demonstration QR code. It contains a QA notice, not an installable eSIM."></div>
+            <b class="spf-qr-caption">Your eSIM QR code</b>
+            <span class="spf-qr-fine">Demo only. Scanning shows a preview notice.</span>
+            <a class="sp-link" href="/qa/assets/start-demo-qr.png" download="openline-demo-esim-qr.png">Download demo QR <span aria-hidden="true">↓</span></a>
+          </div>
+          <div class="spf-manual">
+            <h3>Prefer to enter it manually?</h3><p>Use the profile details below, not your original purchase code.</p>
+            <div class="spf-field"><label>SM-DP+ address</label><div><code data-profile-value="smdp"></code><button type="button" class="sp-icon-button" data-copy-profile="smdp" aria-label="Copy SM-DP+ address"><span data-icon="copy"></span></button></div></div>
+            <div class="spf-field"><label>Activation code</label><div><code data-profile-value="activation"></code><button type="button" class="sp-icon-button" data-copy-profile="activation" aria-label="Copy eSIM activation code"><span data-icon="copy"></span></button></div></div>
+            <div class="spf-confirmation"><span>Confirmation code</span><b>Not required for this sample</b></div>
+            <details class="spf-string"><summary>Full activation string <span>For phones that ask for one code</span></summary><div class="spf-field"><div><code data-profile-value="lpa"></code><button type="button" class="sp-icon-button" data-copy-profile="lpa" aria-label="Copy full activation string"><span data-icon="copy"></span></button></div></div></details>
+            <p class="spf-private"><span data-icon="lock"></span>Real installation credentials are private. Only share them with the person using this eSIM.</p>
+          </div>
+        </div>
+        <div class="spf-identifiers">
+          <div><span>ICCID <small>eSIM identifier</small></span><b><code data-profile-value="iccid"></code><button type="button" class="sp-icon-button" data-copy-profile="iccid" aria-label="Copy ICCID"><span data-icon="copy"></span></button></b></div>
+          <div><span>Openline profile ID</span><b><code data-profile-value="id"></code><button type="button" class="sp-icon-button" data-copy-profile="id" aria-label="Copy profile ID"><span data-icon="copy"></span></button></b></div>
+          <div><span>EID <small>Device eSIM-chip identifier</small></span><b class="spf-unlinked">No device linked in this preview</b></div>
+        </div>
+        <p class="spf-demo-note"><b>Preview credentials.</b> The QR is intentionally not installable, the SM-DP+ domain is fictional, and the ICCID is a sample. No phone is linked or service provisioned.</p>
+        <div class="spf-actions"><span>Plan activated. Next, put it on your phone.</span><button type="button" class="sp-btn sp-primary" data-profile-next="setup">Setup &amp; connect <span aria-hidden="true">→</span></button></div>
+      </section>
+
+      <section id="spf-setup" aria-label="Setup and connection instructions" hidden>
+        <div class="spf-device-picker" role="group" aria-label="Choose your phone">
+          <button type="button" data-profile-device="iphone" aria-pressed="true"><span data-icon="phone"></span>iPhone</button>
+          <button type="button" data-profile-device="samsung" aria-pressed="false">Samsung</button>
+          <button type="button" data-profile-device="pixel" aria-pressed="false">Pixel / Android</button>
+        </div>
+        <div class="spf-guide-grid">
+          <article class="spf-guide-card"><span class="spf-guide-icon" data-icon="qr"></span><p class="sp-eyebrow">Install the profile</p><h3>Start on Wi-Fi.</h3><ol id="spf-install-steps"></ol><button type="button" class="sp-link" data-profile-next="details">Show my QR &amp; manual details</button></article>
+          <article class="spf-guide-card"><span class="spf-guide-icon is-connect" data-icon="signal"></span><p class="sp-eyebrow">Connect in your destination</p><h3>Make Openline your data line.</h3><ol id="spf-connect-steps"></ol><p class="spf-guide-note">Your plan’s validity is already running. Installing or connecting does not restart the clock.</p></article>
+        </div>
+        <a class="spf-full-guide" href="/qa/installation-guide#ig-install-steps" target="_blank" rel="noopener"><span data-icon="book"></span><span><b>Our full setup &amp; connection guide</b><small>The existing guide and animation, in a new tab.</small></span><span aria-hidden="true">↗︎</span></a>
+        <p class="spf-setup-note">These steps follow the existing Openline help guides. Menu names vary by device and OS. This preview does not install an eSIM or detect whether your phone is connected.</p>
+        <div class="spf-actions"><button type="button" class="sp-link" data-profile-next="details">← eSIM details</button><button type="button" class="sp-btn sp-primary" data-profile-next="organise">Label &amp; organise <span aria-hidden="true">→</span></button></div>
+      </section>
+
+      <section id="spf-organise" aria-label="Label and folder" hidden>
+        <div class="spf-organise-grid">
+          <div class="spf-mini-profile"><span class="sp-wordmark">Openline</span><span class="spf-mini-chip" data-icon="esim"></span><b id="spf-label-preview">Japan eSIM</b><span>Japan · 10 GB · 30 days</span><small><span data-icon="folder"></span><span id="spf-folder-preview">Unfiled</span></small></div>
+          <form id="spf-organise-form" novalidate>
+            <label for="spf-label">Give this eSIM a label <span>Optional</span></label>
+            <input id="spf-label" maxlength="48" placeholder="e.g. Tokyo trip" autocomplete="off" aria-describedby="spf-label-help">
+            <p id="spf-label-help">A name for your Openline account. This won’t rename the line in your phone’s settings.</p>
+            <label for="spf-folder">Keep it in a folder <span>Optional</span></label>
+            <select id="spf-folder"><option value="">Unfiled</option><option value="folder:Travel">Travel</option><option value="folder:Personal">Personal</option><option value="folder:Work">Work</option><option value="__new">+ Create a folder</option></select>
+            <div id="spf-new-folder-wrap" hidden><label for="spf-new-folder">New folder name</label><input id="spf-new-folder" maxlength="32" autocomplete="off" placeholder="e.g. Autumn adventures"></div>
+            <p>Example folders for this preview. Choose one or create your own.</p>
+            <p id="spf-form-error" class="sp-error" role="alert" hidden></p>
+            <div class="spf-form-actions"><button type="button" class="sp-link" data-profile-next="setup">← Setup &amp; connect</button><button type="submit" class="sp-btn sp-primary"><span data-icon="check"></span>Save profile</button></div>
+          </form>
+        </div>
+        <p class="spf-demo-note">Only this label and folder are saved in this browser tab. No installation credentials or purchase code are stored, and no real account is changed.</p>
+      </section>
+
+      <section id="spf-done" aria-label="Profile organisation complete" hidden>
+        <div class="spf-finish-icon" data-icon="check"></div>
+        <p class="spf-finish-lead">One purchase code.<br>One connection of your own.</p>
+        <div class="spf-saved-card"><span data-icon="esim"></span><div><b id="spf-saved-label"></b><span id="spf-saved-folder"></span></div><small>Japan · 10 GB</small></div>
+        <p id="spf-save-status" role="status"></p>
+        <div class="spf-finish-actions"><a class="sp-btn sp-primary" href="/qa/login"><span data-icon="user"></span>Go to my account <span aria-hidden="true">→</span></a><button type="button" class="sp-link" data-profile-next="organise">Edit label or folder</button><button type="button" class="sp-link" data-profile-next="details">View eSIM details</button></div>
+        <p class="spf-demo-note">The purchase-code activation journey is complete in this preview. The account button opens the existing sign-in preview; live account saving and provisioning are not connected.</p>
+      </section>
+    </div>
   </dialog>
 
   <div class="sp-toast" id="sp-toast" role="status" hidden></div>

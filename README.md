@@ -193,6 +193,32 @@ use the shared native UI stack, Openline's orange/ink palette and the live site'
   The code format and plan/profile data are demonstration fixtures, not verified production validation rules.
 - Accessible native dialogs, keyboard handling, reduced-motion treatment, and mobile layouts.
 
+#### Final profile handoff
+
+- `qa/start-profile.js` / `start-profile.css` extend the final stage into **eSIM details → Setup & connect
+  → Make it yours → account handoff**. The success card's primary action starts this flow; details and
+  label/folder remain directly accessible and editable.
+- Details show a QR image, copyable SM-DP+ address, activation code, full LPA string, ICCID and internal
+  Openline profile ID. The sample does not require a confirmation code. EID is explicitly unlinked:
+  it belongs to the device's eSIM chip, not the subscription profile; see the
+  [GSMA consumer eSIM architecture](https://www.gsma.com/solutions-and-impact/technologies/esim/wp-content/uploads/2024/09/SGP.21-v2.6.pdf).
+- `qa/tools/start_demo_qr.py` generates a genuine QR image whose payload is a harmless QA notice, not
+  an LPA installation string. The separately displayed manual credentials use the reserved `.invalid`
+  domain and an explicit NOT-INSTALLABLE token. All IDs are fictional; no real profile can be installed.
+- Device-specific instruction summaries use existing KB articles 17/18/20/21/22 and article 8's
+  connection checklist. The full guide opens `/qa/installation-guide#ig-install-steps` in a new tab,
+  preserving its layout and animation. Manual iPhone installation terminology is consistent with
+  [Apple's setup guidance](https://support.apple.com/en-gb/118669). The prototype keeps the requested
+  immediate-validity rule separate from installing/enabling the line at the destination.
+- An optional label, existing sample folder or newly named folder update the visible profile. Only
+  `{label, folder}` is session-stored under `openline-qa-profile-organisation-v1`, never codes,
+  installation credentials or the plan state. Storage failure is disclosed and retains an in-memory
+  result. Reset preview clears this demo organisation state.
+- The completion screen shows the saved label/folder and links to the existing `/qa/login` sign-in
+  preview. It does not claim real account saving, successful phone installation or network connection.
+- The final handoff is recorded separately in the global QA manifest/export. This completes the
+  review prototype of the purchase-code activation journey; no `/delivery` or account backend was added.
+
 ### Contact and installation refinements
 
 - Contact redesign: WhatsApp `https://wa.me/15554842461`, Instagram `askopenline`,

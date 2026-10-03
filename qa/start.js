@@ -3,14 +3,16 @@
    Checking, confirmation and activation are separate state transitions.
    Purchase-code values live in memory only, never storage or URLs. */
 import { glyphSVG } from './icons-lib.js';
+import { initProfileFlow } from './start-profile.js';
 import './support/support.js';
 
 const $ = (selector) => document.querySelector(selector);
 const EXAMPLE = 'GAZE19-MULCH29-NYMPH13';
 const CODE_FORMAT = /^[A-Z]{3,10}\d{2}(?:-[A-Z]{3,10}\d{2}){2}$/;
 const copyGlyph = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2.5"/><path d="M16 8V5.5A1.5 1.5 0 0 0 14.5 4h-9A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16H8"/></svg>';
+const folderGlyph = '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8V6a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><path d="M3 10h18"/></svg>';
 document.querySelectorAll('[data-icon]').forEach(el => {
-  el.innerHTML = el.dataset.icon === 'copy' ? copyGlyph : glyphSVG(el.dataset.icon, { size: 24, sw: 1.8 });
+  el.innerHTML = el.dataset.icon === 'copy' ? copyGlyph : el.dataset.icon === 'folder' ? folderGlyph : glyphSVG(el.dataset.icon, { size: 24, sw: 1.8 });
 });
 document.querySelectorAll('.sp-key svg path').forEach(path => path.setAttribute('pathLength', '1'));
 
@@ -190,24 +192,31 @@ async function activate() {
   setState('success');
 }
 
-async function copyText(text, origin) {
+async function copyText(text, origin, successMessage = 'Copied. Your purchase code is still unused.') {
   const dialog = origin.closest('dialog');
-  const feedback = (message) => {
+  const feedback = (message, failed = false) => {
     if (!dialog) return announce(message);
     let p = dialog.querySelector('.sp-copy-feedback');
-    if (!p) { p = document.createElement('p'); p.className = 'sp-copy-feedback'; p.setAttribute('role', 'status'); origin.after(p); }
+    if (!p) {
+      p = document.createElement('p'); p.className = 'sp-copy-feedback'; p.setAttribute('role', 'status');
+      const profileSection = dialog.querySelector('.spf-content > section:not([hidden])');
+      if (profileSection) profileSection.prepend(p); else origin.after(p);
+    }
     p.textContent = message;
+    p.classList.toggle('is-error', failed);
   };
   try {
     if (!navigator.clipboard?.writeText) throw new Error('Clipboard unavailable');
     await navigator.clipboard.writeText(text);
-    feedback('Copied. Your purchase code is still unused.');
+    feedback(successMessage);
+    return true;
   } catch {
     const fallback = $('#sp-copy-fallback');
     (dialog || document.body).append(fallback);
     fallback.classList.toggle('is-inline', !!dialog);
     fallback.value = text; fallback.hidden = false; fallback.focus(); fallback.select();
-    feedback('Clipboard access is unavailable. Copy the selected text below.');
+    feedback('Clipboard access is unavailable. Copy the selected text below.', true);
+    return false;
   }
 }
 
@@ -216,6 +225,7 @@ function reset() {
   dialogs.forEach(d => { if (d.open) d.close(); });
   currentCode = '';
   activatedAt = null;
+  profileFlow.reset();
   input.value = '';
   $('#sp-clear').hidden = true;
   $('#sp-review-error').hidden = true;
@@ -250,19 +260,10 @@ $('#sp-copy-gift').addEventListener('click', e => {
   if (state !== 'review' || activatedAt) return;
   copyText(`A little connection for your next trip.\n\nYour Openline purchase code: ${currentCode}\n\nRedeem it at https://openline.com/start when you’re ready to travel. Activating starts the plan immediately, so wait if your trip is later.\n\nThis is an example gift message from the Openline QA preview, not a real purchase.`, e.currentTarget);
 });
-function openProfile(install) {
-  if (state !== 'success' || !activatedAt) return;
-  $('#sp-install-title').textContent = install ? 'Put your eSIM on your phone.' : 'Your eSIM details.';
-  $('.sp-qr-demo').hidden = !install;
-  $('.sp-install-warning').hidden = !install;
-  openDialog($('#sp-install-dialog'));
-}
-$('#sp-install').addEventListener('click', () => openProfile(true));
-$('#sp-details').addEventListener('click', () => openProfile(false));
-$('#sp-open-guide').addEventListener('click', () => {
-  $('#sp-install-dialog').close();
-  window.Openline.open('kb', { q: 'install iPhone eSIM' });
-});
+const profileFlow = initProfileFlow({ canOpen: () => state === 'success' && !!activatedAt, openDialog, copyText });
+$('#sp-install').addEventListener('click', () => profileFlow.open());
+$('#sp-details').addEventListener('click', () => profileFlow.open());
+$('#sp-organise').addEventListener('click', () => profileFlow.open('organise'));
 
 dialogs.forEach(dialog => {
   dialog.addEventListener('keydown', event => {
