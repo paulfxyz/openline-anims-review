@@ -378,6 +378,9 @@ svg .marker { transition: transform .5s cubic-bezier(.2,.7,.3,1); }
 .tile .frame.tone-orange { background: linear-gradient(135deg,#FF5314,#F0651F 55%,#FF8A4C); }
 .bd-stage.tone-orange { background: linear-gradient(135deg,#FF5314,#F0651F 55%,#FF8A4C);
   border-color: rgba(255,255,255,.24); }
+/* inside the orange box the stage takes the box's own orange — a second,
+   different orange gradient behind the artwork read as a mismatch */
+.bd-box .bd-stage.tone-orange { background: transparent; border-color: rgba(255,255,255,.3); }
 .score.acc i.f { background: var(--acc); }
 .matrix.acc .mrow:not(.head):hover { background: color-mix(in srgb, var(--acc) 10%, transparent); }
 .matrix.acc .mrow.on { background: color-mix(in srgb, var(--acc) 16%, transparent); }

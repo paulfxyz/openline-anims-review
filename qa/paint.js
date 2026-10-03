@@ -6,7 +6,7 @@
    and "As shipped" restores them exactly.
    ══════════════════════════════════════════════════════════════════════ */
 
-import { recolor } from './recolor.js';
+import { recolor, hexToHue } from './recolor.js';
 
 const ATTRS = ['style', 'fill', 'stroke', 'stop-color', 'flood-color', 'lighting-color', 'color', 'values', 'from', 'to'];
 const SEL = ATTRS.map((a) => `[${a}]`).join(',');
@@ -102,3 +102,26 @@ export function watchMutations(root, getMap, accept) {
   mo.observe(root, { subtree: true, attributes: true, attributeFilter: ATTRS });
   return mo;
 }
+
+/* Chrome: the saturated solids of the replaced hue (the eSIM chip, the
+   module) take a brushed-metal gradient instead of a flat grey. Marked
+   before the recolour pass, while their hue can still be read. */
+export function chromeSheen(el) {
+  el.querySelectorAll('svg').forEach((svg, si) => {
+    const hits = [...svg.querySelectorAll('rect, circle, path, ellipse, polygon')].filter((n) => {
+      const f = (n.getAttribute('fill') || '').trim();
+      if (!/^#[0-9a-f]{6}$/i.test(f)) return false;
+      const { L, C, H } = hexToHue(f);
+      return C > 0.12 && H > 270 && H < 320 && L > 0.35 && L < 0.7;
+    });
+    if (!hits.length) return;
+    const id = `qa-chrome-${Math.random().toString(36).slice(2, 8)}-${si}`;
+    const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+    defs.innerHTML = `<linearGradient id="${id}" x1="0" y1="0" x2="0.35" y2="1">
+      <stop offset="0" stop-color="#B9BEC6"/><stop offset="0.42" stop-color="#6B717A"/>
+      <stop offset="0.5" stop-color="#4E545C"/><stop offset="0.78" stop-color="#7A8089"/><stop offset="1" stop-color="#3D4249"/></linearGradient>`;
+    svg.insertBefore(defs, svg.firstChild);
+    hits.forEach((n) => n.setAttribute('fill', `url(#${id})`));
+  });
+}
+

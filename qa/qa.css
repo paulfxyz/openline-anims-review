@@ -335,3 +335,4 @@ body.qa-bare [data-qa-slot] { outline: none !important; }
 /* boards.js renders its overview into these hosts on import and un-hides
    #overview; they must never show on a /qa page */
 #overview, #boards, #nav-pages, #nav-sections { display: none !important; }
+.qa-ident-sel { font-style: normal; font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: #fff; background: #16A34A; padding: 2px 8px; border-radius: 999px; margin-left: 6px; vertical-align: 2px; }

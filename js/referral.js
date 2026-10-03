@@ -271,7 +271,9 @@ export const linkFlight = {
         <stop offset="100%" stop-color="${W}" stop-opacity="0"/>
       </radialGradient>
     </defs>
-    <rect x="0" y="0" width="${RW}" height="${RH}" fill="url(#wd-${uid})"/>
+    <!-- the field runs well past the frame: on the 640 × 460 review board the
+         drawing is pillarboxed, and the dots carry on into the sides -->
+    <rect x="-240" y="-60" width="${RW + 480}" height="${RH + 120}" fill="url(#wd-${uid})"/>
     <circle cx="300" cy="262" r="250" fill="url(#wb-${uid})"/>
 
     ${mono(44, 62, 'HOW THE US$5 REACHES YOU BOTH', { size: 11, fill: W, op: 0.62 })}

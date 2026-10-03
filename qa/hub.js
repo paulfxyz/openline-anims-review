@@ -5,7 +5,7 @@ import {
   PAGES, STEPS, loadBase, loadState, saveState, optOf, baseOpt, resetPicks,
   themeObj, themeLabel, renderOption, exportMD, makeMapper, esc, styleFor,
 } from './core.js';
-import { paintTree, watchMutations } from './paint.js';
+import { paintTree, watchMutations, chromeSheen } from './paint.js';
 import { renderThemeControls } from './themeui.js';
 
 const TONE_BG = {
@@ -59,7 +59,7 @@ function renderPages() {
       </a>`;
     }).join('');
     const ident = st ? `<span class="hb-ident${stOn ? '' : ' is-off'}" title="${esc(st.note)}">
-      <span class="qa-sw-dots">${st.sw.map((c) => `<i style="background:${c}"></i>`).join('')}</span>${esc(st.name)}${stOn ? '' : ' · off'}</span>` : '';
+      <span class="qa-sw-dots">${st.sw.map((c) => `<i style="background:${c}"></i>`).join('')}</span>${esc(st.name)}${st.selected ? ' · selected' : ''}${stOn ? '' : ' · off'}</span>` : '';
     return `<article class="hb-page" data-slug="${p.slug}">
       <div class="hb-pagehead">
         <span class="hb-pn">${String(pi + 1).padStart(2, '0')}</span>
@@ -83,7 +83,9 @@ function paintPages() {
   const global = makeMapper(themeObj(state));
   pagesBox.querySelectorAll('.hb-page').forEach((art) => {
     const st = styleFor(art.dataset.slug);
-    const m = st && state.pageStyle[art.dataset.slug] !== false ? makeMapper(st) : global;
+    const on = st && state.pageStyle[art.dataset.slug] !== false;
+    const m = on ? makeMapper(st) : global;
+    if (on && st.sheen) chromeSheen(art.querySelector('.hb-picks') || art);
     paintTree(art.querySelector('.hb-picks') || art, m);
   });
 }

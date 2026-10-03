@@ -152,5 +152,13 @@
    "name": "What You Actually Get",
    "note": ""
   }
+ },
+ "pageStyles": {
+  "iot": {
+   "id": "ps-iot",
+   "name": "Chrome",
+   "selected": true,
+   "at": "2026-10-03 18:30"
+  }
  }
 }

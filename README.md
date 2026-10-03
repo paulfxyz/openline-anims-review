@@ -138,4 +138,7 @@ tick in the nav, a highlighted matrix row, and makes it the default on load.
   Affiliate). Live badges beside a slot step aside when a proposal brings its own; two top-right badges
   share one row.
 - **IoT identity** Chrome: purple/indigo become steel and graphite (`scope: 'families'` in `qa/recolor.js`),
-  saturated solids take a brushed-metal gradient (`sheen`).
+  saturated solids take a brushed-metal gradient (`sheen`). Marked `selected: true` — the default, recorded
+  in `qa/selections.json` (`pageStyles`), shown as Selected in the panel, hub and export, and restored by Reset.
+- Referral board (`/` → Home › Refer a friend box): option 3's dotted field runs past its 576 × 520 frame so
+  the 640 × 460 board stage has no bands, and inside the orange box the stage takes the box's own orange.

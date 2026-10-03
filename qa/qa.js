@@ -11,9 +11,8 @@ import {
   PAGES, STEPS, loadBase, loadState, saveState, optOf, baseOpt, resetPicks,
   themeObj, themeLabel, renderOption, exportMD, makeMapper, esc, styleFor,
 } from './core.js';
-import { paintSiteCss, paintTree, watchMutations } from './paint.js';
+import { paintSiteCss, paintTree, watchMutations, chromeSheen } from './paint.js';
 import { renderThemeControls } from './themeui.js';
-import { hexToHue } from './recolor.js';
 
 const slug = document.body.dataset.qaPage;
 const PAGE = PAGES.find((p) => p.slug === slug);
@@ -133,28 +132,6 @@ function rowPills(host, el) {
   if (!wa || wa + wb + 8 > W * 0.72) return;
   b.style.top = a.style.top;
   b.style.right = `${parseFloat(a.style.right) + wa + 8}px`;
-}
-
-/* Chrome: the saturated solids of the replaced hue (the eSIM chip, the
-   module) take a brushed-metal gradient instead of a flat grey. Marked
-   before the recolour pass, while their hue can still be read. */
-function chromeSheen(el) {
-  el.querySelectorAll('svg').forEach((svg, si) => {
-    const hits = [...svg.querySelectorAll('rect, circle, path, ellipse, polygon')].filter((n) => {
-      const f = (n.getAttribute('fill') || '').trim();
-      if (!/^#[0-9a-f]{6}$/i.test(f)) return false;
-      const { L, C, H } = hexToHue(f);
-      return C > 0.12 && H > 270 && H < 320 && L > 0.35 && L < 0.7;
-    });
-    if (!hits.length) return;
-    const id = `qa-chrome-${Math.random().toString(36).slice(2, 8)}-${si}`;
-    const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
-    defs.innerHTML = `<linearGradient id="${id}" x1="0" y1="0" x2="0.35" y2="1">
-      <stop offset="0" stop-color="#B9BEC6"/><stop offset="0.42" stop-color="#6B717A"/>
-      <stop offset="0.5" stop-color="#4E545C"/><stop offset="0.78" stop-color="#7A8089"/><stop offset="1" stop-color="#3D4249"/></linearGradient>`;
-    svg.insertBefore(defs, svg.firstChild);
-    hits.forEach((n) => n.setAttribute('fill', `url(#${id})`));
-  });
 }
 
 /* ── Context fit ───────────────────────────────────────────────────
@@ -463,7 +440,7 @@ function renderIdent() {
   identBox.innerHTML = `
     <div class="qa-ident${on ? ' is-on' : ''}">
       <span class="qa-sw-dots qa-ident-dots">${STYLE.sw.map((c) => `<i style="background:${c}"></i>`).join('')}</span>
-      <span class="qa-ident-t"><b>${esc(STYLE.name)}</b><span>${esc(STYLE.note)}</span></span>
+      <span class="qa-ident-t"><b>${esc(STYLE.name)}${STYLE.selected ? ' <em class="qa-ident-sel">Selected</em>' : ''}</b><span>${esc(STYLE.note)}</span></span>
     </div>
     <label class="qa-check"><input type="checkbox" data-ident ${on ? 'checked' : ''}> Use this identity on ${esc(PAGE.title.replace(' — redesign', ''))}</label>`;
   identBox.querySelector('[data-ident]').addEventListener('change', (e) => {

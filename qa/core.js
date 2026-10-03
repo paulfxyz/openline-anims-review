@@ -81,9 +81,9 @@ export const PAGE_STYLES = {
     sw: ['#831843', '#DB2777', '#F472B6'],
     note: 'Hot magenta: energy and abundance for the no-limits page.' },
   iot: { id: 'ps-iot', name: 'Chrome', hex: '#6B7280', scope: 'families', families: ['purple', 'indigo'], floor: 0.012,
-    chroma: 0.06, keepStatus: true, sheen: true,
+    chroma: 0.06, keepStatus: true, sheen: true, selected: true,
     sw: ['#1F2329', '#6B7280', '#D1D5DB'],
-    note: 'Greyscale like the rest of the page: the purple accents become steel and graphite, the dark cell a neutral gunmetal. Green "online" states and the orange brand stay.' },
+    note: 'Selected. Greyscale like the rest of the page: the purple accents become steel and graphite, the dark cell a neutral gunmetal. Green "online" states and the orange brand stay.' },
   blog: { id: 'ps-blog', name: 'Newsprint', hex: '#111111', scope: 'all', chroma: 0, keepStatus: false, cls: 'qa-journal',
     sw: ['#111111', '#6B6B6B', '#FBFAF7'],
     note: 'Black and white, serif headlines, square corners, no drop shadows — an editorial voice for the blog.' },
@@ -134,6 +134,12 @@ export function loadState() {
   s.live = s.live || {};
   s.shared = s.shared || {};
   s.pageStyle = s.pageStyle || {};   // slug -> false when switched off
+  /* a newly selected identity starts on, even if it was switched off while
+     it was still a proposal */
+  s.selSeen = s.selSeen || {};
+  Object.keys(PAGE_STYLES).forEach((k) => {
+    if (PAGE_STYLES[k].selected && !s.selSeen[k]) { delete s.pageStyle[k]; s.selSeen[k] = 1; }
+  });
   s.theme = s.theme || { id: 'original' };
   if (s.outline == null) s.outline = true;
   if (s.drawer == null) s.drawer = false;   // closed: hero slots sit on the right
@@ -144,7 +150,12 @@ export function saveState(s) { localStorage.setItem(STORE, JSON.stringify(s)); }
 
 export const optOf = (state, key) => (state.picks[key] != null ? state.picks[key] : baseOpt(key));
 
-export function resetPicks(state) { state.picks = {}; state.notes = {}; state.live = {}; saveState(state); }
+export function resetPicks(state) {
+  state.picks = {}; state.notes = {}; state.live = {};
+  /* identities Paul has selected come back on with the picks */
+  Object.keys(PAGE_STYLES).forEach((k) => { if (PAGE_STYLES[k].selected) delete state.pageStyle[k]; });
+  saveState(state);
+}
 
 /* ── Theme ─────────────────────────────────────────────────────────── */
 
@@ -205,7 +216,7 @@ export function exportMD(state) {
     '',
     `**Colour theme:** ${themeLabel(state)}`,
     '',
-    `**Page identities:** ${Object.entries(PAGE_STYLES).map(([k, v]) => `${k} → ${v.name}${state.pageStyle[k] === false ? ' (off)' : ''}`).join(' · ')}`,
+    `**Page identities:** ${Object.entries(PAGE_STYLES).map(([k, v]) => `${k} → ${v.name}${v.selected ? ' (selected)' : ''}${state.pageStyle[k] === false ? ' (off)' : ''}`).join(' · ')}`,
     '',
     '| Page | Section | Board | Choice | Changed | Note |',
     '| --- | --- | --- | --- | --- | --- |',
