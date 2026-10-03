@@ -12,6 +12,7 @@ import { VARIANTS } from '/js/registry.js';
 import { ICONS } from '/js/icons.js';
 import { PRESETS, makeMapper, recolor } from './recolor.js';
 import { refineAnimation } from './animation-fixes.js';
+import { QA_CHANGES, changesMarkdown } from './change-log.js';
 
 export { PRESETS, makeMapper, recolor };
 
@@ -136,6 +137,7 @@ export function loadState() {
   try { s = JSON.parse(localStorage.getItem(STORE) || '{}'); } catch { s = {}; }
   s.picks = s.picks || {};
   s.notes = s.notes || {};
+  s.pageNotes = s.pageNotes || {};
   s.live = s.live || {};
   s.shared = s.shared || {};
   s.pageStyle = s.pageStyle || {};   // slug -> false when switched off
@@ -217,7 +219,7 @@ export function exportMD(state) {
   return [
     '# Openline QA — selections in context',
     '',
-    `Exported ${stamp()} from /qa · ${changed} change${changed === 1 ? '' : 's'} since the /choice file`,
+    `Exported ${stamp()} from /qa · ${changed} animation-pick change${changed === 1 ? '' : 's'} since /choice · ${QA_CHANGES.length} recorded non-pick refinements`,
     '',
     `**Colour theme:** ${themeLabel(state)}`,
     '',
@@ -227,8 +229,15 @@ export function exportMD(state) {
     '| --- | --- | --- | --- | --- | --- |',
     ...rows,
     '',
+    changesMarkdown(),
+    '## Page-level review notes',
+    '',
+    ...(Object.entries(state.pageNotes || {}).filter(([,v]) => v.trim()).length
+      ? Object.entries(state.pageNotes || {}).filter(([,v]) => v.trim()).map(([k,v]) => `### /qa/${k}\n${v}\n`)
+      : ['No page-level notes yet.']),
+    '',
     '<!-- machine-readable, do not edit by hand',
-    JSON.stringify({ v: 2, src: 'qa', at: stamp(), pageStyles: Object.fromEntries(Object.keys(PAGE_STYLES).map((k) => [k, state.pageStyle[k] !== false])), theme: { id: t.id, hex: t.hex || null, scope: t.scope || null, keepStatus: t.keepStatus !== false }, picks }),
+    JSON.stringify({ v: 3, src: 'qa', at: stamp(), pageStyles: Object.fromEntries(Object.keys(PAGE_STYLES).map((k) => [k, state.pageStyle[k] !== false])), theme: { id: t.id, hex: t.hex || null, scope: t.scope || null, keepStatus: t.keepStatus !== false }, picks, sharedSlots: state.shared, pageNotes: state.pageNotes || {}, refinements: QA_CHANGES }),
     '-->',
     '',
   ].join('\n');

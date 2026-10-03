@@ -34,7 +34,7 @@
     <ol class="hb-how">
       <li><b>Open a page.</b> Every animated slot carries a black label with the option number.</li>
       <li><b>Tune it.</b> Click a label or press <kbd>Q</kbd> for the panel: swap the option, compare against what ships today, recolour the site, leave a note.</li>
-      <li><b>Send it back.</b> “Copy for Computer” puts everything — picks, notes, colour — on your clipboard.</li>
+      <li><b>Send it back.</b> “Copy for Computer” includes picks, notes, colours and all recorded layout, interaction and tooling refinements.</li>
     </ol>
   </section>
 
@@ -79,10 +79,17 @@
     </div>
   </section>
 
-  <section class="hb-sec">
+  <section class="hb-sec" id="qa-changes">
+    <div class="hb-sechead"><h2>Beyond animations</h2><p>Everything added or refined in /qa, including the extra flows. These records are included in the export below.</p></div>
+    <div class="qa-changes-toolbar"><label>Show <select id="hb-changes-page" aria-label="Filter changes by page"></select></label><span id="hb-changes-count"></span></div>
+    <div class="qa-change-grid" id="hb-changes-list"></div>
+    <label class="qa-page-note" hidden>Page-level review notes<textarea id="hb-page-note" rows="3" placeholder="Layout, copy, interaction or handoff notes for this page…"></textarea></label>
+  </section>
+
+  <section class="hb-sec" id="qa-export">
     <div class="hb-sechead">
       <h2>Send it back</h2>
-      <p>Paste this into the chat. It carries every pick, every note and the colour theme.</p>
+      <p>One complete QA report: animation picks, section and page notes, colour settings, implemented changes and prototype boundaries.</p>
     </div>
     <div class="hb-export">
       <textarea id="hb-md" readonly spellcheck="false"></textarea>

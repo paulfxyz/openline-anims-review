@@ -121,9 +121,9 @@ tick in the nav, a highlighted matrix row, and makes it the default on load.
   16 content block types (eSIM card, steps, QR, choice, toggle, rating, image, divider…), cover images
   (upload or `qa/modal-illus.js` illustrations), 0–2 CTAs plus a text link; preview over a real page or a phone.
 - **Support chat** `/qa/chat`: capture of /all-countries; the support badge opens a full-screen chat
-  (`qa/support/chat.js`) — sample history, composer with files (pick, drop, paste), voice notes (MediaRecorder,
+  (`qa/support/chat.js`) — fresh guest welcome, local history, composer with files (pick, drop, paste), voice notes (MediaRecorder,
   demo fallback), simulated replies, and a collapsible panel: WhatsApp / Instagram / Messenger / email,
-  "Ask an AI about us" (ChatGPT, Claude, Perplexity, Gemini, Grok, Copilot, Le Chat, prefilled), KB and
+  "Ask an AI about us" (ChatGPT, Claude, Perplexity, Gemini, Grok, Copilot, Le Chat, clipboard handoff), KB and
   compatibility. The badge opens it on every /qa page.
 - **Help modals** `/qa/kb`: the knowledge-base and device-compatibility modals (`qa/support/support.js`) on the
   real open-source data (`qa/data/kb-articles.json` from openline-kb, `qa/data/devices.js` from openline-check;
@@ -192,3 +192,54 @@ use the shared native UI stack, Openline's orange/ink palette and the live site'
 - No real redemption/provisioning/account API calls, no persistent code storage and no installable eSIM QR.
   The code format and plan/profile data are demonstration fixtures, not verified production validation rules.
 - Accessible native dialogs, keyboard handling, reduced-motion treatment, and mobile layouts.
+
+### Contact and installation refinements
+
+- Contact redesign: WhatsApp `https://wa.me/15554842461`, Instagram `askopenline`,
+  Messenger / Facebook `askopenline`, email `ask@openline.com`. A separate hotline card sits below
+  24/7 Global Support, labelled **Coming soon**, displaying `+1 (8) 123 - ONLINE` without a `tel:` action.
+- All three support-process steps are keyboard-clickable and seek the SVG's own timeline. The
+  loop continues; pressed states follow the current scene. Reduced motion keeps manual seeking.
+- `qa/tools/installation_preflight.py` replaces only the two blocks in the marked installation
+  screenshot: purchase-code/profile explainer and four-step roadmap. Source is
+  `qa/redesign/installation-preflight.html`; CSS is scoped `.igp-*`. The rest of the captured HTML
+  and selected installation animation are preserved. Runtime only adds section-anchor IDs.
+- Content handoff issue: the existing installation guide says activate at destination; the requested
+  /start prototype warns that validity starts immediately. Product must resolve this policy distinction
+  before production rather than silently changing unrelated guide copy during a targeted design edit.
+
+### Chat refinements and safe prototype boundaries
+
+- Collapsed sidebar is one full-height button, including its arrow and decorative channel icons.
+  Expanded arrow and header icon also toggle it. Hidden content is inert and expanded state is exposed.
+- Nine editable AI prompts (the previous four plus phone readiness, data estimate, multi-country
+  travel, no-connection troubleshooting, gifting/activation). Every provider opens a native handoff
+  dialog and attempts clipboard copying. Success is only stated after the promise resolves;
+  denied permission leaves selectable text and a retry. No query-string prompt or chat transcript is sent.
+- Official web interface launch destinations checked on 2026-10-03:
+  [ChatGPT](https://chatgpt.com/), [Claude](https://claude.ai/new),
+  [Perplexity](https://www.perplexity.ai/), [Gemini](https://gemini.google.com/app),
+  [Grok](https://grok.com/), [Copilot](https://copilot.microsoft.com/),
+  [Le Chat](https://chat.mistral.ai/chat). Standard HTTPS links defer any installed-app handling to the OS;
+  an installed app cannot be reliably detected or forcibly launched from this browser preview.
+- Provider favicons/logos are stored locally under `qa/assets/ai/`. ChatGPT, Claude, Gemini, Grok and
+  Copilot use their published icon assets; Perplexity and Le Chat use Google's cached site favicon
+  because those public source pages blocked retrieval. These identify external services, not Openline partners.
+- “Clear chat” requires confirmation, defaults to keeping the chat, explains intended live deletion /
+  issue-solved semantics, and explicitly discloses that this prototype only clears local data.
+  No server deletion API or actual ticket closure is connected. Clearing cancels pending replies,
+  stops recordings/playback, releases attachments and returns to an animated guest welcome with Gary's greeting.
+- New visitors also begin at the welcome. Saved conversations remain until explicitly cleared.
+  The preview labels simulated replies; it does not claim an actual assigned agent or server-encrypted session.
+
+### QA reporting beyond animation choices
+
+- `qa/change-log.js` is the shared, manually maintained change inventory: active refinements, exact scopes,
+  selected defaults, prototype limitations, rejected alternative decision and pending handoff questions.
+- Each page panel has **Beyond animations** and persisted page-level notes. The hub at `/qa#qa-changes`
+  shows all changes and accepts notes for the four tools too. Global Copy for Computer includes the inventory,
+  page notes, section notes, theme / identity state, shared-slot choices and machine-readable schema v3.
+- Animation-pick deltas are explicitly separate from implementation records. Resetting picks retains
+  page notes and the inventory. Export contains no entered purchase codes or private chat content.
+- The modal builder retains its separate detailed draft and HTML exports; those should accompany the
+  global inventory when handing off a specific modal. No `/delivery` has been created.

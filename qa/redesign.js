@@ -2,7 +2,11 @@
    the partner marquee's second copy. Everything else is static markup. */
 import { glyphSVG } from './icons-lib.js';
 
-document.querySelectorAll('.rd [data-ic]').forEach((el) => { el.innerHTML = glyphSVG(el.dataset.ic, { size: 24 }); });
+document.querySelectorAll('.rd [data-ic]').forEach((el) => {
+  el.innerHTML = el.dataset.ic === 'camera'
+    ? '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor"/></svg>'
+    : glyphSVG(el.dataset.ic, { size: 24 });
+});
 
 /* duplicate the logo track once so translateX(-50%) loops seamlessly */
 document.querySelectorAll('[data-marq]').forEach((t) => { t.innerHTML += t.innerHTML; });
@@ -17,3 +21,35 @@ function tick() {
   });
 }
 if (clocks.length) { tick(); setInterval(tick, 20000); }
+
+/* Three selectable beats share the SVG's own clock. Seeking changes the
+   current beat without pausing the loop. CSS highlights follow that clock
+   instead of running an unrelated second animation. */
+const chatSvg = document.getElementById('rd-chat-animation');
+const chatSteps = [...document.querySelectorAll('[data-chat-step]')];
+if (chatSvg && chatSteps.length) {
+  const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const starts = [0.08, 4.35, 6.4];
+  chatSteps[0].parentElement.dataset.chatController = 'true';
+  const sync = () => {
+    const t = chatSvg.getCurrentTime() % 9;
+    const step = t < 3.24 ? 0 : t < 6.3 ? 1 : 2;
+    chatSteps.forEach((button, i) => {
+      button.classList.toggle('is-current', i === step);
+      button.setAttribute('aria-pressed', String(i === step));
+    });
+  };
+  const playback = () => {
+    if (motion.matches || document.hidden) chatSvg.pauseAnimations();
+    else chatSvg.unpauseAnimations();
+    sync();
+  };
+  chatSteps.forEach((button, i) => button.addEventListener('click', () => {
+    chatSvg.setCurrentTime(starts[i]);
+    playback();
+  }));
+  motion.addEventListener('change', playback);
+  document.addEventListener('visibilitychange', playback);
+  setInterval(() => { if (!document.hidden) sync(); }, 100);
+  playback();
+}

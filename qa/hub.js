@@ -7,6 +7,7 @@ import {
 } from './core.js';
 import { paintTree, watchMutations, chromeSheen } from './paint.js';
 import { renderThemeControls } from './themeui.js';
+import { QA_CHANGES, changesForPage, changeCards } from './change-log.js';
 
 const TONE_BG = {
   dark: 'linear-gradient(135deg, #1A1526, #0D0B14 50%, #241A38)',
@@ -104,6 +105,25 @@ function renderExport() {
   document.getElementById('hb-kick').textContent = `${themeLabel(state)}`;
 }
 
+function renderChanges() {
+  const select = document.getElementById('hb-changes-page');
+  const note = document.getElementById('hb-page-note');
+  const refresh = () => {
+    const slug = select.value;
+    document.getElementById('hb-changes-list').innerHTML = changeCards(slug === 'all' ? QA_CHANGES : changesForPage(slug));
+    document.getElementById('hb-changes-count').textContent = `${QA_CHANGES.length} recorded refinements, separate from animation selections`;
+    note.parentElement.hidden = slug === 'all';
+    note.value = state.pageNotes[slug] || '';
+  };
+  select.innerHTML = '<option value="all">All /qa changes</option>' + [...PAGES, ...['start','modals','chat','kb'].map(slug => ({slug,title:slug === 'start' ? 'Purchase code → eSIM' : slug === 'modals' ? 'Modal builder' : slug === 'chat' ? 'Support chat' : 'Help modals'}))].map(p => `<option value="${p.slug}">${esc(p.title)}</option>`).join('');
+  select.addEventListener('change', refresh);
+  note.addEventListener('input', () => {
+    if (note.value.trim()) state.pageNotes[select.value] = note.value; else delete state.pageNotes[select.value];
+    saveState(state); renderExport();
+  });
+  refresh();
+}
+
 let tt = 0;
 function toast(m) {
   const t = document.getElementById('hb-toast');
@@ -117,6 +137,7 @@ async function boot() {
   applyTheme();
   renderPages();
   renderExport();
+  renderChanges();
   watchMutations(pagesBox, () => map);
 
   document.getElementById('hb-copy').addEventListener('click', async () => {
@@ -125,7 +146,7 @@ async function boot() {
     toast('Copied — paste it into the chat');
   });
   document.getElementById('hb-reset').addEventListener('click', () => {
-    if (!confirm('Reset every pick and note back to your /choice selections? The colour theme is kept.')) return;
+    if (!confirm('Reset animation picks and their section notes to /choice? Page-level notes, recorded refinements and the colour theme are kept. Selected identities return to their default.')) return;
     resetPicks(state); renderPages(); renderExport();
   });
   /* coming back from a page: reflect anything changed there */

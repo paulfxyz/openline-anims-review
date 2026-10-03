@@ -279,6 +279,14 @@
 .rd-step b { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 15px; background: var(--ink); color: #fff; font-size: 20px; font-weight: 800; }
 .rd-step h3 { margin: 4px 0 6px; font-size: 19px; font-weight: 750; }
 .rd-step p { margin: 0; font-size: 15.5px; line-height: 1.55; color: var(--mut); }
+.rd-step-title { display:block; margin:4px 0 6px; font-size:19px; font-weight:750; line-height:1.25; }
+.rd-step-copy { display:block; font-size:15.5px; line-height:1.55; color:var(--mut); }
+button.rd-step { width:100%; color:var(--ink); font-family:var(--ol-font-sans); text-align:left; cursor:pointer; }
+.rd-steps[data-chat-controller] .rd-step { animation:none; transition:border-color .18s,box-shadow .18s,background .18s; }
+.rd-steps[data-chat-controller] .rd-step.is-current { border-color:var(--or); box-shadow:0 0 0 3px var(--or-w); background:#FFFCFA; }
+.rd-step:hover { border-color:var(--or); }
+.rd-step:focus-visible { outline:3px solid var(--or); outline-offset:4px; }
+.rd-step-hint { margin:18px 0 0; font-size:13px; color:var(--mut); }
 .rd-phone { width: min(380px, 100%); aspect-ratio: 380 / 640; height: auto; }
 .rd-phone svg { width: 100%; height: 100%; display: block; }
 
@@ -335,6 +343,16 @@
 .rd-global-f { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .rd-global-f span { display: flex; align-items: center; gap: 12px; padding: 16px; border-radius: 14px; background: rgba(255, 255, 255, .06); font-size: 15.5px; font-weight: 650; }
 .rd-global-f i { width: 22px; height: 22px; color: #FFB08F; }
+.rd-channel-secondary { display:block; text-align:center; margin-top:12px; color:var(--mut)!important; font-size:13px; text-decoration:underline; text-underline-offset:3px; }
+.rd-hotline { display:flex; align-items:center; gap:24px; margin-top:16px; padding:30px 32px; border:1px solid var(--or-s); border-radius:var(--r); background:var(--or-w); }
+.rd-hotline-icon { flex:none; display:grid; place-items:center; width:70px; height:70px; border-radius:22px; background:#fff; color:var(--or); }
+.rd-hotline-icon svg { width:34px; height:34px; }
+.rd-hotline-status { display:inline-block; color:var(--or-d); border:1px solid var(--or-s); border-radius:99px; padding:4px 10px; font-size:11px; font-weight:700; letter-spacing:.04em; }
+.rd-hotline h3 { margin:9px 0 6px; font-size:25px; letter-spacing:-.025em; font-weight:800; }
+.rd-hotline p { margin:0; color:var(--mut); font-size:15px; }
+.rd-hotline-number { margin-left:auto; text-align:right; }
+.rd-hotline-number b { display:block; font-size:clamp(20px,2.1vw,30px); letter-spacing:-.03em; font-weight:800; white-space:nowrap; }
+.rd-hotline-number small { display:block; font-size:12px; color:var(--mut); margin-top:7px; }
 
 /* ── responsive ── */
 
@@ -347,6 +365,9 @@
   .rd-phone { margin: 0 auto; }
 }
 @media (max-width: 760px) {
+  .rd-hotline { flex-wrap:wrap; gap:18px; padding:24px; }
+  .rd-hotline-icon { width:52px; height:52px; border-radius:16px; }
+  .rd-hotline-number { margin-left:0; text-align:left; flex-basis:100%; padding-top:18px; border-top:1px solid var(--or-s); }
   .rd-hero-grid, .rd-prin, .rd-team, .rd-how, .rd-zd, .rd-faq { grid-template-columns: minmax(0, 1fr); }
   .rd-lever { grid-template-columns: 44px minmax(0, 1fr); gap: 16px; padding: 20px; }
   .rd-lever .rd-bar { grid-column: 1 / -1; grid-row: 3; min-width: 0; }

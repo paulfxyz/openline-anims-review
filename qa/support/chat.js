@@ -33,24 +33,32 @@ const G = {
   dl: '<path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/>',
   reset: '<path d="M4 12a8 8 0 1 0 2.4-5.7L4 8.5M4 4v4.5h4.5"/>',
   min: '<path d="M6 12h12"/>',
+  left: '<path d="M14 6l-6 6 6 6"/>',
+  right: '<path d="M10 6l6 6-6 6"/>',
 };
 const ic = (k, s = 20) => (G[k] ? `<svg viewBox="0 0 24 24" width="${s}" height="${s}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${G[k]}</svg>` : icon(k, s));
 
-const WA = '18887653746';
+const WA = '15554842461';
 const AIS = [
-  { k: 'chatgpt', n: 'ChatGPT', c: '#0B0B0F', url: (q) => `https://chatgpt.com/?q=${q}` },
-  { k: 'claude', n: 'Claude', c: '#C96442', url: (q) => `https://claude.ai/new?q=${q}` },
-  { k: 'perplexity', n: 'Perplexity', c: '#1F8A8A', url: (q) => `https://www.perplexity.ai/search?q=${q}` },
-  { k: 'gemini', n: 'Gemini', c: '#3B6FF5', url: () => 'https://gemini.google.com/app', copy: true },
-  { k: 'grok', n: 'Grok', c: '#2A2A2E', url: (q) => `https://grok.com/?q=${q}` },
-  { k: 'copilot', n: 'Copilot', c: '#0C7A5B', url: (q) => `https://copilot.microsoft.com/?q=${q}` },
-  { k: 'mistral', n: 'Le Chat', c: '#E2561C', url: (q) => `https://chat.mistral.ai/chat?q=${q}` },
+  { k: 'chatgpt', n: 'ChatGPT', c: '#0B0B0F', url: 'https://chatgpt.com/', ext: 'webp' },
+  { k: 'claude', n: 'Claude', c: '#C96442', url: 'https://claude.ai/new' },
+  { k: 'perplexity', n: 'Perplexity', c: '#1F8A8A', url: 'https://www.perplexity.ai/' },
+  { k: 'gemini', n: 'Gemini', c: '#3B6FF5', url: 'https://gemini.google.com/app' },
+  { k: 'grok', n: 'Grok', c: '#2A2A2E', url: 'https://grok.com/' },
+  { k: 'copilot', n: 'Copilot', c: '#0C7A5B', url: 'https://copilot.microsoft.com/', ext: 'ico' },
+  { k: 'mistral', n: 'Le Chat', c: '#E2561C', url: 'https://chat.mistral.ai/chat' },
 ];
+const aiLogo = a => `<img class="olc-ai-logo" src="/qa/assets/ai/${a.k}.${a.ext || 'png'}" width="28" height="28" alt="" decoding="async">`;
 const PROMPTS = [
   ['Is it legit?', 'Is Openline (openline.com) a trustworthy travel eSIM provider? Summarise what real customers and reviewers say.'],
   ['vs. the others', 'How does Openline eSIM compare with Airalo, Holafly and Saily on price, coverage and network quality?'],
   ['Best for my trip', 'I am travelling to Japan for two weeks. Is an Openline eSIM a good choice, and which plan should I pick?'],
   ['How it works', 'Explain in plain words how the Openline eSIM works, how to install it on an iPhone, and what happens when I land.'],
+  ['Phone readiness', 'Help me check whether my phone is ready for an Openline travel eSIM. Ask for my exact model, country of purchase and carrier-lock status, then check the official compatibility guidance.'],
+  ['How much data?', 'Help me estimate how much mobile data I need for my trip. Ask about its length, maps, video, calls and hotspot use before suggesting a suitable Openline plan. Verify current plan details on openline.com.'],
+  ['Several countries', 'I am visiting several countries on one trip. Ask for my itinerary and help me compare regional and country-specific Openline eSIM options, checking current coverage and terms.'],
+  ['No connection', 'Walk me through safe troubleshooting for an Openline eSIM with no internet. Ask about my phone and destination first. Check the official guidance and do not suggest deleting my eSIM without support confirmation.'],
+  ['Gift or activate?', 'Explain the difference between gifting an Openline purchase code and activating it for myself. Check the latest official activation and validity rules, and help me decide what to do if I travel later.'],
 ];
 
 const AGENTS = {
@@ -85,14 +93,36 @@ const REPLIES = [
 ];
 
 let S = null;   // live chat state
+const FRESH = () => [{ from: 'gary', t: now(), text: 'Hi, I’m Gary, Openline’s assistant. How can I help you today?', quick: ['Check my phone', 'Help me install', 'My data isn’t connecting'] }];
+
+// Every delayed reply belongs to this conversation generation. Clearing or
+// closing cancels it, so an old message can never reappear in a new chat.
+function later(fn, ms) {
+  const owner = S, generation = owner.generation;
+  const id = setTimeout(() => {
+    owner.timers.delete(id);
+    if (S === owner && owner.generation === generation) fn();
+  }, ms);
+  owner.timers.add(id);
+}
+function cancelPending() {
+  S.generation++;
+  S.timers.forEach(clearTimeout); S.timers.clear();
+}
+function releaseMessages(msgs) {
+  msgs.forEach(m => {
+    (m.files || []).forEach(f => { if (f.url?.startsWith('blob:')) URL.revokeObjectURL(f.url); });
+    if (m.voice?.url?.startsWith('blob:')) URL.revokeObjectURL(m.voice.url);
+  });
+}
 
 function load() {
   try { const s = JSON.parse(localStorage.getItem(KEY) || 'null'); if (s && Array.isArray(s.msgs)) return s; } catch { /* ignore */ }
-  return { msgs: HISTORY(), panel: true };
+  return { msgs: FRESH(), panel: true };
 }
 function save() {
   // Blob URLs (voice, uploads) don't survive a reload — store the text only.
-  const msgs = S.msgs.map((m) => ({ ...m, files: m.files && m.files.map((f) => ({ name: f.name, size: f.size, kind: f.kind })), voice: m.voice && { d: m.voice.d } }));
+  const msgs = S.msgs.filter(m => !m.typing).map((m) => ({ ...m, files: m.files && m.files.map((f) => ({ name: f.name, size: f.size, kind: f.kind })), voice: m.voice && { d: m.voice.d } }));
   try { localStorage.setItem(KEY, JSON.stringify({ msgs, panel: S.panel })); } catch { /* quota */ }
 }
 
@@ -156,11 +186,12 @@ function msgHTML(m, i) {
 function renderThread() {
   const th = S.root.querySelector('.olc-thread');
   const stick = th.scrollHeight - th.scrollTop - th.clientHeight < 160;
+  const fresh = !S.msgs.some(m => m.from === 'you');
   th.querySelector('.olc-col').innerHTML = `
-    <div class="olc-intro">${avatar('gary')}${avatar('ines')}<span class="olc-av" style="--c:#2F6BFF">M</span>
-      <b>Real humans, around the clock</b><span>Ticket #OL-482915 · conversation is end-to-end private</span></div>
+    ${fresh ? `<div class="olc-welcome"><span class="olc-welcome-icon">${icon('chat', 64)}<i>${ic('spark', 22)}</i></span><span class="olc-welcome-kicker">Welcome to Openline</span><h3>A little help.<br>A lot less hassle.</h3><p>Questions before you go, or help on the move.<br>Let’s start with what you need.</p></div>` : `<div class="olc-intro">${avatar('gary')}${avatar('ines')}<b>Here to help you stay connected</b><span>QA preview · messages and replies stay in this browser</span></div>`}
     ${S.msgs.map(msgHTML).join('')}`;
-  if (stick || S.forceBottom) th.scrollTop = th.scrollHeight;
+  if (fresh) th.scrollTop = 0;
+  else if (stick || S.forceBottom) th.scrollTop = th.scrollHeight;
   S.forceBottom = false;
 }
 
@@ -175,8 +206,8 @@ function send({ text = '', files = null, voice = null } = {}) {
   const m = { from: 'you', t: now(), text, files, voice, state: 'sending', seen: false };
   S.forceBottom = true;
   push(m);
-  setTimeout(() => { m.state = 'sent'; renderThread(); }, 450);
-  setTimeout(() => { m.seen = true; renderThread(); }, 1100);
+  later(() => { m.state = 'sent'; renderThread(); }, 450);
+  later(() => { m.seen = true; renderThread(); }, 1100);
   reply(text, files, voice);
 }
 
@@ -187,8 +218,8 @@ function reply(text, files, voice) {
   if (!r && voice) r = { text: 'Thanks for the voice note — I’ve listened to it. Give me a second to check your line.' };
   if (!r) r = { text: 'Thanks — I’m on it. While I check, these might already have your answer:', card: { type: 'article', title: `Search “${text.slice(0, 40)}” in the knowledge base`, cat: 'Self-help', q: text.slice(0, 60) } };
   const typing = { typing: true, from: 'ines' };
-  setTimeout(() => { S.msgs.push(typing); S.forceBottom = true; renderThread(); }, 1300);
-  setTimeout(() => {
+  later(() => { S.msgs.push(typing); S.forceBottom = true; renderThread(); }, 1300);
+  later(() => {
     S.msgs = S.msgs.filter((x) => x !== typing);
     push({ from: 'ines', t: now(), ...r });
   }, 2900);
@@ -197,6 +228,7 @@ function reply(text, files, voice) {
 /* ── Composer: text, files, voice ──────────────────────────────────── */
 
 function composer() {
+  const owner = S;
   const root = S.root;
   const ta = root.querySelector('.olc-ta');
   const tray = root.querySelector('.olc-tray');
@@ -210,7 +242,7 @@ function composer() {
   const drawTray = () => {
     tray.hidden = !pending.length;
     tray.innerHTML = pending.map((f, i) => `<span class="olc-chip">${f.kind === 'image' ? `<img src="${f.url}" alt="">` : ic('file', 18)}<span><b>${esc(f.name)}</b><small>${kb(f.size)}</small></span><button type="button" data-rm="${i}" aria-label="Remove ${esc(f.name)}">${icon('x', 14)}</button></span>`).join('');
-    tray.querySelectorAll('[data-rm]').forEach((b) => b.addEventListener('click', () => { pending.splice(+b.dataset.rm, 1); drawTray(); sync(); }));
+    tray.querySelectorAll('[data-rm]').forEach((b) => b.addEventListener('click', () => { URL.revokeObjectURL(pending[+b.dataset.rm].url); pending.splice(+b.dataset.rm, 1); drawTray(); sync(); }));
     sync();
   };
   const addFiles = (list) => {
@@ -242,14 +274,19 @@ function composer() {
   /* Voice: real MediaRecorder when the mic is available, a clearly-labelled
      demo recording otherwise (blocked permission, insecure frame, no device). */
   const rec = root.querySelector('.olc-rec');
-  let mr = null, chunks = [], t0 = 0, timer = 0, stream = null, demo = false, raf = 0;
+  let mr = null, chunks = [], t0 = 0, timer = 0, stream = null, demo = false, raf = 0, recRun = 0, starting = false;
   const meter = rec.querySelector('.olc-meter');
   meter.innerHTML = '<i></i>'.repeat(28);
   const bars = [...meter.children];
   async function start() {
+    if (starting || root.querySelector('.olc-comp').classList.contains('is-rec')) return;
+    starting = true;
+    const run = ++recRun;
     demo = false; chunks = [];
     try {
-      stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const acquired = await navigator.mediaDevices.getUserMedia({ audio: true });
+      if (S !== owner || run !== recRun) { acquired.getTracks().forEach(t => t.stop()); return; }
+      stream = acquired;
       mr = new MediaRecorder(stream);
       mr.ondataavailable = (e) => e.data.size && chunks.push(e.data);
       mr.start();
@@ -259,12 +296,14 @@ function composer() {
       const buf = new Uint8Array(an.frequencyBinCount);
       const loop = () => { an.getByteFrequencyData(buf); bars.forEach((b, i) => { b.style.height = `${12 + (buf[i % buf.length] / 255) * 88}%`; }); raf = requestAnimationFrame(loop); };
       loop();
-      S.audioCtx = ctx;
+      owner.audioCtx = ctx;
     } catch {
+      if (S !== owner || run !== recRun) return;
       demo = true;
       const loop = () => { bars.forEach((b) => { b.style.height = `${14 + Math.random() * 70}%`; }); raf = setTimeout(loop, 110); };
       loop();
     }
+    starting = false;
     t0 = Date.now();
     root.querySelector('.olc-comp').classList.add('is-rec');
     rec.querySelector('.olc-demo').hidden = !demo;
@@ -272,17 +311,19 @@ function composer() {
     tick(); timer = setInterval(tick, 250);
   }
   function stop(keep) {
+    ++recRun; starting = false;
     clearInterval(timer); cancelAnimationFrame(raf); clearTimeout(raf);
     root.querySelector('.olc-comp').classList.remove('is-rec');
     const d = Math.max(1, Math.round((Date.now() - t0) / 1000));
     const finish = () => {
       if (stream) stream.getTracks().forEach((t) => t.stop());
-      if (S.audioCtx) { S.audioCtx.close(); S.audioCtx = null; }
+      if (owner.audioCtx) { owner.audioCtx.close(); owner.audioCtx = null; }
       stream = null;
-      if (!keep) return;
+      if (!keep || S !== owner || owner.generation !== generation) return;
       const url = chunks.length ? URL.createObjectURL(new Blob(chunks, { type: (mr && mr.mimeType) || 'audio/webm' })) : null;
       send({ voice: { d, url } });
     };
+    const generation = owner.generation;
     if (mr && mr.state !== 'inactive') { mr.onstop = finish; mr.stop(); } else finish();
     mr = null;
   }
@@ -290,6 +331,11 @@ function composer() {
   rec.querySelector('[data-rec-cancel]').addEventListener('click', () => stop(false));
   rec.querySelector('[data-rec-send]').addEventListener('click', () => stop(true));
   S.stopRec = () => stop(false);
+  S.resetComposer = () => {
+    stop(false);
+    pending.forEach(f => URL.revokeObjectURL(f.url)); pending = [];
+    ta.value = ''; fileIn.value = ''; drawTray(); grow(); sync();
+  };
   sync();
 }
 
@@ -300,7 +346,7 @@ function onVoice(el) {
   if (!m || !m.voice) return;
   const btn = el.querySelector('button');
   const bars = [...el.querySelectorAll('.olc-wave i')];
-  if (S.playing) { S.playing.stop(); if (S.playing.el === el) { S.playing = null; return; } }
+  if (S.playing) { const same = S.playing.el === el; S.playing.stop(); if (same) return; }
   const d = m.voice.d;
   let audio = null;
   if (m.voice.url) { audio = new Audio(m.voice.url); audio.play().catch(() => {}); }
@@ -326,21 +372,22 @@ function toast(msg) {
 /* ── Side panel ────────────────────────────────────────────────────── */
 
 function panelHTML() {
-  const waText = encodeURIComponent('Hi Openline, I’m continuing my chat from the website (ticket #OL-482915).');
+  const waText = encodeURIComponent('Hi Openline, I’d like some help with my eSIM.');
   return `
+  <div class="olc-sidehead"><b>More ways to get help</b><button type="button" data-panel aria-label="Close help sidebar" aria-controls="olc-side-content">${ic('right', 20)}</button></div>
   <div class="olc-sec">
     <h3>Continue on</h3>
-    <a class="olc-ch" href="https://wa.me/${WA}?text=${waText}" target="_blank" rel="noopener" style="--c:#1FA855">${ic('wa', 20)}<span><b>WhatsApp</b><small>Same conversation, on your phone</small></span>${icon('ext', 15)}</a>
+    <a class="olc-ch" href="https://wa.me/${WA}?text=${waText}" target="_blank" rel="noopener" style="--c:#1FA855">${ic('wa', 20)}<span><b>WhatsApp</b><small>+1 (555) 484-2461</small></span>${icon('ext', 15)}</a>
     <a class="olc-ch" href="https://ig.me/m/askopenline" target="_blank" rel="noopener" style="--c:#D62976">${ic('ig', 20)}<span><b>Instagram</b><small>@askopenline</small></span>${icon('ext', 15)}</a>
     <a class="olc-ch" href="https://m.me/askopenline" target="_blank" rel="noopener" style="--c:#0A7CFF">${ic('ms', 20)}<span><b>Messenger</b><small>m.me/askopenline</small></span>${icon('ext', 15)}</a>
-    <a class="olc-ch" href="mailto:ask@openline.com?subject=${encodeURIComponent('Ticket #OL-482915')}" style="--c:#0B0B0F">${ic('mail', 20)}<span><b>Email</b><small>ask@openline.com</small></span>${icon('ext', 15)}</a>
+    <a class="olc-ch" href="mailto:ask@openline.com" style="--c:#0B0B0F">${ic('mail', 20)}<span><b>Email</b><small>ask@openline.com</small></span>${icon('ext', 15)}</a>
   </div>
   <div class="olc-sec">
     <h3>Ask an AI about us</h3>
-    <p class="olc-hint">Don’t take our word for it — ask a public AI. We prefill the question; edit it first if you like.</p>
+    <p class="olc-hint">Get another perspective. Choose a question, make it yours, then copy it to your favourite AI.</p>
     <div class="olc-presets">${PROMPTS.map(([l], i) => `<button type="button" data-preset="${i}" class="${i === 0 ? 'is-on' : ''}">${esc(l)}</button>`).join('')}</div>
     <textarea class="olc-prompt" rows="3" aria-label="Question for the AI">${esc(PROMPTS[0][1])}</textarea>
-    <div class="olc-ais">${AIS.map((a) => `<button type="button" data-ai="${a.k}" style="--c:${a.c}"><span>${a.n.slice(0, 1)}</span>${a.n}${a.copy ? `<small>copies prompt</small>` : ''}</button>`).join('')}</div>
+    <div class="olc-ais">${AIS.map((a) => `<button type="button" data-ai="${a.k}" style="--c:${a.c}">${aiLogo(a)}${a.n}</button>`).join('')}</div>
   </div>
   <div class="olc-sec">
     <h3>Help yourself</h3>
@@ -351,9 +398,83 @@ function panelHTML() {
     <h3>This conversation</h3>
     <div class="olc-tools">
       <button type="button" data-transcript>${ic('dl', 16)} Transcript</button>
-      <button type="button" data-reset>${ic('reset', 16)} Reset demo</button>
+      <button type="button" data-clear>${ic('trash', 16)} Clear chat</button>
     </div>
+    <p class="olc-preview-note">QA preview: conversations are stored in this browser, not on Openline’s servers. Replies are simulated.</p>
+    <a class="olc-changes" href="/qa#qa-changes">Changes &amp; delivery notes ${icon('chev', 14)}</a>
   </div>`;
+}
+
+function chatDialog(html) {
+  const owner = S;
+  const dialog = document.createElement('dialog');
+  dialog.className = 'olc-dialog';
+  dialog.setAttribute('aria-labelledby', 'olc-dialog-title');
+  dialog.innerHTML = `<button class="olc-dialog-x" type="button" aria-label="Close dialog" data-dismiss>${icon('x', 20)}</button>${html}`;
+  owner.root.appendChild(dialog);
+  dialog.querySelectorAll('[data-dismiss]').forEach(b => b.addEventListener('click', () => dialog.close()));
+  dialog.addEventListener('close', () => dialog.remove());
+  dialog.addEventListener('click', e => {
+    const b = dialog.getBoundingClientRect();
+    if (e.target === dialog && (e.clientX < b.left || e.clientX > b.right || e.clientY < b.top || e.clientY > b.bottom)) dialog.close();
+  });
+  dialog.showModal();
+  return dialog;
+}
+
+function aiHandoff(a, prompt) {
+  const d = chatDialog(`
+    <div class="olc-dialog-icon is-ai">${aiLogo(a)}</div>
+    <span class="olc-dialog-kicker">Your question, your AI</span>
+    <h2 id="olc-dialog-title">Continue with ${a.n}</h2>
+    <p>We’ll point you to ${a.n}. Open a conversation there and paste your clipboard to ask your question.</p>
+    <ol class="olc-handoff-steps"><li><b>1</b> Copy your prompt</li><li><b>2</b> Open ${a.n}</li><li><b>3</b> Paste and send</li></ol>
+    <label class="olc-dialog-label" for="olc-handoff-prompt">Your prompt</label>
+    <textarea id="olc-handoff-prompt" class="olc-handoff-prompt" readonly>${esc(prompt)}</textarea>
+    <p class="olc-copy-status" role="status">Copying your prompt…</p>
+    <div class="olc-dialog-actions"><button type="button" data-copy-prompt>${ic('copy', 17)} Copy again</button><a class="is-primary" href="${a.url}" target="_blank" rel="noopener noreferrer">Open ${a.n} ${icon('ext', 16)}</a></div>
+    <p class="olc-dialog-fine">Only this prompt goes on your clipboard. Your Openline chat is not shared. The official web app opens in a new tab; your device may offer its installed app. Sign in there if needed.</p>`);
+  const copy = async () => {
+    const status = d.querySelector('.olc-copy-status');
+    try {
+      await navigator.clipboard.writeText(prompt);
+      status.textContent = 'Prompt copied. Open your AI, then paste.';
+      status.classList.add('is-copied');
+    } catch {
+      status.textContent = 'Automatic copy was blocked. Select and copy the prompt above before opening your AI.';
+      status.classList.remove('is-copied');
+      const ta = d.querySelector('textarea'); ta.focus(); ta.select();
+    }
+  };
+  d.querySelector('[data-copy-prompt]').addEventListener('click', copy);
+  copy();
+}
+
+function confirmClear() {
+  const owner = S;
+  const d = chatDialog(`
+    <div class="olc-dialog-icon">${ic('trash', 34)}</div>
+    <span class="olc-dialog-kicker">A fresh start</span>
+    <h2 id="olc-dialog-title">Clear this chat?</h2>
+    <p>In the live service, clearing a chat will erase the discussion from our servers and close the current issue as solved. You’ll return to the welcome screen and can start a new conversation.</p>
+    <div class="olc-clear-warning"><b>This /qa preview is local only.</b><span>It clears this browser’s demo conversation and attachments. No server discussion is deleted and no real support ticket is changed.</span></div>
+    <p class="olc-dialog-fine">This preview action cannot be undone. Download your transcript first if you’d like to keep it.</p>
+    <div class="olc-dialog-actions"><button type="button" data-dismiss autofocus>Keep chatting</button><button type="button" class="is-primary" data-confirm-clear>Clear chat &amp; start fresh</button></div>`);
+  d.querySelector('[data-confirm-clear]').addEventListener('click', () => {
+    if (S !== owner) return;
+    cancelPending();
+    if (S.playing) S.playing.stop();
+    S.resetComposer?.();
+    releaseMessages(S.msgs);
+    S.msgs = FRESH(); S.forceBottom = false;
+    renderThread(); save();
+    S.root.querySelector('.olc-thread').scrollTop = 0;
+    d.close();
+    // On a small screen, reveal the welcome instead of leaving it behind the sidebar.
+    if (innerWidth <= 980) { S.panel = false; syncPanel(); save(); }
+    S.root.querySelector('.olc-ta').focus({ preventScroll: true });
+    toast('Local chat cleared. Ready for a fresh start.');
+  });
 }
 
 function wirePanel() {
@@ -363,27 +484,39 @@ function wirePanel() {
     pr.value = PROMPTS[+b.dataset.preset][1];
     root.querySelectorAll('[data-preset]').forEach((x) => x.classList.toggle('is-on', x === b));
   }));
-  root.querySelectorAll('[data-ai]').forEach((b) => b.addEventListener('click', async () => {
+  pr.addEventListener('input', () => root.querySelectorAll('[data-preset]').forEach(x => x.classList.remove('is-on')));
+  root.querySelectorAll('[data-ai]').forEach((b) => b.addEventListener('click', () => {
     const a = AIS.find((x) => x.k === b.dataset.ai);
     const q = pr.value.trim();
-    if (a.copy) { try { await navigator.clipboard.writeText(q); toast(`Prompt copied — paste it into ${a.n}`); } catch { toast(`Copy the question, then paste it into ${a.n}`); } }
-    window.open(a.url(encodeURIComponent(q)), '_blank', 'noopener');
+    if (!q) { toast('Write a question or choose a prompt first'); pr.focus(); return; }
+    aiHandoff(a, q);
   }));
-  root.querySelector('[data-reset]').addEventListener('click', () => { S.msgs = HISTORY(); S.forceBottom = true; renderThread(); save(); toast('Conversation reset'); });
+  root.querySelector('[data-clear]').addEventListener('click', confirmClear);
   root.querySelector('[data-transcript]').addEventListener('click', () => {
     const txt = S.msgs.filter((m) => !m.typing).map((m) => (m.day ? `\n— ${m.day} —` : `[${m.t}] ${AGENTS[m.from].n}: ${m.text || ''}${m.voice ? ' (voice message)' : ''}${m.files ? ` (${m.files.map((f) => f.name).join(', ')})` : ''}${m.card && m.card.title ? ` [${m.card.title}]` : ''}`)).join('\n');
     const a = document.createElement('a');
-    a.href = URL.createObjectURL(new Blob([`Openline support · Ticket #OL-482915\n${txt}\n`], { type: 'text/plain' }));
-    a.download = 'openline-chat-OL-482915.txt'; a.click();
+    a.href = URL.createObjectURL(new Blob([`Openline support · QA conversation (local preview)\n${txt}\n`], { type: 'text/plain' }));
+    a.download = 'openline-chat-transcript.txt'; a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
   });
 }
 
 /* ── Open / close ──────────────────────────────────────────────────── */
 
+function syncPanel() {
+  const root = S.root;
+  root.classList.toggle('is-collapsed', !S.panel);
+  root.querySelector('.olc-sidein').inert = !S.panel;
+  const rail = root.querySelector('.olc-rail');
+  rail.tabIndex = S.panel ? -1 : 0;
+  rail.setAttribute('aria-hidden', String(S.panel));
+  root.querySelectorAll('[data-panel]').forEach(b => b.setAttribute('aria-expanded', String(S.panel)));
+}
+
 export function openChat(o = {}) {
   if (S && S.root.isConnected) { if (o.q) S.root.querySelector('.olc-ta').value = o.q; return; }
   const st = load();
-  S = { ...st, root: null, ret: document.activeElement, forceBottom: true };
+  S = { ...st, panel: !!st.panel && innerWidth > 980, root: null, ret: document.activeElement, forceBottom: true, generation: 0, timers: new Set() };
   const root = document.createElement('div');
   root.className = `olc${S.panel && innerWidth > 980 ? '' : ' is-collapsed'}`;
   root.setAttribute('role', 'dialog'); root.setAttribute('aria-modal', 'true'); root.setAttribute('aria-label', 'Openline support chat');
@@ -391,12 +524,12 @@ export function openChat(o = {}) {
     <header class="olc-head">
       <div class="olc-brand">
         <svg viewBox="0 0 32 32" width="34" height="34" aria-hidden="true"><path d="M16 5a11 11 0 1 0 11 11" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/><circle cx="25.5" cy="6.5" r="4" fill="#FF5314"/></svg>
-        <div><h2>Talk to <em>Openline</em></h2><p><i class="olc-live"></i>3 people online · replies in under 2 min</p></div>
+        <div><h2>Talk to <em>Openline</em></h2><p><i class="olc-live"></i>Here to help · QA preview</p></div>
       </div>
       <div class="olc-hacts">
         <button type="button" class="olc-hbtn" data-ol-open="kb">${icon('book', 18)}<span>Knowledge base</span></button>
         <button type="button" class="olc-hbtn" data-ol-open="compat">${icon('phone', 18)}<span>Check my phone</span></button>
-        <button type="button" class="olc-hbtn is-ic" data-panel aria-label="Toggle side panel" aria-expanded="true">${ic('panel', 19)}</button>
+        <button type="button" class="olc-hbtn is-ic" data-panel aria-label="Toggle side panel" aria-controls="olc-side-content">${ic('panel', 19)}</button>
         <button type="button" class="olc-hbtn is-ic is-x" data-close aria-label="Close chat">${icon('x', 19)}</button>
       </div>
     </header>
@@ -423,15 +556,17 @@ export function openChat(o = {}) {
         </div>
       </section>
       <aside class="olc-side" aria-label="More ways to get help">
-        <div class="olc-sidein">${panelHTML()}</div>
-        <div class="olc-rail">
-          <a href="https://wa.me/${WA}" target="_blank" rel="noopener" style="--c:#1FA855" aria-label="WhatsApp">${ic('wa', 20)}</a>
-          <a href="https://ig.me/m/askopenline" target="_blank" rel="noopener" style="--c:#D62976" aria-label="Instagram">${ic('ig', 20)}</a>
-          <a href="https://m.me/askopenline" target="_blank" rel="noopener" style="--c:#0A7CFF" aria-label="Messenger">${ic('ms', 20)}</a>
-          <button type="button" data-panel style="--c:#7A4BFF" aria-label="Ask an AI about us">${ic('spark', 20)}</button>
-          <button type="button" data-ol-open="kb" style="--c:#FF5314" aria-label="Knowledge base">${icon('book', 20)}</button>
-          <button type="button" data-ol-open="compat" style="--c:#FF5314" aria-label="Device compatibility">${icon('phone', 20)}</button>
-        </div>
+        <div class="olc-sidein" id="olc-side-content">${panelHTML()}</div>
+        <button class="olc-rail" type="button" data-panel aria-label="Open help sidebar" aria-controls="olc-side-content" title="Open help sidebar">
+          <span class="olc-rail-arrow">${ic('left', 22)}</span>
+          <span style="--c:#1FA855">${ic('wa', 20)}</span>
+          <span style="--c:#D62976">${ic('ig', 20)}</span>
+          <span style="--c:#0A7CFF">${ic('ms', 20)}</span>
+          <span style="--c:#7A4BFF">${ic('spark', 20)}</span>
+          <span style="--c:#FF5314">${icon('book', 20)}</span>
+          <span style="--c:#FF5314">${icon('phone', 20)}</span>
+          <span class="olc-rail-label">More help</span>
+        </button>
       </aside>
     </div>
     <div class="olc-toast" role="status"></div>`;
@@ -443,14 +578,16 @@ export function openChat(o = {}) {
   renderThread();
   composer();
   wirePanel();
+  syncPanel();
   if (o.q) root.querySelector('.olc-ta').value = o.q;
   if (o.topic) root.querySelector('.olc-ta').value = `Question about “${o.topic}”: `;
   root.querySelector('.olc-ta').dispatchEvent(new Event('input'));
 
   root.querySelectorAll('[data-panel]').forEach((b) => b.addEventListener('click', () => {
-    root.classList.toggle('is-collapsed');
-    S.panel = !root.classList.contains('is-collapsed');
-    root.querySelector('.olc-hbtn[data-panel]').setAttribute('aria-expanded', String(S.panel));
+    S.panel = !S.panel;
+    syncPanel();
+    if (S.panel) root.querySelector('.olc-sidehead button').focus({ preventScroll: true });
+    else root.querySelector('.olc-hbtn[data-panel]').focus({ preventScroll: true });
     save();
   }));
   root.querySelector('[data-close]').addEventListener('click', closeChat);
@@ -460,16 +597,21 @@ export function openChat(o = {}) {
     const r = e.target.closest('[data-rate]');
     if (r) { const n = +r.dataset.rate; r.parentNode.querySelectorAll('[data-rate]').forEach((x) => x.classList.toggle('is-on', +x.dataset.rate <= n)); toast(`Thanks for the ${n}-star rating`); }
   });
-  S.onKey = (e) => { if (e.key === 'Escape' && !document.querySelector('.ols-overlay')) closeChat(); };
+  S.onKey = (e) => { if (e.key === 'Escape' && !document.querySelector('.ols-overlay') && !root.querySelector('dialog[open]')) closeChat(); };
   document.addEventListener('keydown', S.onKey);
-  setTimeout(() => root.querySelector('.olc-ta').focus(), 80);
+  later(() => root.querySelector('.olc-ta').focus({ preventScroll: true }), 80);
 }
 
 export function closeChat() {
   if (!S || !S.root) return;
   const { root, ret } = S;
-  if (S.stopRec) S.stopRec();
+  cancelPending();
+  S.resetComposer?.();
   if (S.playing) S.playing.stop();
+  S.msgs = S.msgs.filter(m => !m.typing); save();
+  releaseMessages(S.msgs);
+  clearTimeout(S.toastT);
+  root.querySelectorAll('dialog[open]').forEach(d => d.close());
   document.removeEventListener('keydown', S.onKey);
   root.classList.remove('is-in');
   document.documentElement.classList.remove('ols-chat-open');

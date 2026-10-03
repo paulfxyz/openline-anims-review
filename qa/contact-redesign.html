@@ -279,6 +279,14 @@
 .rd-step b { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 15px; background: var(--ink); color: #fff; font-size: 20px; font-weight: 800; }
 .rd-step h3 { margin: 4px 0 6px; font-size: 19px; font-weight: 750; }
 .rd-step p { margin: 0; font-size: 15.5px; line-height: 1.55; color: var(--mut); }
+.rd-step-title { display:block; margin:4px 0 6px; font-size:19px; font-weight:750; line-height:1.25; }
+.rd-step-copy { display:block; font-size:15.5px; line-height:1.55; color:var(--mut); }
+button.rd-step { width:100%; color:var(--ink); font-family:var(--ol-font-sans); text-align:left; cursor:pointer; }
+.rd-steps[data-chat-controller] .rd-step { animation:none; transition:border-color .18s,box-shadow .18s,background .18s; }
+.rd-steps[data-chat-controller] .rd-step.is-current { border-color:var(--or); box-shadow:0 0 0 3px var(--or-w); background:#FFFCFA; }
+.rd-step:hover { border-color:var(--or); }
+.rd-step:focus-visible { outline:3px solid var(--or); outline-offset:4px; }
+.rd-step-hint { margin:18px 0 0; font-size:13px; color:var(--mut); }
 .rd-phone { width: min(380px, 100%); aspect-ratio: 380 / 640; height: auto; }
 .rd-phone svg { width: 100%; height: 100%; display: block; }
 
@@ -335,6 +343,16 @@
 .rd-global-f { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .rd-global-f span { display: flex; align-items: center; gap: 12px; padding: 16px; border-radius: 14px; background: rgba(255, 255, 255, .06); font-size: 15.5px; font-weight: 650; }
 .rd-global-f i { width: 22px; height: 22px; color: #FFB08F; }
+.rd-channel-secondary { display:block; text-align:center; margin-top:12px; color:var(--mut)!important; font-size:13px; text-decoration:underline; text-underline-offset:3px; }
+.rd-hotline { display:flex; align-items:center; gap:24px; margin-top:16px; padding:30px 32px; border:1px solid var(--or-s); border-radius:var(--r); background:var(--or-w); }
+.rd-hotline-icon { flex:none; display:grid; place-items:center; width:70px; height:70px; border-radius:22px; background:#fff; color:var(--or); }
+.rd-hotline-icon svg { width:34px; height:34px; }
+.rd-hotline-status { display:inline-block; color:var(--or-d); border:1px solid var(--or-s); border-radius:99px; padding:4px 10px; font-size:11px; font-weight:700; letter-spacing:.04em; }
+.rd-hotline h3 { margin:9px 0 6px; font-size:25px; letter-spacing:-.025em; font-weight:800; }
+.rd-hotline p { margin:0; color:var(--mut); font-size:15px; }
+.rd-hotline-number { margin-left:auto; text-align:right; }
+.rd-hotline-number b { display:block; font-size:clamp(20px,2.1vw,30px); letter-spacing:-.03em; font-weight:800; white-space:nowrap; }
+.rd-hotline-number small { display:block; font-size:12px; color:var(--mut); margin-top:7px; }
 
 /* ── responsive ── */
 
@@ -347,6 +365,9 @@
   .rd-phone { margin: 0 auto; }
 }
 @media (max-width: 760px) {
+  .rd-hotline { flex-wrap:wrap; gap:18px; padding:24px; }
+  .rd-hotline-icon { width:52px; height:52px; border-radius:16px; }
+  .rd-hotline-number { margin-left:0; text-align:left; flex-basis:100%; padding-top:18px; border-top:1px solid var(--or-s); }
   .rd-hero-grid, .rd-prin, .rd-team, .rd-how, .rd-zd, .rd-faq { grid-template-columns: minmax(0, 1fr); }
   .rd-lever { grid-template-columns: 44px minmax(0, 1fr); gap: 16px; padding: 20px; }
   .rd-lever .rd-bar { grid-column: 1 / -1; grid-row: 3; min-width: 0; }
@@ -435,16 +456,17 @@
         <h2 class="rd-h2">How Our Chat Support Works</h2>
         <p class="rd-sub">Get help in three simple steps</p>
         <div class="rd-steps">
-          <div class="rd-step"><b>1</b><div><h3>Click the Chat Icon</h3><p>Look for the floating chat widget at the bottom-right corner of your screen. It's available on every page.</p></div></div>
-          <div class="rd-step"><b>2</b><div><h3>Start a Conversation</h3><p>Type your question or browse our knowledge base for instant answers from our AI assistant.</p></div></div>
-          <div class="rd-step"><b>3</b><div><h3>Get Quick Answers</h3><p>Receive personalized support for your eSIM and connectivity needs from our team.</p></div></div>
+          <button type="button" class="rd-step" data-chat-step="0" aria-controls="rd-chat-animation" aria-pressed="true"><b>1</b><span><strong class="rd-step-title">Click the Chat Icon</strong><span class="rd-step-copy">Look for the floating chat widget at the bottom-right corner of your screen. It's available on every page.</span></span></button>
+          <button type="button" class="rd-step" data-chat-step="1" aria-controls="rd-chat-animation" aria-pressed="false"><b>2</b><span><strong class="rd-step-title">Start a Conversation</strong><span class="rd-step-copy">Type your question or browse our knowledge base for instant answers from our AI assistant.</span></span></button>
+          <button type="button" class="rd-step" data-chat-step="2" aria-controls="rd-chat-animation" aria-pressed="false"><b>3</b><span><strong class="rd-step-title">Get Quick Answers</strong><span class="rd-step-copy">Receive personalized support for your eSIM and connectivity needs from our team.</span></span></button>
         </div>
+        <p class="rd-step-hint">Click a step to jump to it. The demo keeps playing.</p>
       </div>
 
       <!-- 9s loop, three 3s beats that match the step highlight:
            tap the bubble → the panel opens and a question is typed → a reply lands -->
       <div class="rd-phone" aria-label="A phone showing the chat widget being opened, a question sent and an answer arriving">
-        <svg viewBox="0 0 380 640" aria-hidden="true">
+        <svg id="rd-chat-animation" viewBox="0 0 380 640" aria-hidden="true">
           <rect x="10" y="6" width="360" height="628" rx="52" fill="#0B0B0F"/>
           <rect x="22" y="18" width="336" height="604" rx="42" fill="#FFFFFF"/>
           <rect x="150" y="30" width="80" height="22" rx="11" fill="#0B0B0F"/>
@@ -597,15 +619,15 @@
       </div>
     </div>
     <div class="rd-chan">
-      <div class="rd-card"><span class="rd-ico"><i data-ic="chat"></i></span><h3>WhatsApp</h3><b>+1 (888) 765-3746</b><p>Message us anytime on WhatsApp for instant support</p><a class="rd-btn is-main" href="https://wa.me/18887653746">Chat on WhatsApp</a></div>
-      <div class="rd-card"><span class="rd-ico"><i data-ic="send"></i></span><h3>Messenger</h3><b>@openlineesim</b><p>Reach out via Facebook Messenger</p><a class="rd-btn is-ghost" href="https://m.me/openlineesim">Chat on Facebook</a></div>
-      <div class="rd-card"><span class="rd-ico"><i data-ic="phone"></i></span><h3>Global Phone</h3><b>+1 (888) 765-3746</b><p>Toll-free number available 24/7 worldwide</p><a class="rd-btn is-ghost" href="tel:+18887653746">Call Us</a></div>
-      <div class="rd-card"><span class="rd-ico"><i data-ic="mail"></i></span><h3>Email Support</h3><b>support@openline.com</b><p>Email us for non-urgent inquiries</p><a class="rd-btn is-ghost" href="mailto:support@openline.com">Send Email</a></div>
+      <div class="rd-card"><span class="rd-ico"><i data-ic="chat"></i></span><h3>WhatsApp</h3><b>+1 (555) 484-2461</b><p>Message us on WhatsApp for help with your eSIM.</p><a class="rd-btn is-main" href="https://wa.me/15554842461" target="_blank" rel="noopener">Chat on WhatsApp</a></div>
+      <div class="rd-card"><span class="rd-ico"><i data-ic="camera"></i></span><h3>Instagram</h3><b>@askopenline</b><p>Find us on Instagram and send us a message.</p><a class="rd-btn is-ghost" href="https://www.instagram.com/askopenline/" target="_blank" rel="noopener">Open Instagram</a></div>
+      <div class="rd-card"><span class="rd-ico"><i data-ic="send"></i></span><h3>Messenger / Facebook</h3><b>@askopenline</b><p>Reach out through Facebook Messenger.</p><a class="rd-btn is-ghost" href="https://m.me/askopenline" target="_blank" rel="noopener">Open Messenger</a><a class="rd-channel-secondary" href="https://www.facebook.com/askopenline" target="_blank" rel="noopener">Facebook page ↗︎</a></div>
+      <div class="rd-card"><span class="rd-ico"><i data-ic="mail"></i></span><h3>Email</h3><b>ask@openline.com</b><p>Send us your questions and the details we can help with.</p><a class="rd-btn is-ghost" href="mailto:ask@openline.com">Send Email</a></div>
     </div>
     <div class="rd-global">
       <div>
         <h3>24/7 Global Support</h3>
-        <p>No matter where you are in the world or what time it is, we're here to help. Our support team operates around the clock across all channels - live chat, WhatsApp, Messenger, phone, and email. Choose whichever method works best for you and expect the same fast, friendly service.</p>
+        <p>No matter where you are in the world or what time it is, we're here to help. Reach us through live chat, WhatsApp, Instagram, Messenger, or email. Choose whichever method works best for you and expect the same fast, friendly service. Our live hotline is coming soon.</p>
       </div>
       <div class="rd-global-f">
         <span><i data-ic="globe"></i>Global Coverage</span>
@@ -614,6 +636,11 @@
         <span><i data-ic="smile"></i>98% Satisfaction</span>
       </div>
     </div>
+    <aside class="rd-hotline" aria-labelledby="rd-hotline-title">
+      <span class="rd-hotline-icon"><i data-ic="headset"></i></span>
+      <div><span class="rd-hotline-status">Coming soon</span><h3 id="rd-hotline-title">Live hotline</h3><p>Another way to reach the people behind your connection.</p></div>
+      <div class="rd-hotline-number"><b>+1 (8) 123 - ONLINE</b><small>Not available to call yet</small></div>
+    </aside>
   </div>
 </section>
 

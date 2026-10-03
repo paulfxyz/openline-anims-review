@@ -217,7 +217,7 @@
 @media(max-width:1050px) { .sp-nav { gap:16px; }.sp-nav > details:nth-of-type(2) { display:none; }.sp-header { padding-inline:24px; } }
 @media(max-width:760px) {
   .sp-header { height:65px; padding:0 20px; }.sp-nav { display:none; }.sp-brand > span { font-size:25px; }.sp-brand img { width:29px; height:29px; }
-  .sp-reviewbar { width:calc(100% - 40px); font-size:11px; }.sp-reviewbar b { display:none; }
+  .sp-reviewbar { width:calc(100% - 40px); font-size:11px; flex-wrap:wrap; gap:10px 16px; }.sp-reviewbar b { display:none; }
   .sp-main { padding-top:31px; width:calc(100% - 36px); }.sp-steps { font-size:11px; gap:26px; margin-bottom:30px; }.sp-steps li { gap:5px; }.sp-steps li > span { width:21px; height:21px; }
   .sp-symbol { margin-bottom:20px; }.sp-eyebrow { font-size:10px; }
   .sp-body h1 { font-size:32px; max-width:16ch; margin-inline:auto; }.sp-lead { font-size:15px; }.sp-desktop { display:none; }

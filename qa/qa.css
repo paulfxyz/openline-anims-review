@@ -1,5 +1,6 @@
 @import url('/qa/typography.css');
 @import url('/qa/anim.css');
+@import url('/qa/changes.css');
 /* ══════════════════════════════════════════════════════════════════════
    /qa chrome — the dock, the drawer and the slot labels.
    Everything is namespaced .qa-* and lives inside #qa-ui, which the

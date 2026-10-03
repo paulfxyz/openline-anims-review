@@ -13,6 +13,7 @@ import {
 } from './core.js';
 import { paintSiteCss, paintTree, watchMutations, chromeSheen } from './paint.js';
 import { renderThemeControls } from './themeui.js';
+import { QA_CHANGES, changesForPage, changeCards } from './change-log.js';
 
 const slug = document.body.dataset.qaPage;
 const PAGE = PAGES.find((p) => p.slug === slug);
@@ -297,6 +298,13 @@ function buildUI() {
           <h3>On this page <span>${PAGE.slots.length ? `${PAGE.slots.length} slot${PAGE.slots.length > 1 ? 's' : ''}` : 'no animation picks'}</span></h3>
           <div id="qa-slots"></div>
         </section>
+        <section class="qa-sec">
+          <h3>Beyond animations <span>${changesForPage(slug).length} recorded</span></h3>
+          <p class="qa-hint">Layout, copy, interactions and shared refinements. Included in Copy for Computer.</p>
+          ${changeCards(changesForPage(slug))}
+          <label class="qa-page-note">Page-level review notes<textarea id="qa-page-note" rows="3" placeholder="Anything beyond this page’s animation choices…">${esc(state.pageNotes[slug] || '')}</textarea></label>
+          <p class="qa-hint"><a href="/qa#qa-changes">All ${QA_CHANGES.length} refinements &amp; extras →</a></p>
+        </section>
         ${STYLE ? `<section class="qa-sec">
           <h3>Page identity <span>this page only</span></h3>
           <div id="qa-ident"></div>
@@ -316,6 +324,10 @@ function buildUI() {
   slotBox = ui.querySelector('#qa-slots');
   footBox = ui.querySelector('#qa-foot');
   identBox = ui.querySelector('#qa-ident');
+  ui.querySelector('#qa-page-note').addEventListener('input', e => {
+    if (e.target.value.trim()) state.pageNotes[slug] = e.target.value; else delete state.pageNotes[slug];
+    saveState(state); renderFoot();
+  });
 
   ui.querySelectorAll('[data-act]').forEach((b) => {
     b.addEventListener('click', () => act(b.dataset.act));
@@ -512,14 +524,14 @@ function renderFoot() {
   const changed = Object.keys(state.picks).length;
   const notes = Object.keys(state.notes).length;
   footBox.innerHTML = `
-    <p class="qa-foot-sum">${changed ? `<b>${changed}</b> change${changed > 1 ? 's' : ''}` : 'No changes'} since /choice${notes ? ` · <b>${notes}</b> note${notes > 1 ? 's' : ''}` : ''}<br><span>${esc(themeLabel(state))}</span></p>
+    <p class="qa-foot-sum"><b>${changed}</b> animation-pick changes · <b>${QA_CHANGES.length}</b> recorded refinements${notes ? ` · ${notes} section notes` : ''}${Object.keys(state.pageNotes).length ? ` · ${Object.keys(state.pageNotes).length} page notes` : ''}<br><span>${esc(themeLabel(state))}</span></p>
     <div class="qa-foot-btns">
       <button type="button" class="qa-btn is-main" data-copy>Copy for Computer</button>
       <button type="button" class="qa-btn" data-reset title="Back to the picks in your /choice file">Reset</button>
     </div>`;
   footBox.querySelector('[data-copy]').addEventListener('click', copyExport);
   footBox.querySelector('[data-reset]').addEventListener('click', () => {
-    if (!confirm('Reset every pick and note back to your /choice selections? The colour theme is kept.')) return;
+    if (!confirm('Reset animation picks and their section notes to /choice? Page-level notes, recorded refinements and the colour theme are kept. Selected identities return to their default.')) return;
     resetPicks(state); recs.forEach(mount); renderSlots(); renderFoot(); recs.forEach((r) => { r.tag.innerHTML = tagText(r); });
   });
 }
