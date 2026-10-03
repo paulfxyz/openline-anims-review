@@ -156,6 +156,7 @@ html.ols-lock { overflow: hidden; }
 .olc.is-in { opacity: 1; transform: none; }
 .olc-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 28px; border-bottom: 1px solid var(--ol-line); }
 .olc-brand { display: flex; align-items: center; gap: 14px; min-width: 0; flex: 1; }
+.olc-brand-mark { width:34px; height:34px; object-fit:contain; flex:none; }
 .olc-brand > div { min-width: 0; }
 .olc-brand h2 { margin: 0; font-size: 24px; line-height: 1.15; font-weight: 800; letter-spacing: -.02em; }
 .olc-brand h2 em { font-style: normal; color: var(--ol-or); }
@@ -175,22 +176,25 @@ html.ols-lock { overflow: hidden; }
 .olc-main { position: relative; display: grid; grid-template-rows: 1fr auto; min-height: 0; background: linear-gradient(180deg, #FFFCFA 0%, #FBF8F5 100%); }
 .olc-thread { overflow-y: auto; min-height: 0; padding: 0 28px; scroll-behavior: smooth; }
 .olc-col { max-width: 860px; margin: 0 auto; padding: 32px 0 20px; }
-.olc-intro { display: grid; justify-items: center; gap: 2px; text-align: center; padding: 8px 0 26px; }
-.olc-intro .olc-av { display: inline-grid; margin: 0 -5px 10px; border: 3px solid #FFFCFA; width: 48px; height: 48px; font-size: 18px; }
-.olc-intro { grid-template-columns: repeat(3, auto); justify-content: center; }
-.olc-intro b, .olc-intro > span:not(.olc-av) { grid-column: 1 / -1; }
+.olc-intro { display:grid; grid-template-columns:minmax(0,1fr); justify-items:center; gap:7px; text-align:center; padding:8px 0 26px; width:100%; }
 .olc-intro b { font-size: 19px; }
-.olc-intro > span:not(.olc-av) { color: var(--ol-mute); font-size: 14px; }
+.olc-intro > span { color:var(--ol-mute); font-size:12px; line-height:1.5; }
+.olc-team-faces { display:flex; justify-content:center; align-items:center; width:100%; padding:2px 0; margin:0 auto 9px; }
+.olc-team-faces img { width:48px; height:48px; flex:none; display:block; object-fit:cover; border-radius:50%; border:3px solid #FFFCFA; box-shadow:0 2px 5px #0B0B0F0B; }
+.olc-team-faces img + img { margin-left:-9px; }
 
 .olc-day { display: flex; align-items: center; gap: 14px; margin: 18px 0; color: var(--ol-mute); font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
 .olc-day::before, .olc-day::after { content: ""; flex: 1; height: 1px; background: var(--ol-line); }
 
 .olc-msg { display: flex; gap: 12px; margin: 14px 0; align-items: flex-end; }
 .olc-msg.is-me { justify-content: flex-end; }
+.olc-msg.is-them > .olc-av { align-self:flex-start; }
+.olc-msg.is-them:has(.olc-who) > .olc-av { margin-top:25px; }
 .olc-av { flex: none; width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; background: var(--c); color: #fff; font-weight: 800; font-size: 15px; }
 .olc-av.is-gap { visibility: hidden; }
 .olc-msg.is-cont { margin-top: 4px; }
-.olc-av.is-ai { background: var(--ol-ink); color: var(--ol-or); }
+.olc-av.is-ai { background:#fff; border:1px solid var(--ol-line); }
+.olc-av.is-ai img { width:26px; height:26px; object-fit:contain; display:block; }
 .olc-stack { display: grid; gap: 6px; max-width: min(620px, 78%); justify-items: start; }
 .is-me .olc-stack { justify-items: end; }
 .olc-who { font-size: 13px; color: var(--ol-mute); padding-left: 4px; }
@@ -315,12 +319,14 @@ button.olc-card:hover { border-color: var(--ol-or); }
 .olc-ai-logo { object-fit: contain; flex: none; border-radius: 5px; }
 .olc-preview-note { font-size: 12px; color: var(--ol-mute); line-height: 1.6; margin: 12px 0; }
 .olc-changes { display: inline-flex; align-items: center; gap: 5px; font-size: 13px; color: var(--ol-ink2); }
-.olc-welcome { text-align: center; padding: 42px 16px 32px; }
-.olc-welcome-icon { display: grid; place-items: center; position: relative; width: 110px; height: 110px; background: #FFF0E8; color: var(--ol-or); border-radius: 35px; margin: 0 auto 24px; animation: olcHello 5s ease-in-out infinite; }
-.olc-welcome-icon > i { position: absolute; right: -7px; top: 0; background: #fff; border: 1px solid #FFE1D1; padding: 9px; border-radius: 15px; display: grid; place-items: center; }
+.olc-welcome { text-align:center; padding:28px 16px 24px; }
+.olc-welcome-icon { display:grid; place-items:center; position:relative; width:88px; height:88px; background:#FFF0E8; border-radius:28px; margin:0 auto 18px; animation:olcHello 5s ease-in-out infinite; }
+.olc-welcome-icon > img { width:58px; height:58px; object-fit:contain; }
 .olc-welcome-kicker { display: block; color: #C24312; font-size: 12px; font-weight: 750; letter-spacing: .1em; text-transform: uppercase; }
+.olc-welcome .olc-team-faces { margin:17px auto 10px; }
 .olc-welcome h3 { font-size: clamp(32px, 3.2vw, 46px); line-height: 1.12; letter-spacing: -.045em; margin: 12px 0; font-weight: 750; }
 .olc-welcome p { color: var(--ol-ink2); line-height: 1.6; font-size: 16px; margin: 0; }
+.olc-face-caption { display:block; color:var(--ol-mute); font-size:10px; line-height:1.5; margin-top:11px; }
 @keyframes olcHello { 0%,100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-7px) rotate(3deg); } }
 .olc-dialog { margin: auto; padding: 36px; width: min(560px, calc(100vw - 32px)); max-height: calc(100dvh - 32px); overflow: auto; border: 1px solid #E7E3DE; border-radius: 28px; background: #fff; color: #0B0B0F; font-family: var(--ol-font, ui-sans-serif, system-ui, sans-serif); box-shadow: 0 30px 100px #0003; }
 .olc-dialog::backdrop { background: #16120D70; backdrop-filter: blur(8px); }
@@ -362,6 +368,7 @@ button.olc-card:hover { border-color: var(--ol-or); }
 @media (max-width: 600px) {
   .olc-head { padding: 12px 14px; }
   .olc-brand svg { display: none; }
+  .olc-brand { gap:10px; }.olc-brand-mark { width:28px; height:28px; }
   .olc-brand h2 { font-size: 20px; }
   .olc-brand p { font-size: 13px; }
   .olc-hacts { gap: 6px; }
@@ -370,6 +377,8 @@ button.olc-card:hover { border-color: var(--ol-or); }
   .olc-thread { padding: 0 14px; }
   .olc-stack { max-width: 86%; }
   .olc-msg.is-them .olc-av { display: none; }
+  .olc-msg.is-them .olc-av.is-ai { display:grid; width:30px; height:30px; }
+  .olc-msg.is-them .olc-av.is-ai img { width:20px; height:20px; }
   .olc-dock { padding: 10px 12px 12px; }
   .olc-fine { display: none; }
   .olc-voice { min-width: 220px; }
@@ -383,9 +392,16 @@ button.olc-card:hover { border-color: var(--ol-or); }
   .olc-dialog { padding: 24px; border-radius: 23px; }
   .olc-dialog-actions { flex-direction: column; }
   .olc-dialog-icon { margin-bottom: 18px; }
-  .olc-welcome { padding: 28px 12px 26px; }
-  .olc-welcome-icon { width: 88px; height: 88px; border-radius: 29px; margin-bottom: 20px; }
-  .olc-welcome-icon > svg { width: 52px; height: 52px; }
-  .olc-welcome h3 { font-size: 33px; }
+  .olc-welcome { padding:12px 8px 20px; }
+  .olc-welcome-icon { width:68px; height:68px; border-radius:23px; margin-bottom:14px; }
+  .olc-welcome-icon > img { width:44px; height:44px; }
+  .olc-welcome .olc-team-faces { margin-top:13px; margin-bottom:8px; }
+  .olc-team-faces img { width:38px; height:38px; border-width:2px; }
+  .olc-team-faces img + img { margin-left:-6px; }
+  .olc-welcome h3 { font-size:30px; }
   .olc-welcome p { font-size: 14px; }
+  .olc-quick button { font-size:13px; padding-inline:12px; }
+}
+@media(max-width:360px) {
+  .olc-brand { gap:8px; }.olc-brand-mark { width:24px; height:24px; }.olc-brand h2 { font-size:18px; }.olc-brand p { font-size:11px; }
 }

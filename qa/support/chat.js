@@ -11,6 +11,21 @@ import { icon } from './support.js';
 const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const nl2br = (s) => esc(s).replace(/\n/g, '<br>');
 const KEY = 'openline-qa-chat-v1';
+const OPENLINE_MARK = '/qa/assets/start-brand-mark.png';
+const PORTRAITS = [5, 12, 16, 32, 47, 49, 53].map(n => `/qa/assets/support-portraits/portrait-${n}.jpg`);
+function shuffledPortraits() {
+  const portraits = [...PORTRAITS];
+  for (let i = portraits.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [portraits[i], portraits[j]] = [portraits[j], portraits[i]];
+  }
+  return portraits;
+}
+function portraitRow() {
+  // Illustrative CC0 faces, not real staff identities or availability.
+  // Shuffle once per opened chat, never on each message render.
+  return `<div class="olc-team-faces" role="img" aria-label="Seven illustrative profile portraits">${S.portraits.map(src => `<img src="${src}" width="48" height="48" alt="" decoding="async">`).join('')}</div>`;
+}
 
 const G = {
   menu: '<path d="M4 7h16M4 12h16M4 17h10"/>',
@@ -143,7 +158,7 @@ const SETTINGS_IMG = `data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http:
 
 function avatar(who) {
   const a = AGENTS[who];
-  return `<span class="olc-av${a.ai ? ' is-ai' : ''}" style="--c:${a.c}">${a.ai ? ic('spark', 16) : a.ini}</span>`;
+  return `<span class="olc-av${a.ai ? ' is-ai' : ''}" style="--c:${a.c}"${a.ai ? ' role="img" aria-label="Openline AI"' : ''}>${a.ai ? `<img src="${OPENLINE_MARK}" width="26" height="26" alt="">` : a.ini}</span>`;
 }
 
 function cardHTML(c) {
@@ -188,7 +203,7 @@ function renderThread() {
   const stick = th.scrollHeight - th.scrollTop - th.clientHeight < 160;
   const fresh = !S.msgs.some(m => m.from === 'you');
   th.querySelector('.olc-col').innerHTML = `
-    ${fresh ? `<div class="olc-welcome"><span class="olc-welcome-icon">${icon('chat', 64)}<i>${ic('spark', 22)}</i></span><span class="olc-welcome-kicker">Welcome to Openline</span><h3>A little help.<br>A lot less hassle.</h3><p>Questions before you go, or help on the move.<br>Let’s start with what you need.</p></div>` : `<div class="olc-intro">${avatar('gary')}${avatar('ines')}<b>Here to help you stay connected</b><span>QA preview · messages and replies stay in this browser</span></div>`}
+    ${fresh ? `<div class="olc-welcome"><span class="olc-welcome-icon"><img src="${OPENLINE_MARK}" width="58" height="58" alt=""></span><span class="olc-welcome-kicker">Welcome to Openline</span>${portraitRow()}<h3>Here to help you<br>stay connected.</h3><p>Questions before you go, or help on the move.<br>Let’s start with what you need.</p><small class="olc-face-caption">Illustrative portraits · QA preview</small></div>` : `<div class="olc-intro">${portraitRow()}<b>Here to help you stay connected</b><span>Illustrative portraits · QA messages stay in this browser</span></div>`}
     ${S.msgs.map(msgHTML).join('')}`;
   if (fresh) th.scrollTop = 0;
   else if (stick || S.forceBottom) th.scrollTop = th.scrollHeight;
@@ -516,14 +531,14 @@ function syncPanel() {
 export function openChat(o = {}) {
   if (S && S.root.isConnected) { if (o.q) S.root.querySelector('.olc-ta').value = o.q; return; }
   const st = load();
-  S = { ...st, panel: !!st.panel && innerWidth > 980, root: null, ret: document.activeElement, forceBottom: true, generation: 0, timers: new Set() };
+  S = { ...st, panel: !!st.panel && innerWidth > 980, root: null, ret: document.activeElement, forceBottom: true, generation: 0, timers: new Set(), portraits: shuffledPortraits() };
   const root = document.createElement('div');
   root.className = `olc${S.panel && innerWidth > 980 ? '' : ' is-collapsed'}`;
   root.setAttribute('role', 'dialog'); root.setAttribute('aria-modal', 'true'); root.setAttribute('aria-label', 'Openline support chat');
   root.innerHTML = `
     <header class="olc-head">
       <div class="olc-brand">
-        <svg viewBox="0 0 32 32" width="34" height="34" aria-hidden="true"><path d="M16 5a11 11 0 1 0 11 11" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/><circle cx="25.5" cy="6.5" r="4" fill="#FF5314"/></svg>
+        <img class="olc-brand-mark" src="${OPENLINE_MARK}" width="34" height="34" alt="">
         <div><h2>Talk to <em>Openline</em></h2><p><i class="olc-live"></i>Here to help · QA preview</p></div>
       </div>
       <div class="olc-hacts">

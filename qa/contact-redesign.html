@@ -49,19 +49,31 @@
 
 .rd-btns { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
 .rd-btn {
-  display: inline-flex; align-items: center; gap: 10px; height: 54px; padding: 0 26px; border-radius: 14px;
-  font-size: 16px; font-weight: 700; text-decoration: none; transition: transform .15s, box-shadow .15s, background .15s;
+  display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:40px; max-width:100%; padding:7px 24px; border:1px solid transparent; border-radius:8px;
+  font:500 16px/24px var(--ol-font-sans); letter-spacing:normal; text-align:center; text-decoration:none; transition:box-shadow .15s,background .15s,border-color .15s; cursor:pointer;
 }
-.rd-btn:hover { transform: translateY(-1px); }
+.rd-btn:has(> [data-ic]) { padding-inline:16px; }
 .rd-btn.is-main { background: var(--or); color: #fff; box-shadow: 0 10px 26px rgba(255, 83, 20, .28); }
 .rd-btn.is-main:hover { background: var(--or-d); }
-.rd-btn.is-ghost { border: 1.5px solid var(--ln); background: #fff; color: var(--ink); }
+.rd-btn.is-ghost { border:2px solid var(--ln); padding-block:6px; background:#fff; color:var(--ink); }
 .rd-btn.is-ghost:hover { border-color: var(--ink); }
 .rd-btn.is-dark { background: var(--ink); color: #fff; }
-.rd-btn svg { width: 18px; height: 18px; }
-.rd-link { display: inline-flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 700; color: var(--or-d) !important; text-decoration: none; }
+.rd-btn > [data-ic] { flex:none; width:16px; height:16px; }
+.rd-btn > [data-ic]:first-child:not([data-ic="arrow"]) { margin-right:8px; }
+.rd-btn > [data-ic="arrow"] { margin-left:8px; }
+.rd-commerce-short { display:none; }
+.rd-btn svg { width:16px; height:16px; }
+.rd-link { display:inline-flex; align-items:center; gap:4px; font:400 14px/20px var(--ol-font-sans); color:var(--or-d)!important; text-decoration:none; }
 .rd-link:hover { text-decoration: underline; text-underline-offset: 4px; }
-.rd-link svg { width: 18px; height: 18px; }
+.rd-link > [data-ic],.rd-link svg { width:12px; height:12px; flex:none; }
+/* Match Openline's 4px / 150ms arrow nudge. The label and button stay put.
+   Only directional arrows move: chat icons and disclosure chevrons do not. */
+:is(.rd-btn,.rd-link,.rd-kb) > [data-ic="arrow"] { transform:translateX(0); transition:transform .15s cubic-bezier(.4,0,.2,1); }
+@media(hover:hover) {
+  :is(.rd-btn,.rd-link,.rd-kb):hover > [data-ic="arrow"] { transform:translateX(4px); }
+}
+:is(.rd-btn,.rd-link,.rd-kb):is(:focus-visible,:active) > [data-ic="arrow"] { transform:translateX(4px); }
+.rd-btn:focus-visible,.rd-link:focus-visible,.rd-kb:focus-visible { outline:3px solid var(--or); outline-offset:4px; }
 
 [data-ic] { display: inline-grid; place-items: center; }
 [data-ic] svg { width: 100%; height: 100%; }
@@ -379,7 +391,8 @@ button.rd-step { width:100%; color:var(--ink); font-family:var(--ol-font-sans); 
 .rd-chan .rd-card { display: flex; flex-direction: column; }
 .rd-chan .rd-card b { display: block; margin-top: 6px; font: 700 15px/1.3 var(--ol-font-sans); color: var(--ink); word-break: break-word; }
 .rd-chan .rd-card p { flex: 1; }
-.rd-chan .rd-btn { margin-top: 22px; height: 48px; justify-content: center; font-size: 15px; }
+.rd-chan .rd-btn { margin-top:22px; min-height:36px; padding:7px 16px; font-size:14px; line-height:20px; }
+.rd-chan .rd-btn.is-ghost { padding-block:6px; }
 .rd-global { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; align-items: center; margin-top: 16px; padding: 36px; border-radius: var(--r); background: var(--ink); color: #fff; }
 .rd-global h3 { margin: 0; font-size: 26px; font-weight: 800; letter-spacing: -.02em; }
 .rd-global p { margin: 12px 0 0; font-size: 16px; line-height: 1.65; color: rgba(255, 255, 255, .72); }
@@ -443,9 +456,22 @@ button.rd-step { width:100%; color:var(--ink); font-family:var(--ol-font-sans); 
 @media (max-width:360px) {
   .rd-people { grid-template-columns:repeat(2,minmax(0,1fr)); }
 }
+@media(max-width:639px) {
+  .rd-btn { min-height:44px; }
+  .rd-btn.is-commerce { font-size:14px; line-height:20px; }
+  .rd-commerce-full { display:none; }
+  .rd-commerce-short { display:inline-flex; align-items:center; gap:6px; white-space:nowrap; }
+  .rd-commerce-short small { font-size:10px; line-height:14px; font-weight:500; padding:2px 5px; border-radius:4px; background:#FFFFFF33; }
+  .rd-btns > .rd-btn { width:100%; }
+  .rd-chan .rd-btn { min-height:44px; }
+}
+@media(max-width:360px) {
+  .rd-commerce-short small { display:none; }
+}
 @media (prefers-reduced-motion: reduce) {
   .rd *, .rd *::before, .rd *::after { animation: none !important; }
   .rd-startup-toggle svg { transition:none; }
+  :is(.rd-btn,.rd-link,.rd-kb) > [data-ic="arrow"] { transform:none!important; transition:none; }
 }
 </style>
 </head>
@@ -494,7 +520,7 @@ button.rd-step { width:100%; color:var(--ink); font-family:var(--ol-font-sans); 
         <h2 class="rd-h2">What Our Support Can Help With</h2>
         <p class="rd-sub">Our expert support team is ready to assist you with any questions or issues</p>
       </div>
-      <a class="rd-btn is-main" href="/qa/home">Buy an eSIM for 190+ countries now <i data-ic="arrow"></i></a>
+      <a class="rd-btn is-main is-commerce" href="/qa/home"><span class="rd-commerce-full">Buy an eSIM for 190+ countries now</span><span class="rd-commerce-short">Buy eSIM Now <small>190+ countries</small></span><i data-ic="arrow"></i></a>
     </div>
     <div class="rd-grid4">
       <div class="rd-card"><span class="rd-ico"><i data-ic="headset"></i></span><h3>Customer Service</h3><p>Order help, refunds, plan changes, and account management</p><span class="rd-chip is-or">24/7 Live Support</span></div>
@@ -617,7 +643,7 @@ button.rd-step { width:100%; color:var(--ink); font-family:var(--ol-font-sans); 
           <li><i data-ic="check-circle"></i>Automated help for common questions</li>
           <li><i data-ic="check-circle"></i>Priority support for urgent issues</li>
         </ul>
-        <div class="rd-btns"><a class="rd-btn is-main" href="/qa/home">Buy an eSIM for 190+ countries now <i data-ic="arrow"></i></a></div>
+        <div class="rd-btns"><a class="rd-btn is-main is-commerce" href="/qa/home"><span class="rd-commerce-full">Buy an eSIM for 190+ countries now</span><span class="rd-commerce-short">Buy eSIM Now <small>190+ countries</small></span><i data-ic="arrow"></i></a></div>
       </div>
       <div>
         <div class="rd-feat">
@@ -662,7 +688,7 @@ button.rd-step { width:100%; color:var(--ink); font-family:var(--ol-font-sans); 
         <details><summary>Is my payment information secure?<i data-ic="plus"></i></summary><p>Absolutely. We use Stripe for payment processing, which is certified to PCI Service Provider Level 1 - the highest level of security in the payments industry. We never store your full credit card details on our servers.</p></details>
       </div>
     </div>
-    <div class="rd-btns" style="justify-content:center;margin-top:56px"><a class="rd-btn is-main" href="/qa/home">Buy an eSIM for 190+ countries now <i data-ic="arrow"></i></a></div>
+    <div class="rd-btns" style="justify-content:center;margin-top:56px"><a class="rd-btn is-main is-commerce" href="/qa/home"><span class="rd-commerce-full">Buy an eSIM for 190+ countries now</span><span class="rd-commerce-short">Buy eSIM Now <small>190+ countries</small></span><i data-ic="arrow"></i></a></div>
   </div>
 </section>
 

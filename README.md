@@ -255,6 +255,13 @@ use the shared native UI stack, Openline's orange/ink palette and the live site'
 
 ### Chat refinements and safe prototype boundaries
 
+- Chat branding now uses the actual Openline mark (`qa/assets/start-brand-mark.png`) in the header,
+  animated welcome and Gary's AI avatar, rather than the earlier hand-drawn ring and sparkle.
+- Seven [CC0 Pravatar placeholder portraits](https://pravatar.cc/) sit in a single centred row above
+  “Here to help you stay connected” in both fresh and existing conversations. They are explicitly
+  illustrative, not real employee identities or availability signals, and are served locally from
+  `qa/assets/support-portraits/`. Their order is shuffled once per opened chat, not on each render.
+
 - Collapsed sidebar is one full-height button, including its arrow and decorative channel icons.
   Expanded arrow and header icon also toggle it. Hidden content is inert and expanded state is exposed.
 - Nine editable AI prompts (the previous four plus phone readiness, data estimate, multi-country
@@ -276,6 +283,22 @@ use the shared native UI stack, Openline's orange/ink palette and the live site'
   stops recordings/playback, releases attachments and returns to an animated guest welcome with Gary's greeting.
 - New visitors also begin at the welcome. Saved conversations remain until explicitly cleared.
   The preview labels simulated replies; it does not claim an actual assigned agent or server-encrypted session.
+
+### Redesign button parity
+
+- Compared the retained redesigns to the live [Openline About page](https://openline.com/about) and
+  original captures. Main actions use the native UI family at 16px / 24px, weight 500; compact contact
+  actions and mobile purchase buttons use 14px. Button icons are 16px; the quiet partner link uses
+  14px type and a 12px icon. Corners are 8px, with 8px base gaps and source-like horizontal insets.
+- Right-arrow shapes match the current source. Only the arrow shifts 4px over 150ms with the source
+  cubic-bezier(.4,0,.2,1); labels stay stationary and the previous whole-button lift is removed.
+  The same feedback works for keyboard focus and press, while reduced motion stays static.
+- Main desktop buttons follow the 40px baseline and compact channel buttons 36px; mobile tap targets
+  remain at least 44px. Purchase CTAs use the source-style “Buy eSIM Now” mobile label and a compact
+  country badge, preserving the existing QA copy's 190+ count. The badge hides on the narrowest screens
+  rather than shrinking the action text or overflowing its container.
+- These changes are scoped to About and Contact redesign action controls, not navigation menus,
+  disclosure chevrons, selected illustrations, or the separate large-input /start process design.
 
 ### QA reporting beyond animation choices
 

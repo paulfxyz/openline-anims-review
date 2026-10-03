@@ -3,7 +3,9 @@
 import { glyphSVG } from './icons-lib.js';
 
 document.querySelectorAll('.rd [data-ic]').forEach((el) => {
-  el.innerHTML = el.dataset.ic === 'camera'
+  el.innerHTML = el.dataset.ic === 'arrow'
+    ? '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>'
+    : el.dataset.ic === 'camera'
     ? '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor"/></svg>'
     : glyphSVG(el.dataset.ic, { size: 24 });
 });
