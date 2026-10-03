@@ -1,0 +1,12 @@
+.rx-main {
+  --rx-ink:#0B0B0F; --rx-copy:#4A505B; --rx-muted:#777E89;
+  --rx-line:#E4E6EA; --rx-paper:#FFFFFF; --rx-soft:#F6F7F8;
+  --rx-tint:color-mix(in srgb,var(--rx-accent) 6%,white);
+  color:var(--rx-ink); background:var(--rx-paper);
+}
+.rx-premium {
+  --rx-ink:#FAFAFC; --rx-copy:#D0D4DD; --rx-muted:#A0A8B6;
+  --rx-line:#343C4A; --rx-paper:#111722; --rx-soft:#1B2331;
+  --rx-tint:#212938;
+}
+.rx-editorial { --rx-paper:#FBFAF7; --rx-soft:#F0EFEB; --rx-line:#D5D4D0; }

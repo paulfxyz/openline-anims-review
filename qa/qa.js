@@ -641,6 +641,7 @@ async function boot() {
     if (target.boards && target.boards.includes(h)) { state.shared[target.key] = h; saveState(state); mount(target); renderSlots(); target.tag.innerHTML = tagText(target); }
     setTimeout(() => { jumpTo(target, false); openCard(target); }, 250);
   }
+  document.body.dataset.qaReady = 'true';
 }
 
 boot();

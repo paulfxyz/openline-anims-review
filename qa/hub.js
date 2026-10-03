@@ -73,7 +73,7 @@ function renderPages() {
     </article>`;
   }).join('');
   document.getElementById('hb-count').textContent =
-    `${PAGES.filter((p) => !p.redesignOf).length} pages + 2 redesigns · ${total} picks${changed ? ` · ${changed} changed since /choice` : ''}`;
+    `${PAGES.filter((p) => !p.redesignOf).length} pages + ${PAGES.filter((p) => p.redesignOf).length} redesigns · ${total} picks${changed ? ` · ${changed} changed since /choice` : ''}`;
   paintPages();
 }
 

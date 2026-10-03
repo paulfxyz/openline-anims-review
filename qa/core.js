@@ -61,6 +61,24 @@ export const PAGES = [
     { key: 'affil', hero: true, w: 576, h: 420, clearFill: true }] },
 ];
 
+/* Every product page has a separate alternative in /qa. The hand-built
+   About / Contact variants above are retained; other alternatives share
+   picks and identities with their source, but own their new slot wrappers. */
+for (let i = PAGES.length - 1; i >= 0; i--) {
+  const page = PAGES[i];
+  if (page.redesignOf || page.redesign) continue;
+  page.redesign = `${page.slug}-redesign`;
+  const slots = page.slots.map(({ hero, hideUp, ...slot }) => ({ ...slot }));
+  PAGES.splice(i + 1, 0, {
+    ...page,
+    slug: page.redesign,
+    title: `${page.title} — redesign`,
+    redesign: undefined,
+    redesignOf: page.slug,
+    slots,
+  });
+}
+
 export const pageOf = (key) => PAGES.find((p) => !p.redesignOf && p.slots.some((s) => (s.boards || [s.key]).includes(key)));
 
 /* ── Page identities ───────────────────────────────────────────────── */
@@ -104,6 +122,10 @@ BOARDS.forEach((b) => {
     const src = b.special === 'tier1' ? VARIANTS : b.variants || [];
     opts = src.map((v) => ({ id: v.id, name: v.name, family: v.family, tagline: v.tagline || '', desc: v.desc || '',
       pros: v.pros || [], cons: v.cons || [], build: (uid) => v.build(uid) }));
+  }
+  if (b.key === 'plusnomad') {
+    const cities = opts.find(o => o.id === 'nm-cities');
+    if (cities) cities.desc = cities.desc.replace('+351', '+1');
   }
   STEPS[b.key] = {
     key: b.key, page: b.page, path: b.path, section: b.section, short: b.short || b.section,

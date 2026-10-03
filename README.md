@@ -168,3 +168,24 @@ tick in the nav, a highlighted matrix row, and makes it the default on load.
 - Openline+ / Built for Digital Nomads / Six Cities, One Number: destination labels remain steady
   instead of repeating their 350ms entrance fade. The connection dots still travel to the fixed
   number column, which now shows the fictional US example `+1 202 555 0148`.
+
+### /qa complete redesign set
+
+Every one of the 18 product pages now has an alternative at `/qa/<page>-redesign`.
+The two earlier About/Contact versions stay intact; the other 16 are built with
+`python3 qa/tools/redesign_all.py`. The hub and page dropdown list the alternatives,
+and the dock provides a Current / Redesign switch on every product page.
+
+- **Page-specific structure:** chapter navigation, reordered reading paths, comparison layouts,
+  pricing columns, editorial article grids, engineering panels and a dedicated sign-in layout.
+- **Shared product context:** chosen animations, the native Openline font stack, page identities
+  (including IoT Chrome) and the fixed Openline+ nomad animation carry into the alternatives.
+- **Copy preservation:** the generator checks a word multiset against each captured page, excluding
+  replaced illustrations and inaccessible decorative text. `qa/redesign/content-audit.json` records
+  per-page totals and slot keys. Existing marketing claims are retained, not independently validated.
+- **Local interactions:** chapter links, photo gallery, destination filtering, article filtering,
+  FAQ disclosures where source answers exist, help/chat handoffs and local form previews.
+  These review pages do not submit purchases, authentication requests or emails.
+- **Installation:** the captured detailed flow is iPhone QR setup; Android and manual-method
+  controls open relevant knowledge-base searches rather than pretending missing screens exist.
+- **Scope:** all new alternatives and runtime changes remain in `/qa`. No `/delivery` is created.
