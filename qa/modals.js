@@ -9,6 +9,8 @@
 
 import { ICONS as LIB, GLYPHS, MOTIONS, iconSVG, glyphSVG } from './icons-lib.js';
 import { ICONS as ALOHA } from '/js/icons.js';
+import { TEMPLATES, TEMPLATE_CATS } from './modal-templates.js';
+import { ILLUS, resolveSrc } from './modal-illus.js';
 
 const STORE = 'openline-qa-modal-v1';
 const LOCAL = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
@@ -36,51 +38,18 @@ const BLOCKS = {
   code: 'Code to copy',
   input: 'Input field',
   note: 'Small note',
+  image: 'Image',
+  esim: 'eSIM card',
+  steps: 'Numbered steps',
+  qr: 'QR code',
+  choice: 'Choice list (label | detail | price)',
+  toggle: 'Toggle',
+  rating: 'Star rating',
+  divider: 'Divider',
 };
 
-/* ── Templates (sample copy — every figure is illustrative) ────────── */
-
-const TEMPLATES = [
-  { k: 'ready', t: 'eSIM ready', cfg: { type: 'success', icon: 'check-circle:draw', title: 'Your eSIM is ready',
-    blocks: [{ type: 'p', text: 'Japan · 10 GB is installed and switches on the moment you land.' },
-      { type: 'kv', text: 'Plan | Japan 10 GB\nValid | 30 days from first use\nNetwork | Best available Tier-1' }],
-    ctas: 2, primary: 'Open my eSIM', secondary: 'Done' } },
-  { k: 'switch', t: 'Switch plan?', cfg: { type: 'confirm', icon: 'refresh:pop', title: 'Switch to the Europe plan?',
-    blocks: [{ type: 'p', text: 'Your current plan stays active until midnight, then **Europe 20 GB** starts. Nothing is charged until you confirm.' }],
-    ctas: 2, primary: 'Switch plan', secondary: 'Keep current plan' } },
-  { k: 'low', t: 'Data running low', cfg: { type: 'warning', icon: 'battery:pulse', title: 'You’ve used 92% of your data',
-    blocks: [{ type: 'progress', label: 'Data used', value: 92, text: '9.2 GB of 10 GB' },
-      { type: 'p', text: 'At this rate you’ll run out tomorrow afternoon. Top up now and keep the same eSIM — nothing to reinstall.' }],
-    ctas: 2, primary: 'Top up 5 GB', secondary: 'Remind me later' } },
-  { k: 'failed', t: 'Payment failed', cfg: { type: 'error', icon: 'card:pulse', title: 'Payment didn’t go through',
-    blocks: [{ type: 'p', text: 'Your bank declined the charge. No money was taken.' },
-      { type: 'list', text: 'Check the card number and expiry date\nTry another card, Apple Pay or Google Pay\nContact your bank if it keeps happening' }],
-    ctas: 2, primary: 'Try again', secondary: 'Use another method' } },
-  { k: 'roaming', t: 'Turn on roaming', cfg: { type: 'info', icon: 'antenna:pulse', title: 'Leave Data Roaming on',
-    blocks: [{ type: 'p', text: 'Openline switches networks for you abroad, so Data Roaming must be on — for this eSIM only. It never touches your main line.' },
-      { type: 'note', text: 'Settings › Mobile Data › Openline › Data Roaming' }],
-    ctas: 1, primary: 'Got it', secondary: '' } },
-  { k: 'promo', t: 'Discount', cfg: { type: 'discount', icon: 'gift:pop', title: '20% off your next trip',
-    blocks: [{ type: 'p', text: 'Thanks for travelling with us. Use this code on any plan in the next 7 days.' },
-      { type: 'code', label: 'Your code', text: 'TRIP20' },
-      { type: 'kv', text: 'Plans from | $3.19\nValid until | 9 October' }],
-    ctas: 2, primary: 'Browse plans', secondary: 'Not now' } },
-  { k: 'plus', t: 'Openline+', cfg: { type: 'premium', icon: 'crown:pop', title: 'Welcome to Openline+',
-    blocks: [{ type: 'p', text: 'Your membership is active. Here’s what just switched on:' },
-      { type: 'list', text: 'Airport lounge and fast-track access\nA permanent number that travels with you\nPriority support, day and night' }],
-    ctas: 1, primary: 'Explore my perks', secondary: '' } },
-  { k: 'verify', t: 'Verify identity', cfg: { type: 'security', icon: 'fingerprint:draw', title: 'Verify it’s you',
-    blocks: [{ type: 'p', text: 'We sent a 6-digit code to p•••@openline.com. It expires in 10 minutes.' },
-      { type: 'input', label: 'Verification code', text: '000 000' }],
-    ctas: 2, primary: 'Verify', secondary: 'Resend code' } },
-  { k: 'delete', t: 'Delete eSIM?', cfg: { type: 'error', icon: 'trash:pop', title: 'Delete this eSIM?',
-    blocks: [{ type: 'p', text: 'Japan 10 GB will be removed from this phone. Unused data can’t be moved to another device.' },
-      { type: 'highlight', title: 'This can’t be undone', text: 'You’ll need a new QR code to install it again.' }],
-    ctas: 2, primary: 'Delete eSIM', secondary: 'Cancel' } },
-];
-
 const DEFAULTS = {
-  ...TEMPLATES[0].cfg,
+  ...TEMPLATES[0].cfg, cover: '', link: '',
   size: 'md', align: 'center', radius: 20, theme: 'light', close: true, iconStyle: 'badge', iconSize: 72,
   layout: 'row', backdrop: 'page', page: 'home', device: 'desktop', primaryStyle: 'type',
 };
@@ -91,12 +60,15 @@ let cfg = load();
 function load() {
   try { return { ...DEFAULTS, ...JSON.parse(localStorage.getItem(STORE) || '{}') }; } catch { return { ...DEFAULTS }; }
 }
-function save() { localStorage.setItem(STORE, JSON.stringify(cfg)); }
+function save() {
+  try { localStorage.setItem(STORE, JSON.stringify(cfg)); }
+  catch { toast('Image too large to remember after a reload — it still works for this session'); }
+}
 
 /* ── Rendering ─────────────────────────────────────────────────────── */
 
 const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-const rich = (s) => esc(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+const rich = (s) => esc(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/~~(.+?)~~/g, '<s style="opacity:.55">$1</s>');
 const FONT = 'ui-sans-serif, system-ui, -apple-system, \'Segoe UI\', Roboto, sans-serif';
 const MONO = 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace';
 
@@ -168,6 +140,63 @@ export function renderModal(c, uid = 'm') {
           <input placeholder="${esc(b.text)}" style="height:48px;padding:0 14px;border:1.5px solid ${line};border-radius:${Math.max(8, R - 8)}px;background:${dark ? 'rgba(255,255,255,0.04)' : '#FFFFFF'};color:${ink};font:600 17px ${MONO};letter-spacing:.1em;outline:none"></label>`;
       case 'note':
         return `<p style="margin:0;font-size:12.5px;line-height:1.5;color:${mut};font-family:${MONO}">${rich(b.text)}</p>`;
+      case 'image': {
+        const src = resolveSrc(b.src);
+        if (!src) return '';
+        const h = +b.h || 180;
+        return `<img src="${esc(src)}" alt="${esc(b.alt || '')}" style="display:block;width:100%;height:${h}px;object-fit:${b.fit === 'contain' ? 'contain' : 'cover'};border-radius:${Math.max(8, R - 8)}px;background:${soft}">`;
+      }
+      case 'esim':
+        /* the plan as a card: the one object a traveller recognises */
+        return `<div style="display:flex;align-items:center;gap:14px;padding:16px;border-radius:${Math.max(10, R - 6)}px;background:${dark ? '#222229' : '#0B0B0F'};color:#FFFFFF;text-align:left">
+          <div style="flex:none;width:44px;height:56px;border-radius:8px;background:linear-gradient(140deg,#FF5314,#FF8A4C);display:grid;place-items:center">
+            <div style="width:24px;height:18px;border-radius:4px;background:rgba(255,255,255,.85);box-shadow:inset 0 0 0 1.5px rgba(11,11,15,.25)"></div></div>
+          <div style="flex:1;min-width:0"><div style="font-size:16px;font-weight:800">${rich(b.country)}</div>
+            <div style="font-size:13.5px;opacity:.75;margin-top:2px">${rich(b.plan)}</div>
+            <div style="font:600 11px ${MONO};letter-spacing:.06em;opacity:.55;margin-top:5px;text-transform:uppercase">${rich(b.meta)}</div></div>
+          ${b.status ? `<span style="flex:none;padding:6px 10px;border-radius:999px;font:700 11.5px ${FONT};${/active|ready/i.test(b.status) ? 'background:rgba(74,222,128,.16);color:#4ADE80' : 'background:rgba(255,255,255,.12);color:#FFFFFF'}">${rich(b.status)}</span>` : ''}
+        </div>`;
+      case 'steps':
+        return `<ol style="margin:0;padding:0;list-style:none;display:grid;gap:10px;text-align:left">${lines.map((x, i) => `
+          <li style="display:flex;gap:12px;align-items:flex-start;font-size:14.5px;line-height:1.45;color:${ink}">
+            <span style="flex:none;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:${soft};color:${accent};font:800 12px ${FONT};box-shadow:inset 0 0 0 1px ${line}">${i + 1}</span><span style="padding-top:2px">${rich(x)}</span></li>`).join('')}</ol>`;
+      case 'qr': {
+        let cells = '';
+        const n = 21, sz = 7;
+        for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) {
+          const f = (i < 7 && j < 7) || (i < 7 && j > 13) || (i > 13 && j < 7);
+          if (!f && ((i * 7 + j * 13 + (i * j) % 5) % 3 === 0)) cells += `<rect x="${j * sz}" y="${i * sz}" width="${sz}" height="${sz}"/>`;
+        }
+        const fin = (x, y) => `<rect x="${x + 3.5}" y="${y + 3.5}" width="42" height="42" fill="none" stroke="#0B0B0F" stroke-width="7"/><rect x="${x + 14}" y="${y + 14}" width="21" height="21"/>`;
+        return `<div style="display:grid;justify-items:center;gap:10px;padding:18px;border-radius:${Math.max(10, R - 6)}px;background:${soft}">
+          <div style="padding:12px;border-radius:12px;background:#FFFFFF"><svg viewBox="0 0 147 147" width="168" height="168" fill="#0B0B0F" aria-label="QR code">${cells}${fin(0, 0)}${fin(98, 0)}${fin(0, 98)}</svg></div>
+          ${b.label ? `<div style="font-size:14px;font-weight:700;color:${ink}">${rich(b.label)}</div>` : ''}
+          ${b.text ? `<div style="font:12px/1.4 ${MONO};color:${mut};text-align:center">${rich(b.text)}</div>` : ''}</div>`;
+      }
+      case 'choice':
+        return `<div style="display:grid;gap:8px;text-align:left" role="radiogroup">${lines.map((x, i) => {
+          const [l, d, pr] = x.split('|').map((y) => (y || '').trim());
+          const on = i === (+b.value || 0);
+          return `<div role="radio" aria-checked="${on}" style="display:flex;align-items:center;gap:12px;padding:13px 14px;border-radius:${Math.max(10, R - 8)}px;cursor:pointer;
+            border:${on ? `2px solid ${accent}` : `1.5px solid ${line}`};background:${on ? soft : 'transparent'}">
+            <span style="flex:none;width:18px;height:18px;border-radius:50%;border:${on ? `5px solid ${accent}` : `2px solid ${line}`};box-sizing:border-box"></span>
+            <span style="flex:1;min-width:0"><span style="display:block;font-size:14.5px;font-weight:700;color:${ink}">${rich(l)}</span>${d ? `<span style="display:block;font-size:12.5px;color:${mut};margin-top:1px">${rich(d)}</span>` : ''}</span>
+            ${pr ? `<span style="flex:none;font-size:14.5px;font-weight:800;color:${ink}">${rich(pr)}</span>` : ''}</div>`;
+        }).join('')}</div>`;
+      case 'toggle': {
+        const on = b.on === true || b.on === 'true';
+        return `<div style="display:flex;align-items:center;gap:14px;padding:12px 14px;border:1.5px solid ${line};border-radius:${Math.max(10, R - 8)}px;text-align:left">
+          <span style="flex:1"><span style="display:block;font-size:14.5px;font-weight:700;color:${ink}">${rich(b.label)}</span>${b.text ? `<span style="display:block;font-size:12.5px;color:${mut};margin-top:1px">${rich(b.text)}</span>` : ''}</span>
+          <span role="switch" aria-checked="${on}" style="flex:none;width:44px;height:26px;border-radius:13px;padding:3px;box-sizing:border-box;background:${on ? accent : (dark ? 'rgba(255,255,255,.18)' : '#D9DCE3')};display:flex;justify-content:${on ? 'flex-end' : 'flex-start'}">
+            <span style="width:20px;height:20px;border-radius:50%;background:#FFFFFF;box-shadow:0 1px 3px rgba(0,0,0,.25)"></span></span></div>`;
+      }
+      case 'rating': {
+        const v = Math.max(0, Math.min(5, +b.value || 0));
+        return `<div style="display:flex;gap:8px;justify-content:${c.align === 'center' ? 'center' : 'flex-start'}" role="radiogroup" aria-label="Rating">${[1, 2, 3, 4, 5].map((k) =>
+          `<span style="width:40px;height:40px;display:grid;place-items:center;border-radius:12px;background:${k <= v ? soft : 'transparent'};color:${k <= v ? '#F59E0B' : line}">${glyphSVG('star', { size: 26, color: k <= v ? '#F59E0B' : (dark ? '#52525B' : '#D1D5DB'), sw: 2 })}</span>`).join('')}</div>`;
+      }
+      case 'divider':
+        return `<hr style="margin:2px 0;border:0;border-top:1px solid ${line}">`;
       default: return '';
     }
   }).join('');
@@ -178,18 +207,27 @@ export function renderModal(c, uid = 'm') {
     ${primary ? `border:0;background:${btnBg};color:${btnOn};` : `border:1.5px solid ${line};background:transparent;color:${ink};`}">${esc(label)}</button>`;
   const ctas = +c.ctas > 0 ? `<div style="display:flex;gap:10px;margin-top:4px;${stack ? 'flex-direction:column;' : (two ? 'flex-direction:row-reverse;' : '')}">
       ${btn(c.primary || 'OK', true)}${two ? btn(c.secondary, false) : ''}</div>` : '';
+  const link = c.link ? `<a href="#" style="justify-self:${c.align === 'center' ? 'center' : 'start'};font-size:13.5px;font-weight:650;color:${mut};text-decoration:underline;text-underline-offset:3px">${rich(c.link)}</a>` : '';
+  const pad = c.size === 'sm' ? 26 : 32;
+  const coverSrc = resolveSrc(c.cover);
+  /* a header image bleeds to the modal's edges; the icon then overlaps its
+     bottom edge so the two read as one object */
+  const cover = coverSrc ? `<div style="margin:-${pad}px -${pad}px ${c.iconStyle === 'none' ? 0 : -(+c.iconSize || 72) / 2 - 8}px;height:${c.size === 'lg' ? 220 : 180}px;border-radius:${R}px ${R}px 0 0;overflow:hidden;background:${soft}">
+      <img src="${esc(coverSrc)}" alt="" style="display:block;width:100%;height:100%;object-fit:cover"></div>` : '';
 
   return `<div role="dialog" aria-modal="true" aria-labelledby="${uid}-t" style="position:relative;box-sizing:border-box;width:100%;max-width:${W}px;padding:${c.size === 'sm' ? 26 : 32}px;border-radius:${R}px;background:${bg};color:${ink};font-family:${FONT};
     box-shadow:0 30px 80px rgba(11,11,15,${dark ? 0.6 : 0.28}),0 0 0 1px ${line};text-align:${ta};animation:olmIn .42s cubic-bezier(.2,.9,.25,1.12) both">
     <style>@keyframes olmIn{from{opacity:0;transform:translateY(14px) scale(.96)}to{opacity:1;transform:none}}@keyframes olmProg{from{transform:scaleX(0)}to{transform:scaleX(1)}}@media (prefers-reduced-motion:reduce){[role=dialog],[role=dialog] *{animation:none!important}}</style>
-    ${c.close ? `<button type="button" aria-label="Close" style="position:absolute;top:14px;right:14px;width:34px;height:34px;display:grid;place-items:center;border:0;border-radius:50%;background:${dark ? 'rgba(255,255,255,0.08)' : '#F2F3F6'};color:${mut};cursor:pointer">${glyphSVG('x', { size: 16, sw: 2.4 })}</button>` : ''}
+    ${c.close ? `<button type="button" aria-label="Close" style="position:absolute;top:14px;right:14px;width:34px;height:34px;display:grid;place-items:center;border:0;border-radius:50%;z-index:2;background:${coverSrc ? 'rgba(255,255,255,0.92)' : (dark ? 'rgba(255,255,255,0.08)' : '#F2F3F6')};color:${coverSrc ? '#0B0B0F' : mut};cursor:pointer">${glyphSVG('x', { size: 16, sw: 2.4 })}</button>` : ''}
     <div style="display:grid;gap:18px">
-      ${renderIcon(c, T, uid)}
+      ${cover}
+      ${coverSrc && c.iconStyle !== 'none' ? `<div style="position:relative;${c.align === 'center' ? '' : 'padding-left:4px;'}"><div style="display:inline-block;border-radius:50%;box-shadow:0 0 0 6px ${bg};background:${bg};${c.align === 'center' ? 'margin:0 auto;display:block;width:max-content' : ''}">${renderIcon({ ...c, align: 'left' }, T, uid)}</div></div>` : renderIcon(c, T, uid)}
       <div style="display:grid;gap:8px">
         <h2 id="${uid}-t" style="margin:0;font-size:${c.size === 'lg' ? 26 : 22}px;line-height:1.2;letter-spacing:-.015em;font-weight:800;color:${ink}${c.close && ta === 'left' ? ';padding-right:36px' : ''}">${rich(c.title)}</h2>
       </div>
       ${blocks ? `<div style="display:grid;gap:14px">${blocks}</div>` : ''}
       ${ctas}
+      ${link}
     </div>
   </div>`;
 }
@@ -209,8 +247,10 @@ function renderControls() {
   const T = TYPES[cfg.type];
   $c.innerHTML = `
     <div class="mb-sec">
-      <h3>Start from</h3>
-      <div class="mb-tpls">${TEMPLATES.map((t) => `<button type="button" data-tpl="${t.k}"><i style="background:${TYPES[t.cfg.type].c}"></i>${esc(t.t)}</button>`).join('')}</div>
+      <h3>Start from <span>${TEMPLATES.length} Openline templates</span></h3>
+      <button type="button" class="hb-btn is-main mb-tplbtn" data-tplmenu>${glyphSVG('sparkles', { size: 18 })} Browse templates</button>
+      <div class="mb-tpls">${['paid-activate', 'activated', 'details', 'low', 'delete', 'promo'].map((k) => TEMPLATES.find((t) => t.k === k)).map((t) =>
+        `<button type="button" data-tpl="${t.k}"><i style="background:${TYPES[t.cfg.type].c}"></i>${esc(t.t)}</button>`).join('')}</div>
     </div>
 
     <div class="mb-sec">
@@ -250,6 +290,12 @@ function renderControls() {
       ${+cfg.ctas === 2 ? `<label class="mb-lab">Second button<input class="mb-in" data-f="secondary" value="${esc(cfg.secondary)}"></label>` : ''}
       ${+cfg.ctas > 0 ? `<div class="mb-row">${seg('primaryStyle', [['type', 'Main in type colour'], ['ink', 'Main in black']], cfg.primaryStyle)}</div>` : ''}
       ${+cfg.ctas === 2 ? `<div class="mb-row">${seg('layout', [['row', 'Side by side'], ['stack', 'Stacked']], cfg.layout)}</div>` : ''}
+      <label class="mb-lab">Text link under the buttons (optional)<input class="mb-in" data-f="link" value="${esc(cfg.link || '')}" placeholder="e.g. View receipt"></label>
+    </div>
+
+    <div class="mb-sec">
+      <h3>Header image</h3>
+      ${imagePicker('cover', cfg.cover)}
     </div>
 
     <div class="mb-sec">
@@ -268,6 +314,46 @@ function renderControls() {
   wire();
 }
 
+/* Image source picker: built-in illustration, upload, or URL. Uploads are
+   downscaled to 1200px WebP so they fit in localStorage and the export. */
+function imagePicker(field, cur, bi) {
+  const key = bi == null ? field : `${bi}:${field}`;
+  const isIllus = cur && cur.startsWith('illus:');
+  return `<div class="mb-img" data-img="${key}">
+    <div class="mb-illus">
+      <button type="button" data-illus="" class="${!cur ? 'is-on' : ''}">None</button>
+      ${Object.entries(ILLUS).map(([k, v]) => `<button type="button" data-illus="illus:${k}" class="${cur === 'illus:' + k ? 'is-on' : ''}" title="${esc(v.name)}"><img src="${resolveSrc('illus:' + k)}" alt=""><span>${esc(v.name)}</span></button>`).join('')}
+    </div>
+    <div class="mb-imgrow">
+      <label class="hb-btn mb-upload">${glyphSVG('upload', { size: 16 })} Upload<input type="file" accept="image/*" data-upload hidden></label>
+      <input class="mb-in" data-url placeholder="…or paste an image URL" value="${cur && !isIllus && !cur.startsWith('data:') ? esc(cur) : ''}">
+    </div>
+    ${cur && cur.startsWith('data:') ? '<p class="qa-hint">Using your uploaded image.</p>' : ''}
+  </div>`;
+}
+
+function setImg(key, v) {
+  if (key.includes(':')) { const [i, f] = key.split(':'); cfg.blocks[+i][f] = v; } else cfg[key] = v;
+}
+
+function downscale(file) {
+  return new Promise((res, rej) => {
+    const r = new FileReader();
+    r.onload = () => {
+      const im = new Image();
+      im.onload = () => {
+        const k = Math.min(1, 1200 / Math.max(im.width, im.height));
+        const cv = document.createElement('canvas');
+        cv.width = Math.round(im.width * k); cv.height = Math.round(im.height * k);
+        cv.getContext('2d').drawImage(im, 0, 0, cv.width, cv.height);
+        res(cv.toDataURL('image/webp', 0.82));
+      };
+      im.onerror = rej; im.src = r.result;
+    };
+    r.onerror = rej; r.readAsDataURL(file);
+  });
+}
+
 function blockEditor(b, i) {
   const n = (cfg.blocks || []).length;
   const head = `<div class="mb-bhead"><b>${BLOCKS[b.type]}</b><span>
@@ -284,13 +370,21 @@ function blockEditor(b, i) {
   if (b.type === 'progress') body = inp('label', 'Label') + `<div class="mb-2col">${inp('value', '0–100')}${inp('text', 'Right-hand text')}</div>`;
   if (b.type === 'code') body = inp('label', 'Label (optional)') + inp('text', 'CODE');
   if (b.type === 'input') body = inp('label', 'Field label') + inp('text', 'Placeholder');
+  if (b.type === 'image') body = imagePicker('src', b.src, i) + `<div class="mb-2col">${inp('h', 'Height px')}${inp('alt', 'Alt text')}</div>`;
+  if (b.type === 'esim') body = inp('country', 'Country or region') + inp('plan', 'Plan') + `<div class="mb-2col">${inp('status', 'Status')}${inp('meta', 'Detail line')}</div>`;
+  if (b.type === 'steps') body = ta('text', 'One step per line', 3);
+  if (b.type === 'qr') body = inp('label', 'Label') + inp('text', 'Caption');
+  if (b.type === 'choice') body = ta('text', 'Label | detail | price — one per line', 3) + `<div class="mb-2col">${inp('value', 'Selected')}<span class="qa-hint" style="margin:10px 0 0">0 = first option</span></div>`;
+  if (b.type === 'toggle') body = inp('label', 'Label') + inp('text', 'Detail (optional)') + `<label class="qa-check"><input type="checkbox" data-bon="${i}" ${b.on === true || b.on === 'true' ? 'checked' : ''}> On</label>`;
+  if (b.type === 'rating') body = `<div class="mb-2col">${inp('value', '0–5')}<span class="qa-hint" style="margin:10px 0 0">Stars shown as selected</span></div>`;
+  if (b.type === 'divider') body = '';
   return `<div class="mb-block">${head}${body}</div>`;
 }
 
 function wire() {
   $c.querySelectorAll('[data-tpl]').forEach((b) => b.addEventListener('click', () => {
     const t = TEMPLATES.find((x) => x.k === b.dataset.tpl);
-    cfg = { ...cfg, ...JSON.parse(JSON.stringify(t.cfg)) };
+    cfg = { ...cfg, cover: '', link: '', secondary: '', ...JSON.parse(JSON.stringify(t.cfg)) };
     commit(true);
   }));
   $c.querySelectorAll('[data-type]').forEach((b) => b.addEventListener('click', () => {
@@ -319,11 +413,28 @@ function wire() {
     const type = $c.querySelector('[data-addtype]').value;
     const seed = { p: { text: 'New paragraph.' }, list: { text: 'First item\nSecond item' }, kv: { text: 'Label | Value' },
       highlight: { title: 'Heads up', text: 'Something worth calling out.' }, progress: { label: 'Progress', value: 60, text: '60%' },
-      code: { label: 'Code', text: 'OPENLINE' }, input: { label: 'Field', text: 'Type here' }, note: { text: 'A small note.' } }[type];
+      code: { label: 'Code', text: 'OPENLINE' }, input: { label: 'Field', text: 'Type here' }, note: { text: 'A small note.' },
+      image: { src: 'illus:qr-install', h: 180, alt: '' }, esim: { country: 'Japan', plan: '10 GB · 30 days', meta: 'Tier-1 · 5G', status: 'Ready' },
+      steps: { text: 'First step\nSecond step\nThird step' }, qr: { label: 'Japan · 10 GB', text: 'Scan with your camera' },
+      choice: { text: '5 GB | 30 days | $9.00\n10 GB | 30 days | $15.00', value: 0 }, toggle: { label: 'Auto-renew', text: '', on: true },
+      rating: { value: 4 }, divider: {} }[type];
     cfg.blocks = [...(cfg.blocks || []), { type, ...seed }];
     commit(true);
   });
   $c.querySelector('[data-close]').addEventListener('change', (e) => { cfg.close = e.target.checked; commit(true); });
+  $c.querySelectorAll('[data-bon]').forEach((el) => el.addEventListener('change', () => { cfg.blocks[+el.dataset.bon].on = el.checked; commit(false); }));
+  $c.querySelectorAll('[data-img]').forEach((box) => {
+    const key = box.dataset.img;
+    box.querySelectorAll('[data-illus]').forEach((b) => b.addEventListener('click', () => { setImg(key, b.dataset.illus); commit(true); }));
+    box.querySelector('[data-url]').addEventListener('change', (e) => { setImg(key, e.target.value.trim()); commit(true); });
+    box.querySelector('[data-upload]').addEventListener('change', async (e) => {
+      const f = e.target.files && e.target.files[0];
+      if (!f) return;
+      try { setImg(key, await downscale(f)); commit(true); } catch { toast('That image could not be read'); }
+    });
+  });
+  const tm = $c.querySelector('[data-tplmenu]');
+  if (tm) tm.addEventListener('click', openTemplates);
   $c.querySelector('[data-pick]').addEventListener('click', openPicker);
   $c.querySelectorAll('[data-copy]').forEach((b) => b.addEventListener('click', () => copy(b.dataset.copy)));
 }
@@ -415,6 +526,58 @@ function paintPicker() {
   }));
 }
 
+/* ── Template menu ─────────────────────────────────────────────────── */
+
+let tf = { cat: 'All', q: '' };
+function openTemplates() {
+  const el = document.getElementById('mb-tplmenu');
+  el.hidden = false;
+  if (!el.firstElementChild) {
+    el.innerHTML = `<div class="mb-pk-back" data-x></div>
+      <div class="mb-pk mb-tm" role="dialog" aria-label="Openline modal templates">
+        <div class="mb-pk-head">
+          <input class="mb-in" data-tq placeholder="Search ${TEMPLATES.length} templates — activate, top-up, refund…">
+          <button type="button" class="qa-x" data-x title="Close">✕</button>
+        </div>
+        <div class="mb-pk-filters"><div class="mb-chips" data-tcats></div></div>
+        <div class="mb-tm-grid"></div>
+        <p class="mb-tm-foot">Sample copy — plans, prices, dates and codes are placeholders for real order and account data.</p>
+      </div>`;
+    el.querySelectorAll('[data-x]').forEach((b) => b.addEventListener('click', () => { el.hidden = true; }));
+    el.querySelector('[data-tq]').addEventListener('input', (e) => { tf.q = e.target.value; paintTemplates(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') el.hidden = true; });
+  }
+  paintTemplates();
+  el.querySelector('[data-tq]').focus();
+}
+
+function paintTemplates() {
+  const el = document.getElementById('mb-tplmenu');
+  const cats = ['All', ...TEMPLATE_CATS];
+  const list = TEMPLATES.filter((t) => (tf.cat === 'All' || t.cat === tf.cat)
+    && (!tf.q || (t.t + ' ' + t.cfg.title + ' ' + t.cat).toLowerCase().includes(tf.q.toLowerCase())));
+  el.querySelector('[data-tcats]').innerHTML = cats.map((c) => `<button type="button" data-tc="${esc(c)}" class="${tf.cat === c ? 'is-on' : ''}">${esc(c)}
+    <small>${c === 'All' ? TEMPLATES.length : TEMPLATES.filter((t) => t.cat === c).length}</small></button>`).join('');
+  el.querySelectorAll('[data-tc]').forEach((b) => b.addEventListener('click', () => { tf.cat = b.dataset.tc; paintTemplates(); }));
+  /* live miniatures: the real renderModal at full size, scaled down, so
+     what you pick is exactly what loads */
+  el.querySelector('.mb-tm-grid').innerHTML = list.map((t) => {
+    const c = { ...DEFAULTS, ...t.cfg, size: 'md', theme: cfg.theme, radius: cfg.radius, align: cfg.align, close: true };
+    /* a div, not a <button>: the miniature contains real buttons, and a
+       button inside a button makes the parser close the outer one early */
+    return `<div role="button" tabindex="0" class="mb-tm-i" data-tk="${t.k}">
+      <span class="mb-tm-prev"><span class="mb-tm-scale">${renderModal(c, 'tm-' + t.k)}</span></span>
+      <span class="mb-tm-meta"><i style="background:${TYPES[t.cfg.type].c}"></i><b>${esc(t.t)}</b><small>${esc(t.cat)}</small></span>
+    </div>`;
+  }).join('') || '<p class="qa-hint">Nothing matches.</p>';
+  el.querySelectorAll('[data-tk]').forEach((b) => b.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); b.click(); } }));
+  el.querySelectorAll('[data-tk]').forEach((b) => b.addEventListener('click', () => {
+    const t = TEMPLATES.find((x) => x.k === b.dataset.tk);
+    cfg = { ...cfg, cover: '', link: '', secondary: '', ...JSON.parse(JSON.stringify(t.cfg)) };
+    el.hidden = true; commit(true);
+  }));
+}
+
 /* ── Export ────────────────────────────────────────────────────────── */
 
 function toast(m) {
@@ -436,12 +599,14 @@ async function copy(kind) {
       `- **Subject:** ${cfg.title}`,
       `- **Buttons:** ${+cfg.ctas === 0 ? 'none' : `“${cfg.primary}”${+cfg.ctas === 2 ? ` + “${cfg.secondary}” (${cfg.layout})` : ''} · main in ${cfg.primaryStyle === 'ink' ? 'black' : 'type colour'}`}`,
       `- **Format:** ${cfg.size} · ${cfg.align} · radius ${cfg.radius} · ${cfg.theme}${cfg.close ? ' · close button' : ''}`,
+      `- **Header image:** ${!cfg.cover ? 'none' : cfg.cover.startsWith('illus:') ? `built-in “${(ILLUS[cfg.cover.slice(6)] || {}).name}”` : cfg.cover.startsWith('data:') ? 'uploaded image (in the HTML export)' : cfg.cover}`,
+      ...(cfg.link ? [`- **Text link:** ${cfg.link}`] : []),
       '',
       '**Content blocks:**',
       ...(cfg.blocks || []).map((b, i) => `${i + 1}. ${BLOCKS[b.type]}: ${[b.title, b.label, b.text, b.value != null && b.type === 'progress' ? `${b.value}%` : null].filter(Boolean).join(' — ').replace(/\n/g, ' / ')}`),
       '',
       '<!-- machine-readable',
-      JSON.stringify(cfg),
+      JSON.stringify({ ...cfg, cover: cfg.cover && cfg.cover.startsWith('data:') ? '(uploaded image)' : cfg.cover, blocks: (cfg.blocks || []).map((b) => (b.src && b.src.startsWith('data:') ? { ...b, src: '(uploaded image)' } : b)) }),
       '-->',
     ].join('\n');
   }

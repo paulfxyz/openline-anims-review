@@ -415,6 +415,8 @@ async function boot() {
   });
 
   buildUI();
+  /* the support badge, KB and compatibility modals work on every page */
+  import('./support/boot.js');
 
   /* The capture keeps the live page's links, rewritten to /qa. Links to
      pages that are not part of the review land on the hub. */

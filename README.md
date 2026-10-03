@@ -116,6 +116,17 @@ tick in the nav, a highlighted matrix row, and makes it the default on load.
 - **Features pages** `/qa/security`, `/qa/adblocking`, `/qa/unlimited` captured (no boards; here for identity).
 - **Redesigns** `/qa/about-redesign`, `/qa/contact-redesign`: every piece of the live copy kept, new layout,
   plain HTML/CSS on the captured header/footer. Source in `qa/redesign/`, built by `qa/tools/redesign.py`.
-- **Modal builder** `/qa/modals`: 8 types, 249 generated + 31 Aloha animated icons (`qa/icons-lib.js`),
-  8 content block types, 0–2 CTAs, format options, preview over a real page or a phone; copy HTML or for Computer.
+- **Modal builder** `/qa/modals`: 8 types, 327 generated + 31 Aloha animated icons (`qa/icons-lib.js`),
+  60 Openline templates in 7 categories with a searchable miniature menu (`qa/modal-templates.js`),
+  16 content block types (eSIM card, steps, QR, choice, toggle, rating, image, divider…), cover images
+  (upload or `qa/modal-illus.js` illustrations), 0–2 CTAs plus a text link; preview over a real page or a phone.
+- **Support chat** `/qa/chat`: capture of /all-countries; the support badge opens a full-screen chat
+  (`qa/support/chat.js`) — sample history, composer with files (pick, drop, paste), voice notes (MediaRecorder,
+  demo fallback), simulated replies, and a collapsible panel: WhatsApp / Instagram / Messenger / email,
+  "Ask an AI about us" (ChatGPT, Claude, Perplexity, Gemini, Grok, Copilot, Le Chat, prefilled), KB and
+  compatibility. The badge opens it on every /qa page.
+- **Help modals** `/qa/kb`: the knowledge-base and device-compatibility modals (`qa/support/support.js`) on the
+  real open-source data (`qa/data/kb-articles.json` from openline-kb, `qa/data/devices.js` from openline-check;
+  search engine `qa/support/search.mjs` from openline-kb). Opened by `data-ol-open` markup, `#kb` / `#compat=`
+  hashes, `Openline.open()`, or ⌘K; the page documents each with live examples.
 - Home › Why choose: board embed is now the real 407 × 302 slot; 3 · The Handover redrawn for it.

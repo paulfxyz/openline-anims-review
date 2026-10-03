@@ -1,5 +1,5 @@
 /* ══════════════════════════════════════════════════════════════════════
-   Icon library for /qa — 83 glyphs × 3 motions = 249 animated icons.
+   Icon library for /qa — 109 glyphs × 3 motions = 327 animated icons (26 of them Openline-specific: eSIM, activation, top-up, transfer, lounge…).
 
    Glyphs are stroke drawings on a 24 grid (round caps and joins, 2px),
    so every one of them can be "drawn on" with pathLength. Motions are
@@ -91,6 +91,33 @@ export const GLYPHS = {
   book: ['Messages', '<path d="M4 4.5A1.5 1.5 0 0 1 5.5 3H19v15H5.5A1.5 1.5 0 0 0 4 19.5z"/><path d="M4 19.5A1.5 1.5 0 0 0 5.5 21H19v-3"/><path d="M8 7.5h7"/>'],
   headset: ['Messages', '<path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3" y="13.5" width="4.5" height="6.5" rx="1.5"/><rect x="16.5" y="13.5" width="4.5" height="6.5" rx="1.5"/><path d="M20 19.5a3 3 0 0 1-3 2.5h-3"/>'],
   languages: ['Messages', '<path d="M3 5h10M8 3v2M5 5c.8 3.5 3.5 6.5 7 8M11 5c-.8 3.5-3.5 6.5-7 8"/><path d="M13 21l4-9 4 9M14.5 18h5"/>'],
+  /* ── Openline: eSIM lifecycle, plans, account ── */
+  esim: ['Openline', '<path d="M7 3h7.5L19 7.5V19a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M14.5 13.2h-4.2a2.1 2.1 0 1 0 0 2.6"/><path d="M9.3 14.5h5.2"/>'],
+  'esim-check': ['Openline', '<path d="M7 3h7.5L19 7.5V12M12 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2"/><path d="M14.5 18l2 2 4-4"/><rect x="8" y="9.5" width="6" height="4.5" rx="1"/>'],
+  'esim-plus': ['Openline', '<path d="M7 3h7.5L19 7.5V12M12 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2"/><path d="M17.5 14.5v6M14.5 17.5h6"/><rect x="8" y="9.5" width="6" height="4.5" rx="1"/>'],
+  'esim-x': ['Openline', '<path d="M7 3h7.5L19 7.5V12M12 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2"/><path d="M15 15l5 5M20 15l-5 5"/><rect x="8" y="9.5" width="6" height="4.5" rx="1"/>'],
+  power: ['Openline', '<path d="M12 3v8"/><path d="M6.6 6.6a8 8 0 1 0 10.8 0"/>'],
+  scan: ['Openline', '<path d="M4 8V5.5A1.5 1.5 0 0 1 5.5 4H8M16 4h2.5A1.5 1.5 0 0 1 20 5.5V8M20 16v2.5a1.5 1.5 0 0 1-1.5 1.5H16M8 20H5.5A1.5 1.5 0 0 1 4 18.5V16"/><path d="M4 12h16"/>'],
+  'phone-check': ['Openline', '<rect x="5" y="2.5" width="11" height="19" rx="3"/><path d="M9 18.5h3"/><path d="M14.5 11.5l2 2 4.5-4.5"/>'],
+  'phone-x': ['Openline', '<rect x="5" y="2.5" width="11" height="19" rx="3"/><path d="M9 18.5h3"/><path d="M15.5 8.5l5 5M20.5 8.5l-5 5"/>'],
+  'phone-swap': ['Openline', '<rect x="2.5" y="5" width="7" height="13" rx="2"/><rect x="14.5" y="5" width="7" height="13" rx="2"/><path d="M10.5 9.5h3l-1.2-1.2M13.5 13.5h-3l1.2 1.2"/>'],
+  gauge: ['Openline', '<path d="M3.5 17a8.5 8.5 0 1 1 17 0"/><path d="M12 17l4.5-5.5"/><circle cx="12" cy="17" r="1.5"/>'],
+  topup: ['Openline', '<circle cx="12" cy="12" r="9"/><path d="M12.8 6.5L9 12.6h3.4l-1 4.9 3.8-6.1h-3.4z"/>'],
+  'plane-land': ['Openline', '<path d="M2.5 20.5h19"/><path d="M4 10.5l2.2-1 3 3 2.3-1-3-6.5 2-.8 5.5 5.8 4.6-1.8a1.7 1.7 0 0 1 1.2 3.2l-15 5.8-3-2.9z"/>'],
+  'plane-off': ['Openline', '<path d="M3 3l18 18"/><path d="M10.2 13.8L3 11.5l1.3-1.3 4.2.3M12.8 9.7l3.4-3.4a1.8 1.8 0 0 1 2.6 2.6l-3.4 3.4M15.3 15.3l.3 4.4-1.3 1.3-2.3-7.2"/>'],
+  lounge: ['Openline', '<path d="M5 11V8a3 3 0 0 1 3-3h8a3 3 0 0 1 3 3v3"/><path d="M3 13a2 2 0 0 1 4 0v2h10v-2a2 2 0 0 1 4 0v4.5H3z"/><path d="M5 17.5V20M19 17.5V20"/>'],
+  refund: ['Openline', '<path d="M5 3h14v18l-2.3-1.5L14.3 21 12 19.5 9.7 21l-2.4-1.5L5 21z"/><path d="M14.5 9.5H10a1.8 1.8 0 0 0 0 3.6h2a1.8 1.8 0 0 1 0 3.6H9"/><path d="M12 7.5v1.8M12 16.7v1.3"/>'],
+  'receipt-check': ['Openline', '<path d="M5 3h14v18l-2.3-1.5L14.3 21 12 19.5 9.7 21l-2.4-1.5L5 21z"/><path d="M8.8 11.5l2.2 2.2 4.2-4.4"/>'],
+  'card-check': ['Openline', '<rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 10h19"/><path d="M13.5 15l1.8 1.8L19 13"/>'],
+  'calendar-check': ['Openline', '<rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M9 15l2 2 4-4"/>'],
+  map: ['Openline', '<path d="M9 4L3.5 6v14L9 18l6 2 5.5-2V4L15 6z"/><path d="M9 4v14M15 6v14"/>'],
+  route: ['Openline', '<circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="6" r="2.5"/><path d="M8.5 18H15a3.5 3.5 0 0 0 0-7H9a3.5 3.5 0 0 1 0-7h6.5"/>'],
+  speed: ['Openline', '<path d="M3 13.5a9 9 0 0 1 18 0"/><path d="M12 13.5L8 8.5"/><path d="M5.5 18.5h13"/>'],
+  pause: ['Openline', '<circle cx="12" cy="12" r="9"/><path d="M10 9v6M14 9v6"/>'],
+  repeat: ['Openline', '<path d="M17 2.5l3 3-3 3"/><path d="M4 11.5v-1a5 5 0 0 1 5-5h11M7 21.5l-3-3 3-3"/><path d="M20 12.5v1a5 5 0 0 1-5 5H4"/>'],
+  'user-plus': ['Openline', '<circle cx="10" cy="8" r="4"/><path d="M3 20.5a7 7 0 0 1 12.5-4.4"/><path d="M18.5 14v6M15.5 17h6"/>'],
+  shop: ['Openline', '<path d="M3.5 9.5L5 4h14l1.5 5.5"/><path d="M3.5 9.5a2.8 2.8 0 0 0 5.6 0 2.8 2.8 0 0 0 5.8 0 2.8 2.8 0 0 0 5.6 0"/><path d="M5 12v8.5h14V12M10 20.5v-5h4v5"/>'],
+  cart: ['Openline', '<circle cx="9" cy="20" r="1.5"/><circle cx="17.5" cy="20" r="1.5"/><path d="M2.5 3.5h2.8l2.4 11.5h10.8l2-8H6.3"/>'],
   sun: ['Delight', '<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/>'],
 };
 

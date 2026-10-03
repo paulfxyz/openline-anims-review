@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Knowledge base &amp; compatibility modals — Openline QA</title>
+<meta name="robots" content="noindex" />
+<link rel="stylesheet" href="/qa/hub.css" />
+<link rel="stylesheet" href="/qa/support/support.css" />
+<link rel="stylesheet" href="/qa/kb.css" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230B0B0F'/%3E%3Cpath d='M16 7a9 9 0 1 0 9 9' fill='none' stroke='%23fff' stroke-width='4' stroke-linecap='round'/%3E%3Ccircle cx='24' cy='8' r='3.4' fill='%23FF5314'/%3E%3C/svg%3E" />
+</head>
+<body class="kd-body">
+
+<header class="hb-head">
+  <a class="hb-brand" href="/qa">
+    <svg viewBox="0 0 32 32" aria-label="Openline">
+      <path d="M16 5a11 11 0 1 0 11 11" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+      <circle cx="25.5" cy="6.5" r="4" fill="#FF5314"/>
+    </svg>
+    <span><b>Help modals</b><small>Openline QA</small></span>
+  </a>
+  <nav class="hb-links">
+    <a href="/qa/chat">Support chat</a>
+    <a href="/qa/modals">Modal builder</a>
+    <a href="/qa">All pages</a>
+  </nav>
+</header>
+
+<main class="kd">
+
+  <section class="kd-hero">
+    <p class="kd-eyebrow">/qa/kb</p>
+    <h1>Two help modals, <em>opened from anywhere.</em></h1>
+    <p class="kd-lede">The knowledge base and the device-compatibility check are the same two modals everywhere on the site — the chat, the installation guide, checkout, an email link. This page shows every way to open them, each one live.</p>
+    <div class="kd-cards">
+      <button type="button" class="kd-card" data-ol-open="kb">
+        <span class="kd-ic"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4.5A1.5 1.5 0 0 1 5.5 3H19v15H5.5A1.5 1.5 0 0 0 4 19.5z"/><path d="M4 19.5A1.5 1.5 0 0 0 5.5 21H19v-3"/></svg></span>
+        <b>Knowledge base</b>
+        <span><strong id="kd-n-kb">2,737</strong> articles · 18 topics · search, read and related articles side by side</span>
+        <em>Open it →</em>
+      </button>
+      <button type="button" class="kd-card" data-ol-open="compat">
+        <span class="kd-ic"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.5" width="12" height="19" rx="3"/><path d="M10.5 18.5h3"/></svg></span>
+        <b>Device compatibility</b>
+        <span><strong>9,496</strong> devices · 173 brands · a clear verdict and what to do next</span>
+        <em>Open it →</em>
+      </button>
+    </div>
+  </section>
+
+  <section class="kd-sec">
+    <div class="kd-sh"><span>01</span><div><h2>In the page — the way customers meet them</h2><p>Where Irina placed the triggers on the live site, plus the places they belong next.</p></div></div>
+    <div class="kd-demos">
+
+      <div class="kd-demo">
+        <div class="kd-dlabel">Help search · header or help page</div>
+        <form class="kd-mock kd-search" data-kd-search="kb">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+          <input type="search" placeholder="Search help — try “refund”" aria-label="Search help" />
+          <kbd>⌘K</kbd>
+        </form>
+        <p>Type and press Enter: the KB opens with that search already run. ⌘K / Ctrl+K opens it from any page.</p>
+      </div>
+
+      <div class="kd-demo">
+        <div class="kd-dlabel">Plan card · before checkout</div>
+        <div class="kd-mock kd-plan">
+          <div class="kd-plan-top"><span class="kd-flag">JP</span><div><b>Japan</b><small>10 GB · 30 days</small></div><strong>$17</strong></div>
+          <button type="button" class="kd-buy">Buy now</button>
+          <button type="button" class="kd-link" data-ol-open="compat">Is my phone compatible?</button>
+        </div>
+        <p>The quiet question under the buy button — the most common pre-purchase doubt, answered without leaving the page.</p>
+      </div>
+
+      <div class="kd-demo">
+        <div class="kd-dlabel">Phone check · inline</div>
+        <form class="kd-mock kd-search is-dev" data-kd-search="compat">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="6" y="2.5" width="12" height="19" rx="3"/><path d="M10.5 18.5h3"/></svg>
+          <input type="search" placeholder="Your phone — try “Galaxy S24”" aria-label="Your phone model" />
+          <button type="submit">Check</button>
+        </form>
+        <p>Type a model and the modal opens straight on the verdict for the best match.</p>
+      </div>
+
+      <div class="kd-demo">
+        <div class="kd-dlabel">Installation guide · live site</div>
+        <div class="kd-mock kd-pillrow">
+          <button type="button" class="kd-pill" data-ol-open="compat"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></svg> Check your device compatibility</button>
+        </div>
+        <p>Irina’s pill on /installation-guide. On the captured <a href="/qa/installation-guide">QA page</a> it now opens the new modal.</p>
+      </div>
+
+      <div class="kd-demo">
+        <div class="kd-dlabel">Support chat · side panel</div>
+        <div class="kd-mock kd-help">
+          <button type="button" data-ol-open="kb"><b>Knowledge base</b><small>2,737 articles</small></button>
+          <button type="button" data-ol-open="compat"><b>Device compatibility</b><small>9,496 devices</small></button>
+        </div>
+        <p>“Help yourself” in the <a href="/qa/chat">redesigned chat</a>. Agents can also drop an article or a phone check straight into the conversation.</p>
+      </div>
+
+      <div class="kd-demo">
+        <div class="kd-dlabel">Article shortcut · footer, emails, error states</div>
+        <div class="kd-mock kd-foot">
+          <a href="#kb/article/what-is-openline">What is Openline?</a>
+          <a href="#kb=refund">Refunds</a>
+          <a href="#kb=install iphone">Install on iPhone</a>
+          <a href="#compat=pixel 9">Pixel 9 support</a>
+        </div>
+        <p>Plain links with a #hash. They work in a footer, a payment-failed modal or an email — the page opens with the modal already up.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="kd-sec">
+    <div class="kd-sh"><span>02</span><div><h2>For the developers — four ways in</h2><p>One script on the page; everything else is markup. Each “Try” button runs the snippet beside it.</p></div></div>
+
+    <div class="kd-ways">
+      <article class="kd-way">
+        <h3>Markup attributes</h3>
+        <p>Any button or link. Add a search, a topic or an article to land deeper.</p>
+        <div class="kd-rows">
+          <div class="kd-row"><code>&lt;button data-ol-open="kb"&gt;</code><button type="button" data-ol-open="kb">Try</button></div>
+          <div class="kd-row"><code>&lt;a data-ol-open="kb" data-ol-q="refund"&gt;</code><button type="button" data-ol-open="kb" data-ol-q="refund">Try</button></div>
+          <div class="kd-row"><code>&lt;a data-ol-open="kb" data-ol-cat="Troubleshooting"&gt;</code><button type="button" data-ol-open="kb" data-ol-cat="Troubleshooting">Try</button></div>
+          <div class="kd-row"><code>&lt;a data-ol-open="kb" data-ol-article="what-is-openline"&gt;</code><button type="button" data-ol-open="kb" data-ol-article="what-is-openline">Try</button></div>
+          <div class="kd-row"><code>&lt;button data-ol-open="compat" data-ol-q="iPhone 15"&gt;</code><button type="button" data-ol-open="compat" data-ol-q="iPhone 15">Try</button></div>
+        </div>
+      </article>
+
+      <article class="kd-way">
+        <h3>URL hash</h3>
+        <p>Shareable. Opens on load and on change, and is cleared when the modal closes.</p>
+        <div class="kd-rows">
+          <div class="kd-row"><code>openline.com/#kb</code><a href="#kb">Try</a></div>
+          <div class="kd-row"><code>openline.com/#kb=japan coverage</code><a href="#kb=japan coverage">Try</a></div>
+          <div class="kd-row"><code>openline.com/#kb/article/what-is-openline</code><a href="#kb/article/what-is-openline">Try</a></div>
+          <div class="kd-row"><code>openline.com/#compat=galaxy s24</code><a href="#compat=galaxy s24">Try</a></div>
+          <div class="kd-row"><code>openline.com/#chat</code><a href="#chat">Try</a></div>
+        </div>
+      </article>
+
+      <article class="kd-way">
+        <h3>JavaScript</h3>
+        <p>For app flows — a failed install, a checkout step, Gary handing over.</p>
+        <div class="kd-rows">
+          <div class="kd-row"><code>Openline.open('kb', { q: 'esim wont activate' })</code><button type="button" data-kd-js="kb|esim wont activate">Try</button></div>
+          <div class="kd-row"><code>Openline.open('compat', { q: 'Pixel 9' })</code><button type="button" data-kd-js="compat|Pixel 9">Try</button></div>
+          <div class="kd-row"><code>Openline.open('chat', { topic: 'Refund' })</code><button type="button" data-kd-js="chat|Refund">Try</button></div>
+          <div class="kd-row"><code>Openline.close()</code><span class="kd-muted">closes the open modal</span></div>
+        </div>
+      </article>
+
+      <article class="kd-way">
+        <h3>Keyboard &amp; embed</h3>
+        <p><kbd>⌘K</kbd> / <kbd>Ctrl K</kbd> opens the knowledge base anywhere. <kbd>↑</kbd> <kbd>↓</kbd> move through results, <kbd>Enter</kbd> opens, <kbd>Esc</kbd> closes.</p>
+        <pre class="kd-pre"><code>&lt;script type="module"
+  src="/qa/support/support.js"&gt;&lt;/script&gt;</code></pre>
+        <p class="kd-muted">Data loads only on first open, so pages that never open a modal pay nothing.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="kd-sec kd-notes">
+    <div class="kd-sh"><span>03</span><div><h2>What changed from the live modals</h2></div></div>
+    <ul>
+      <li><b>Read without losing your place.</b> Results stay on the left and the article opens on the right, with related articles and a “Chat with us” hand-off. On phones it slides in as a second screen.</li>
+      <li><b>A verdict, not a label.</b> Picking a device gives a clear works / doesn’t-work answer, the regional notes, the *#06# EID check and the next step — find a plan, or ask us.</li>
+      <li><b>It guesses your phone.</b> On a phone, the compatibility check offers the device it detects as the first thing to check.</li>
+      <li><b>Real data.</b> Both run on the open-source data: <a href="https://github.com/paulfxyz/openline-kb" target="_blank" rel="noopener">openline-kb</a> (2,737 articles) and <a href="https://github.com/paulfxyz/openline-check" target="_blank" rel="noopener">openline-check</a> (9,496 devices). The live site says 2,180 articles — that figure is out of date.</li>
+    </ul>
+  </section>
+
+</main>
+
+<script type="module">
+  import '/qa/support/support.js';
+  document.querySelectorAll('[data-kd-search]').forEach((f) => f.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const q = f.querySelector('input').value.trim();
+    window.Openline.open(f.dataset.kdSearch, { q });
+  }));
+  document.querySelectorAll('[data-kd-js]').forEach((b) => b.addEventListener('click', () => {
+    const [k, v] = b.dataset.kdJs.split('|');
+    window.Openline.open(k, k === 'chat' ? { topic: v } : { q: v });
+  }));
+</script>
+</body>
+</html>
