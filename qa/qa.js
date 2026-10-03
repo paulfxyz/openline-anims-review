@@ -281,7 +281,9 @@ function buildUI() {
         <span>QA</span>
       </a>
       <button type="button" class="qa-dock-b" data-act="prev" title="Previous page">‹</button>
-      <span class="qa-dock-page">${esc(PAGE.title)}<small>${pIdx + 1} / ${PAGES.length}</small></span>
+      <button type="button" class="qa-dock-page" data-act="pages" aria-haspopup="menu" aria-expanded="false" title="Browse all pages">
+        <span>${esc(PAGE.title)} <svg viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><small>${pIdx + 1} / ${PAGES.length}</small>
+      </button>
       <button type="button" class="qa-dock-b" data-act="next" title="Next page">›</button>
       ${PAGE.redesign || PAGE.redesignOf ? `<span class="qa-dock-sep"></span>
       <span class="qa-dock-seg">
@@ -333,8 +335,74 @@ function buildUI() {
 function act(a) {
   if (a === 'drawer') { state.drawer = !state.drawer; saveState(state); syncChrome(); }
   if (a === 'outline') { state.outline = !state.outline; saveState(state); syncChrome(); layoutTags(); }
+  if (a === 'pages') togglePageMenu();
   if (a === 'prev') location.href = `/qa/${PAGES[(pIdx - 1 + PAGES.length) % PAGES.length].slug}`;
   if (a === 'next') location.href = `/qa/${PAGES[(pIdx + 1) % PAGES.length].slug}`;
+}
+
+/* ── Page menu (the page name in the dock) ───────────────────────── */
+
+const TOOLS = [
+  { slug: 'modals', title: 'Modal builder', path: '/qa/modals' },
+  { slug: 'chat', title: 'Support chat', path: '/qa/chat' },
+  { slug: 'kb', title: 'Help modals', path: '/qa/kb' },
+];
+
+function togglePageMenu(force) {
+  const btn = ui.querySelector('[data-act="pages"]');
+  let menu = document.getElementById('qa-pagemenu');
+  const open = force != null ? force : !menu;
+  if (!open) { if (menu) menu.remove(); btn.setAttribute('aria-expanded', 'false'); return; }
+  if (menu) return;
+  menu = document.createElement('div');
+  menu.id = 'qa-pagemenu';
+  menu.className = 'qa-pagemenu';
+  menu.setAttribute('role', 'menu');
+  const row = (p, i) => {
+    const n = p.slots.flatMap((s) => s.boards || [s.key]).length;
+    const st = styleFor(p.slug);
+    return `<a role="menuitem" class="qa-pm-i${p.slug === slug ? ' is-cur' : ''}${p.redesignOf ? ' is-sub' : ''}" href="/qa/${p.slug}" data-q="${esc((p.title + ' ' + p.path + ' ' + (p.group || '')).toLowerCase())}">
+      <span class="qa-pm-n">${String(i + 1).padStart(2, '0')}</span>
+      <span class="qa-pm-t"><b>${esc(p.title)}</b><small>${esc(p.path)}${p.group ? ` · ${esc(p.group)}` : ''}</small></span>
+      <span class="qa-pm-m">${st ? `<i class="qa-pm-sw" style="background:${st.sw[1]}" title="${esc(st.name)}"></i>` : ''}${n ? `${n} pick${n > 1 ? 's' : ''}` : 'identity'}</span>
+    </a>`;
+  };
+  menu.innerHTML = `
+    <div class="qa-pm-head"><input type="search" class="qa-pm-q" placeholder="Jump to a page…" aria-label="Filter pages" autocomplete="off"><kbd>Esc</kbd></div>
+    <div class="qa-pm-list">
+      <div class="qa-pm-h">Pages · ${PAGES.length}</div>
+      ${PAGES.map(row).join('')}
+      <div class="qa-pm-h">Tools</div>
+      ${TOOLS.map((t) => `<a role="menuitem" class="qa-pm-i" href="${t.path}" data-q="${esc(t.title.toLowerCase())} tool"><span class="qa-pm-n">·</span><span class="qa-pm-t"><b>${esc(t.title)}</b><small>${esc(t.path)}</small></span><span class="qa-pm-m"></span></a>`).join('')}
+      <a role="menuitem" class="qa-pm-i" href="/qa" data-q="hub all pages home"><span class="qa-pm-n">·</span><span class="qa-pm-t"><b>All pages</b><small>/qa</small></span><span class="qa-pm-m"></span></a>
+    </div>`;
+  ui.appendChild(menu);
+  const r = btn.getBoundingClientRect();
+  menu.style.left = `${Math.min(innerWidth - 12 - menu.offsetWidth / 2, Math.max(12 + menu.offsetWidth / 2, r.left + r.width / 2))}px`;
+  menu.style.bottom = `${innerHeight - r.top + 10}px`;
+  btn.setAttribute('aria-expanded', 'true');
+  const items = () => [...menu.querySelectorAll('.qa-pm-i')].filter((a) => !a.hidden);
+  const q = menu.querySelector('.qa-pm-q');
+  const cur = menu.querySelector('.is-cur');
+  if (cur) cur.scrollIntoView({ block: 'center' });
+  setTimeout(() => q.focus(), 20);
+  q.addEventListener('input', () => {
+    const v = q.value.trim().toLowerCase();
+    menu.querySelectorAll('.qa-pm-i').forEach((a) => { a.hidden = !!v && !a.dataset.q.includes(v); });
+    menu.querySelectorAll('.qa-pm-h').forEach((h) => { h.hidden = !!v; });
+  });
+  menu.addEventListener('keydown', (e) => {
+    const list = items();
+    const at = list.indexOf(document.activeElement);
+    if (e.key === 'Escape') { e.preventDefault(); togglePageMenu(false); btn.focus(); }
+    if (e.key === 'ArrowDown') { e.preventDefault(); (list[at + 1] || list[0]).focus(); }
+    if (e.key === 'ArrowUp') { e.preventDefault(); (at > 0 ? list[at - 1] : q).focus(); }
+    if (e.key === 'Enter' && document.activeElement === q && list[0]) { e.preventDefault(); location.href = list[0].href; }
+  });
+  setTimeout(() => document.addEventListener('pointerdown', function off(e) {
+    if (!document.getElementById('qa-pagemenu')) return document.removeEventListener('pointerdown', off);
+    if (!e.target.closest('#qa-pagemenu, [data-act="pages"]')) { togglePageMenu(false); document.removeEventListener('pointerdown', off); }
+  }), 0);
 }
 
 function syncChrome() {

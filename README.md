@@ -130,8 +130,10 @@ tick in the nav, a highlighted matrix row, and makes it the default on load.
   search engine `qa/support/search.mjs` from openline-kb). Opened by `data-ol-open` markup, `#kb` / `#compat=`
   hashes, `Openline.open()`, or ⌘K; the page documents each with live examples.
 - Home › Why choose: board embed is now the real 407 × 302 slot; 3 · The Handover redrawn for it.
+- **Page menu**: the page name in the bottom dock opens a filterable list of all 20 pages plus the tools
+  (type to filter, ↑ ↓ to move, Enter to go, Esc to close).
 - Home › Referral: 3 · Link in Flight redrawn for its real 576 × 520 slot, with no background of its own
-  so it sits on the box's flat orange (slot `clear: true`); a four-beat ticker fills the middle.
+  so it sits on the box's flat orange (slot `clear: true`); a four-beat ticker fills the middle; its dotted field fades in from 0% at the left edge to 100% at the right.
 - **Context fit** (`fitArt` in `qa/qa.js`): options drawn on the 640 × 460 board stage have their viewBox
   re-cut to the slot's shape around what is drawn (even padding, ≤ 1.2× zoom) and their full-bleed layers
   stretched, so dotted fields run edge to edge. `clearFill` drops opaque panels on hero art (Contact,

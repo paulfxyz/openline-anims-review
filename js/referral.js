@@ -270,10 +270,19 @@ export const linkFlight = {
         <stop offset="0%" stop-color="${W}" stop-opacity="0.16"/>
         <stop offset="100%" stop-color="${W}" stop-opacity="0"/>
       </radialGradient>
+      <!-- the field fades in from nothing at the left edge, where the box's
+           copy sits, to full strength at the right — no hard seam -->
+      <linearGradient id="wf-${uid}" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="${RW}" y2="0">
+        <stop offset="0" stop-color="#fff" stop-opacity="0"/>
+        <stop offset="1" stop-color="#fff" stop-opacity="1"/>
+      </linearGradient>
+      <mask id="wm-${uid}" maskUnits="userSpaceOnUse" x="-240" y="-60" width="${RW + 480}" height="${RH + 120}">
+        <rect x="-240" y="-60" width="${RW + 480}" height="${RH + 120}" fill="url(#wf-${uid})"/>
+      </mask>
     </defs>
     <!-- the field runs well past the frame: on the 640 × 460 review board the
          drawing is pillarboxed, and the dots carry on into the sides -->
-    <rect x="-240" y="-60" width="${RW + 480}" height="${RH + 120}" fill="url(#wd-${uid})"/>
+    <rect x="-240" y="-60" width="${RW + 480}" height="${RH + 120}" fill="url(#wd-${uid})" mask="url(#wm-${uid})"/>
     <circle cx="300" cy="262" r="250" fill="url(#wb-${uid})"/>
 
     ${mono(44, 62, 'HOW THE US$5 REACHES YOU BOTH', { size: 11, fill: W, op: 0.62 })}
