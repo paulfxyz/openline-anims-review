@@ -9,6 +9,12 @@ import './support/support.js';
 const $ = (selector) => document.querySelector(selector);
 const EXAMPLE = 'GAZE19-MULCH29-NYMPH13';
 const CODE_FORMAT = /^[A-Z]{3,10}\d{2}(?:-[A-Z]{3,10}\d{2}){2}$/;
+const actionArrowSVG = '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>';
+const forwardArrow = () => `<span class="sp-action-arrow" data-action-arrow="right" aria-hidden="true">${actionArrowSVG}</span>`;
+document.querySelectorAll('[data-action-arrow]').forEach(el => {
+  el.innerHTML = actionArrowSVG;
+  el.closest('a,button')?.classList.add('sp-motion');
+});
 const copyGlyph = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2.5"/><path d="M16 8V5.5A1.5 1.5 0 0 0 14.5 4h-9A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16H8"/></svg>';
 const folderGlyph = '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8V6a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><path d="M3 10h18"/></svg>';
 document.querySelectorAll('[data-icon]').forEach(el => {
@@ -62,7 +68,7 @@ function setState(next, focus = true) {
   $('#sp-code-form').setAttribute('aria-busy', String(busy));
   $('#sp-check').innerHTML = busy
     ? '<span class="sp-loader" aria-hidden="true"></span><span>Checking your code…</span>'
-    : '<span>Check my code</span><span class="sp-next" aria-hidden="true">→</span>';
+    : `<span>Check my code</span>${forwardArrow()}`;
   if (focus && ['review', 'creating', 'success'].includes(next)) {
     const title = $('#sp-' + next + '-title');
     title?.focus({ preventScroll: true });

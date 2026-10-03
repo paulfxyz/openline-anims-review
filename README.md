@@ -297,8 +297,13 @@ use the shared native UI stack, Openline's orange/ink palette and the live site'
   remain at least 44px. Purchase CTAs use the source-style “Buy eSIM Now” mobile label and a compact
   country badge, preserving the existing QA copy's 190+ count. The badge hides on the narrowest screens
   rather than shrinking the action text or overflowing its container.
-- These changes are scoped to About and Contact redesign action controls, not navigation menus,
-  disclosure chevrons, selected illustrations, or the separate large-input /start process design.
+- Button typography/dimensions remain scoped to About and Contact redesign actions, not navigation
+  menus, disclosure chevrons or selected illustrations.
+- The same arrow treatment also applies to `/qa/start`, including its final profile dialogs, back
+  links, guide/account links and QR download. Forward/back arrows nudge 4px; diagonal and downward
+  arrows move in their own direction over the same 150ms curve. Loading/disabled states and reduced
+  motion stay static. The check-code button restores its SVG after loading and errors.
+  `/start` keeps its existing larger inputs, button sizes, type hierarchy and activation animations.
 
 ### QA reporting beyond animation choices
 

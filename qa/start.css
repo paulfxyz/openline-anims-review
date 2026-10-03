@@ -73,7 +73,19 @@
 .sp-secondary { color:var(--sp-ink); background:#fff; }
 .sp-secondary:hover { background:#F7F8FA; border-color:#C8CDD5; }
 .sp-check-button { width:100%; margin-top:22px; font-size:17px!important; min-height:58px; }
-.sp-next { font-size:23px; line-height:1; }
+/* Same directional nudge as Openline's native buttons. Only the arrow
+   moves; form dimensions, button labels and non-arrow icons stay put. */
+.sp-action-arrow { --sp-arrow-x:4px; --sp-arrow-y:0px; --sp-arrow-angle:0deg; display:inline-grid; place-items:center; flex:none; width:16px; height:16px; vertical-align:-.18em; transform:translate(0,0); transition:transform .15s cubic-bezier(.4,0,.2,1); }
+.sp-body .sp-action-arrow > svg { display:block; width:100%; height:100%; transform:rotate(var(--sp-arrow-angle)); }
+.sp-action-arrow[data-action-arrow="back"] { --sp-arrow-x:-4px; --sp-arrow-angle:180deg; }
+.sp-action-arrow[data-action-arrow="external"] { --sp-arrow-x:3px; --sp-arrow-y:-3px; --sp-arrow-angle:-45deg; }
+.sp-action-arrow[data-action-arrow="down"] { --sp-arrow-x:0px; --sp-arrow-y:4px; --sp-arrow-angle:90deg; }
+.sp-check-button > .sp-action-arrow { width:20px; height:20px; }
+@media(hover:hover) {
+  .sp-motion:hover:not(:disabled):not([aria-disabled="true"]) > .sp-action-arrow { transform:translate(var(--sp-arrow-x),var(--sp-arrow-y)); }
+}
+.sp-motion:is(:focus-visible,:active):not(:disabled):not([aria-disabled="true"]) > .sp-action-arrow { transform:translate(var(--sp-arrow-x),var(--sp-arrow-y)); }
+.sp-motion:is(:disabled,[aria-disabled="true"]) > .sp-action-arrow { transform:none; transition:none; }
 .sp-safe { display:flex; justify-content:center; align-items:center; gap:7px; margin:14px 0 0; font-size:12px; color:#818893; }
 .sp-safe svg { width:13px; height:13px; }
 .sp-email-note { display:flex; gap:12px; max-width:590px; margin:27px auto 0; color:#89909A; font-size:12.5px; line-height:1.65; text-align:left; }
@@ -239,6 +251,7 @@
 @media(prefers-reduced-motion:reduce) {
   .sp-body *, .sp-body *::before,.sp-body *::after { animation:none!important; transition:none!important; }
   .sp-key svg path { stroke-dasharray:none!important; }
+  .sp-action-arrow { transform:none!important; transition:none!important; }
   .sp-creating.is-moving .sp-code-parts { display:none; }
   .sp-creating.is-moving .sp-chip,.sp-creating.is-moving .sp-signal-bars { opacity:1; transform:none; }
 }
