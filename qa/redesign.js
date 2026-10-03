@@ -22,6 +22,19 @@ function tick() {
 }
 if (clocks.length) { tick(); setInterval(tick, 20000); }
 
+/* Unpublished Open Startup figures are never revealed. This disclosure
+   only shows/hides a locked layout preview, not a client-side privacy gate. */
+const startupToggle = document.getElementById('rd-startup-toggle');
+const startupResults = document.getElementById('rd-startup-results');
+if (startupToggle && startupResults) {
+  startupToggle.addEventListener('click', () => {
+    const open = startupResults.hidden;
+    startupResults.hidden = !open;
+    startupToggle.setAttribute('aria-expanded', String(open));
+    startupToggle.querySelector('[data-startup-toggle-label]').textContent = open ? 'Hide results preview' : 'Show results preview';
+  });
+}
+
 /* Three selectable beats share the SVG's own clock. Seeking changes the
    current beat without pausing the loop. CSS highlights follow that clock
    instead of running an unrelated second animation. */

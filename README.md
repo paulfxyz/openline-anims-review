@@ -219,6 +219,25 @@ use the shared native UI stack, Openline's orange/ink palette and the live site'
 - The final handoff is recorded separately in the global QA manifest/export. This completes the
   review prototype of the purchase-code activation journey; no `/delivery` or account backend was added.
 
+### About redesign refinements
+
+- Network Technology / The Most Reliable Connection: scoped heading styles resolve the generic
+  `.rd-card p` cascade that flattened the comparison headings and removed their list spacing.
+  Both card bodies now have balanced desktop/mobile padding and consistent bullet spacing.
+  The SVG illustrations, geometry and motion are unchanged.
+- Open Startup is a locked, coming-very-soon disclosure. Show / Hide results preview is a real
+  keyboard-accessible button, collapsed by default; its open state contains locked placeholders only.
+  The former sample financial/user values and Live badges were removed from this section rather
+  than hidden with CSS, so expanding never presents fabricated metrics as actual results.
+- Team locations are New York, Lisbon, Warsaw, Ankara, Bristol, Berlin, Paris, Singapore and Bali.
+  City badges replace invented employee initials; the footer says “Nine cities, one team.”
+  Local clocks use native `Intl.DateTimeFormat` with IANA zones, including
+  [Asia/Makassar for Bali](https://time.is/Bali,_Bali),
+  [Europe/Istanbul for Ankara](https://time.is/Ankara) and
+  [Europe/London for Bristol](https://time.is/Bristol).
+  The selected team animation and original About comparison page are unchanged.
+- These three refinements have separate entries in `qa/change-log.js` and the full QA export.
+
 ### Contact and installation refinements
 
 - Contact redesign: WhatsApp `https://wa.me/15554842461`, Instagram `askopenline`,

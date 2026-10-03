@@ -80,7 +80,7 @@
 </section>
 
 <!-- ═══ 2 · Network technology ═════════════════════════════════════════ -->
-<section class="rd-sec">
+<section class="rd-sec" id="rd-network-technology">
   <div class="rd-wrap">
     <div class="rd-head">
       <div>
@@ -112,7 +112,7 @@
         </div>
         <div class="rd-vs-body">
           <span class="rd-vs-tag">Competitors</span>
-          <p class="rd-vs-h">Locked to ONE carrier</p>
+          <h3 class="rd-vs-h">Locked to ONE carrier</h3>
           <ul class="rd-ticks is-no">
             <li><i data-ic="x-circle"></i>Locked to ONE carrier</li>
             <li><i data-ic="x-circle"></i>Congested network = stuck</li>
@@ -149,7 +149,7 @@
         </div>
         <div class="rd-vs-body">
           <span class="rd-vs-tag">Openline</span>
-          <p class="rd-vs-h">ALL Tier-1 carriers</p>
+          <h3 class="rd-vs-h">ALL Tier-1 carriers</h3>
           <ul class="rd-ticks is-yes">
             <li><i data-ic="check-circle"></i>ALL Tier-1 carriers</li>
             <li><i data-ic="check-circle"></i>Auto-switches to strongest</li>
@@ -213,67 +213,49 @@
   </div>
 </section>
 
-<!-- ═══ 4 · Open startup ═══════════════════════════════════════════════ -->
-<section class="rd-sec">
+<!-- ═══ 4 · Open startup: unpublished results stay locked ═══════════ -->
+<section class="rd-sec" id="rd-open-startup">
   <div class="rd-wrap">
     <div class="rd-head">
       <div>
         <p class="rd-kick">Transparency</p>
         <h2 class="rd-h2">We're an Open Startup</h2>
-        <p class="rd-sub">Real-time metrics that prove we pass all savings to customers</p>
+        <p class="rd-sub">Our numbers, out in the open. The public dashboard is coming very, very soon.</p>
       </div>
     </div>
-    <div class="rd-grid3">
-      <div class="rd-metric">
-        <div class="rd-mlab">Monthly Revenue <span class="rd-live">Live</span></div>
-        <b>$2.4M</b><span>Monthly Revenue</span>
-        <div class="rd-mviz">
-          <!-- compounding at the stated 15% a month: each bar is 1.15× the last -->
-          <svg viewBox="0 0 300 64" preserveAspectRatio="none" aria-hidden="true">
-            <g fill="#FF5314">
-              <rect x="0" y="40" width="34" height="24" rx="4" opacity=".35"/><rect x="44" y="36.4" width="34" height="27.6" rx="4" opacity=".45"/>
-              <rect x="88" y="32.3" width="34" height="31.7" rx="4" opacity=".55"/><rect x="132" y="27.5" width="34" height="36.5" rx="4" opacity=".65"/>
-              <rect x="176" y="22" width="34" height="42" rx="4" opacity=".75"/><rect x="220" y="15.7" width="34" height="48.3" rx="4" opacity=".87"/>
-              <rect x="264" y="8.4" width="36" height="55.6" rx="4"/>
-            </g>
-          </svg>
-        </div>
-        <p><span class="rd-chip is-gr" style="margin:0">▲ 15%</span>&nbsp; Growing 15% month-over-month</p>
+    <div class="rd-startup-gate">
+      <div class="rd-startup-notice">
+        <span class="rd-startup-lock"><i data-ic="lock"></i></span>
+        <div class="rd-startup-copy"><span class="rd-startup-status">Not public yet</span><h3>A little longer. Then, full transparency.</h3><p>Revenue, margins and active users are staying locked while we get our public metrics ready. The results are coming very, very soon.</p></div>
+        <button type="button" class="rd-startup-toggle" id="rd-startup-toggle" aria-expanded="false" aria-controls="rd-startup-results"><span data-startup-toggle-label>Show results preview</span><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="m5 8 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       </div>
-      <div class="rd-metric">
-        <div class="rd-mlab">Gross Margin <span class="rd-live">Live</span></div>
-        <b>8.5%</b><span>Gross Margin</span>
-        <div class="rd-mviz">
-          <!-- to scale on a 0–50% axis: our 8.5% against the 35–45% industry band -->
-          <svg viewBox="0 0 300 64" aria-hidden="true">
-            <rect x="0" y="22" width="300" height="12" rx="6" fill="#F2F3F6"/>
-            <rect x="210" y="22" width="60" height="12" rx="0" fill="#D1D5DB"/>
-            <rect x="0" y="22" width="51" height="12" rx="6" fill="#FF5314"/>
-            <text x="51" y="54" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="10.5" font-weight="700" fill="#E23D00">8.5%</text>
-            <text x="240" y="54" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="10.5" fill="#8A90A0">35–45%</text>
-            <text x="0" y="12" font-family="ui-monospace, Menlo, monospace" font-size="9.5" fill="#8A90A0">0%</text>
-            <text x="300" y="12" text-anchor="end" font-family="ui-monospace, Menlo, monospace" font-size="9.5" fill="#8A90A0">50%</text>
-          </svg>
+      <div id="rd-startup-results" class="rd-startup-results" hidden>
+        <p class="rd-startup-preview-note">A look at what’s coming. The figures stay locked until we publish them.</p>
+        <div class="rd-grid3">
+          <article class="rd-metric is-locked">
+            <div class="rd-mlab">Monthly Revenue <span class="rd-metric-lock"><i data-ic="lock"></i>Locked</span></div>
+            <div class="rd-metric-pending" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+            <h3>Monthly revenue</h3>
+            <div class="rd-metric-skeleton is-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <p>Results coming very soon</p>
+          </article>
+          <article class="rd-metric is-locked">
+            <div class="rd-mlab">Gross Margin <span class="rd-metric-lock"><i data-ic="lock"></i>Locked</span></div>
+            <div class="rd-metric-pending" aria-hidden="true"><i></i><i></i><i></i></div>
+            <h3>Gross margin</h3>
+            <div class="rd-metric-skeleton is-range" aria-hidden="true"><i></i></div>
+            <p>Results coming very soon</p>
+          </article>
+          <article class="rd-metric is-locked">
+            <div class="rd-mlab">Monthly Active Users <span class="rd-metric-lock"><i data-ic="lock"></i>Locked</span></div>
+            <div class="rd-metric-pending" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+            <h3>Monthly active users</h3>
+            <div class="rd-metric-skeleton is-ring" aria-hidden="true"><i></i><span><b></b><b></b></span></div>
+            <p>Results coming very soon</p>
+          </article>
         </div>
-        <p>Industry average: 35-45%</p>
       </div>
-      <div class="rd-metric">
-        <div class="rd-mlab">Monthly Active Users <span class="rd-live">Live</span></div>
-        <b>420K</b><span>Monthly Active Users</span>
-        <div class="rd-mviz">
-          <!-- 98.5% retention, as a ring -->
-          <svg viewBox="0 0 300 64" aria-hidden="true">
-            <circle cx="32" cy="32" r="26" fill="none" stroke="#F2F3F6" stroke-width="8"/>
-            <circle cx="32" cy="32" r="26" fill="none" stroke="#16A34A" stroke-width="8" stroke-linecap="round" pathLength="100"
-              stroke-dasharray="98.5 100" transform="rotate(-90 32 32)">
-              <animate attributeName="stroke-dasharray" values="0 100;98.5 100" dur="1.6s" fill="freeze"/>
-            </circle>
-            <text x="76" y="30" font-size="19" font-weight="800" fill="#0B0B0F">98.5%</text>
-            <text x="76" y="48" font-family="ui-monospace, Menlo, monospace" font-size="10.5" fill="#8A90A0">RETENTION</text>
-          </svg>
-        </div>
-        <p>98.5% retention rate</p>
-      </div>
+      <noscript><p class="rd-startup-preview-note">The public results are locked and coming very soon. Enable JavaScript to preview the dashboard layout.</p></noscript>
     </div>
   </div>
 </section>
@@ -348,14 +330,17 @@
         <div class="rd-roster">
           <div class="rd-roster-h"><span>The team, right now</span><span class="rd-live">Local time</span></div>
           <div class="rd-people">
-            <div class="rd-person"><span class="rd-av">AM</span><span><b>Lisbon</b><small data-tz="Europe/Lisbon">—</small></span></div>
-            <div class="rd-person"><span class="rd-av">KT</span><span><b>Tokyo</b><small data-tz="Asia/Tokyo">—</small></span></div>
-            <div class="rd-person"><span class="rd-av">RS</span><span><b>Nairobi</b><small data-tz="Africa/Nairobi">—</small></span></div>
-            <div class="rd-person"><span class="rd-av">JD</span><span><b>Berlin</b><small data-tz="Europe/Berlin">—</small></span></div>
-            <div class="rd-person"><span class="rd-av">LC</span><span><b>Bogotá</b><small data-tz="America/Bogota">—</small></span></div>
-            <div class="rd-person"><span class="rd-av">PF</span><span><b>Singapore</b><small data-tz="Asia/Singapore">—</small></span></div>
+            <div class="rd-person"><span class="rd-av" aria-hidden="true">NY</span><span><b>New York</b><small data-tz="America/New_York">—</small></span></div>
+            <div class="rd-person"><span class="rd-av" aria-hidden="true">LI</span><span><b>Lisbon</b><small data-tz="Europe/Lisbon">—</small></span></div>
+            <div class="rd-person"><span class="rd-av" aria-hidden="true">WA</span><span><b>Warsaw</b><small data-tz="Europe/Warsaw">—</small></span></div>
+            <div class="rd-person"><span class="rd-av" aria-hidden="true">AN</span><span><b>Ankara</b><small data-tz="Europe/Istanbul">—</small></span></div>
+            <div class="rd-person"><span class="rd-av" aria-hidden="true">BR</span><span><b>Bristol</b><small data-tz="Europe/London">—</small></span></div>
+            <div class="rd-person"><span class="rd-av" aria-hidden="true">BE</span><span><b>Berlin</b><small data-tz="Europe/Berlin">—</small></span></div>
+            <div class="rd-person"><span class="rd-av" aria-hidden="true">PA</span><span><b>Paris</b><small data-tz="Europe/Paris">—</small></span></div>
+            <div class="rd-person"><span class="rd-av" aria-hidden="true">SG</span><span><b>Singapore</b><small data-tz="Asia/Singapore">—</small></span></div>
+            <div class="rd-person"><span class="rd-av" aria-hidden="true">BA</span><span><b>Bali</b><small data-tz="Asia/Makassar">—</small></span></div>
           </div>
-          <p class="rd-roster-foot">Six timezones, one network</p>
+          <p class="rd-roster-foot">Nine cities, one team.</p>
         </div>
         <div class="rd-mix">
           <div class="rd-mixbar" aria-hidden="true">
