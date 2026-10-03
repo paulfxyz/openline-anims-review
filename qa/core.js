@@ -11,6 +11,7 @@ import { BOARDS } from '/js/boards.js';
 import { VARIANTS } from '/js/registry.js';
 import { ICONS } from '/js/icons.js';
 import { PRESETS, makeMapper, recolor } from './recolor.js';
+import { refineAnimation } from './animation-fixes.js';
 
 export { PRESETS, makeMapper, recolor };
 
@@ -182,7 +183,7 @@ export function renderOption(key, opt) {
   const o = s.opts[opt] || s.opts[0];
   const uid = `qa-${key}-${o.id}-${++seq}`;
   if (o.isIcon) return { html: `<span class="qa-ic">${o.svg(uid)}</span>`, init: null, pills: [], o };
-  const built = o.build(uid);
+  const built = refineAnimation(key, o.id, o.build(uid));
   return { html: built.svg, init: built.init || null, pills: built.pills || [], o };
 }
 

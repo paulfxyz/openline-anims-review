@@ -160,3 +160,11 @@ tick in the nav, a highlighted matrix row, and makes it the default on load.
 - **Scope:** font-family changes are confined to `/qa`; the original animation boards are unchanged.
   Font sizes, animation timing and page identities are preserved. Rebuild redesign HTML with
   `python3 qa/tools/redesign.py` after changing `qa/redesign/rd.css`.
+
+### /qa animation refinements
+
+- `qa/animation-fixes.js` applies context-only corrections through `renderOption`, covering both the
+  page and hub previews without modifying the original comparison boards.
+- Openline+ / Built for Digital Nomads / Six Cities, One Number: destination labels remain steady
+  instead of repeating their 350ms entrance fade. The connection dots still travel to the fixed
+  number column, which now shows the fictional US example `+1 202 555 0148`.
