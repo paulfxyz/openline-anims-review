@@ -326,6 +326,42 @@ use the shared native UI stack, Openline's orange/ink palette and the live site'
   motion stay static. The check-code button restores its SVG after loading and errors.
   `/start` keeps its existing larger inputs, button sizes, type hierarchy and activation animations.
 
+### Connectivity copy and profile flexibility
+
+- On 2026-10-04, the marked Multi Tier-1 warning/probability block was replaced with
+  a two-route explainer: selecting a network within the current eSIM, or occasionally
+  issuing a whole replacement profile to change the underlying provider and service stack.
+  The same prominent section replaces Unlimited's former competitor-throttling comparison.
+- This follows Paul's supplied operating principle for multi-network access and unlimited usage.
+  Both pages disclose that replacement should be uncommon, may require installation or enabling
+  a new profile, and is part of maintaining service. The unsupported 90% / 10% split and fixed
+  30-second replacement claim are gone, as is the instruction to remove a working profile first.
+- `qa/connectivity-copy.json` records 45 Multi Tier-1 and 53 Unlimited before/after changes.
+  Run `python qa/tools/connectivity_copy.py` to apply them idempotently, rebuild the shared section
+  from `qa/redesign/profile-switching.html` and `qa/profile-switching.css`, and regenerate
+  `qa/connectivity-changes.js` and `qa/connectivity-changelog.md`.
+- Hero, feature, checklist, process and closing copy distinguish usage from speed and availability.
+  No guarantee of continuous maximum speed, congestion-free service, always-cheapest routing or
+  setup-free profile replacement is added. Unlimited's former red competitor-failure rows are now
+  neutral grey customer-use rows with circle markers. The selected Operator Roster labels are adjusted
+  in the QA adapter only; the selected animation choices, motion and original review boards remain.
+- The section has stable text, a gentle connector animation, responsive cards, reduced-motion support,
+  and crosslinks between the two explanations. It is not a provisioning workflow. Silent installation,
+  zero interruption, balance/validity carry-over, notification policy and replacement charges remain
+  product/implementation questions, not promises made by this prototype.
+- The QA panel and hub include a new-entry record plus a separate copy record for each page, expandable
+  before/after rows and a full changelog link. The same entries appear in the global Markdown and
+  machine-readable exports, separately from animation picks.
+
+### Global eSIM orange default
+
+- `/qa/global-esim` now selects an Openline-orange page identity by default, including pale colour
+  washes, icon tiles and contextual SVG/JS animation colours previously blue, purple or green.
+  The page-specific mapper also recolours green status accents here; their labels preserve meaning.
+- Neutral surfaces, photographs and raster partner logos are preserved. Other page identities,
+  including the selected IoT Chrome treatment, are unchanged. The panel toggle still allows comparison,
+  and the selected default / current toggle state are included in the export.
+
 ### QA reporting beyond animation choices
 
 - `qa/change-log.js` is the shared, manually maintained change inventory: active refinements, exact scopes,

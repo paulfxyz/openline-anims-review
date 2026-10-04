@@ -2,11 +2,29 @@
    while /qa is the working surface. Applied before mounting and recolouring,
    so the page, hub thumbnails and option previews all show the same result. */
 export function refineAnimation(key, optionId, built) {
-  if (key !== 'plusnomad' || optionId !== 'nm-cities') return built;
+  const nomad = key === 'plusnomad' && optionId === 'nm-cities';
+  const access = key === 't1access' && ['acroster', 'ac-current', 'acsignal'].includes(optionId);
+  if (!nomad && !access) return built;
   const host = document.createElement('template');
   host.innerHTML = built.svg;
   const svg = host.content.querySelector('svg');
   if (!svg) return built;
+
+  if (access) {
+    const copy = {
+      'Auto-switch on': 'Network options',
+      'No manual APN': 'Profile may change',
+      'Best signal wins': 'Setup if needed',
+    };
+    svg.querySelectorAll('text').forEach(text => {
+      const replacement = copy[text.textContent.trim()];
+      if (replacement) {
+        text.textContent = replacement;
+        text.setAttribute('font-size', '10');
+      }
+    });
+    return { ...built, svg: svg.outerHTML };
+  }
 
   /* This was an entrance fade accidentally set to repeat indefinitely:
      0.3 -> 1 -> snap to 0.3 every 350ms. Keep each destination readable

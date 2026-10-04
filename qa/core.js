@@ -72,6 +72,10 @@ export const pageOf = (key) => PAGES.find((p) => !p.redesignOf && p.slots.some((
    one page. It applies to the captured page AND the animations on it, and
    while it is on it takes precedence over the site-wide theme. */
 export const PAGE_STYLES = {
+  'global-esim': { id: 'ps-global-esim', name: 'Openline orange', hex: '#FF5314', scope: 'families',
+    families: ['red','orange','amber','gold','green','teal','cyan','blue','indigo','purple','pink'], floor: 0.006,
+    keepStatus: false, selected: true, sw: ['#FF5314', '#FFB08F', '#FFF3EB'],
+    note: 'Selected. All section accents, icon tiles, washes and animation colours use the Openline orange family, including the previous blue, purple and green treatments. Neutral surfaces, photographs and partner logos keep their original appearance.' },
   network: { id: 'ps-network', name: 'Corporate blue', hex: '#1E40AF', scope: 'all', keepStatus: true, ink: 264, inkC: 0.07,
     sw: ['#1E3A8A', '#1E40AF', '#2563EB'],
     note: 'Royal blue accents over navy ink: dark blue for depth, royal blue for action, corporate rather than consumer.' },
@@ -111,6 +115,10 @@ BOARDS.forEach((b) => {
   if (b.key === 'plusnomad') {
     const cities = opts.find(o => o.id === 'nm-cities');
     if (cities) cities.desc = cities.desc.replace('+351', '+1');
+  }
+  if (b.key === 't1access') {
+    const roster = opts.find(o => o.id === 'acroster');
+    if (roster) roster.desc += ' In QA, the phone labels now distinguish network options from occasional profile replacement and possible setup. Operator availability depends on the plan, profile and destination.';
   }
   STEPS[b.key] = {
     key: b.key, page: b.page, path: b.path, section: b.section, short: b.short || b.section,

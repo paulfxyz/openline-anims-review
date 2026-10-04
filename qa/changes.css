@@ -7,6 +7,17 @@
 .qa-change p { font-size: 13px; line-height: 1.65; margin: 8px 0; overflow-wrap: anywhere; }
 .qa-change .qa-change-delivery { color: #74695E; }
 .qa-change a { font-size: 12px; color: #BB4215; font-weight: 650; }
+.qa-change-links { display:flex; flex-wrap:wrap; gap:10px 16px; margin-top:12px; }
+.qa-new-copy { padding:8px 12px; background:#F8F7F4; border-radius:10px; margin:12px 0; }
+.qa-copy-log { margin:14px 0; border-top:1px solid #E9E5DF; }
+.qa-copy-log > summary { padding:13px 0!important; font-size:12px; font-weight:650; color:#665C52; }
+.qa-copy-log > div { display:grid; gap:7px; }
+.qa-copy-row { border:1px solid #E7E2DA; border-radius:9px; overflow:hidden; }
+.qa-copy-row > summary { padding:10px 12px!important; font-size:12px; line-height:1.5; font-weight:650; background:#FAF9F6; }
+.qa-copy-row dl { margin:0; padding:4px 12px 12px; }
+.qa-copy-row dt { font-size:10px; font-weight:700; color:#9A8775; text-transform:uppercase; letter-spacing:.07em; margin-top:10px; }
+.qa-copy-row dd { margin:5px 0 0; font-size:12px; line-height:1.65; overflow-wrap:anywhere; color:#7D756C; }
+.qa-copy-row dd:last-child { color:#24211D; }
 .qa-change summary:focus-visible { outline: 2px solid #FF5314; outline-offset: -3px; }
 .qa-page-note { display: grid; gap: 8px; font-size: 12px; font-weight: 700; margin-top: 18px; }
 .qa-page-note[hidden] { display: none; }

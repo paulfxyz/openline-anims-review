@@ -1,6 +1,8 @@
 /* The implemented QA surface, not production approval. Keep this registry
    in sync with code so page panels and the global handoff share one account.
    Never add user-entered codes, chat transcripts or clipboard content here. */
+import { CONNECTIVITY_COPY } from './connectivity-changes.js';
+
 export const QA_CHANGES = [
   { id: 'native-typography', title: 'Openline typography everywhere', pages: ['*'], status: 'Implemented in QA', route: '/qa',
     summary: 'One native Openline UI font stack across captured pages, retained redesigns, animations, navigation, chat, help and modal tools.',
@@ -23,6 +25,26 @@ export const QA_CHANGES = [
   { id: 'page-identities', title: 'Page-specific colour treatments', pages: ['network', 'security', 'adblocking', 'unlimited', 'blog'], status: 'Review options', route: '/qa',
     summary: 'Network blue, Security teal, AdBlocking ultraviolet, Unlimited magenta and Blog newsprint are switchable within each page.',
     delivery: 'The export includes each identity’s current on/off state and the global theme. Do not treat these proposals as approved production defaults.' },
+  { id: 'global-esim-orange', title: 'Global eSIM: consistent Openline orange', pages: ['global-esim'], status: 'Selected default', route: '/qa/global-esim', changedAt: '2026-10-04',
+    summary: 'All section accents, tinted blocks, icon tiles and contextual animations now use the Openline orange family instead of the mixed blue, purple and green treatments.',
+    delivery: 'Selected page identity, on by default and recorded in the export. Green accent/status treatments are recoloured on this page as requested; labels still carry their meaning. Neutral surfaces and raster images/partner logos are not repainted. Other page identities, including IoT Chrome, are unchanged.' },
+  { id: 'profile-switching-explainer', title: 'New entry: network switch versus new eSIM profile', pages: ['multiple-tier1', 'unlimited'], status: 'Added in QA', route: '/qa/multiple-tier1#profile-switching', changedAt: '2026-10-04',
+    summary: 'A new, prominent two-route explainer replaces the marked eSIM-switching warning and probability cards on Multi Tier-1, with a matching entry on Unlimited replacing the old competitor-throttling comparison. It distinguishes network selection within one profile from occasionally issuing an entirely new profile/provider setup.',
+    delivery: 'The user-supplied operating principle is explicit on both pages: profile replacement should be uncommon, but can be part of maintaining service. Possible installation/activation and variable reconnection time are disclosed. The 90% / 10% split, fixed 30-second promise and instruction to remove the old profile first are gone. Diagrams are illustrative with reduced-motion support. No silent-install, zero-interruption, balance/validity carry-over or free-replacement guarantee is invented; these live-process details need product confirmation.',
+    newCopy: [
+      {area:'Multi Tier-1 entry', text:'A better connection can mean a different eSIM. Usually we work with network options on the current profile; when that is not enough, we can issue another profile on the fly and change the service setup behind the connection.'},
+      {area:'Unlimited entry', text:'Unlimited use does not mean one profile forever. If the current service setup is no longer a good fit, a new eSIM can move the service to a different underlying provider.'},
+      {area:'Shared customer disclosure', text:'Occasionally, we may replace your eSIM profile entirely. You may need to install or enable the replacement on your phone. If a setup step is needed, we’ll guide you through it.'}
+    ],
+    changelogUrl: '/qa/connectivity-changelog.md' },
+  { id: 'multi-tier1-profile-copy', title: 'Multi Tier-1: profile-aware wording throughout', pages: ['multiple-tier1'], status: 'Reworded in QA', route: '/qa/multiple-tier1', changedAt: '2026-10-04',
+    summary: 'Hero, infrastructure explanation, partner introductions, selection cards, market narrative, three-step process, access checklist and closing copy now explain the network/profile distinction without promising the strongest signal, cheapest price, millisecond handoffs or no setup in every situation.',
+    delivery: 'Existing page structure and four selected animation choices remain. The selected Operator Roster phone labels now read Network options / Profile may change / Setup if needed; its geometry and motion are preserved. Original review-board files remain untouched. Other historical alternative illustrations are reference material, not newly approved product claims.',
+    copyChanges: CONNECTIVITY_COPY['multiple-tier1'], changelogUrl: '/qa/connectivity-changelog.md' },
+  { id: 'unlimited-profile-copy', title: 'Unlimited: usage promise versus service delivery', pages: ['unlimited'], status: 'Reworded in QA', route: '/qa/unlimited', changedAt: '2026-10-04',
+    summary: 'Unlimited now refers to usage on eligible unlimited plans, not infinite speed, congestion-free radio service or one permanent profile. Hero, feature cards, use cases, benefit list, illustration labels and closing copy explain that a replacement profile can change the underlying provider/setup when needed.',
+    delivery: 'Unsupported 5× speed and always-fast claims, invented competitor limits and guarantees of no buffering/congestion are removed. Former red competitor-failure rows become neutral grey customer-use rows with circle markers. The new disclosure is visible in the page, not hidden in fine print. Existing non-comparison illustrations remain; their labels are aligned with the new copy. The current page colour treatment is preserved.',
+    copyChanges: CONNECTIVITY_COPY.unlimited, changelogUrl: '/qa/connectivity-changelog.md' },
   { id: 'iot-chrome', title: 'IoT: selected Chrome default', pages: ['iot'], status: 'Selected default', route: '/qa/iot',
     summary: 'Purple and indigo accents become neutral steel, graphite and gunmetal with a restrained chrome sheen.',
     delivery: 'Chrome starts selected. Keep orange branding and green online status meaningful; honour the reviewer’s explicit identity toggle.' },
@@ -88,14 +110,19 @@ export const QA_CHANGES = [
 export const changesForPage = slug => QA_CHANGES.filter(c => c.pages.includes('*') || c.pages.includes(slug));
 const safe = s => String(s).replace(/[&<>"]/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[c]));
 export function changeCards(changes) {
-  return changes.map(c => `<details class="qa-change" data-change-id="${c.id}"><summary><span><b>${safe(c.title)}</b><small>${safe(c.status)}</small></span></summary><div><p>${safe(c.summary)}</p><p class="qa-change-delivery"><b>Handoff:</b> ${safe(c.delivery)}</p><a href="${c.route}">Review in /qa →</a></div></details>`).join('');
+  return changes.map(c => `<details class="qa-change" data-change-id="${c.id}"><summary><span><b>${safe(c.title)}</b><small>${safe(c.status)}${c.changedAt ? ` · ${safe(c.changedAt)}` : ''}</small></span></summary><div><p>${safe(c.summary)}</p><p class="qa-change-delivery"><b>Handoff:</b> ${safe(c.delivery)}</p>
+    ${c.newCopy ? `<div class="qa-new-copy">${c.newCopy.map(x=>`<p><b>${safe(x.area)}</b><br>${safe(x.text)}</p>`).join('')}</div>` : ''}
+    ${c.copyChanges ? `<details class="qa-copy-log"><summary>${c.copyChanges.length} wording changes · before / after</summary><div>${c.copyChanges.map(x=>`<details class="qa-copy-row"><summary>${safe(x.area)}</summary><dl><dt>Before</dt><dd>${safe(x.before)}</dd><dt>After</dt><dd>${safe(x.after)}</dd></dl></details>`).join('')}</div></details>` : ''}
+    <div class="qa-change-links"><a href="${c.route}">Review in /qa →</a>${c.changelogUrl ? `<a href="${c.changelogUrl}" target="_blank" rel="noopener">Full wording changelog ↗︎</a>` : ''}</div></div></details>`).join('');
 }
 export function changesMarkdown() {
   return ['## Page, interaction and tooling changes', '',
     'These are implemented QA refinements or explicitly labelled prototypes, not production approval. They are independent of animation-pick deltas.', '',
     ...QA_CHANGES.flatMap(c => [`### ${c.title}`, `- ID: \`${c.id}\` · ${c.status} · ${c.route}`,
       `- Scope: ${c.pages.includes('*') ? 'Shared /qa' : c.pages.join(', ')}`,
-      `- Implemented: ${c.summary}`, `- Handoff: ${c.delivery}`, '']),
+      `- Implemented: ${c.summary}`, `- Handoff: ${c.delivery}`, '',
+      ...(c.newCopy || []).flatMap(x=>[`#### ${x.area}`,x.text,'']),
+      ...(c.copyChanges || []).flatMap(x=>[`#### ${x.area}`,`- **Before:** ${x.before}`,`- **After:** ${x.after}`,''])]),
     '## Review decisions', '',
     '- Keep the previous About / Contact alternatives and the separately requested Product Hunt redesign. The rejected later batch of 16 alternatives remains removed.',
     '- Finish /qa first. A separate /delivery and its documentation have not been requested for execution yet.',
