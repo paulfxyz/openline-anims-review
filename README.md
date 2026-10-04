@@ -207,9 +207,12 @@ use the shared native UI stack, Openline's orange/ink palette and the live site'
 - Three-part code entry with uppercase/whitespace normalization, validation, clear and sample-code controls.
 - Read-only code check → sample Japan plan → explicit activation confirmation → animated code-to-profile reveal.
 - The confirmation follows Paul's requested rule: activation starts validity immediately and removes gifting eligibility.
-  It defaults to “Not yet” and requires an explicit readiness checkbox before confirming.
+  It defaults to “Not yet” and requires a large centred readiness switch before confirming.
 - Gift flow copies a clearly labelled example message; it never sends a message. Account links use the existing `/qa/login`.
 - Error controls cover unknown, already-used and connection-error codes plus a recoverable demo activation failure.
+  They now live in the persistent demo badge's dialog, keeping the main flow uncluttered.
+- The plan review has three distinct Activate / Gift / Account cards, with larger native UI type.
+  Code help, timing, device instructions and save details use dedicated dialogs instead of repeated paragraphs.
 - No real redemption/provisioning/account API calls, no persistent code storage and no installable eSIM QR.
   The code format and plan/profile data are demonstration fixtures, not verified production validation rules.
 - Accessible native dialogs, keyboard handling, reduced-motion treatment, and mobile layouts.
@@ -217,9 +220,9 @@ use the shared native UI stack, Openline's orange/ink palette and the live site'
 #### Final profile handoff
 
 - `qa/start-profile.js` / `start-profile.css` extend the final stage into **eSIM details → Setup & connect
-  → Make it yours → account handoff**. The success card's primary action starts this flow; details and
-  label/folder remain directly accessible and editable.
-- Details show a QR image, copyable SM-DP+ address, activation code, full LPA string, ICCID and internal
+  → Make it yours → account handoff**. This is now inline, not behind a “Set up my eSIM” button or modal.
+  The QR and profile card appear immediately after activation; manual details start collapsed.
+- The disclosure contains copyable SM-DP+ address, activation code, full LPA string, ICCID and internal
   Openline profile ID. The sample does not require a confirmation code. EID is explicitly unlinked:
   it belongs to the device's eSIM chip, not the subscription profile; see the
   [GSMA consumer eSIM architecture](https://www.gsma.com/solutions-and-impact/technologies/esim/wp-content/uploads/2024/09/SGP.21-v2.6.pdf).
@@ -231,14 +234,19 @@ use the shared native UI stack, Openline's orange/ink palette and the live site'
   preserving its layout and animation. Manual iPhone installation terminology is consistent with
   [Apple's setup guidance](https://support.apple.com/en-gb/118669). The prototype keeps the requested
   immediate-validity rule separate from installing/enabling the line at the destination.
+- The visible setup view uses private Wi-Fi plus three large setting cards: Openline for primary
+  mobile data, automatic data switching OFF, and roaming ON for Openline. Device paths and the
+  user's private-Wi-Fi / avoid airport-public-Wi-Fi and 4G/5G setup guidance are in detail dialogs.
 - An optional label, existing sample folder or newly named folder update the visible profile. Only
   `{label, folder}` is session-stored under `openline-qa-profile-organisation-v1`, never codes,
   installation credentials or the plan state. Storage failure is disclosed and retains an in-memory
-  result. Reset preview clears this demo organisation state.
+  result. Restart demo clears this demo organisation state.
 - The completion screen shows the saved label/folder and links to the existing `/qa/login` sign-in
-  preview. It does not claim real account saving, successful phone installation or network connection.
+  preview. The intended “You're connected” finale is explicitly labelled a simulated demo connection,
+  with an adjacent no-real-activation disclosure. Production needs authoritative status before showing it.
 - The final handoff is recorded separately in the global QA manifest/export. This completes the
   review prototype of the purchase-code activation journey; no `/delivery` or account backend was added.
+- Full copy/layout/interaction handoff: `qa/start-changelog.md`, included in the QA panel/export registry.
 
 ### About redesign refinements
 
@@ -329,11 +337,11 @@ use the shared native UI stack, Openline's orange/ink palette and the live site'
   rather than shrinking the action text or overflowing its container.
 - Button typography/dimensions remain scoped to About and Contact redesign actions, not navigation
   menus, disclosure chevrons or selected illustrations.
-- The same arrow treatment also applies to `/qa/start`, including its final profile dialogs, back
+- The same arrow treatment also applies to `/qa/start`, including its inline profile flow, back
   links, guide/account links and QR download. Forward/back arrows nudge 4px; diagonal and downward
   arrows move in their own direction over the same 150ms curve. Loading/disabled states and reduced
   motion stay static. The check-code button restores its SVG after loading and errors.
-  `/start` keeps its existing larger inputs, button sizes, type hierarchy and activation animations.
+  The later `/start` redesign expands type and controls further while preserving the activation animations.
 
 ### Connectivity copy and profile flexibility
 

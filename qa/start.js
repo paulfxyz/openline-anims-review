@@ -18,7 +18,9 @@ document.querySelectorAll('[data-action-arrow]').forEach(el => {
 const copyGlyph = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2.5"/><path d="M16 8V5.5A1.5 1.5 0 0 0 14.5 4h-9A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16H8"/></svg>';
 const folderGlyph = '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8V6a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><path d="M3 10h18"/></svg>';
 document.querySelectorAll('[data-icon]').forEach(el => {
-  el.innerHTML = el.dataset.icon === 'copy' ? copyGlyph : el.dataset.icon === 'folder' ? folderGlyph : glyphSVG(el.dataset.icon, { size: 24, sw: 1.8 });
+  el.innerHTML = el.dataset.icon === 'copy' ? copyGlyph : el.dataset.icon === 'folder' ? folderGlyph
+    : el.dataset.icon === 'chevron-down' ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>'
+    : glyphSVG(el.dataset.icon, { size: 24, sw: 1.8 });
 });
 document.querySelectorAll('.sp-key svg path').forEach(path => path.setAttribute('pathLength', '1'));
 
@@ -132,6 +134,7 @@ function openDialog(dialog) {
 function openConfirmation() {
   if (state !== 'review' || !currentCode || activatedAt) return;
   consent.checked = false;
+  $('.sp-switch-state').textContent = 'Not yet';
   confirmButton.disabled = true;
   $('#sp-review-error').hidden = true;
   openDialog($('#sp-confirm'));
@@ -196,6 +199,7 @@ async function activate() {
   $('#sp-valid-until').dateTime = end.toISOString();
   $('#sp-valid-until').textContent = new Intl.DateTimeFormat('en', { day: 'numeric', month: 'short', year: 'numeric' }).format(end);
   setState('success');
+  profileFlow.open('details');
 }
 
 async function copyText(text, origin, successMessage = 'Copied. Your purchase code is still unused.') {
@@ -241,6 +245,7 @@ function reset() {
   clearTimeout(toastTimer);
   clearCodeError();
   consent.checked = false;
+  $('.sp-switch-state').textContent = 'Not yet';
   confirmButton.disabled = true;
   progress(0, 0);
   $('#sp-creating').classList.remove('is-moving');
@@ -257,7 +262,10 @@ $('#sp-example').addEventListener('click', () => { input.value = EXAMPLE; clearC
 $('#sp-entry-gift').addEventListener('click', () => checkCode('gift'));
 $('#sp-review-gift').addEventListener('click', openGift);
 $('#sp-open-confirm').addEventListener('click', openConfirmation);
-consent.addEventListener('change', () => { confirmButton.disabled = !consent.checked; });
+consent.addEventListener('change', () => {
+  confirmButton.disabled = !consent.checked;
+  $('.sp-switch-state').textContent = consent.checked ? 'Ready' : 'Not yet';
+});
 confirmButton.addEventListener('click', activate);
 $('#sp-change-code').addEventListener('click', () => { generation++; currentCode = ''; setState('entry', false); input.focus(); input.select(); });
 $('#sp-reset').addEventListener('click', reset);
@@ -266,10 +274,17 @@ $('#sp-copy-gift').addEventListener('click', e => {
   if (state !== 'review' || activatedAt) return;
   copyText(`A little connection for your next trip.\n\nYour Openline purchase code: ${currentCode}\n\nRedeem it at https://openline.com/start when you’re ready to travel. Activating starts the plan immediately, so wait if your trip is later.\n\nThis is an example gift message from the Openline QA preview, not a real purchase.`, e.currentTarget);
 });
-const profileFlow = initProfileFlow({ canOpen: () => state === 'success' && !!activatedAt, openDialog, copyText });
-$('#sp-install').addEventListener('click', () => profileFlow.open());
-$('#sp-details').addEventListener('click', () => profileFlow.open());
-$('#sp-organise').addEventListener('click', () => profileFlow.open('organise'));
+const profileFlow = initProfileFlow({ canOpen: () => state === 'success' && !!activatedAt, copyText });
+document.querySelectorAll('[data-open-dialog]').forEach(button => {
+  button.setAttribute('aria-haspopup', 'dialog');
+  button.setAttribute('aria-controls', button.dataset.openDialog);
+  button.addEventListener('click', () => {
+    const dialog = document.getElementById(button.dataset.openDialog);
+    if (!dialog) return;
+    openDialog(dialog);
+    dialog.scrollTop = 0;
+  });
+});
 
 dialogs.forEach(dialog => {
   dialog.addEventListener('keydown', event => {

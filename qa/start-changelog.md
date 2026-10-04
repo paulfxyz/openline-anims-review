@@ -1,0 +1,41 @@
+# Activate a plan: focused flow redesign
+
+The current version is on [Openline QA /start](https://openline-anims-review.vercel.app/qa/start). It replaces the crowded review and modal-based profile handoff while preserving the chosen key and code-to-profile animation.
+
+## Entry and choice
+
+- **Enter code:** A large purchase-code input, one primary check button, and concise reassurance that checking does not start the plan. “Where’s my code?” opens a dedicated explanation.
+- **Your plan:** One concise sample-plan card followed by clearly separated Activate my plan, Gift this code and My account actions. Travelling-later guidance remains visible without dominating the page.
+- **Gift:** Copies a private example message, never sends it. An activated purchase code cannot be gifted.
+- **Confirm:** The plan starts immediately and gifting ends. The centred “I’m ready to start this plan now” label is larger and paired with a keyboard-operable switch that defaults OFF every time the modal opens. Activation remains disabled until consent is ON.
+
+## Inline eSIM handoff
+
+- **eSIM details:** QR and plan information appear directly after the chosen activation animation. No “Set up my eSIM” gate button and no full-flow modal.
+- **Manual details:** A collapsed disclosure holds SM-DP+ address, activation code, full activation string, ICCID and profile ID with individual copy controls. Confirmation code is not needed for the sample; EID is explicitly unlinked, never invented.
+- **Setup & connect:** Private Wi-Fi installation, followed by three large cards: Mobile data = Openline; automatic data switching = OFF; Data roaming = ON for Openline.
+- **Detailed help:** Dedicated native dialogs hold iPhone/Samsung/Pixel installation steps and connection tips. Activate just before departure or on arrival; use private Wi-Fi, not airport/public Wi-Fi or cellular 4G/5G for profile setup because these networks may block it. Roaming guidance applies to Openline, not the home SIM.
+- **Make it yours:** Larger optional label/folder controls, live profile preview, custom folder validation and one Finish setup action.
+- **Completion:** The intended “You’re connected” finale and activated-profile state lead to Go to my account. The screen explicitly says this is a simulated demo connection and that no real eSIM or phone connection was activated.
+
+## Presentation and behaviour
+
+- **Type and spacing:** Native Openline UI font, larger body text and controls, clear action hierarchy, generous blocks and responsive single-column mobile layouts. Play is reserved for the wordmark; technical codes remain monospace.
+- **Motion:** Selected key float/draw and code-to-profile animation are preserved. Directional arrows retain source-style hover/focus/press movement. Reduced-motion preferences disable the nonessential motion.
+- **Details on demand:** Code help, timing, phone-specific instructions, connection tips, save behaviour and preview controls are moved out of the main sequence into dialogs.
+- **Accessibility:** Native focus-trapping dialogs, Escape/close/backdrop dismissal, focus return, labelled switch, native disclosure, clear focus outlines and button-sized tap targets.
+
+## Preview boundaries and production handoff
+
+- **No live activation:** No provisioning, account, payment or messaging APIs are called. The demo's successful timing animation is not evidence of production activation or physical connectivity.
+- **Safe fixtures:** QR encodes a harmless notice. Manual server uses `.invalid`; all identifiers and credentials are fictional. Purchase codes never enter storage or URLs.
+- **Local organisation only:** The optional label and folder are stored for this browser tab, with a truthful in-memory fallback when storage is unavailable. Account links open `/qa/login`.
+- **Failure states:** Empty/malformed/unknown/used codes, lookup failure and recoverable activation failure remain available. Restart cancels outstanding work; reopening confirmation resets consent.
+- **Irina handoff:** Apply copy, layout, typography, icons, spacing, dialogs and state transitions together with the animation. Replace fixtures with authoritative server results and gate any real connected-state assertion on actual evidence. This is QA work, not production approval or the deferred `/delivery` package.
+
+## QA checks
+
+- **Responsive review:** Entry, choices, confirmation, QR, setup, organisation and completion were checked at desktop and 375px mobile widths. Entry/review also fit at 320px; expanded manual values did not create mobile horizontal overflow.
+- **Consent and errors:** Keyboard Space toggles the switch; reopening resets it OFF. Empty, malformed, unknown, used and connection-error codes were exercised, as was recoverable activation failure with gifting still available.
+- **Interactions:** Native help-dialog open/close and focus return, three device guides, manual-detail disclosure, profile copying, clipboard-denied fallback, optional blank fields and required custom-folder names were checked.
+- **Persistence and motion:** Storage-denied fallback stays truthful, restarting clears organisation and cancels pending activation work, and reduced-motion mode removes the key animation. No page JavaScript errors were observed in those tested flows.
