@@ -17,7 +17,7 @@
     <button type="button" id="fuc-edit-start" aria-pressed="true"><span>Start date</span><strong id="fuc-start-label">Choose a date</strong></button>
     <span class="fuc-date-arrow" aria-hidden="true">{{ARROW}}</span>
     <button type="button" id="fuc-edit-end" aria-pressed="false" disabled><span>End date</span><strong id="fuc-end-label">Choose a date</strong></button>
-    <button type="button" id="fuc-clear" aria-label="Clear selected dates">Reset</button>
+    <button type="button" id="fuc-clear" aria-label="Clear selected dates"><span aria-hidden="true">{{RESET}}</span>Reset</button>
   </div>
   <div class="fuc-navigation" aria-label="Calendar navigation">
     <button type="button" id="fuc-prev" aria-label="Previous month">{{ARROW}}</button>
@@ -28,8 +28,11 @@
   <p class="fuc-keyboard-hint" id="fuc-keyboard-help">Arrow keys move between dates. Enter selects. Page Up / Down changes month.</p>
   <p class="fuc-activation-note">These dates calculate your duration. They do not activate or schedule your eSIM.</p>
   <div class="fuc-footer">
-    <div class="fuc-quote" aria-live="polite" aria-atomic="true"><strong id="fuc-duration">Select your dates</strong><p id="fuc-quote-text">Your total will appear here.</p></div>
-    <div class="fuc-footer-actions"><button type="button" data-fu-close>Cancel</button><button type="button" id="fu-date-apply" class="fu-primary" disabled>Apply dates {{CHECK}}</button></div>
+    <div class="fuc-quote" aria-live="polite" aria-atomic="true">
+      <div class="fuc-plan-summary"><span class="fuc-plan-icon" aria-hidden="true">{{CALENDAR}}</span><div><strong id="fuc-duration">Select your dates</strong><span id="fuc-plan-caption">First and last day included</span></div></div>
+      <div id="fuc-quote-text" class="fuc-price-summary"><span class="fuc-total-line"><strong id="fuc-total">—</strong><small>USD</small></span><span id="fuc-daily">Preview total</span></div>
+    </div>
+    <div class="fuc-footer-actions"><button type="button" data-fu-close>Cancel</button><button type="button" id="fu-date-apply" class="fu-primary" disabled><span>Apply dates</span><span class="fuc-apply-arrow" aria-hidden="true">{{ARROW}}</span></button></div>
   </div>
 </dialog>
 <dialog id="fu-review" class="fu-dialog" aria-labelledby="fu-review-title">

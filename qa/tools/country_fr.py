@@ -31,6 +31,7 @@ PATHS = {
     "CART": '<path d="M3 3h2l3 13h10l3-10H6"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/>',
     "HELP": '<circle cx="12" cy="12" r="9"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3M12 17h.01"/>',
     "CLOSE": '<path d="m6 6 12 12M18 6 6 18"/>',
+    "RESET": '<path d="M3 10a9 9 0 1 1 2.6 8.1M3 4v6h6"/>',
 }
 def icon(name):
     return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + PATHS[name] + "</svg>"

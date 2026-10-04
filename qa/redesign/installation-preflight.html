@@ -2,42 +2,67 @@
 <div class="igp-wrap" id="ig-preflight">
   <section class="igp-card" aria-labelledby="igp-title">
     <header class="igp-head">
-      <div><p class="igp-kicker">Before you install</p><h2 id="igp-title">From purchase code to connected.</h2><p>Three steps. The same starting point for iPhone and Android.</p></div>
-      <button type="button" class="igp-compat" data-ol-open="compat"><span data-ig-icon="phone"></span>Check compatibility</button>
+      <div><p class="igp-kicker">Before you install</p><h2 id="igp-title">Your code unlocks your eSIM.</h2><p>Two different things. One simple journey to getting connected.</p></div>
+      <button type="button" class="igp-compat" data-ol-open="compat"><span data-ig-icon="phone" aria-hidden="true"></span>Check compatibility</button>
     </header>
+
+    <div class="igp-exchange">
+      <article class="igp-exchange-card igp-purchase">
+        <div class="igp-panel-head"><span class="igp-panel-icon" data-ig-icon="key" aria-hidden="true"></span><div><p>From your order</p><h3>Purchase code</h3></div></div>
+        <div class="igp-token"><small>Example purchase code</small><code>GAZE19-<wbr>MULCH29-<wbr>NYMPH13</code></div>
+        <p class="igp-panel-caption">Use it at <b>/start</b>, not in your phone’s eSIM settings.</p>
+      </article>
+      <div class="igp-bridge" aria-hidden="true"><span data-ig-icon="arrow"></span><small>/start</small></div>
+      <article class="igp-exchange-card igp-esim">
+        <div class="igp-panel-head"><span class="igp-panel-icon" data-ig-icon="esim" aria-hidden="true"></span><div><p>Ready to install</p><h3>Openline eSIM</h3></div></div>
+        <div class="igp-profile-preview" aria-label="Illustration of an eSIM profile, not installation credentials"><span class="igp-qr-tile" data-ig-icon="qr" aria-hidden="true"></span><div><b>Your eSIM profile</b><span>QR code + manual setup details</span></div></div>
+        <p class="igp-panel-caption">This is the profile you install on your phone.</p>
+      </article>
+    </div>
+
     <ol class="igp-journey">
-      <li class="igp-stage">
-        <div class="igp-visual igp-code-visual" aria-label="Example purchase code">
-          <span data-ig-icon="key" aria-hidden="true"></span><span class="igp-visual-label">Purchase code</span>
-          <code>GAZE19-<wbr>MULCH29-<wbr>NYMPH13</code>
-        </div>
-        <div class="igp-stage-copy"><h3><span>1</span>Find your code</h3><p>It’s in your order email and dashboard.</p></div>
-        <span class="igp-flow-arrow" data-ig-icon="arrow" aria-hidden="true"></span>
-      </li>
-      <li class="igp-stage">
-        <div class="igp-visual igp-profile-visual" aria-hidden="true">
-          <span class="igp-profile-icon" data-ig-icon="esim"></span><div><b>Openline eSIM</b><span>QR + setup details</span></div><span class="igp-profile-qr" data-ig-icon="qr"></span>
-        </div>
-        <div class="igp-stage-copy"><h3><span>2</span>Create your eSIM</h3><p>Redeem at <a href="/qa/start">openline.com/start</a> for your QR code and manual setup details.</p></div>
-        <span class="igp-flow-arrow" data-ig-icon="arrow" aria-hidden="true"></span>
-      </li>
-      <li class="igp-stage">
-        <div class="igp-visual igp-phone-visual" aria-hidden="true"><span class="igp-phone" data-ig-icon="phone"></span><span class="igp-phone-check" data-ig-icon="check"></span><span class="igp-visual-label">Ready for your phone</span></div>
-        <div class="igp-stage-copy"><h3><span>3</span>Install &amp; connect</h3><p>Select your device and setup method, then follow the guide below.</p></div>
-      </li>
+      <li class="igp-stage"><span class="igp-step-number">1</span><div><h3>Find your code</h3><p>In your order email or dashboard.</p></div></li>
+      <li class="igp-stage"><span class="igp-step-number">2</span><div><h3>Create your eSIM</h3><p>Redeem your purchase code at <a href="/start">/start</a>.</p></div></li>
+      <li class="igp-stage"><span class="igp-step-number">3</span><div><h3>Install &amp; connect</h3><p>Scan your QR, then check your settings.</p></div></li>
     </ol>
     <div class="igp-actions">
-      <a class="igp-button" href="/qa/start" title="Open the purchase-code preview">Redeem purchase code <span data-ig-icon="arrow"></span></a>
-      <a class="igp-skip" href="#ig-install-steps">I already have my eSIM <span data-ig-icon="arrow"></span></a>
+      <a class="igp-button" href="/start">Redeem purchase code <span data-ig-icon="arrow" aria-hidden="true"></span></a>
+      <a class="igp-skip" href="#ig-install-steps">I already have my eSIM <span data-ig-icon="arrow" aria-hidden="true"></span></a>
     </div>
-    <p class="igp-timing"><span data-ig-icon="info" aria-hidden="true"></span><span><b>Travelling later?</b> Wait before confirming activation at /start. Your plan starts then, and gifting ends.</span></p>
+    <p class="igp-timing"><span data-ig-icon="clock" aria-hidden="true"></span><span><b>Activate just before departure or on arrival, using private Wi-Fi.</b> Confirmation at /start starts your plan and ends gifting.</span></p>
+
     <div class="igp-help-row">
-      <details class="igp-code-help">
-        <summary>Which code is which?<span aria-hidden="true">+</span></summary>
-        <div><p><b>Purchase code:</b> your order code, previously called an “activation code”. It unlocks your eSIM profile at /start.</p><p><b>eSIM activation code:</b> part of the manual installation details issued with that profile. It is not your purchase code.</p></div>
-      </details>
-      <a href="#ig-activation-steps" class="igp-connect-link">Connection checklist <span data-ig-icon="arrow"></span></a>
+      <button type="button" class="igp-info-trigger" data-ig-dialog="igp-codes-dialog" aria-haspopup="dialog" aria-controls="igp-codes-dialog"><span class="igp-help-icon" data-ig-icon="key" aria-hidden="true"></span><span><b>Which code is which?</b><small>Purchase code vs eSIM activation code</small></span><span class="igp-help-arrow" data-ig-icon="arrow" aria-hidden="true"></span></button>
+      <button type="button" class="igp-info-trigger" data-ig-dialog="igp-connect-dialog" aria-haspopup="dialog" aria-controls="igp-connect-dialog"><span class="igp-help-icon" data-ig-icon="checklist" aria-hidden="true"></span><span><b>Connection checklist</b><small>Private Wi-Fi, mobile data &amp; roaming</small></span><span class="igp-help-arrow" data-ig-icon="arrow" aria-hidden="true"></span></button>
     </div>
   </section>
+
+  <dialog class="igp-dialog" id="igp-codes-dialog" aria-labelledby="igp-codes-title" aria-describedby="igp-codes-intro">
+    <button type="button" class="igp-dialog-close" data-ig-close aria-label="Close code explanation">×</button>
+    <span class="igp-dialog-icon" data-ig-icon="key" aria-hidden="true"></span>
+    <h2 id="igp-codes-title">Which code is which?</h2><p id="igp-codes-intro" class="igp-dialog-intro">Your purchase unlocks the profile. The profile is what your phone installs.</p>
+    <div class="igp-code-definitions">
+      <article><span data-ig-icon="key" aria-hidden="true"></span><div><h3>Openline purchase code</h3><p>Found in your order email and dashboard. Enter it at <b>/start</b> to create your eSIM profile. It is not an installation code for your phone.</p><code>GAZE19-MULCH29-NYMPH13</code></div></article>
+      <article><span data-ig-icon="esim" aria-hidden="true"></span><div><h3>eSIM activation code</h3><p>Issued with your eSIM profile for manual setup, together with its <b>SM-DP+ address</b>. Enter those details in your phone’s eSIM settings, or scan the profile’s QR code instead.</p></div></article>
+    </div>
+    <p class="igp-dialog-note"><b>Older wording:</b> the purchase code was previously called an “activation code”. The order code and the eSIM’s manual activation code are not interchangeable.</p>
+    <p class="igp-dialog-notice">You can gift a purchase code before activation. Confirming activation at /start starts your plan and ends gifting, so wait if your trip is later.</p>
+    <div class="igp-dialog-actions"><a class="igp-button" href="/start">Redeem at /start <span data-ig-icon="arrow" aria-hidden="true"></span></a><button type="button" class="igp-dialog-secondary" data-ig-close>Got it</button></div>
+  </dialog>
+
+  <dialog class="igp-dialog igp-connection-dialog" id="igp-connect-dialog" aria-labelledby="igp-connect-title" aria-describedby="igp-connect-intro">
+    <button type="button" class="igp-dialog-close" data-ig-close aria-label="Close connection checklist">×</button>
+    <span class="igp-dialog-icon" data-ig-icon="checklist" aria-hidden="true"></span>
+    <h2 id="igp-connect-title">Your connection checklist</h2><p id="igp-connect-intro" class="igp-dialog-intro">Beyond scanning the QR code, these are the settings that matter.</p>
+    <div class="igp-checklist-callout"><span data-ig-icon="wifi" aria-hidden="true"></span><div><h3>Use a stable, private Wi-Fi connection</h3><p>Avoid airport/public Wi-Fi and 4G/5G for activation. Those networks may block the profile download or activation process.</p></div></div>
+    <div class="igp-checklist-timing"><span data-ig-icon="clock" aria-hidden="true"></span><div><h3>Activate just before departure or on arrival</h3><p>Wait if your trip is later. Confirmation at /start starts your plan’s validity and ends gifting.</p></div></div>
+    <dl class="igp-settings-list">
+      <div><span data-ig-icon="phone" aria-hidden="true"></span><div><dt>Primary mobile data</dt><dd>Select your <b>Openline eSIM</b> for Mobile Data / Cellular Data.</dd></div><span class="igp-setting-state">Openline</span></div>
+      <div><span data-ig-icon="data-switch" aria-hidden="true"></span><div><dt>Automatic data switching</dt><dd>Turn it <b>off</b> so your phone does not switch to another data line.</dd></div><span class="igp-setting-state is-off">Set to OFF</span></div>
+      <div><span data-ig-icon="globe" aria-hidden="true"></span><div><dt>Data roaming</dt><dd>Turn it <b>on for your Openline eSIM</b>, not your home SIM.</dd></div><span class="igp-setting-state is-on">Set to ON</span></div>
+    </dl>
+    <p class="igp-dialog-note">Setting names vary between phones. These are instructions, not a reading of your device settings; this preview cannot change them.</p>
+    <div class="igp-dialog-actions"><button type="button" class="igp-button" data-ig-jump="ig-install-steps">Open setup guide <span data-ig-icon="arrow" aria-hidden="true"></span></button><button type="button" class="igp-dialog-secondary" data-ig-close>Close</button></div>
+  </dialog>
 </div>
 <!-- qa-installation-preflight:end -->

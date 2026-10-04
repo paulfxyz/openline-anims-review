@@ -267,16 +267,21 @@ use the shared native UI stack, Openline's orange/ink palette and the live site'
 - All three support-process steps are keyboard-clickable and seek the SVG's own timeline. The
   loop continues; pressed states follow the current scene. Reduced motion keeps manual seeking.
 - `qa/tools/installation_preflight.py` replaces only the marked installation preflight region.
-  The latest version consolidates its text-heavy explainer and separate roadmap into one visual
-  three-step journey: find the purchase code, create the profile at /start, install and connect.
+  The latest version uses two large Purchase code → Openline eSIM panels with the three steps below:
+  find the code, create the profile at /start, install and connect. The 56px redemption CTA now uses
+  `/start`, a lightweight redirect alias to the existing `/qa/start` preview, not a production action.
   Source is `qa/redesign/installation-preflight.html`; CSS is scoped `.igp-*`.
-  Compatibility, redemption, installation and connection links remain. Terminology is in an optional
-  details row; a short notice keeps activation timing/gifting visible without repeating the whole flow.
+  Compatibility, redemption and installation links remain. Two larger icon-led help buttons open
+  native detail dialogs for code terminology and connection guidance. The latter covers private Wi-Fi,
+  activation just before departure/on arrival, Openline as primary data, automatic data switching OFF,
+  and roaming ON for the Openline eSIM; these are instructions, not detected phone settings.
   The rest of the captured HTML and selected installation animation are preserved byte-for-byte.
-  Runtime only fills icons and adds section-anchor IDs. See `qa/installation-preflight-changelog.md`.
-- Content handoff issue: the existing installation guide says activate at destination; the requested
-  /start prototype warns that validity starts immediately. Product must resolve this policy distinction
-  before production rather than silently changing unrelated guide copy during a targeted design edit.
+  Runtime fills icons, adds anchors/focus targets and handles the two dialogs. See
+  `qa/installation-preflight-changelog.md`.
+- Timing clarification: activate just before departure or on arrival. Confirming at /start starts
+  validity and ends gifting, while profile installation/activation should use stable private Wi-Fi.
+  Airport/public Wi-Fi and cellular connections may block the setup, per Paul's supplied guidance.
+  Unrelated walkthrough copy is not silently rewritten during this targeted edit.
 
 ### Chat refinements and safe prototype boundaries
 
@@ -421,6 +426,9 @@ use the shared native UI stack, Openline's orange/ink palette and the live site'
   month/year keyboard navigation, Reset and Apply/Cancel. Only applied dates change the day count
   and price. Calendar-day arithmetic is inclusive and DST-safe; totals use the block's own pricing
   function and USD, not the reference modal's mismatched fixed daily estimate.
+- Latest calendar polish hides the visible shortcut hint while preserving accessibility, separates
+  the day-count/total/daily-rate quote, uses orange Reset and a stronger Apply action, and aligns
+  Unlimited duration-control styling and icon motion. Text stays steady and reduced motion is static.
 - `python qa/tools/country_fr.py --refresh-local` updates only the controlled dialogs and scoped
   stylesheet, so modal iterations preserve the surrounding captured page.
 - `qa/country-fr-changelog.md` and the shared panel/export explicitly record the rejection and

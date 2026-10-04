@@ -6,6 +6,17 @@ const state={days:7,valid:true,dates:null,view:'popular',data:null,validity:null
 const fixedGrid=$('#fu-fixed-grid'), popular=[...fixedGrid.children].map(e=>e.outerHTML);
 const all=[...$('#fu-fixed-all').content.children].map(e=>e.outerHTML);
 let overflow='',timer;
+// One consistent icon/type treatment for the existing six duration controls.
+// Only the icon moves; dates, day counts, prices and the original layout stay still.
+const durationIcon='<svg class="fu-duration-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/><path class="fu-duration-tick" d="m8 15 3 3 5-6"/></svg>';
+root.querySelectorAll('[data-fu-days]').forEach(b=>{
+  const days=Number(b.dataset.fuDays);
+  b.innerHTML=`<span class="fu-duration-main">${durationIcon}<span class="fu-duration-number">${days}</span></span><span class="fu-duration-unit">days</span>`;
+  b.setAttribute('aria-label',`${days} days`);
+});
+root.querySelectorAll('.fu-actions svg').forEach(svg=>svg.classList.remove('group-hover:scale-110'));
+$('#fu-date-open').setAttribute('aria-haspopup','dialog');
+$('#fu-date-open').setAttribute('aria-controls','fu-dates');
 function open(d){overflow=document.documentElement.style.overflow;document.documentElement.style.overflow='hidden';d.showModal();d.scrollTop=0;}
 function scrollToNode(el){el.scrollIntoView({behavior:motion.matches?'instant':'smooth',block:'start'});}
 function update(){
@@ -14,6 +25,7 @@ function update(){
   $('#fu-rate').textContent=state.valid?`${money(unlimitedPrice(state.days)/state.days)}/day • ${state.days} days validity`:'Select a valid duration';
   $('#fu-error').hidden=state.valid;$('#fu-error').textContent=state.valid?'':'Choose a whole number from 1 to 365 days in this preview.';
   $('#fu-days').setAttribute('aria-invalid',!state.valid);
+  $('#fu-date-open').classList.toggle('fu-has-dates',state.valid&&state.dates!==null);
   root.querySelectorAll('[data-fu-days]').forEach(b=>b.setAttribute('aria-pressed',state.valid&&Number(b.dataset.fuDays)===state.days));
   root.querySelectorAll('[data-fu-buy],[data-fu-add]').forEach(b=>b.disabled=!state.valid);
   root.querySelector('[data-fu-delta="-1"]').disabled=state.valid&&state.days===1;

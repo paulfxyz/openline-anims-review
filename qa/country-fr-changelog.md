@@ -50,6 +50,22 @@ than introducing another page layout.
 The panel/export has a separate `country-fr-calendar-range` record for Irina. No surrounding
 page capture or Fixed Plan layout was changed during this modal-only update.
 
+## Calendar and Unlimited-control polish
+
+- The keyboard shortcut sentence is visually hidden, not removed from the accessible description.
+  All keyboard navigation still works.
+- The footer now has a distinct quote card with X-day plan, preview label, prominent total in USD
+  and a separate daily rate. Existing pricing mathematics and input guards are unchanged.
+- Reset uses Openline orange, with a small reset icon. Apply uses the primary-button styling and
+  a short trailing-arrow motion; incomplete ranges still leave it disabled.
+- The existing six duration buttons share the same icon/number layout, 8px corners, borders,
+  selected orange treatment and focus styles. Selected calendar icons draw a small tick.
+- Date-picker, day-stepper, purchase/cart and calendar navigation icons respond consistently to
+  hover/focus. Text and prices stay still; reduced motion disables these effects.
+
+This is styling inside the original France template, not the rejected page redesign. It is
+logged as `country-fr-calendar-polish` for Irina, alongside the existing functional calendar record.
+
 ## Unlimited introduction restored
 
 At Paul's explicit request on 2026-10-04, only the description below “Unlimited Data” changes:
