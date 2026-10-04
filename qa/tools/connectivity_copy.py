@@ -9,6 +9,7 @@ import re
 
 Q = Path(__file__).resolve().parents[1]
 data = json.loads((Q / "connectivity-copy.json").read_text())
+policy = json.loads((Q / "unlimited-plan-copy.json").read_text())
 fragment = (Q / "redesign/profile-switching.html").read_text()
 css = (Q / "profile-switching.css").read_text()
 START = "<!-- qa-profile-switching:start -->"
@@ -44,7 +45,17 @@ def block(slug):
         ),
         "LINK": "/qa/multiple-tier1#profile-switching" if is_unlimited else "/qa/unlimited#profile-switching",
         "LINK_LABEL": "How multi-network works" if is_unlimited else "How this supports unlimited use",
+        "NETWORK_TEXT": "When your current eSIM has a suitable network option, we can adapt the connection within that profile. The choices depend on your plan and location.",
+        "NETWORK_STAYS": "Your existing eSIM profile remains in use.",
+        "PROFILE_TITLE_1": "A new profile.",
+        "PROFILE_TITLE_2": "A different service setup.",
+        "PROFILE_TEXT": "If a network change is not enough, we can issue another eSIM profile on the fly. That lets us change the underlying provider and connectivity setup, not just the network name on your screen.",
+        "PROFILE_STAYS": "This flexibility supports both multi-network access and our unlimited-use approach.",
+        "DISCLOSURE_TITLE": "Occasionally, we may replace your eSIM profile entirely.",
+        "DISCLOSURE_TEXT": "It should be uncommon, but changing the whole profile is part of how we work to maintain a good service. You may need to install or enable the replacement on your phone. If a setup step is needed, we’ll guide you through it.",
     }
+    if is_unlimited:
+        values.update({key: record["after"] for key, record in policy["section"].items()})
     result = fragment
     for key, value in values.items():
         result = result.replace("{{" + key + "}}", html.escape(value, quote=True))
@@ -68,7 +79,12 @@ def replace_section(text, slug):
 def rewrite(text, records):
     ordinary = [r for r in records if "stat" not in r]
     lookup = {compact(r["before"]): r for r in ordinary}
-    already = {compact(r["after"]): r for r in ordinary}
+    for r in ordinary:
+        for alias in r.get("aliases", []):
+            lookup[compact(alias)] = r
+    already = {}
+    for r in ordinary:
+        already.setdefault(compact(r["after"]), []).append(r)
     found = set()
     def heading_or_paragraph(m):
         key = compact(m.group(3))
@@ -77,8 +93,8 @@ def rewrite(text, records):
             found.add(record["before"])
             content = record.get("html", html.escape(record["after"], quote=False))
             return m.group(1) + content + m.group(4)
-        if key in already:
-            found.add(already[key]["before"])
+        for record in already.get(key, []):
+            found.add(record["before"])
         return m.group(0)
     # Headings may contain per-word accent/reveal spans. Keep their outer
     # element and classes; replace only the human-readable inner copy.
@@ -92,22 +108,52 @@ def rewrite(text, records):
             leading = re.match(r"\s*", raw).group()
             trailing = re.search(r"\s*$", raw).group()
             return leading + html.escape(record["after"], quote=False) + trailing
-        if key in already:
-            found.add(already[key]["before"])
+        for record in already.get(key, []):
+            found.add(record["before"])
         return raw
     text = re.sub(r"(?<=>)[^<>]+(?=<)", leaf, text)
     for r in records:
         if "stat" not in r:
             continue
         old_value, old_label, new_value, new_label = r["stat"]
-        pattern = r"(<div\b[^>]*>)" + re.escape(old_value) + r"(</div>\s*<div\b[^>]*>)" + re.escape(old_label) + r"(</div>)"
-        text, count = re.subn(pattern, lambda m: m[1] + new_value + m[2] + new_label + m[3], text)
+        count = 0
+        for value, label in [(old_value, old_label), *r.get("stat_aliases", [])]:
+            pattern = r"(<div\b[^>]*>)" + re.escape(value) + r"(</div>\s*<div\b[^>]*>)" + re.escape(label) + r"(</div>)"
+            text, changed = re.subn(pattern, lambda m: m[1] + new_value + m[2] + new_label + m[3], text)
+            count += changed
         if count or new_label in text:
             found.add(r["before"])
     missing = [r["before"] for r in records if r["before"] not in found]
     if missing:
         raise RuntimeError("Copy keys not located: " + repr(missing))
     return text
+
+def current_records(slug):
+    """Keep original-to-current and previous-to-current logs without replaying
+    superseded prose. Both old captures and already-updated pages are accepted."""
+    if slug != "unlimited":
+        return data[slug]
+    latest = {compact(r["before"]): r for r in policy["copy"]}
+    result = []
+    matched = set()
+    for base in data[slug]:
+        r = dict(base)
+        update = latest.get(compact(base["after"]))
+        if update:
+            matched.add(update["before"])
+            r["after"] = update["after"]
+            r["aliases"] = [base["after"]]
+            r.pop("html", None)
+            if "html" in update:
+                r["html"] = update["html"]
+            if "stat" in base:
+                r["stat_aliases"] = [base["stat"][2:]]
+                r["stat"] = base["stat"][:2] + update["stat"][2:]
+        result.append(r)
+    missing = [r["before"] for r in policy["copy"] if r["before"] not in matched]
+    if missing:
+        raise RuntimeError("Revision has no base copy record: " + repr(missing))
+    return result
 
 def neutral_usage_cards(text):
     """The former competitor failures are now neutral customer use cases."""
@@ -142,7 +188,7 @@ for slug in ("multiple-tier1", "unlimited"):
     # Do not rewrite the new component when scanning the captured copy.
     a, b = revised.index(START), revised.index(END) + len(END)
     outside = revised[:a] + "<!-- CPX_SLOT -->" + revised[b:]
-    outside = rewrite(outside, data[slug])
+    outside = rewrite(outside, current_records(slug))
     if slug == "unlimited":
         outside = neutral_usage_cards(outside)
     revised = outside.replace("<!-- CPX_SLOT -->", revised[a:b], 1)
@@ -152,16 +198,29 @@ for slug in ("multiple-tier1", "unlimited"):
 # The registry imports this generated JS so one source drives implementation,
 # the in-panel before/after view, Markdown export and machine-readable data.
 public = {
-    slug: [{k:r[k] for k in ("area","before","after")} for r in data[slug]]
+    slug: [{k:r[k] for k in ("area","before","after")} for r in current_records(slug)]
     for slug in ("multiple-tier1","unlimited")
 }
+policy_public = [
+    {k:r[k] for k in ("area", "before", "after")}
+    for r in [*policy["copy"], *policy["section"].values()]
+]
 (Q / "connectivity-changes.js").write_text(
     "// Generated by qa/tools/connectivity_copy.py from connectivity-copy.json.\n"
     "export const CONNECTIVITY_COPY = " + json.dumps(public, ensure_ascii=False, indent=2) + ";\n"
+    "export const UNLIMITED_PLAN_COPY = " + json.dumps(policy_public, ensure_ascii=False, indent=2) + ";\n"
 )
 lines = [
     "# Connectivity wording and profile-switching update",
     "", "Date: " + data["date"], "", data["basis"], "",
+    "## Latest clarification for Irina: fixed packages versus unlimited", "",
+    policy["basis"], "",
+    "Apply this latest Unlimited copy together with its existing QA page identity, native typography, "
+    "animation geometry/timings, neutral use-case rows and the added profile-replacement section. "
+    "The Unlimited before/after inventory below is consolidated original-to-current copy. The final "
+    "revision section records the immediately previous wording versus this latest clarification, "
+    "including the replacement component. Do not restore the earlier generic adaptive-service copy. "
+    "Multi Tier-1 and Global eSIM remain unchanged by this clarification.", "",
     "## New entry on both pages", "",
     "A prominent two-route explainer distinguishes network selection within an existing profile "
     "from occasional replacement of the whole profile/provider setup. It discloses possible installation "
@@ -179,4 +238,7 @@ for slug, records in public.items():
     lines += ["## /qa/" + slug, ""]
     for record in records:
         lines += ["### " + record["area"], "- Before: " + record["before"], "- After: " + record["after"], ""]
+lines += ["## Latest Unlimited revision: previous to current", ""]
+for record in policy_public:
+    lines += ["### " + record["area"], "- Before: " + record["before"], "- After: " + record["after"], ""]
 (Q / "connectivity-changelog.md").write_text("\n".join(lines))

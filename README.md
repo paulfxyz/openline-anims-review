@@ -362,6 +362,28 @@ use the shared native UI stack, Openline's orange/ink palette and the live site'
   including the selected IoT Chrome treatment, are unchanged. The panel toggle still allows comparison,
   and the selected default / current toggle state are included in the export.
 
+### Unlimited plan clarification for Irina
+
+- Paul's subsequent 2026-10-04 clarification supersedes the earlier generic Unlimited wording:
+  fixed packages guarantee every purchased GB at full available network speed with no usage-based
+  throttling. A 10 GB purchase means all 10 GB at full speed. Unlimited plans have no Openline-imposed
+  cap or throttling, but remain subject to local MNO fair-use rules, including possible temporary
+  slowdown after heavy data use within 24 hours.
+- Fixed packages are explicitly recommended when avoiding throttling is the priority. For frequently
+  throttled unlimited plans, Openline will try another eSIM profile/provider infrastructure whose
+  fair-use policy may better fit the location and usage. Better performance or freedom from future
+  throttling is not guaranteed. No universal threshold, recovery period or midnight reset is invented.
+  Full available network speed is not a universal Mbps guarantee and still depends on radio conditions.
+- `qa/unlimited-plan-copy.json` is the latest revision. The existing connectivity builder composes it
+  over the original copy inventory without replaying superseded text. It accepts original captures,
+  the previous revision and the current revision, and generates both consolidated original-to-current
+  copy and a previous-to-current revision log including the new profile-section wording.
+- The panel, hub, Markdown changelog and Copy for Computer export contain the dedicated
+  `unlimited-fixed-vs-mno-fair-use` Irina handoff record. Apply this copy with the current page colours,
+  native typography, preserved animation geometry/timings, neutral use-case cards and profile explainer.
+  The handoff is recorded only; no message has been sent to Irina and no production Openline page changed.
+  This revision does not alter Multi Tier-1, Global eSIM or the original animation boards.
+
 ### QA reporting beyond animation choices
 
 - `qa/change-log.js` is the shared, manually maintained change inventory: active refinements, exact scopes,

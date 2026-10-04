@@ -4,6 +4,12 @@ Date: 2026-10-04
 
 Paul's clarification: Openline can occasionally issue a replacement eSIM profile to change the underlying provider and connectivity stack, supporting its multi-network and unlimited-use approach.
 
+## Latest clarification for Irina: fixed packages versus unlimited
+
+Paul's product clarification: Openline adds no throttling or data cap to unlimited plans. Fixed packages guarantee the full purchased allowance at full available network speed without usage-based throttling. Unlimited plans remain subject to local MNO rules, which may reduce speed after heavy use within 24 hours. Recommend fixed packages to avoid this throttling. If unlimited throttling recurs, Openline will try an alternative eSIM profile/infrastructure with a fair-use policy better suited to the customer's location and usage, without guaranteeing an improvement.
+
+Apply this latest Unlimited copy together with its existing QA page identity, native typography, animation geometry/timings, neutral use-case rows and the added profile-replacement section. The Unlimited before/after inventory below is consolidated original-to-current copy. The final revision section records the immediately previous wording versus this latest clarification, including the replacement component. Do not restore the earlier generic adaptive-service copy. Multi Tier-1 and Global eSIM remain unchanged by this clarification.
+
 ## New entry on both pages
 
 A prominent two-route explainer distinguishes network selection within an existing profile from occasional replacement of the whole profile/provider setup. It discloses possible installation or activation, removes the unverified 90% / 10% split and fixed 30-second promise, and links the two pages.
@@ -200,59 +206,59 @@ The illustration is not a real profile switch. No promise is added about automat
 
 ### Hero badge
 - Before: Truly Unlimited
-- After: Unlimited Use, Adaptive Service
+- After: No Throttling from Openline
 
 ### Hero heading
 - Before: Unlimited Speed,No Limits
-- After: Unlimited usage. Service that adapts.
+- After: Your data. Full speed. Our promise, explained.
 
 ### Hero introduction
 - Before: No throttling. No fair usage policy. No hidden limits. When we say unlimited, we mean it. Use your full data allocation at full speed, always.
-- After: Our unlimited-use approach is built on flexibility, not one fixed connection. We can use another network where your profile supports it or, occasionally, issue a new eSIM profile to change the underlying provider and connectivity setup. Speeds still depend on local conditions.
+- After: Buy 10 GB and get all 10 GB at full speed, guaranteed, with no usage-based throttling. Openline adds no data cap or throttling to unlimited plans either, but the local mobile operator’s fair-use rules can still reduce their speed after heavy use.
 
 ### Meaning heading
 - Before: What Unlimited Really Means
-- After: Unlimited use needs a service that can adapt
+- After: One promise. Two types of plan.
 
 ### Meaning introduction
 - Before: While other providers use "unlimited" as a marketing term, Openline delivers genuinely unlimited data at full speed with zero throttling or hidden restrictions.
-- After: Our ability to move you to another eSIM profile is part of what supports unlimited use. If the current provider or service setup is no longer suitable, we can replace it rather than leave you stuck with it. Unlimited usage is not a promise of one constant speed everywhere.
+- After: On a fixed-data package, your entire purchased allowance is guaranteed at full available network speed, without usage-based throttling. On an unlimited plan, Openline imposes no data cap or throttling, but local operator fair-use rules still apply. Full speed means the speed the network can deliver: signal, congestion and your device can affect it.
 
 ### Feature heading
 - Before: No Speed Throttling
-- After: Built for continued use
+- After: 10 GB means all 10 GB
 
 ### Feature copy
 - Before: Full speed from the first byte to the last. Your connection never slows down, no matter how much you use.
-- After: Our aim is to keep your service usable as you use your plan. Network conditions and provider constraints can still affect performance.
+- After: Buy a 10 GB package and every GB is available at full speed. We guarantee no usage-based throttling anywhere within your purchased allowance.
 
 ### Feature heading
 - Before: No Fair Usage Policy
-- After: More than one service setup
+- After: Unlimited on our side
 
 ### Feature copy
 - Before: Truly unlimited means unlimited. Use your full data allocation without any hidden restrictions.
-- After: If your current service path stops being a good fit, we can issue another profile and move to a different underlying provider.
+- After: For unlimited plans, we guarantee that Openline adds no data cap or usage-based speed restriction. The local mobile network operator’s rules are a separate matter.
 
 ### Feature heading
 - Before: 4K Streaming Ready
-- After: Streaming, calls and more
+- After: Local network fair use
 
 ### Feature copy
 - Before: Stream in the highest quality without buffering. Perfect for Netflix, YouTube, and video calls.
-- After: Use your plan for the things you need on the move. Video quality and call performance depend on the connection available.
+- After: On unlimited plans, using a lot of data quickly within 24 hours may trigger a local MNO fair-use policy and temporarily reduce your speed. Thresholds and recovery times vary by network and plan.
 
 ### Feature heading
 - Before: Consistent Performance
-- After: A rare change, explained
+- After: Want no throttling? Go fixed.
 
 ### Feature copy
 - Before: Same high speed whether you're the first user or the millionth. No congestion, no slowdowns.
-- After: Profile changes should be uncommon. If a replacement is needed, we will explain the change and any installation or activation step.
+- After: Choose a fixed-data package if avoiding usage-based slowdowns is your priority. This is where we can guarantee your full purchased allowance at full available network speed.
 
 ### Usage introduction
 - Before: See how Openline handles common use cases versus competitors
-- After: Everyday uses need a suitable connection. We can adapt the network or, occasionally, the whole eSIM profile to help maintain service.
+- After: Streaming, downloads and backups can use a lot of data quickly. For guaranteed no-throttling access to your purchased allowance, choose a fixed package. Unlimited plans offer no Openline data cap, with local operator fair use still applying.
 
 ### Usage-card label
 - Before: Others
@@ -264,7 +270,7 @@ The illustration is not a real profile switch. No promise is added about automat
 
 ### Video example
 - Before: Full 4K quality always
-- After: Adapt the service when needed
+- After: Fixed package: no usage-based slowdown
 
 ### Download example
 - Before: Speed reduced by 80%
@@ -272,7 +278,7 @@ The illustration is not a real profile switch. No promise is added about automat
 
 ### Download example
 - Before: Full speed guaranteed
-- After: More than one service path
+- After: All purchased GB at full speed
 
 ### Calling example
 - Before: Limited to 1 hour/day
@@ -280,7 +286,7 @@ The illustration is not a real profile switch. No promise is added about automat
 
 ### Calling example
 - Before: Unlimited HD calls
-- After: Connection quality matters
+- After: No Openline speed restriction
 
 ### Backup example
 - Before: Not allowed on mobile
@@ -288,11 +294,11 @@ The illustration is not a real profile switch. No promise is added about automat
 
 ### Backup example
 - Before: Upload without limits
-- After: A new profile if the setup needs to change
+- After: Choose fixed for heavy uploads
 
 ### Illustration badge
 - Before: Full speed, always
-- After: Service that adapts
+- After: No Openline throttling
 
 ### Illustration label
 - Before: buffering: none
@@ -300,43 +306,43 @@ The illustration is not a real profile switch. No promise is added about automat
 
 ### Service section kicker
 - Before: Zero Restrictions
-- After: Flexible Delivery
+- After: Choose with Confidence
 
 ### Service section heading
 - Before: Use Your Data Without Limits
-- After: Use your plan. Let the service adapt.
+- After: Know your plan. Know our promise.
 
 ### Service section introduction
 - Before: While other providers quietly throttle your speeds or impose usage restrictions, Openline delivers exactly what you paid for. Your full data allocation at full speed, every single time.
-- After: Unlimited use does not mean one eSIM profile must stay in place forever. To maintain a good service, Openline may occasionally replace the profile and move you to a different underlying provider and connectivity setup. Some changes may need a setup step on your phone.
+- After: Fixed packages give you the clearest guarantee: all the data you buy, at full available network speed, without usage-based throttling. Unlimited plans have no cap or throttling added by Openline, but the local MNO may apply fair use. If that slows you down too often, we’ll try a replacement eSIM on another infrastructure with rules that better suit your location and usage.
 
 ### Service checklist
 - Before: No speed throttling after certain usage
-- After: Unlimited use on eligible unlimited plans
+- After: Fixed package: every purchased GB at full speed
 
 ### Service checklist
 - Before: No daily usage limits or caps
-- After: Network options depend on your plan and location
+- After: No usage-based throttling on fixed packages
 
 ### Service checklist
 - Before: No video quality restrictions
-- After: Video quality follows the available connection
+- After: Unlimited: no data cap added by Openline
 
 ### Service checklist
 - Before: No 'fair usage policy' slowdowns
-- After: Alternative providers when the service needs to change
+- After: Unlimited: local MNO fair-use rules still apply
 
 ### Service checklist
 - Before: No time-of-day speed reductions
-- After: Local congestion can still affect performance
+- After: Heavy use within 24h may trigger a slowdown
 
 ### Service checklist
 - Before: No application-specific throttling
-- After: Data for your everyday work and travel apps
+- After: We’ll try another infrastructure if it happens often
 
 ### Service checklist
 - Before: No tethering/hotspot restrictions
-- After: Check your plan and device for hotspot support
+- After: Better fair use is our aim, not a guarantee
 
 ### Service checklist
 - Before: No peak-hour congestion
@@ -344,55 +350,55 @@ The illustration is not a real profile switch. No promise is added about automat
 
 ### Usage illustration
 - Before: NO CAP
-- After: UNLIMITED PLAN
+- After: LOCAL FUP MAY APPLY
 
 ### Usage illustration
 - Before: No throttling
-- After: Adaptive service
+- After: No Openline cap
 
 ### Usage illustration
 - Before: No fair-use
-- After: Profile flexibility
+- After: Local fair use
 
 ### Usage illustration
 - Before: Full speed
-- After: Network-aware
+- After: Support if needed
 
 ### Usage illustration
 - Before: Unlimited speed
-- After: Unlimited usage
+- After: Unlimited from Openline
 
 ### Closing headline
 - Before: Experience True Unlimited
-- After: Unlimited use, with flexibility behind it
+- After: Your full allowance. Our full commitment.
 
 ### Closing introduction
 - Before: Stop settling for throttled "unlimited" plans. Get genuinely unlimited speeds with Openline - use every MB at full speed.
-- After: Choose an unlimited plan backed by the flexibility to adapt its delivery. Usually your existing profile does the job; occasionally, a replacement eSIM helps us move you to a better service setup.
+- After: Choose fixed data for guaranteed no-throttling access to every GB you buy. Choose unlimited for no Openline data cap, with local MNO fair-use rules still applying. If those rules limit you too often, we’ll try to find a better-fitting infrastructure for you.
 
 ### Closing badge
 - Before: No limits
-- After: Profile changes may apply
+- After: Fixed: full-speed data
 
 ### Closing badge
 - Before: Always reliable
-- After: Built to adapt
+- After: Help with repeat slowdowns
 
 ### Hero illustration
 - Before: 150 Mbps Download
-- After: Download varies
+- After: Full-speed fixed data
 
 ### Hero illustration
 - Before: 75 Mbps Upload
-- After: Upload varies
+- After: No Openline throttling
 
 ### Hero illustration
 - Before: 12ms Latency
-- After: Latency varies
+- After: Local rules apply
 
 ### Hero illustration
 - Before: 8.7 GB Used, No Throttling
-- After: Usage supported by profile flexibility
+- After: Unlimited plans: local fair use may apply
 
 ### Hero usage statistic
 - Before: 5X
@@ -400,12 +406,238 @@ The illustration is not a real profile switch. No promise is added about automat
 
 ### Hero usage statistic
 - Before: Faster
-- After: Usage
+- After: Unlimited data
 
 ### Hero flexibility statistic
 - Before: 0 · Throttling
-- After: 2 · Ways to adapt
+- After: 0 · Fixed-plan throttling
 
 ### Hero replacement frequency
 - Before: 24/7 · Always Fast
-- After: Rare · Profile changes
+- After: 10 GB · All at full speed
+
+## Latest Unlimited revision: previous to current
+
+### Hero badge
+- Before: Unlimited Use, Adaptive Service
+- After: No Throttling from Openline
+
+### Hero heading
+- Before: Unlimited usage. Service that adapts.
+- After: Your data. Full speed. Our promise, explained.
+
+### Hero introduction
+- Before: Our unlimited-use approach is built on flexibility, not one fixed connection. We can use another network where your profile supports it or, occasionally, issue a new eSIM profile to change the underlying provider and connectivity setup. Speeds still depend on local conditions.
+- After: Buy 10 GB and get all 10 GB at full speed, guaranteed, with no usage-based throttling. Openline adds no data cap or throttling to unlimited plans either, but the local mobile operator’s fair-use rules can still reduce their speed after heavy use.
+
+### Meaning heading
+- Before: Unlimited use needs a service that can adapt
+- After: One promise. Two types of plan.
+
+### Meaning introduction
+- Before: Our ability to move you to another eSIM profile is part of what supports unlimited use. If the current provider or service setup is no longer suitable, we can replace it rather than leave you stuck with it. Unlimited usage is not a promise of one constant speed everywhere.
+- After: On a fixed-data package, your entire purchased allowance is guaranteed at full available network speed, without usage-based throttling. On an unlimited plan, Openline imposes no data cap or throttling, but local operator fair-use rules still apply. Full speed means the speed the network can deliver: signal, congestion and your device can affect it.
+
+### Fixed-package feature heading
+- Before: Built for continued use
+- After: 10 GB means all 10 GB
+
+### Fixed-package guarantee
+- Before: Our aim is to keep your service usable as you use your plan. Network conditions and provider constraints can still affect performance.
+- After: Buy a 10 GB package and every GB is available at full speed. We guarantee no usage-based throttling anywhere within your purchased allowance.
+
+### Openline-side feature heading
+- Before: More than one service setup
+- After: Unlimited on our side
+
+### Openline-side promise
+- Before: If your current service path stops being a good fit, we can issue another profile and move to a different underlying provider.
+- After: For unlimited plans, we guarantee that Openline adds no data cap or usage-based speed restriction. The local mobile network operator’s rules are a separate matter.
+
+### Local-MNO feature heading
+- Before: Streaming, calls and more
+- After: Local network fair use
+
+### 24-hour heavy-use disclosure
+- Before: Use your plan for the things you need on the move. Video quality and call performance depend on the connection available.
+- After: On unlimited plans, using a lot of data quickly within 24 hours may trigger a local MNO fair-use policy and temporarily reduce your speed. Thresholds and recovery times vary by network and plan.
+
+### Plan recommendation heading
+- Before: A rare change, explained
+- After: Want no throttling? Go fixed.
+
+### Fixed-package recommendation
+- Before: Profile changes should be uncommon. If a replacement is needed, we will explain the change and any installation or activation step.
+- After: Choose a fixed-data package if avoiding usage-based slowdowns is your priority. This is where we can guarantee your full purchased allowance at full available network speed.
+
+### Usage introduction
+- Before: Everyday uses need a suitable connection. We can adapt the network or, occasionally, the whole eSIM profile to help maintain service.
+- After: Streaming, downloads and backups can use a lot of data quickly. For guaranteed no-throttling access to your purchased allowance, choose a fixed package. Unlimited plans offer no Openline data cap, with local operator fair use still applying.
+
+### Video recommendation
+- Before: Adapt the service when needed
+- After: Fixed package: no usage-based slowdown
+
+### Download recommendation
+- Before: More than one service path
+- After: All purchased GB at full speed
+
+### Calling recommendation
+- Before: Connection quality matters
+- After: No Openline speed restriction
+
+### Backup recommendation
+- Before: A new profile if the setup needs to change
+- After: Choose fixed for heavy uploads
+
+### Streaming illustration badge
+- Before: Service that adapts
+- After: No Openline throttling
+
+### Service section kicker
+- Before: Flexible Delivery
+- After: Choose with Confidence
+
+### Service section heading
+- Before: Use your plan. Let the service adapt.
+- After: Know your plan. Know our promise.
+
+### Service section introduction
+- Before: Unlimited use does not mean one eSIM profile must stay in place forever. To maintain a good service, Openline may occasionally replace the profile and move you to a different underlying provider and connectivity setup. Some changes may need a setup step on your phone.
+- After: Fixed packages give you the clearest guarantee: all the data you buy, at full available network speed, without usage-based throttling. Unlimited plans have no cap or throttling added by Openline, but the local MNO may apply fair use. If that slows you down too often, we’ll try a replacement eSIM on another infrastructure with rules that better suit your location and usage.
+
+### Promise checklist
+- Before: Unlimited use on eligible unlimited plans
+- After: Fixed package: every purchased GB at full speed
+
+### Promise checklist
+- Before: Network options depend on your plan and location
+- After: No usage-based throttling on fixed packages
+
+### Promise checklist
+- Before: Video quality follows the available connection
+- After: Unlimited: no data cap added by Openline
+
+### Promise checklist
+- Before: Alternative providers when the service needs to change
+- After: Unlimited: local MNO fair-use rules still apply
+
+### Promise checklist
+- Before: Local congestion can still affect performance
+- After: Heavy use within 24h may trigger a slowdown
+
+### Promise checklist
+- Before: Data for your everyday work and travel apps
+- After: We’ll try another infrastructure if it happens often
+
+### Promise checklist
+- Before: Check your plan and device for hotspot support
+- After: Better fair use is our aim, not a guarantee
+
+### Unlimited illustration marker
+- Before: UNLIMITED PLAN
+- After: LOCAL FUP MAY APPLY
+
+### Unlimited illustration badge
+- Before: Adaptive service
+- After: No Openline cap
+
+### Unlimited illustration badge
+- Before: Profile flexibility
+- After: Local fair use
+
+### Unlimited illustration badge
+- Before: Network-aware
+- After: Support if needed
+
+### Unlimited illustration heading
+- Before: Unlimited usage
+- After: Unlimited from Openline
+
+### Closing headline
+- Before: Unlimited use, with flexibility behind it
+- After: Your full allowance. Our full commitment.
+
+### Closing introduction
+- Before: Choose an unlimited plan backed by the flexibility to adapt its delivery. Usually your existing profile does the job; occasionally, a replacement eSIM helps us move you to a better service setup.
+- After: Choose fixed data for guaranteed no-throttling access to every GB you buy. Choose unlimited for no Openline data cap, with local MNO fair-use rules still applying. If those rules limit you too often, we’ll try to find a better-fitting infrastructure for you.
+
+### Closing badge
+- Before: Profile changes may apply
+- After: Fixed: full-speed data
+
+### Closing badge
+- Before: Built to adapt
+- After: Help with repeat slowdowns
+
+### Hero illustration
+- Before: Download varies
+- After: Full-speed fixed data
+
+### Hero illustration
+- Before: Upload varies
+- After: No Openline throttling
+
+### Hero illustration
+- Before: Latency varies
+- After: Local rules apply
+
+### Hero illustration
+- Before: Usage supported by profile flexibility
+- After: Unlimited plans: local fair use may apply
+
+### Hero usage statistic
+- Before: Usage
+- After: Unlimited data
+
+### Hero guarantee statistic
+- Before: 2 · Ways to adapt
+- After: 0 · Fixed-plan throttling
+
+### Hero allowance statistic
+- Before: Rare · Profile changes
+- After: 10 GB · All at full speed
+
+### Replacement section kicker
+- Before: The flexibility behind unlimited
+- After: When unlimited slows you down
+
+### Replacement section heading
+- Before: Unlimited use does not mean one profile forever.
+- After: Throttled too often? We’ll try another route.
+
+### Replacement section introduction
+- Before: Network selection and profile replacement are two parts of the same approach. If your current service setup is no longer a good fit, we can issue a new eSIM and move you to a different underlying provider. This should be uncommon, but it is part of the service.
+- After: If your unlimited plan repeatedly hits local fair-use restrictions, contact us. We’ll try to issue another eSIM profile using a different provider or infrastructure, aiming for a fair-use policy that works better in your location and for the way you use data.
+
+### Network-selection distinction
+- Before: When your current eSIM has a suitable network option, we can adapt the connection within that profile. The choices depend on your plan and location.
+- After: Selecting another available network keeps the current eSIM profile. It is different from moving your service to another infrastructure with a different fair-use policy.
+
+### Network-selection boundary
+- Before: Your existing eSIM profile remains in use.
+- After: A network change alone does not guarantee different fair-use rules.
+
+### Replacement-card heading
+- Before: A new profile.
+- After: Another infrastructure.
+
+### Replacement-card heading
+- Before: A different service setup.
+- After: A better fit, if available.
+
+### Best-effort replacement promise
+- Before: If a network change is not enough, we can issue another eSIM profile on the fly. That lets us change the underlying provider and connectivity setup, not just the network name on your screen.
+- After: For recurring unlimited-plan throttling, we’ll try to provide a replacement profile from another infrastructure. We hope its fair-use rules will better suit your location, environment and experience. A better result is not guaranteed.
+
+### Replacement-card boundary
+- Before: This flexibility supports both multi-network access and our unlimited-use approach.
+- After: A new profile changes the underlying service setup, not just the network name.
+
+### Replacement disclosure heading
+- Before: Occasionally, we may replace your eSIM profile entirely.
+- After: We’ll try to improve the experience. Local rules still apply.
+
+### Replacement disclosure
+- Before: It should be uncommon, but changing the whole profile is part of how we work to maintain a good service. You may need to install or enable the replacement on your phone. If a setup step is needed, we’ll guide you through it.
+- After: Replacement should be uncommon and depends on available alternatives. We cannot guarantee a more generous fair-use policy, faster service or no future throttling. You may need to install or enable a new profile; we’ll guide you if needed. If you want guaranteed no usage-based throttling, choose a fixed-data package instead.
