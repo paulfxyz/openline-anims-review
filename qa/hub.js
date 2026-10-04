@@ -75,7 +75,7 @@ function renderPages() {
     </article>`;
   }).join('');
   document.getElementById('hb-count').textContent =
-    `${PAGES.filter((p) => !p.redesignOf && !p.standaloneRedesign).length} pages + ${PAGES.filter((p) => p.redesignOf || p.standaloneRedesign).length} redesigns · ${total} picks${changed ? ` · ${changed} changed since /choice` : ''}`;
+    `${PAGES.filter((p) => !p.redesignOf && !p.standaloneRedesign && !p.standaloneRefinement).length} pages + ${PAGES.filter((p) => p.redesignOf || p.standaloneRedesign).length} redesigns${PAGES.some(p=>p.standaloneRefinement) ? ` + ${PAGES.filter(p=>p.standaloneRefinement).length} refinement` : ''} · ${total} picks${changed ? ` · ${changed} changed since /choice` : ''}`;
   paintPages();
 }
 

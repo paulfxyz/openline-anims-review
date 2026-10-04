@@ -1,0 +1,56 @@
+/* Original France template. These adjustments are deliberately confined to Unlimited. */
+.fu-unlimited { font-family:var(--ol-font-sans,ui-sans-serif,system-ui,sans-serif); }
+.fu-unlimited .fu-controls { width:100%; max-width:100%; border-width:1px; border-color:#F0DFD2; box-shadow:none; padding:20px 24px; margin-bottom:24px; }
+.fu-controls > div { gap:24px; justify-content:space-between; }
+.fu-controls button { height:48px; border-width:1px; }
+.fu-controls input { width:64px; height:48px; border:0; text-align:center; background:white; font:600 18px/1 var(--ol-font-sans,ui-sans-serif,system-ui,sans-serif); color:#111; appearance:textfield; -moz-appearance:textfield; }
+.fu-controls input::-webkit-inner-spin-button,.fu-controls input::-webkit-outer-spin-button { -webkit-appearance:none; margin:0; }
+.fu-controls input:focus-visible { outline:2px solid #FF5314; outline-offset:-3px; }
+.fu-stepper { border-width:1px!important; }.fu-stepper button { width:44px; }
+.fu-unlimited [data-fu-days] { transform:none!important; min-height:68px; box-shadow:none!important; border-width:1px; background:#fff; color:#111; }
+.fu-unlimited [data-fu-days][aria-pressed=true] { background:#FF5314; color:#fff; border-color:#FF5314; }
+.fu-quote { border-width:1px!important; border-color:#E9E3DF; box-shadow:0 8px 28px -21px #11131540!important; }
+.fu-features { row-gap:13px!important; column-gap:28px!important; align-items:center; }
+.fu-features > div { min-height:28px; }
+.fu-fair-label { font-size:14px; white-space:nowrap; text-decoration:none; border:0; }
+.fu-help { flex:none; width:30px; height:30px; padding:0; display:inline-grid; place-items:center; background:transparent; color:#737B86; border:0; border-radius:50%; }
+.fu-help svg { width:16px; height:16px; }
+.fu-help:hover { color:#FF5314; }.fu-help:focus-visible { outline:2px solid #FF5314; outline-offset:2px; }
+.fu-actions { gap:12px!important; max-width:490px; margin-left:auto; margin-right:auto; }
+.fu-actions > button { height:48px!important; min-height:48px; padding:12px 22px!important; font-size:16px!important; font-weight:500; min-width:0!important; flex:1; border-radius:8px; }
+.fu-actions > button svg { width:18px!important; height:18px!important; margin-right:0!important; }
+.fu-actions > button:disabled { opacity:.45; cursor:not-allowed; }
+.fu-error { color:#A34225; font-size:13px; line-height:1.5; margin:12px 0; text-align:center; }
+.fu-unlimited [hidden],.fu-dialog [hidden],#fu-fixed [hidden] { display:none!important; }
+#fu-fixed button[data-fu-filter][aria-pressed=true],#fu-fixed button[data-fu-view][aria-pressed=true] { background:#FF5314; border-color:#FF5314; color:#fff; }
+#fu-fixed button[data-fu-filter][aria-pressed=false],#fu-fixed button[data-fu-view][aria-pressed=false] { background:#fff; color:inherit; border-color:#E5E7EB; }
+.fu-dialog { font-family:var(--ol-font-sans,ui-sans-serif,system-ui,sans-serif); width:580px; max-width:calc(100% - 32px); max-height:calc(100dvh - 32px); padding:28px; margin:auto; background:#fff; color:#151619; border:1px solid #E7E8EB; border-radius:14px; box-shadow:0 22px 80px #11182733; overflow:auto; }
+.fu-dialog::backdrop { background:#11131570; backdrop-filter:blur(3px); }
+.fu-dialog * { box-sizing:border-box; }.fu-dialog button,.fu-dialog input { font-family:inherit; }
+.fu-dialog-close { float:right; width:36px; height:36px; display:grid; place-items:center; margin:-8px -8px 0 12px; border:0; background:transparent; color:#818997; font-size:24px; cursor:pointer; }
+.fu-dialog h2 { margin:0 0 8px; font-size:22px; line-height:1.3; font-weight:650; letter-spacing:-.025em; }
+.fu-dialog-intro { margin:0 0 23px; color:#77818F; font-size:13px; line-height:1.6; }
+.fu-policy-row { margin:0 0 17px; }.fu-policy-row h3 { font-size:14px; font-weight:650; margin:0 0 5px; }.fu-policy-row p { font-size:14px; line-height:1.65; margin:0; color:#606B7B; }
+.fu-policy-row:first-of-type { padding:15px 17px; background:#FFF7F1; border:1px solid #FFE0CE; border-radius:9px; }
+.fu-dialog-note { color:#737E8E; font-size:12px; line-height:1.6; margin:16px 0; }
+.fu-dialog-links { display:flex; flex-wrap:wrap; gap:10px 20px; margin:12px 0; font-size:12px; }.fu-dialog-links a { color:#A94920; text-decoration:none; }
+.fu-dialog-actions { display:flex; gap:10px; margin-top:22px; border-top:1px solid #E8EBEF; padding-top:20px; }
+.fu-dialog-actions button { flex:1; min-height:44px; padding:11px 15px; border:1px solid #E1E5EB; background:white; color:#252A32; border-radius:8px; font-size:14px; font-weight:500; cursor:pointer; }
+.fu-dialog-actions button.fu-primary { background:#FF5314; border-color:#FF5314; color:white; }
+.fu-date-fields { display:grid; grid-template-columns:1fr 1fr; gap:14px; }.fu-date-fields label { font-size:13px; display:grid; gap:8px; color:#5B6675; }.fu-date-fields input { min-width:0; width:100%; height:46px; border:1px solid #DCE1E7; border-radius:8px; padding:10px; font-size:14px; }
+.fu-review-item { border:1px solid #E7E9ED; padding:15px; border-radius:9px; margin:10px 0; }.fu-review-item strong { display:block; font-size:18px; }.fu-review-item p { color:#6B7481; font-size:13px; margin:7px 0; }.fu-review-item button { font-size:12px; background:none; border:0; padding:8px 0; color:#AB4A26; cursor:pointer; }
+.fu-notice { padding:8px 16px; text-align:center; background:#FFF8F3; color:#8A6B5A; font:11px/1.5 var(--ol-font-sans,ui-sans-serif,system-ui,sans-serif); }.fu-notice a { color:#A64722; margin-left:12px; }
+.fu-reference-note { font:11px/1.6 var(--ol-font-sans,ui-sans-serif,system-ui,sans-serif); color:#8A929E; margin:16px auto; padding:0 24px; max-width:1200px; }
+[data-qa-page="country-fr-redesign"] img[src="/img/kitty-ph.png"] { object-fit:contain; }
+#fr-plans,#fu-fixed { scroll-margin-top:140px; }
+.fu-toast { position:fixed; bottom:95px; left:50%; transform:translateX(-50%); background:#24282E; color:white; padding:12px 16px; border-radius:9px; z-index:2147482990; max-width:calc(100% - 32px); font:12px/1.5 var(--ol-font-sans,ui-sans-serif,system-ui,sans-serif); }
+@media(max-width:767px) {
+  .fu-unlimited { padding:22px 18px!important; }
+  .fu-controls { padding:16px!important; }.fu-controls > div { gap:16px; align-items:stretch; }.fu-controls > div > div { width:100%; }.fu-controls > div > div:last-child { justify-content:space-between; gap:8px; }
+  .fu-controls label { font-size:12px; }.fu-controls button { min-width:0!important; }.fu-controls .fu-stepper button { width:37px; }.fu-controls input { width:42px; }
+  .fu-features { max-width:100%; grid-template-columns:minmax(0,1fr) minmax(0,1.6fr)!important; gap:10px 8px!important; }.fu-features > div { gap:6px!important; }.fu-fair-label { font-size:12px; }.fu-help { width:30px; height:44px; margin:-8px 0; }.fu-features span { font-size:12px; }
+  .fu-quote { padding:21px 16px!important; }.fu-actions { display:grid!important; grid-template-columns:1fr; gap:9px!important; }.fu-actions > button { width:100%; }.fu-actions > button span { display:inline!important; }
+  .fu-dialog { padding:23px 20px; max-width:calc(100% - 20px); border-radius:12px; }.fu-dialog-actions { flex-direction:column; }.fu-dialog-close { width:44px; height:44px; }
+  .fu-date-fields { gap:9px; }.fu-date-fields input { padding:8px; font-size:12px; }#fr-plans,#fu-fixed { scroll-margin-top:125px; }
+}
+@media(prefers-reduced-motion:reduce) { .fu-unlimited *,.fu-dialog * { transition:none!important; animation:none!important; scroll-behavior:auto!important; } }

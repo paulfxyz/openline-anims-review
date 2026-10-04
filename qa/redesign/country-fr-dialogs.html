@@ -1,0 +1,26 @@
+<dialog id="fu-fair" class="fu-dialog" aria-labelledby="fu-fair-title">
+  <button type="button" class="fu-dialog-close" data-fu-close aria-label="Close fair usage explanation">×</button>
+  <h2 id="fu-fair-title">Fair Usage Policy</h2>
+  <p class="fu-dialog-intro">A clear promise for each type of plan.</p>
+  <div class="fu-policy-row"><h3>Fixed packages: every GB at full speed.</h3><p>{{FIXED_PROMISE}}</p></div>
+  <div class="fu-policy-row"><h3>Unlimited from Openline. Local rules still apply.</h3><p>Openline adds no data cap or throttling to unlimited plans. {{MNO_RULES}}</p></div>
+  <div class="fu-policy-row"><h3>Throttled too often? We’ll try another route.</h3><p>{{PROFILE_TRY}}</p></div>
+  <p class="fu-dialog-note">A replacement may need installation or enabling on your phone. Full available network speed still depends on signal, congestion and your device.</p>
+  <div class="fu-dialog-links"><a href="/qa/unlimited" target="_blank" rel="noopener">Full-speed promise ↗</a><a href="/qa/multiple-tier1#profile-switching" target="_blank" rel="noopener">Profile replacement explained ↗</a></div>
+  <div class="fu-dialog-actions"><button type="button" class="fu-primary" id="fu-view-fixed">View fixed packages</button><button type="button" data-fu-close>Close</button></div>
+</dialog>
+<dialog id="fu-dates" class="fu-dialog" aria-labelledby="fu-date-title">
+  <button type="button" class="fu-dialog-close" data-fu-close aria-label="Close travel dates">×</button>
+  <h2 id="fu-date-title">Select travel dates</h2><p class="fu-dialog-intro">Both dates count toward your plan’s duration.</p>
+  <div class="fu-date-fields"><label>First day<input type="date" id="fu-first"></label><label>Last day<input type="date" id="fu-last"></label></div>
+  <p id="fu-date-error" class="fu-error" role="status" hidden></p>
+  <p class="fu-dialog-note">Dates calculate duration only. This preview does not schedule activation.</p>
+  <div class="fu-dialog-actions"><button type="button" class="fu-primary" id="fu-date-apply">Use these dates</button><button type="button" data-fu-close>Cancel</button></div>
+</dialog>
+<dialog id="fu-review" class="fu-dialog" aria-labelledby="fu-review-title">
+  <button type="button" class="fu-dialog-close" data-fu-close aria-label="Close preview">×</button>
+  <h2 id="fu-review-title">Purchase preview</h2><p class="fu-dialog-intro">Local QA demonstration. No order, payment or eSIM is created.</p>
+  <div id="fu-review-content"></div>
+  <div class="fu-dialog-actions"><button type="button" class="fu-primary" data-fu-close>Back to plans</button></div>
+</dialog>
+<div class="fu-toast" id="fu-toast" role="status" hidden></div>

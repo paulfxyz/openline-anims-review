@@ -1,5 +1,5 @@
-"""Capture the supplied France review page and replace only its plan selector.
-The original remote app is read-only. Run after editing the fragment/CSS/policy.
+"""Preserve the original France template and lightly refine Unlimited only.
+The rejected selector redesign must not be rebuilt. The remote app is read-only.
 """
 import asyncio
 import hashlib
@@ -34,7 +34,7 @@ def icon(name):
     return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + PATHS[name] + "</svg>"
 
 def fragment():
-    text = (Q / "redesign/country-fr-plans.html").read_text()
+    text = (Q / "redesign/country-fr-dialogs.html").read_text()
     records = {r["area"]:r["after"] for r in POLICY["copy"]}
     values = {
         "FIXED_PROMISE": records["Fixed-package guarantee"],
@@ -75,18 +75,73 @@ async def main():
         page = await browser.new_page(viewport={"width":1440,"height":1000})
         await page.goto(SOURCE, wait_until="networkidle")
         await page.get_by_role("heading", name="Choose Your Plan").wait_for()
+        await page.get_by_role("button", name="Show all 25 plans", exact=True).click()
+        all_cards = await page.get_by_role("button", name="Buy Now", exact=True).evaluate_all("""buttons=>buttons.map(b=>{
+          const card=b.parentElement.parentElement.parentElement.cloneNode(true);
+          const text=card.textContent, gb=Number(text.match(/(\\d+)GB/)[1]), days=Number(text.match(/(\\d+) days/)[1]);
+          card.dataset.fuPackage=`fr-${gb}-${days}`;
+          const buttons=card.querySelectorAll('button');buttons[0].dataset.fuBuy=card.dataset.fuPackage;
+          buttons[1].dataset.fuAdd=card.dataset.fuPackage;buttons[1].setAttribute('aria-label',`Add ${gb} GB for ${days} days to demo cart`);
+          return card.outerHTML;
+        })""")
+        assert len(all_cards) == 25
+        await page.get_by_role("button", name="Most Popular", exact=True).click()
         assets = await page.locator("img[src]").evaluate_all("(es)=>es.map(e=>e.getAttribute('src'))")
         asset_map = {url:asset_path(url) for url in assets}
-        text = await page.evaluate("""({part,css,slug,assetMap,source})=>{
+        text = await page.evaluate("""({part,css,slug,assetMap,source,allCards})=>{
           const d=document.documentElement.cloneNode(true);
           d.querySelectorAll('script,link[rel=modulepreload]').forEach(e=>e.remove());
           const head=[...d.querySelectorAll('h2')].find(e=>e.textContent.replace(/\\s+/g,' ').trim()==='Choose Your Plan');
           const section=head?.closest('section');
           if(!section)throw new Error('Source plan section not found; stop rather than replace another block');
-          const box=document.createElement('div');box.innerHTML=part;
-          section.replaceWith(...box.childNodes);
+          section.id='fr-plans';
+          head.nextElementSibling.textContent='Fixed packages: no usage-based throttling. Unlimited plans: local network fair use applies.';
+          const unlimitedTitle=[...section.querySelectorAll('h3')].find(e=>e.textContent==='Unlimited Data');
+          const unlimited=unlimitedTitle.parentElement.parentElement;
+          unlimited.id='fu-unlimited';unlimited.classList.add('fu-unlimited');
+          unlimitedTitle.nextElementSibling.textContent='No data cap from Openline. Local network fair use applies.';
+          const ub=[...unlimited.querySelectorAll('button')];
+          const date=ub.find(b=>b.textContent.trim()==='Select travel dates');
+          date.id='fu-date-open';date.parentElement.parentElement.parentElement.classList.add('fu-controls');
+          date.querySelector('.flex-1 > div').id='fu-date-label';
+          const minus=unlimited.querySelector('.lucide-minus').closest('button');
+          const plus=unlimited.querySelector('.lucide-plus').closest('button');
+          minus.dataset.fuDelta='-1';plus.dataset.fuDelta='1';minus.setAttribute('aria-label','One fewer day');plus.setAttribute('aria-label','One more day');
+          minus.parentElement.classList.add('fu-stepper');
+          const count=minus.nextElementSibling;
+          count.outerHTML='<input id="fu-days" type="number" min="1" max="365" step="1" inputmode="numeric" value="7" aria-label="Number of days" aria-describedby="fu-error">';
+          const durationLabel=minus.parentElement.previousElementSibling;
+          if(durationLabel)durationLabel.textContent='or number of days:';
+          const presets=ub.filter(b=>/^(3|5|7|10|15|30)\\s*days$/.test(b.textContent.trim()));
+          if(presets.length!==6)throw new Error('Unexpected source duration controls');
+          presets.forEach(b=>{b.dataset.fuDays=parseInt(b.textContent);b.setAttribute('aria-pressed',b.dataset.fuDays==='7');b.classList.remove('scale-105','shadow-lg');});
+          presets[0].parentElement.previousElementSibling.textContent='Popular durations';
+          const buy=ub.find(b=>b.textContent.trim()==='Purchase'), add=ub.find(b=>b.textContent.trim()==='Add to Cart');
+          buy.dataset.fuBuy='unlimited';add.dataset.fuAdd='unlimited';
+          const actions=buy.parentElement, quote=actions.parentElement;
+          actions.classList.add('fu-actions');quote.classList.add('fu-quote');
+          quote.querySelector('.text-4xl').id='fu-price';quote.querySelector('#fu-price').nextElementSibling.id='fu-rate';
+          quote.children[1].classList.add('fu-features');
+          const fair=ub.find(b=>b.textContent.trim()==='Fair usage applies');
+          const helpSvg=fair.querySelector('svg').outerHTML;
+          fair.outerHTML='<span class="fu-fair-label">Fair usage applies</span><button type="button" class="fu-help" data-fu-fair aria-label="Explain fair usage">'+helpSvg+'</button>';
+          const error=document.createElement('p');error.id='fu-error';error.className='fu-error';error.hidden=true;error.setAttribute('role','status');quote.before(error);
+          const fixedTitle=[...section.querySelectorAll('h3')].find(e=>e.textContent==='Data Bundles');
+          const fixed=fixedTitle.parentElement.parentElement;fixed.id='fu-fixed';
+          const fixedBuys=[...fixed.querySelectorAll('button')].filter(b=>b.textContent.trim()==='Buy Now');
+          const fixedGrid=fixedBuys[0].parentElement.parentElement.parentElement.parentElement;fixedGrid.id='fu-fixed-grid';
+          fixedBuys.forEach(b=>{const card=b.parentElement.parentElement.parentElement;const text=card.textContent,gb=Number(text.match(/(\\d+)GB/)[1]),days=Number(text.match(/(\\d+) days/)[1]);card.dataset.fuPackage=`fr-${gb}-${days}`;b.dataset.fuBuy=card.dataset.fuPackage;b.nextElementSibling.dataset.fuAdd=card.dataset.fuPackage;b.nextElementSibling.setAttribute('aria-label',`Add ${gb} GB for ${days} days to demo cart`);});
+          for(const b of fixed.querySelectorAll('button')){
+            const t=b.textContent.trim();
+            if(t==='Most Popular'||t==='All plans'){b.dataset.fuView=t==='Most Popular'?'popular':'all';b.setAttribute('aria-pressed',t==='Most Popular');}
+            else if(/^(1|3|5|10|20|30|50)GB\\+?$/.test(t)){b.dataset.fuFilter='data';b.dataset.value=t==='50GB+'?'50+':parseInt(t);b.setAttribute('aria-pressed','false');}
+            else if(/^(5|7|10|14|30)d$/.test(t)){b.dataset.fuFilter='days';b.dataset.value=parseInt(t);b.setAttribute('aria-pressed','false');}
+            else if(t==='Show all 25 plans')b.dataset.fuMore='';
+          }
+          const templates=document.createElement('template');templates.id='fu-fixed-all';templates.innerHTML=allCards.join('');d.querySelector('body').append(templates);
+          const box=document.createElement('div');box.innerHTML=part;d.querySelector('body').append(...box.childNodes);
           d.querySelector('body').dataset.qaPage=slug;
-          d.querySelector('title').textContent='QA · France plan selector redesign · Openline';
+          d.querySelector('title').textContent='QA · France original template · Openline';
           d.querySelectorAll('img[src]').forEach(e=>{const src=e.getAttribute('src');if(assetMap[src])e.setAttribute('src',assetMap[src]);});
           d.querySelectorAll('link[rel=stylesheet]').forEach(e=>{
             if(e.getAttribute('href').includes('/assets/index-')){e.setAttribute('href','/qa/assets/site.css');e.id='qa-site-css';}
@@ -110,19 +165,19 @@ async def main():
             if(e?.classList.contains('fixed'))e.remove();
           });
           const header=d.querySelector('header');
-          if(header){const notice=document.createElement('aside');notice.className='fr-source-notice';notice.innerHTML='<b>QA · France plan-selector alternative</b><span>Demo prices and cart. No payment or activation.</span><a href="'+source+'" target="_blank" rel="noopener">Original page ↗</a>';header.after(notice);}
+          if(header){const notice=document.createElement('aside');notice.className='fu-notice';notice.innerHTML='<b>QA · Original template, Unlimited lightly refined.</b> Demo prices and cart; no payment or activation.<a href="'+source+'" target="_blank" rel="noopener">Original page ↗</a>';header.after(notice);}
           const sectionNew=d.querySelector('#fr-plans');
-          const note=document.createElement('p');note.className='fr-reference-note';note.textContent='Below: surrounding content retained from the supplied review page. Its claims, sample reviews and price comparisons have not been re-verified as part of this selector redesign.';
+          const note=document.createElement('p');note.className='fu-reference-note';note.textContent='Surrounding content is retained from the supplied review page. Its sample claims, reviews and comparisons have not been re-verified.';
           sectionNew.after(note);
           const qaCss=document.createElement('link');qaCss.rel='stylesheet';qaCss.href='/qa/qa.css';d.querySelector('head').append(qaCss);
           const robots=document.createElement('meta');robots.name='robots';robots.content='noindex';d.querySelector('head').append(robots);
           const style=document.createElement('style');style.dataset.fr='';style.textContent=css;d.querySelector('body').prepend(style);
           const hosts=document.createElement('div');hosts.hidden=true;hosts.setAttribute('aria-hidden','true');hosts.innerHTML='<div id="overview"></div><div id="boards"></div><nav id="nav-pages"></nav><nav id="nav-sections"></nav>';d.querySelector('body').append(hosts);
-          for(const src of ['/qa/country-fr.js','/qa/qa.js']){const script=document.createElement('script');script.type='module';script.src=src;d.querySelector('body').append(script);}
+          for(const src of ['/qa/country-fr-refinement.js','/qa/qa.js']){const script=document.createElement('script');script.type='module';script.src=src;d.querySelector('body').append(script);}
           return '<!DOCTYPE html>\\n'+d.outerHTML;
-        }""", {"part":fragment(),"css":(Q/"country-fr.css").read_text(),"slug":SLUG,"assetMap":asset_map,"source":SOURCE})
+        }""", {"part":fragment(),"css":(Q/"country-fr-refinement.css").read_text(),"slug":SLUG,"assetMap":asset_map,"source":SOURCE,"allCards":all_cards})
         (Q / (SLUG+".html")).write_text(text)
         await browser.close()
-        print(SLUG, len(text), "bytes; source hero/surroundings retained, selector replaced")
+        print(SLUG, len(text), "bytes; original layout retained, Unlimited lightly refined")
 
 asyncio.run(main())
