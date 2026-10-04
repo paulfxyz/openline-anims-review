@@ -411,6 +411,13 @@ use the shared native UI stack, Openline's orange/ink palette and the live site'
   `qa/unlimited-plan-copy.json`. Its fixed-package action scrolls to Data Bundles, not a new selector.
   Source prices, custom days, date-duration and local cart/review remain safe demonstrations.
   The original calculator is accessed through the reference page, outside this focused refinement.
+- The travel-date action now restores the original calendar-range interaction through
+  `qa/calendar-range.js`: two months on desktop, one on mobile, range highlighting, endpoint editing,
+  month/year keyboard navigation, Reset and Apply/Cancel. Only applied dates change the day count
+  and price. Calendar-day arithmetic is inclusive and DST-safe; totals use the block's own pricing
+  function and USD, not the reference modal's mismatched fixed daily estimate.
+- `python qa/tools/country_fr.py --refresh-local` updates only the controlled dialogs and scoped
+  stylesheet, so modal iterations preserve the surrounding captured page.
 - `qa/country-fr-changelog.md` and the shared panel/export explicitly record the rejection and
   current restrained direction for Irina. Page 22 is classified as a refinement, not a retained
   redesign. No source-app write, production checkout, provisioning or `/delivery` is introduced.

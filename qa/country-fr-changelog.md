@@ -27,6 +27,27 @@ fragment have been deleted. This is not an additional alternative to keep or inc
 - “View fixed packages” closes the modal and scrolls to the original Data Bundles section.
   The hero CTA still scrolls to Choose Your Plan; there is no plan-type chooser or sidebar.
 
+## Calendar range modal restored
+
+“Select travel dates” opens the normal calendar-based start/end picker again, replacing the
+temporary pair of date-input fields. This follows the original two-month desktop pattern rather
+than introducing another page layout.
+
+- Two readable month grids on desktop; one navigable month on mobile, with full-size day targets.
+- Orange start/end points, a soft in-range band and pointer preview while choosing an end date.
+- Clear start/end summaries, editable endpoints, Reset and a live inclusive day count.
+- Previous/next month navigation, disabled past dates and keyboard arrows, Home/End, Page Up/Down;
+  Shift+Page Up/Down moves by year. Same-day and reverse-order selections are supported.
+- Apply commits the range to the existing day counter, compact two-line date label and price.
+  Cancel, Escape and backdrop dismissal discard changes; reopening restores only applied dates.
+- The quote uses `unlimitedPrice()` and USD, exactly like the Unlimited block. The original
+  reference modal's fixed daily estimate and mixed `$`/EUR label are not copied.
+- Calendar-day arithmetic covers daylight-saving and leap-day boundaries. The existing
+  1–365-day preview guard remains; choosing dates never activates or schedules an eSIM.
+
+The panel/export has a separate `country-fr-calendar-range` record for Irina. No surrounding
+page capture or Fixed Plan layout was changed during this modal-only update.
+
 ## Prototype boundaries
 
 Duration presets, editable day count, date-duration selection and local purchase/cart previews
@@ -44,9 +65,13 @@ reviews and comparison claims remain reference content rather than newly verifie
 - `qa/tools/country_fr.py`: capture original markup and apply scoped refinements.
 - `qa/country-fr-refinement.css`: small Unlimited-only visual adjustments and compact dialog styles.
 - `qa/country-fr-refinement.js`: source-control behaviour and safe local demonstrations.
+- `qa/calendar-range.js`: inclusive range selection, calendar navigation and accessible keyboard behaviour.
 - `qa/redesign/country-fr-dialogs.html`: compact policy, date and preview dialogs.
 - `qa/unlimited-plan-copy.json`: shared current product-policy wording.
 - `qa/country-fr-data.js`: preserved source-review catalogue and pricing function.
 
 The QA panel and Copy for Computer export record the rejected design separately from the current
 `country-fr-unlimited-refinement` handoff. The original remote site and other QA pages are unchanged.
+
+For modal-only edits, run `python qa/tools/country_fr.py --refresh-local` to refresh the controlled
+dialog group and scoped CSS without recapturing or rewriting the original surrounding page.

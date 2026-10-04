@@ -5,6 +5,8 @@ import asyncio
 import hashlib
 import html
 import json
+import re
+import sys
 from pathlib import Path
 from urllib.parse import urljoin, urlparse
 from playwright.async_api import async_playwright
@@ -180,4 +182,17 @@ async def main():
         await browser.close()
         print(SLUG, len(text), "bytes; original layout retained, Unlimited lightly refined")
 
-asyncio.run(main())
+if "--refresh-local" in sys.argv:
+    # Modal-only iterations must not recapture or change the surrounding source page.
+    path = Q / (SLUG+".html")
+    text = path.read_text()
+    text, styles = re.subn(r'<style data-fr(?:="")?>[\s\S]*?</style>',
+        lambda m:'<style data-fr="">'+(Q/"country-fr-refinement.css").read_text()+'</style>', text, count=1)
+    text, dialogs = re.subn(r'<dialog id="fu-fair"[\s\S]*?<div class="fu-toast" id="fu-toast"[\s\S]*?</div>',
+        lambda m:fragment(), text, count=1)
+    if styles != 1 or dialogs != 1:
+        raise RuntimeError("Expected scoped style and dialog group; surrounding page was not changed")
+    path.write_text(text)
+    print(SLUG, "local dialogs and scoped CSS refreshed; original page retained")
+else:
+    asyncio.run(main())

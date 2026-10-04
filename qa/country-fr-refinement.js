@@ -1,4 +1,5 @@
 import {FIXED,unlimitedPrice} from './country-fr-data.js';
+import {createRangeCalendar,dayNumber} from './calendar-range.js';
 const $=s=>document.querySelector(s), root=$('#fu-unlimited'), motion=matchMedia('(prefers-reduced-motion: reduce)');
 const money=n=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(n);
 const state={days:7,valid:true,dates:null,view:'popular',data:null,validity:null,cart:[]};
@@ -60,15 +61,15 @@ document.addEventListener('click',e=>{
   }
 });
 $('#fu-days').addEventListener('input',()=>{state.dates=null;$('#fu-date-label').textContent='Select travel dates';update();});
-$('#fu-date-open').addEventListener('click',()=>{
-  if(!$('#fu-first').value){const d=new Date();const today=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;$('#fu-first').value=today;$('#fu-last').value=new Date(Date.parse(today+'T00:00:00Z')+((state.valid?state.days:7)-1)*86400000).toISOString().slice(0,10);}
-  $('#fu-date-error').hidden=true;open($('#fu-dates'));
+const calendar=createRangeCalendar({
+  element:$('#fu-dates'),getSelection:()=>state.dates,priceForDays:unlimitedPrice,openDialog:open,
+  onApply(a,b,n){
+    const format=(s,year=true)=>new Intl.DateTimeFormat('en-GB',{day:'numeric',month:'short',...(year?{year:'numeric'}:{}),timeZone:'UTC'}).format(new Date(dayNumber(s)*86400000));
+    const range=a===b?format(a):`${format(a,a.slice(0,4)!==b.slice(0,4))} – ${format(b)}`;
+    $('#fu-days').value=n;state.dates=[a,b];$('#fu-date-label').innerHTML=`<span class="fu-date-range">${range}</span><span class="fu-date-duration">${n} ${n===1?'day':'days'}</span>`;update();
+  },
 });
-$('#fu-date-apply').addEventListener('click',()=>{
-  const a=$('#fu-first').value,b=$('#fu-last').value,n=Math.round((Date.parse(b+'T00:00:00Z')-Date.parse(a+'T00:00:00Z'))/86400000)+1;
-  if(!Number.isInteger(n)||n<1||n>365){$('#fu-date-error').hidden=false;$('#fu-date-error').textContent='Choose dates in order, for 1–365 days in this preview.';return;}
-  $('#fu-days').value=n;state.dates=[a,b];$('#fu-date-label').textContent=`${a} – ${b}`;update();$('#fu-dates').close();
-});
+$('#fu-date-open').addEventListener('click',()=>calendar.open());
 $('#fu-view-fixed').addEventListener('click',()=>{$('#fu-fair').close();scrollToNode($('#fu-fixed'));});
 document.querySelectorAll('.fu-dialog').forEach(d=>{
   d.querySelectorAll('[data-fu-close]').forEach(b=>b.addEventListener('click',()=>d.close()));
