@@ -14,9 +14,9 @@ fragment have been deleted. This is not an additional alternative to keep or inc
 
 - Preserve the original hero, centered Unlimited card, Data Bundles below it, fixed-card design,
   source orange palette, native font and surrounding page.
-- Limit visual changes to the Unlimited block: align the date selector and day counter in a
-  lighter control strip; keep all six presets level, with no selected-card scale jump; reduce
-  heavy borders/shadows; align feature rows; give Purchase / Add to Cart consistent heights and icons.
+- Keep the date selector and day counter aligned in a lighter control strip. The latest requested
+  preset treatment restores original-style shadow/lift emphasis, with number and days only and no
+  calendar icons. Feature rows and Purchase / Add to Cart retain consistent heights and spacing.
 - Use Paul's restored original Unlimited introduction: “Perfect for heavy users. Stream, video call,
   and browse without limits.” Keep the corrected plan-wide promise and the separate fair-use
   disclosure; do not restore the claim that every unlimited plan is free from local-operator throttling.
@@ -110,3 +110,20 @@ The QA panel and Copy for Computer export record the rejected design separately 
 
 For modal-only edits, run `python qa/tools/country_fr.py --refresh-local` to refresh the controlled
 dialog group and scoped CSS without recapturing or rewriting the original surrounding page.
+
+## Latest FAQ and duration-card revision
+
+- **Duration choices:** All six presets are icon-free. Neutral cards have a subtle shadow; the
+  selected orange card has a stronger shadow and restrained 1.04 lift, closer to the original page.
+  Prices, custom days, date selection and fair-use behaviour are unchanged.
+- **Contextual support animation:** The unrelated coverage graphic to the right of the FAQ questions
+  is replaced by Knowledge base → Openline AI → Our human team. Labels stay readable while emphasis
+  cycles slowly. Each step is selectable, with pause/resume and reduced-motion support.
+- **Real review interactions:** Start a live chat opens the shared chat surface; Browse the knowledge
+  base opens the KB. The component is visible on mobile instead of hiding the entire illustration.
+  No real AI/human support backend is implied by playback.
+- **Clean customer view:** Demo-cart labels, page notices and calendar preview labels are removed.
+  Review limitations remain in this handoff and the global panel/export, not in the customer-facing UI.
+- **Source files:** `qa/redesign/country-fr-support.html`, `qa/country-fr-support.css` and
+  `qa/country-fr-support.js`. The local builder replaces only this marked illustration plus the
+  previously scoped modal/style regions; the rest of the original France template is preserved.

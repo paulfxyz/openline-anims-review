@@ -6,12 +6,10 @@ const state={days:7,valid:true,dates:null,view:'popular',data:null,validity:null
 const fixedGrid=$('#fu-fixed-grid'), popular=[...fixedGrid.children].map(e=>e.outerHTML);
 const all=[...$('#fu-fixed-all').content.children].map(e=>e.outerHTML);
 let overflow='',timer;
-// One consistent icon/type treatment for the existing six duration controls.
-// Only the icon moves; dates, day counts, prices and the original layout stay still.
-const durationIcon='<svg class="fu-duration-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/><path class="fu-duration-tick" d="m8 15 3 3 5-6"/></svg>';
+// Original-style duration tiles: numbers and days only, no decorative icons.
 root.querySelectorAll('[data-fu-days]').forEach(b=>{
   const days=Number(b.dataset.fuDays);
-  b.innerHTML=`<span class="fu-duration-main">${durationIcon}<span class="fu-duration-number">${days}</span></span><span class="fu-duration-unit">days</span>`;
+  b.innerHTML=`<span class="fu-duration-number">${days}</span><span class="fu-duration-unit">days</span>`;
   b.setAttribute('aria-label',`${days} days`);
 });
 root.querySelectorAll('.fu-actions svg').forEach(svg=>svg.classList.remove('group-hover:scale-110'));
@@ -23,7 +21,7 @@ function update(){
   state.days=Number($('#fu-days').value);state.valid=Number.isInteger(state.days)&&state.days>=1&&state.days<=365;
   $('#fu-price').textContent=state.valid?money(unlimitedPrice(state.days)):'—';
   $('#fu-rate').textContent=state.valid?`${money(unlimitedPrice(state.days)/state.days)}/day • ${state.days} days validity`:'Select a valid duration';
-  $('#fu-error').hidden=state.valid;$('#fu-error').textContent=state.valid?'':'Choose a whole number from 1 to 365 days in this preview.';
+  $('#fu-error').hidden=state.valid;$('#fu-error').textContent=state.valid?'':'Choose a whole number from 1 to 365 days.';
   $('#fu-days').setAttribute('aria-invalid',!state.valid);
   $('#fu-date-open').classList.toggle('fu-has-dates',state.valid&&state.dates!==null);
   root.querySelectorAll('[data-fu-days]').forEach(b=>b.setAttribute('aria-pressed',state.valid&&Number(b.dataset.fuDays)===state.days));
@@ -36,12 +34,12 @@ function plan(id){
   if(id==='unlimited')return state.valid?{id,amount:'Unlimited',days:state.days,price:unlimitedPrice(state.days),dates:state.dates}:null;
   const p=FIXED.find(p=>p.id===id);return p?{...p,amount:`${p.gb} GB`}:null;
 }
-function item(p,i=null){return `<div class="fu-review-item"><strong>France · ${p.amount}</strong><p>${p.days} days${p.qty?` · ${p.qty} eSIM${p.qty>1?'s':''}`:''}</p><strong>${money(p.price*(p.qty||1))}</strong>${i!==null?`<button type="button" data-fu-remove="${i}">Remove from demo cart</button>`:''}</div>`;}
-function review(p){if(!p)return;$('#fu-review-title').textContent='Purchase preview';$('#fu-review-content').innerHTML=item(p)+'<p class="fu-dialog-note">Review-page pricing only. No payment, order or activation takes place.</p>';open($('#fu-review'));}
-function cart(){ $('#fu-review-title').textContent='Demo cart';$('#fu-review-content').innerHTML=state.cart.length?state.cart.map((p,i)=>item(p,i)).join('')+`<p class="fu-dialog-note">Demo total: ${money(state.cart.reduce((n,p)=>n+p.price*p.qty,0))}</p>`:'<p class="fu-dialog-note">Your demo cart is empty.</p>';if(!$('#fu-review').open)open($('#fu-review'));}
+function item(p,i=null){return `<div class="fu-review-item"><strong>France · ${p.amount}</strong><p>${p.days} days${p.qty?` · ${p.qty} eSIM${p.qty>1?'s':''}`:''}</p><strong>${money(p.price*(p.qty||1))}</strong>${i!==null?`<button type="button" data-fu-remove="${i}">Remove from cart</button>`:''}</div>`;}
+function review(p){if(!p)return;$('#fu-review-title').textContent='Your selected plan';$('#fu-review-content').innerHTML=item(p);open($('#fu-review'));}
+function cart(){ $('#fu-review-title').textContent='Your cart';$('#fu-review-content').innerHTML=state.cart.length?state.cart.map((p,i)=>item(p,i)).join('')+`<p class="fu-dialog-note">Total: ${money(state.cart.reduce((n,p)=>n+p.price*p.qty,0))}</p>`:'<p class="fu-dialog-note">Your cart is empty.</p>';if(!$('#fu-review').open)open($('#fu-review'));}
 function add(p){if(!p)return;const key=`${p.id}-${p.days}`,entry=state.cart.find(x=>x.key===key);if(entry)entry.qty++;else state.cart.push({...p,key,qty:1});
-  $('#fu-toast').textContent=`France ${p.amount} added to demo cart. No order created.`;$('#fu-toast').hidden=false;clearTimeout(timer);timer=setTimeout(()=>$('#fu-toast').hidden=true,3500);
-  document.querySelectorAll('[data-fr-cart]').forEach(b=>b.setAttribute('aria-label',`View demo cart, ${state.cart.reduce((n,p)=>n+p.qty,0)} items`));
+  $('#fu-toast').textContent=`France ${p.amount} added to cart.`;$('#fu-toast').hidden=false;clearTimeout(timer);timer=setTimeout(()=>$('#fu-toast').hidden=true,3500);
+  document.querySelectorAll('[data-fr-cart]').forEach(b=>b.setAttribute('aria-label',`View cart, ${state.cart.reduce((n,p)=>n+p.qty,0)} items`));
 }
 function renderFixed(){
   const filter=state.data||state.validity, entries=(state.view==='all'||filter?all:popular).filter(h=>{
@@ -69,7 +67,7 @@ document.addEventListener('click',e=>{
   if(b.hasAttribute('data-fu-remove')){state.cart.splice(Number(b.dataset.fuRemove),1);cart();}
   if(/Data Calculator/.test(b.textContent)&&!b.closest('#qa-ui')){
     $('#fu-review-title').textContent='Data calculator';
-    $('#fu-review-content').innerHTML='<p class="fu-dialog-note">The original calculator is outside this focused Unlimited-block refinement. You can use it in the original reference page.</p><p class="fu-dialog-links"><a href="https://openline-revisions-hub.vercel.app/country-fr" target="_blank" rel="noopener">Open the original page ↗</a></p>';open($('#fu-review'));
+    $('#fu-review-content').innerHTML='<p class="fu-dialog-note">Find the right amount of data for your trip.</p><p class="fu-dialog-links"><a href="https://openline-revisions-hub.vercel.app/country-fr" target="_blank" rel="noopener">Open the data calculator ↗</a></p>';open($('#fu-review'));
   }
 });
 $('#fu-days').addEventListener('input',()=>{state.dates=null;$('#fu-date-label').textContent='Select travel dates';update();});

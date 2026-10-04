@@ -16,7 +16,7 @@ The current version is on [Openline QA /start](https://openline-anims-review.ver
 - **Setup & connect:** Private Wi-Fi installation, followed by three large cards: Mobile data = Openline; automatic data switching = OFF; Data roaming = ON for Openline.
 - **Detailed help:** Dedicated native dialogs hold iPhone/Samsung/Pixel installation steps and connection tips. Activate just before departure or on arrival; use private Wi-Fi, not airport/public Wi-Fi or cellular 4G/5G for profile setup because these networks may block it. Roaming guidance applies to Openline, not the home SIM.
 - **Make it yours:** Larger optional label/folder controls, live profile preview, custom folder validation and one Finish setup action.
-- **Completion:** The intended “You’re connected” finale and activated-profile state lead to Go to my account. The screen explicitly says this is a simulated demo connection and that no real eSIM or phone connection was activated.
+- **Completion:** The intended “You’re connected” finale and activated-profile state lead to Go to my account. View my eSIM and Edit label or folder are now substantial secondary buttons, not small text links. Technical simulation boundaries are recorded in the handoff rather than displayed on the customer-facing screen, as Paul requested.
 
 ## Presentation and behaviour
 
@@ -39,3 +39,10 @@ The current version is on [Openline QA /start](https://openline-anims-review.ver
 - **Consent and errors:** Keyboard Space toggles the switch; reopening resets it OFF. Empty, malformed, unknown, used and connection-error codes were exercised, as was recoverable activation failure with gifting still available.
 - **Interactions:** Native help-dialog open/close and focus return, three device guides, manual-detail disclosure, profile copying, clipboard-denied fallback, optional blank fields and required custom-folder names were checked.
 - **Persistence and motion:** Storage-denied fallback stays truthful, restarting clears organisation and cancels pending activation work, and reduced-motion mode removes the key animation. No page JavaScript errors were observed in those tested flows.
+
+## Latest header and presentation revision
+
+- **Normal header:** 64px source-style Openline navigation, official mark, Destinations / Features / Pro / Resources, Openline+ Beta, cart, Sign In and EN / $. Mobile has support, cart and an expandable navigation dialog. Locale is currently English/USD only; no new account or checkout backend is connected.
+- **Entry buttons:** Gift this code and Go to my account are larger icon-and-arrow buttons with distinct orange-tinted and neutral treatments.
+- **Removed clutter:** The Check my device / Need a hand row is gone. Customer-facing demo, no-real-activation, simulated-connection and browser-tab-save notices are removed throughout the flow.
+- **Review controls:** Scenario testing and restart remain behind a footer review-controls entry. Activation still requires the readiness switch and stays a safe local fixture; QR and `.invalid` manual details cannot install a real plan.

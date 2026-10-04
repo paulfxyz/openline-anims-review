@@ -12,6 +12,8 @@ Apply this latest Unlimited copy together with its existing QA page identity, na
 
 ## New entry on both pages
 
+Latest presentation revision: larger 18px card copy and 28px headings, two concise route cards, an expandable replacement disclosure and a live-chat CTA. The current page-specific introduction and short note are documented in the QA registry's compact-profile-explainer entry. Longer policy copy below remains the detailed product-policy record, not the default visible layout.
+
 A prominent two-route explainer distinguishes network selection within an existing profile from occasional replacement of the whole profile/provider setup. It discloses possible installation or activation, removes the unverified 90% / 10% split and fixed 30-second promise, and links the two pages.
 
 Unlimited's former red competitor-failure rows are now neutral grey customer-use rows with circle markers, so the design no longer presents the customer's use case as a failure.

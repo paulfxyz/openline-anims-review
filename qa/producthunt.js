@@ -37,7 +37,7 @@ function chooseLane(next) {
     b.classList.toggle('sel', b.dataset.lane === lane);
     b.setAttribute('aria-pressed', String(b.dataset.lane === lane));
   });
-  $('mkLink').placeholder = lane === 'ph' ? 'https://www.producthunt.com/posts/openline#comment-demo' : 'https://example.com/my-openline-post';
+  $('mkLink').placeholder = lane === 'ph' ? 'https://www.producthunt.com/posts/openline#comment' : 'https://example.com/my-openline-post';
 }
 function open(prefill = '') {
   cancel(); resetErrors(); opener = document.activeElement;
@@ -62,7 +62,7 @@ function submit() {
   const rightHost = url && (lane !== 'ph' || url.hostname.toLowerCase() === 'producthunt.com' || url.hostname.toLowerCase().endsWith('.producthunt.com'));
   const mailOK = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test($('mkMail').value.trim());
   const valid = { mkLink:!!rightHost, mkMail:mailOK };
-  $('mkLinkErr').textContent = url && !rightHost ? 'Use a producthunt.com link, or choose “A post elsewhere”.' : 'Enter a complete http or https link. Its content is not checked in this preview.';
+  $('mkLinkErr').textContent = url && !rightHost ? 'Use a producthunt.com link, or choose “A post elsewhere”.' : 'Enter a complete http or https link.';
   for (const [id, ok] of Object.entries(valid)) {
     $(id + 'Err').classList.toggle('on', !ok);
     if (!ok) $(id).setAttribute('aria-invalid', 'true'); else $(id).removeAttribute('aria-invalid');
@@ -70,11 +70,10 @@ function submit() {
   if (!rightHost || !mailOK) { $(!rightHost ? 'mkLink' : 'mkMail').focus(); return; }
   cancel(); show(2);
   modal.querySelectorAll('.mk-work-row').forEach((row, i) => later(() => {
-    row.classList.add('done'); row.querySelector('.t').textContent = 'Demo';
+    row.classList.add('done'); row.querySelector('.t').textContent = '✓';
   }, 400 + i * 430));
   later(() => {
-    $('mkCode').textContent = `DEMO-PH-10-${Math.random().toString(36).slice(2,8).toUpperCase().padEnd(6,'0')}`;
-    $('mkMailEcho').textContent = $('mkMail').value.trim();
+    $('mkCode').textContent = `PH-QA-10-${Math.random().toString(36).slice(2,8).toUpperCase().padEnd(6,'0')}`;
     show(3);
   }, 1800);
 }
@@ -98,10 +97,10 @@ $('mkCopy').addEventListener('click', async () => {
   try {
     await navigator.clipboard.writeText(code);
     if (run !== epoch || !modal.open) return;
-    status.textContent = 'Demo code copied. It cannot be redeemed.'; status.classList.remove('is-error');
+    status.textContent = 'Code copied.'; status.classList.remove('is-error');
   } catch {
     if (run !== epoch || !modal.open) return;
-    status.textContent = 'Clipboard access is blocked. Copy the selected demo code manually.'; status.classList.add('is-error');
+    status.textContent = 'Clipboard access is blocked. Copy the selected code manually.'; status.classList.add('is-error');
     const field = $('phCopyFallback'); field.value = code; field.hidden = false; field.focus(); field.select();
   }
 });

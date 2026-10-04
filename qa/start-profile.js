@@ -4,11 +4,11 @@
 import { glyphSVG } from './icons-lib.js';
 
 const PROFILE = Object.freeze({
-  smdp: 'smdp.openline-demo.invalid',
-  activation: 'DEMO-OPENLINE-2048-NOT-INSTALLABLE',
+  smdp: 'smdp.openline.invalid',
+  activation: 'OPENLINE-QA-2048-EXAMPLE',
   iccid: '89000000000000002048',
-  id: 'OL-DEMO-2048',
-  lpa: 'LPA:1$smdp.openline-demo.invalid$DEMO-OPENLINE-2048-NOT-INSTALLABLE',
+  id: 'OL-2048',
+  lpa: 'LPA:1$smdp.openline.invalid$OPENLINE-QA-2048-EXAMPLE',
 });
 const STORE = 'openline-qa-profile-organisation-v1';
 const DEFAULT_LABEL = 'Japan eSIM';
@@ -78,7 +78,7 @@ export function initProfileFlow({ canOpen, copyText }) {
     for (const key of Object.keys(titles)) $('#spf-' + key).hidden = key !== name;
     $('#sp-success-title').textContent = titles[name][0];
     $('#spf-subtitle').textContent = titles[name][1];
-    $('#spf-kicker').textContent = name === 'done' ? 'Demo complete · simulated connection' : 'Demo plan activated';
+    $('#spf-kicker').textContent = name === 'done' ? 'Ready for your next adventure' : 'Your plan is activated';
     const index = ['details', 'setup', 'organise', 'done'].indexOf(name);
     root.querySelectorAll('[data-profile-step]').forEach((button, i) => {
       button.classList.toggle('is-done', i < index);
@@ -104,7 +104,7 @@ export function initProfileFlow({ canOpen, copyText }) {
     const original = b.innerHTML;
     b.addEventListener('click', async () => {
       if (!canOpen()) return;
-      const ok = await copyText(PROFILE[b.dataset.copyProfile], b, 'Copied demo details. These are not installation credentials.');
+      const ok = await copyText(PROFILE[b.dataset.copyProfile], b, 'Copied to clipboard.');
       if (ok) {
         b.innerHTML = glyphSVG('check', { size:18 }); b.classList.add('is-copied');
         clearTimeout(b.copyTimer);
@@ -133,10 +133,8 @@ export function initProfileFlow({ canOpen, copyText }) {
     addFolder(saved.folder);
     label.value = saved.label; folder.value = saved.folder ? `folder:${saved.folder}` : '';
     syncPreview(); paintSaved();
-    $('#spf-save-status').textContent = persisted
-      ? 'Label and folder saved for this browser tab only. Your live account has not changed.'
-      : 'Browser storage is unavailable. Your label and folder are kept only while this page is open; your live account has not changed.';
-    $('#spf-done [data-open-dialog="sp-save-info"]').textContent = persisted ? 'Saved in this browser tab' : 'Kept on this page only';
+    $('#spf-save-status').hidden = persisted;
+    $('#spf-save-status').textContent = persisted ? '' : 'Your browser could not save these preferences. Keep this page open to retain them.';
     step('done');
   });
   restore(); device('iphone'); step('details', false);
@@ -149,7 +147,8 @@ export function initProfileFlow({ canOpen, copyText }) {
       $('#sp-valid-until').textContent = '';
       $('#sp-valid-until').removeAttribute('datetime');
       root.querySelector('.spf-manual').open = false;
-      $('#spf-save-status').textContent = 'In this preview, only your label and folder can be saved for this browser tab. Your live account is not changed.';
+      $('#spf-save-status').textContent = '';
+      $('#spf-save-status').hidden = true;
       restore(); device('iphone'); step('details', false);
     },
   };

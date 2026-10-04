@@ -33,7 +33,7 @@ if (startupToggle && startupResults) {
     const open = startupResults.hidden;
     startupResults.hidden = !open;
     startupToggle.setAttribute('aria-expanded', String(open));
-    startupToggle.querySelector('[data-startup-toggle-label]').textContent = open ? 'Hide results preview' : 'Show results preview';
+    startupToggle.querySelector('[data-startup-toggle-label]').textContent = open ? 'Hide results' : 'Show results';
   });
 }
 

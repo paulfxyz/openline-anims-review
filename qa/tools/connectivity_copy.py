@@ -20,6 +20,7 @@ PATHS = {
     "SWITCH": '<path d="M4 7h15l-4-4M20 17H5l4 4"/><path d="M19 7l-4 4M5 17l4-4"/>',
     "INFO": '<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7h.01"/>',
     "ARROW": '<path d="M5 12h14M12 5l7 7-7 7"/>',
+    "CHAT": '<path d="M21 11.5a8.5 8.5 0 0 1-12.5 7.4L3 21l1.6-5.5A8.5 8.5 0 1 1 21 11.5z"/>',
 }
 
 def svg(key):
@@ -33,29 +34,38 @@ def block(slug):
     values = {
         "VARIANT": "is-unlimited" if is_unlimited else "",
         "KICKER": "The flexibility behind unlimited" if is_unlimited else "More than a network switch",
-        "TITLE": "Unlimited use does not mean one profile forever." if is_unlimited else "A better connection can mean a different eSIM.",
+        "TITLE": "Unlimited use does not mean one profile forever." if is_unlimited else "A better connection. More than one way.",
         "INTRO": (
             "Network selection and profile replacement are two parts of the same approach. "
             "If your current service setup is no longer a good fit, we can issue a new eSIM "
             "and move you to a different underlying provider. This should be uncommon, but it is part of the service."
             if is_unlimited else
-            "Our multi-network and unlimited-use approach is built on flexibility. Usually, "
-            "we work with the network options on your current eSIM. When that is not enough, "
-            "we can issue another profile on the fly and change the service setup behind your connection."
+            "When a network switch is not enough, we can replace your eSIM and change the provider behind it."
         ),
         "LINK": "/qa/multiple-tier1#profile-switching" if is_unlimited else "/qa/unlimited#profile-switching",
         "LINK_LABEL": "How multi-network works" if is_unlimited else "How this supports unlimited use",
-        "NETWORK_TEXT": "When your current eSIM has a suitable network option, we can adapt the connection within that profile. The choices depend on your plan and location.",
+        "NETWORK_TEXT": "We use another network available to your current plan. Your eSIM stays the same.",
         "NETWORK_STAYS": "Your existing eSIM profile remains in use.",
-        "PROFILE_TITLE_1": "A new profile.",
-        "PROFILE_TITLE_2": "A different service setup.",
-        "PROFILE_TEXT": "If a network change is not enough, we can issue another eSIM profile on the fly. That lets us change the underlying provider and connectivity setup, not just the network name on your screen.",
+        "PROFILE_TITLE_1": "New eSIM.",
+        "PROFILE_TITLE_2": "Different provider.",
+        "PROFILE_TEXT": "Sometimes we replace the whole profile to move your connection to a better-fitting provider.",
         "PROFILE_STAYS": "This flexibility supports both multi-network access and our unlimited-use approach.",
         "DISCLOSURE_TITLE": "Occasionally, we may replace your eSIM profile entirely.",
         "DISCLOSURE_TEXT": "It should be uncommon, but changing the whole profile is part of how we work to maintain a good service. You may need to install or enable the replacement on your phone. If a setup step is needed, we’ll guide you through it.",
+        "SHORT_NOTE": "Profile changes are rare. If a new installation is needed, we’ll guide you.",
     }
     if is_unlimited:
         values.update({key: record["after"] for key, record in policy["section"].items()})
+        # The fuller policy remains in the disclosure and in the shared fair-use
+        # modal's data source. This is a concise presentation, not a new promise.
+        values.update({
+            "INTRO": "If local fair-use rules keep slowing you down, we’ll try another eSIM from a different provider.",
+            "NETWORK_TEXT": "A network switch keeps your current eSIM. It does not necessarily change its fair-use rules.",
+            "PROFILE_TITLE_1": "New eSIM.",
+            "PROFILE_TITLE_2": "Different provider.",
+            "PROFILE_TEXT": "We’ll try a replacement profile with fair-use rules better suited to your location and usage.",
+            "SHORT_NOTE": "Local rules still apply. A better result is not guaranteed; choose fixed data to avoid usage-based throttling.",
+        })
     result = fragment
     for key, value in values.items():
         result = result.replace("{{" + key + "}}", html.escape(value, quote=True))
@@ -222,6 +232,10 @@ lines = [
     "including the replacement component. Do not restore the earlier generic adaptive-service copy. "
     "Multi Tier-1 and Global eSIM remain unchanged by this clarification.", "",
     "## New entry on both pages", "",
+    "Latest presentation revision: larger 18px card copy and 28px headings, two concise route cards, "
+    "an expandable replacement disclosure and a live-chat CTA. The current page-specific introduction "
+    "and short note are documented in the QA registry's compact-profile-explainer entry. Longer "
+    "policy copy below remains the detailed product-policy record, not the default visible layout.", "",
     "A prominent two-route explainer distinguishes network selection within an existing profile "
     "from occasional replacement of the whole profile/provider setup. It discloses possible installation "
     "or activation, removes the unverified 90% / 10% split and fixed 30-second promise, and links the two pages.",

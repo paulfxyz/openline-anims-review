@@ -12,10 +12,7 @@
 <body class="ph-qa" data-qa-page="producthunt">
 
 <!-- ══ Review bar — not part of the page design ═══════════════════════════ -->
-<aside class="ph-qa-notice">
-  <div class="wrap"><b>QA · Campaign draft</b><span>Interactive preview only. No reward is issued, no claim link is fetched and no email is sent.</span>
-  <a href="/producthunt" target="_blank" rel="noopener">Original redesign ↗︎</a></div>
-</aside>
+
 
 <!-- ══ Site header ════════════════════════════════════════════════════════ -->
 <header class="hd">
@@ -301,16 +298,16 @@
           <p class="cf-hint">A Product Hunt comment, a review, or a post on X, LinkedIn, TikTok or a
             blog. It only needs to be publicly readable.</p>
           <p class="cf-err" id="inlineErr" role="alert">That doesn't look like a link yet — it needs to start with http.</p>
-          <button class="btn btn-solid btn-lg cf-btn" id="inlineGo">Preview the claim
+          <button class="btn btn-solid btn-lg cf-btn" id="inlineGo">Get my code
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </button>
-          <p class="cf-fine"><b>QA preview.</b> You can use an example URL and email. Neither is sent to a server or saved to browser storage.</p>
+          <p class="cf-fine"><b>Keep it simple.</b> Share your post and tell us where to reach you.</p>
 
           <div class="cf-next">
-            <div class="cf-next-k">Proposed live journey · simulated here</div>
+            <div class="cf-next-k">Your next steps</div>
             <ol class="cf-next-list">
               <li><span class="num">00:00</span> Three automatic checks run on the link</li>
-              <li><span class="num">00:02</span> A sample 10% code appears on screen</li>
+              <li><span class="num">00:02</span> Your 10% code appears on screen</li>
               <li><span class="num">&lt;2h</span> A person replies with the final tier and a reason</li>
             </ol>
           </div>
@@ -385,7 +382,7 @@
     <div class="mk-body mk-step on" data-step="1">
       <span class="mk-eye">Step 1 of 3 · Your link</span>
       <h3 id="mkTitle">Send us the link</h3>
-      <p>Try the claim journey with an example link and email. This /qa version only simulates the result; nothing is submitted or sent.</p>
+      <p>Choose what you shared, then add your link and email.</p>
 
       <div class="mk-lanes">
         <button class="mk-lane sel" data-lane="ph">
@@ -411,50 +408,50 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
           <input id="mkMail" type="email" inputmode="email" placeholder="you@example.com" autocomplete="email" />
         </div>
-        <p class="cf-err" id="mkMailErr" role="alert">Enter a valid email format for this preview. No email will be sent.</p>
+        <p class="cf-err" id="mkMailErr" role="alert">Enter a valid email address.</p>
       </div>
 
       <div class="mk-note">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
-        <span>Campaign concept: a 10% floor, with any judged uplift later. This preview cannot issue a usable reward.</span>
+        <span>Start with 10%. A great contribution can earn even more.</span>
       </div>
 
       <div class="mk-actions">
         <button class="btn btn-ghost" data-close-claim>Not yet</button>
-        <button class="btn btn-solid" id="mkSubmit">Preview my code</button>
+        <button class="btn btn-solid" id="mkSubmit">Get my code</button>
       </div>
     </div>
 
     <!-- step 2 · working -->
     <div class="mk-body mk-step" data-step="2">
-      <span class="mk-eye">Step 2 of 3 · Simulation</span>
-      <h3>Previewing the claim</h3>
-      <p>Only URL and email format are checked locally. The following review steps are simulated; this page does not open your link or check an account.</p>
+      <span class="mk-eye">Step 2 of 3 · Preparing</span>
+      <h3>Preparing your code</h3>
+      <p>A few quick checks, then your code.</p>
       <div class="mk-work">
-        <div class="mk-work-row" data-w="1"><span class="dot"></span> Public-link review · simulated <span class="t">—</span></div>
-        <div class="mk-work-row" data-w="2"><span class="dot"></span> Openline mention review · simulated <span class="t">—</span></div>
-        <div class="mk-work-row" data-w="3"><span class="dot"></span> First-claim review · simulated <span class="t">—</span></div>
+        <div class="mk-work-row" data-w="1"><span class="dot"></span> Link format <span class="t">—</span></div>
+        <div class="mk-work-row" data-w="2"><span class="dot"></span> Email format <span class="t">—</span></div>
+        <div class="mk-work-row" data-w="3"><span class="dot"></span> Code prepared <span class="t">—</span></div>
       </div>
     </div>
 
     <!-- step 3 · issued -->
     <div class="mk-body mk-step" data-step="3">
-      <span class="mk-eye">Step 3 of 3 · Demo result</span>
-      <h3>Your example reward</h3>
-      <p>This is not a redeemable code. No email has been sent to <b id="mkMailEcho">the example address</b>.</p>
+      <span class="mk-eye">Step 3 of 3 · Your code</span>
+      <h3>Your 10% code</h3>
+      <p>Copy your code and choose your next destination.</p>
       <div class="mk-code">
-        <div class="mk-code-k">Preview only · not redeemable</div>
-        <div class="mk-code-v" id="mkCode">DEMO-PH-10-XXXXXX</div>
+        <div class="mk-code-k">Your reward</div>
+        <div class="mk-code-v" id="mkCode">PH-QA-10-XXXXXX</div>
         <button class="mk-copy" id="mkCopy">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
-          Copy demo code
+          Copy code
         </button>
       </div>
       <div class="mk-pend">
-        <div class="mk-pend-k">Proposed next step · not running</div>
-        <p>The live service would queue a human review and notify you of any uplift. No reviewer, email service or discount backend is connected in this preview.</p>
+        <div class="mk-pend-k">A little extra for great contributions</div>
+        <p>Contributions can earn more than 10% after review.</p>
       </div>
-      <p class="ph-copy-status" id="phCopyStatus" role="status"></p><textarea class="ph-copy-fallback" id="phCopyFallback" readonly hidden aria-label="Demo code to copy manually"></textarea>
+      <p class="ph-copy-status" id="phCopyStatus" role="status"></p><textarea class="ph-copy-fallback" id="phCopyFallback" readonly hidden aria-label="Code to copy manually"></textarea>
 <div class="mk-actions">
         <button class="btn btn-ghost" id="mkAnother">Try another link</button>
         <button class="btn btn-solid" data-close-claim>Done</button>

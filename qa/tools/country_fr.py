@@ -72,6 +72,39 @@ def asset_path(url):
                 return "/qa/assets/"+name
     return full
 
+def support_block(text):
+    """Replace only the right-hand FAQ illustration, keeping source accordion/layout."""
+    start, end = "<!-- qa-fr-support:start -->", "<!-- qa-fr-support:end -->"
+    new = (Q / "redesign/country-fr-support.html").read_text().strip()
+    if start in text:
+        a, b = text.index(start), text.index(end) + len(end)
+        text = text[:a] + new + text[b:]
+    else:
+        heading = text.index("Frequently Asked Questions")
+        a = text.index('<div class="relative h-[450px] hidden lg:block">', heading)
+        # Match nested div boundaries without reserialising the surrounding capture.
+        depth = 0
+        b = None
+        for m in re.finditer(r"<div\b[^>]*>|</div>", text[a:]):
+            depth += -1 if m[0].startswith("</") else 1
+            if depth == 0:
+                b = a + m.end()
+                break
+        if b is None:
+            raise RuntimeError("FAQ illustration boundary not found")
+        text = text[:a] + new + text[b:]
+    for tag in ['<link rel="stylesheet" href="/qa/country-fr-support.css">']:
+        if tag not in text:
+            text = text.replace("</head>", tag + "</head>", 1)
+    script = '<script type="module" src="/qa/country-fr-support.js"></script>'
+    if script not in text:
+        text = text.replace("</body>", script + "</body>", 1)
+    # Review metadata belongs to the QA panel, not the customer-facing design.
+    text = re.sub(r'<aside class="fu-notice">[\s\S]*?</aside>', '', text)
+    text = re.sub(r'<p class="fu-reference-note">[\s\S]*?</p>', '', text)
+    text = text.replace('demo cart', 'cart')
+    return text
+
 async def main():
     async with async_playwright() as p:
         browser = await p.chromium.launch(executable_path=EXE)
@@ -179,7 +212,7 @@ async def main():
           for(const src of ['/qa/country-fr-refinement.js','/qa/qa.js']){const script=document.createElement('script');script.type='module';script.src=src;d.querySelector('body').append(script);}
           return '<!DOCTYPE html>\\n'+d.outerHTML;
         }""", {"part":fragment(),"css":(Q/"country-fr-refinement.css").read_text(),"slug":SLUG,"assetMap":asset_map,"source":SOURCE,"allCards":all_cards})
-        (Q / (SLUG+".html")).write_text(text)
+        (Q / (SLUG+".html")).write_text(support_block(text))
         await browser.close()
         print(SLUG, len(text), "bytes; original layout retained, Unlimited lightly refined")
 
@@ -200,7 +233,7 @@ if "--refresh-local" in sys.argv:
         lambda m:fragment(), text, count=1)
     if styles != 1 or dialogs != 1:
         raise RuntimeError("Expected scoped style and dialog group; surrounding page was not changed")
-    path.write_text(text)
+    path.write_text(support_block(text))
     print(SLUG, "local dialogs and scoped CSS refreshed; original page retained")
 else:
     asyncio.run(main())

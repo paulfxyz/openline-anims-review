@@ -1,41 +1,25 @@
 <!-- qa-profile-switching:start -->
 <section class="cpx-section {{VARIANT}}" id="profile-switching" aria-labelledby="cpx-title">
   <div class="cpx-wrap">
-    <header class="cpx-head">
-      <p class="cpx-kicker">{{KICKER}}</p>
-      <h2 id="cpx-title">{{TITLE}}</h2>
-      <p>{{INTRO}}</p>
-    </header>
+    <header class="cpx-head"><p class="cpx-kicker">{{KICKER}}</p><h2 id="cpx-title">{{TITLE}}</h2><p>{{INTRO}}</p></header>
     <div class="cpx-grid">
       <article class="cpx-card">
-        <div class="cpx-card-top"><span class="cpx-type">Network selection</span><span class="cpx-frequency">The usual route</span></div>
-        <h3>A different network.<br>The same profile.</h3>
-        <p>{{NETWORK_TEXT}}</p>
-        <div class="cpx-network-visual" aria-label="Illustration: network selection within the current profile">
-          <span><i>{{SIGNAL}}</i>Network A</span><b aria-hidden="true">→</b><span class="is-next"><i>{{SIGNAL}}</i>Network B</span>
-        </div>
-        <div class="cpx-stays">{{SIM}}<span>{{NETWORK_STAYS}}</span></div>
+        <div class="cpx-card-top"><span class="cpx-type">Network switch</span><span class="cpx-frequency">Usually</span></div>
+        <div class="cpx-network-visual" aria-label="Illustration: two networks, the same eSIM"><span>{{SIGNAL}}<b>Network A</b></span><i>{{ARROW}}</i><span class="is-next">{{SIGNAL}}<b>Network B</b></span></div>
+        <h3>Same eSIM.<br>Another network.</h3><p>{{NETWORK_TEXT}}</p>
       </article>
       <article class="cpx-card is-profile">
         <div class="cpx-card-top"><span class="cpx-type">Profile replacement</span><span class="cpx-frequency">Occasionally</span></div>
-        <h3>{{PROFILE_TITLE_1}}<br>{{PROFILE_TITLE_2}}</h3>
-        <p>{{PROFILE_TEXT}}</p>
-        <div class="cpx-flow" aria-label="Illustration: a replacement eSIM can use a different provider and connectivity setup">
-          <div class="cpx-profile">{{SIM}}<small>Current setup</small><b>eSIM profile A</b><span>Provider &amp; connection A</span></div>
-          <span class="cpx-flow-link" aria-hidden="true"></span>
-          <div class="cpx-profile is-new">{{SIM}}<small>If needed</small><b>eSIM profile B</b><span>A different service stack</span></div>
-        </div>
-        <div class="cpx-stays">{{SWITCH}}<span>{{PROFILE_STAYS}}</span></div>
+        <div class="cpx-flow" aria-label="Illustration: a new eSIM on a different provider"><span class="cpx-profile">{{SIM}}<b>eSIM A</b></span><i class="cpx-flow-link">{{ARROW}}</i><span class="cpx-profile is-new">{{SIM}}<b>eSIM B</b></span></div>
+        <h3>{{PROFILE_TITLE_1}}<br>{{PROFILE_TITLE_2}}</h3><p>{{PROFILE_TEXT}}</p>
       </article>
     </div>
-    <aside class="cpx-disclosure">
-      {{INFO}}
-      <div><h3>{{DISCLOSURE_TITLE}}</h3><p>{{DISCLOSURE_TEXT}}</p></div>
-    </aside>
-    <div class="cpx-foot">
-      <p>Installation and reconnection time can vary. Follow the instructions we provide, and don’t delete a working profile before you’re asked to. The diagrams are illustrations, not a live profile change.</p>
-      <a href="{{LINK}}">{{LINK_LABEL}} {{ARROW}}</a>
-    </div>
+    <div class="cpx-reassurance">{{INFO}}<p>{{SHORT_NOTE}}</p></div>
+    <details class="cpx-details">
+      <summary>What happens if my eSIM changes?<span aria-hidden="true">+</span></summary>
+      <div><p>{{DISCLOSURE_TEXT}}</p><p>{{NETWORK_STAYS}} {{PROFILE_STAYS}}</p><p>Follow our setup instructions and keep your working profile until we ask you to change it. Installation and reconnection time can vary.</p></div>
+    </details>
+    <div class="cpx-foot"><button type="button" data-ol-open="chat">{{CHAT}}Talk to support {{ARROW}}</button><a href="{{LINK}}">{{LINK_LABEL}} {{ARROW}}</a></div>
   </div>
 </section>
 <!-- qa-profile-switching:end -->

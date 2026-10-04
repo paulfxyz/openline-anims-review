@@ -19,6 +19,7 @@ const copyGlyph = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" s
 const folderGlyph = '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8V6a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><path d="M3 10h18"/></svg>';
 document.querySelectorAll('[data-icon]').forEach(el => {
   el.innerHTML = el.dataset.icon === 'copy' ? copyGlyph : el.dataset.icon === 'folder' ? folderGlyph
+    : el.dataset.icon === 'menu' ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>'
     : el.dataset.icon === 'chevron-down' ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>'
     : glyphSVG(el.dataset.icon, { size: 24, sw: 1.8 });
 });
@@ -101,7 +102,7 @@ async function checkCode(intent = 'review') {
   const code = normalize(input.value);
   input.value = code;
   $('#sp-clear').hidden = !code;
-  if (!code) return showCodeError('Enter your purchase code first. You can also use the example to try this preview.');
+  if (!code) return showCodeError('Enter your purchase code first.');
   if (!CODE_FORMAT.test(code)) return showCodeError('Use all three parts of the code, like GAZE19-MULCH29-NYMPH13. Check that each part ends with two numbers.');
   const token = ++generation;
   const response = $('#sp-scenario').value;
@@ -112,7 +113,7 @@ async function checkCode(intent = 'review') {
     setState('entry', false);
     const errors = {
       'not-found': 'We couldn’t find that purchase code. Check the spelling and try again. Nothing has been activated.',
-      used: 'This purchase code has already been activated in this demo scenario. Go to your account to find the eSIM; it can’t be redeemed or gifted again.',
+      used: 'This purchase code has already been activated. Go to your account to find the eSIM; it can’t be redeemed or gifted again.',
       network: 'We couldn’t check the code right now. Nothing has changed. Check your connection and try again.',
     };
     return showCodeError(errors[response]);
@@ -183,7 +184,7 @@ async function activate() {
   if (outcome === 'activation-error') {
     setState('review');
     const error = $('#sp-review-error');
-    error.textContent = 'Activation couldn’t be completed. This preview hasn’t used your code, so it can still be kept or gifted. Change the preview response to retry.';
+    error.textContent = 'Activation couldn’t be completed. Your code is still unused, so you can try again, keep it or gift it.';
     error.hidden = false;
     return;
   }
@@ -272,7 +273,7 @@ $('#sp-reset').addEventListener('click', reset);
 document.querySelectorAll('[data-copy-code]').forEach(b => b.addEventListener('click', () => copyText(currentCode, b)));
 $('#sp-copy-gift').addEventListener('click', e => {
   if (state !== 'review' || activatedAt) return;
-  copyText(`A little connection for your next trip.\n\nYour Openline purchase code: ${currentCode}\n\nRedeem it at https://openline.com/start when you’re ready to travel. Activating starts the plan immediately, so wait if your trip is later.\n\nThis is an example gift message from the Openline QA preview, not a real purchase.`, e.currentTarget);
+  copyText(`A little connection for your next trip.\n\nYour Openline purchase code: ${currentCode}\n\nRedeem it at https://openline.com/start when you’re ready to travel. Activating starts the plan immediately, so wait if your trip is later.`, e.currentTarget);
 });
 const profileFlow = initProfileFlow({ canOpen: () => state === 'success' && !!activatedAt, copyText });
 document.querySelectorAll('[data-open-dialog]').forEach(button => {

@@ -1,6 +1,35 @@
 /* Focused /start redesign. Native Openline UI type, larger controls, details on demand.
    The selected code-to-profile animation remains in start.css. */
-.sp-main { width:min(980px,calc(100% - 48px)); padding:44px 0 60px; }
+.sp-header { height:64px; padding:0; position:sticky; top:0; z-index:50; background:#FFFFFFED; backdrop-filter:blur(12px); border-color:#E5E7EB; }
+.sp-header-inner { width:100%; max-width:1280px; height:64px; padding:0 32px; margin:auto; display:flex; align-items:center; justify-content:space-between; gap:20px; }
+.sp-header-left { display:flex; align-items:center; gap:32px; }
+.sp-header .sp-brand > span { font-size:26px; }
+.sp-header .sp-brand img { width:32px; height:32px; }
+.sp-header .sp-nav { gap:4px; font-size:14px; }
+.sp-header .sp-nav details { display:block; }
+.sp-header .sp-nav summary { display:flex; align-items:center; gap:4px; min-height:36px; padding:7px 14px; border-radius:7px; font-weight:500; }
+.sp-header .sp-nav summary:hover,.sp-header .sp-nav details[open] summary { background:#F4F5F7; color:#15171B; }
+.sp-header .sp-nav summary span { margin:0; font-size:14px; }
+.sp-header .sp-nav details > div { top:43px; left:0; min-width:205px; }
+.sp-header .sp-plus { min-height:36px; padding:6px 14px; border-radius:7px; font-weight:500; }
+.sp-header .sp-plus small { font-size:12px; padding:0 5px; margin-left:6px; }
+.sp-header-actions { display:flex; align-items:center; gap:14px; }
+.sp-header-icon { width:36px; height:40px; padding:8px; border:0; border-radius:7px; background:none; color:#12161B; display:grid; place-items:center; }
+.sp-header-icon:hover,.sp-locale:hover,.sp-sign-in:hover { background:#F3F5F7; }
+.sp-header-icon svg { display:block; width:20px; height:20px; }
+.sp-sign-in { font-size:14px; font-weight:500; padding:9px 12px; border-radius:7px; white-space:nowrap; }
+.sp-locale { display:flex; align-items:center; gap:6px; font-size:16px!important; background:none; color:#101419; padding:9px 10px; border:0; border-radius:7px; white-space:nowrap; }
+.sp-locale svg { width:18px; height:18px; display:block; }
+.sp-mobile-support,.sp-mobile-toggle { display:none; }
+.sp-mobile-menu nav { display:grid; gap:4px; margin-top:22px; }
+.sp-mobile-menu nav > a,.sp-mobile-menu summary { padding:13px 12px; border-radius:9px; font-size:18px; font-weight:600; min-height:48px; }
+.sp-mobile-menu nav > a:hover,.sp-mobile-menu summary:hover { background:#FFF5EF; color:#FF5314; }
+.sp-mobile-menu details > div { display:grid; padding:0 12px 8px; }
+.sp-mobile-menu details a { padding:11px; font-size:16px; color:#626F7F; }
+.sp-mobile-menu small { font-size:12px; background:#FF5314; color:white; padding:2px 5px; border-radius:4px; margin-left:8px; }
+.sp-footer > div { display:flex; align-items:center; gap:22px; }
+.sp-main { width:min(980px,calc(100% - 48px)); padding:44px 0 60px; scroll-margin-top:88px; }
+#sp-success { scroll-margin-top:88px; }
 .sp-body h1 { font-size:clamp(34px,4vw,46px); font-weight:750; line-height:1.15; letter-spacing:-.035em; }
 .sp-lead { font-size:18px; line-height:1.55; margin-top:14px; color:#69707C; }
 .sp-entry { max-width:764px; margin:auto; }
@@ -27,7 +56,12 @@
 .sp-check-button { margin-top:18px; }
 .sp-safe { font-size:15px; color:#69717C; margin-top:16px; }
 .sp-safe svg { width:17px; height:17px; }
-.sp-entry-links { display:flex; justify-content:center; flex-wrap:wrap; gap:12px 36px; margin-top:28px; }
+.sp-entry-links { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:30px auto 0; max-width:764px; }
+.sp-entry-links .sp-btn { min-height:62px; gap:12px; justify-content:flex-start; padding:18px 22px; font-size:16px!important; font-weight:600!important; }
+.sp-entry-links .sp-action-arrow { margin-left:auto; }
+.sp-entry-gift { background:#FFF7F2; color:#CE4414; border-color:#FFCEBA; }
+.sp-entry-gift:hover { background:#FFF0E7; border-color:#FFA27D; }
+.sp-entry-links .sp-secondary { background:#FAFBFC; box-shadow:0 2px 5px #15203207; }
 .sp-help-line { padding-top:24px; margin-top:48px; border-top:1px solid var(--sp-line); }
 .sp-body .sp-help-line .sp-link { font-size:14px!important; }
 .sp-footer { font-size:14px; }
@@ -190,14 +224,26 @@
 .spf-saved-card strong { font-size:20px; display:block; overflow-wrap:anywhere; }
 .spf-saved-card div > span { display:block; font-size:15px; color:#7C8591; overflow-wrap:anywhere; margin-top:4px; }
 .spf-saved-card > span:last-child { font-size:17px; color:#707C89; flex:none; }
-.spf-finish-actions { display:flex; flex-direction:column; align-items:center; gap:10px; max-width:420px; margin:auto; }
-.spf-finish-actions .sp-btn { width:100%; margin-bottom:8px; }
+.spf-finish-actions { display:grid; grid-template-columns:1fr 1fr; align-items:stretch; gap:12px; max-width:540px; margin:auto; }
+.spf-finish-actions .sp-btn { width:100%; margin:0; font-size:16px!important; padding:16px; }
+.spf-finish-actions .sp-primary { grid-column:1/-1; }
+.spf-finish-actions .sp-secondary { background:#FAFBFC; min-height:60px; }
 .spf-preview-note { color:#78828F; font-size:14px; margin:24px 0 4px; }
 .sp-success[data-profile-step=done] .spf-nav { display:none; }
 .sp-toast { font-size:15px; bottom:20px; }
 .sp-copy-fallback { font-size:16px; bottom:80px; }
 .sp-copy-fallback.is-inline { font-size:16px; }
+@media(max-width:1100px) {
+  .sp-header-left { gap:18px; }.sp-header .sp-nav summary { padding:7px 9px; }.sp-header-actions { gap:7px; }.sp-header-inner { padding:0 24px; }
+}
+@media(max-width:1023px) {
+  .sp-header .sp-nav { display:none; }.sp-mobile-support,.sp-mobile-toggle { display:grid; }
+}
 @media(max-width:760px) {
+  .sp-header-inner { padding:0 18px; gap:12px; }.sp-header-left { min-width:0; }
+  .sp-header .sp-brand { gap:8px; }.sp-header .sp-brand > span { font-size:26px; }.sp-header .sp-brand img { width:29px; height:29px; }
+  .sp-header-actions { gap:4px; }.sp-sign-in,.sp-locale { display:none; }
+  .sp-header-icon { width:44px; height:44px; }.sp-footer { flex-wrap:wrap; gap:16px; }.sp-footer > div { gap:16px; font-size:12px; }.sp-footer > div .sp-link { font-size:12px!important; }
   .sp-main { width:calc(100% - 36px); padding-top:32px; }
   .sp-reviewbar { width:calc(100% - 36px); gap:12px; }
   .sp-reviewbar > a { font-size:14px; }
@@ -215,7 +261,7 @@
   #sp-code { font-size:16px; height:84px; padding:0 8px; }
   .sp-clear { min-width:36px; height:44px; width:36px; margin-right:4px; }
   .sp-body .sp-input-caption .sp-link { font-size:14px!important; }
-  .sp-entry-links { gap:6px 22px; margin-top:20px; }
+  .sp-entry-links { grid-template-columns:1fr; gap:12px; margin-top:24px; }
   .sp-body .sp-btn { padding:15px 18px; }
   .sp-ticket-head { padding:20px; gap:12px; }
   .sp-ticket-head h2 { font-size:26px; }
@@ -290,9 +336,11 @@
   .spf-saved-card { padding:18px; gap:12px; }
   .spf-saved-card strong { font-size:19px; }
   .spf-saved-card > span:last-child { font-size:15px; }
+  .spf-finish-actions { grid-template-columns:1fr; }.spf-finish-actions .sp-primary { grid-column:1; }
 }
 @media(prefers-reduced-motion:reduce) {
   .sp-choice .sp-action-arrow { transform:none!important; }
   .spf-content > section,.spf-finish-icon { animation:none; }
   .sp-switch-track,.sp-switch-track i,.spf-chevron { transition:none; }
 }
+@media(max-width:360px) { .sp-header-inner { padding-inline:12px; gap:6px; }.sp-header .sp-brand > span { font-size:24px; } }

@@ -203,7 +203,7 @@ function renderThread() {
   const stick = th.scrollHeight - th.scrollTop - th.clientHeight < 160;
   const fresh = !S.msgs.some(m => m.from === 'you');
   th.querySelector('.olc-col').innerHTML = `
-    ${fresh ? `<div class="olc-welcome"><span class="olc-welcome-icon"><img src="${OPENLINE_MARK}" width="58" height="58" alt=""></span><span class="olc-welcome-kicker">Welcome to Openline</span>${portraitRow()}<h3>Here to help you<br>stay connected.</h3><p>Questions before you go, or help on the move.<br>Let’s start with what you need.</p><small class="olc-face-caption">Illustrative portraits · QA preview</small></div>` : `<div class="olc-intro">${portraitRow()}<b>Here to help you stay connected</b><span>Illustrative portraits · QA messages stay in this browser</span></div>`}
+    ${fresh ? `<div class="olc-welcome"><span class="olc-welcome-icon"><img src="${OPENLINE_MARK}" width="58" height="58" alt=""></span><span class="olc-welcome-kicker">Welcome to Openline</span>${portraitRow()}<h3>Here to help you<br>stay connected.</h3><p>Questions before you go, or help on the move.<br>Let’s start with what you need.</p></div>` : `<div class="olc-intro">${portraitRow()}<b>Here to help you stay connected</b></div>`}
     ${S.msgs.map(msgHTML).join('')}`;
   if (fresh) th.scrollTop = 0;
   else if (stick || S.forceBottom) th.scrollTop = th.scrollHeight;
@@ -286,8 +286,7 @@ function composer() {
   main.addEventListener('dragover', (e) => e.preventDefault());
   main.addEventListener('drop', (e) => { e.preventDefault(); dragN = 0; main.classList.remove('is-drop'); addFiles([...e.dataTransfer.files]); });
 
-  /* Voice: real MediaRecorder when the mic is available, a clearly-labelled
-     demo recording otherwise (blocked permission, insecure frame, no device). */
+  /* Voice only records real audio. Permission failures do not fake a recording. */
   const rec = root.querySelector('.olc-rec');
   let mr = null, chunks = [], t0 = 0, timer = 0, stream = null, demo = false, raf = 0, recRun = 0, starting = false;
   const meter = rec.querySelector('.olc-meter');
@@ -314,9 +313,13 @@ function composer() {
       owner.audioCtx = ctx;
     } catch {
       if (S !== owner || run !== recRun) return;
-      demo = true;
-      const loop = () => { bars.forEach((b) => { b.style.height = `${14 + Math.random() * 70}%`; }); raf = setTimeout(loop, 110); };
-      loop();
+      starting = false;
+      if (mr && mr.state !== 'inactive') mr.stop();
+      if (stream) stream.getTracks().forEach(t=>t.stop());
+      stream = null; mr = null;
+      if (owner.audioCtx) { owner.audioCtx.close(); owner.audioCtx = null; }
+      toast('Microphone unavailable. Allow microphone access or type your message.');
+      return;
     }
     starting = false;
     t0 = Date.now();
@@ -415,7 +418,6 @@ function panelHTML() {
       <button type="button" data-transcript>${ic('dl', 16)} Transcript</button>
       <button type="button" data-clear>${ic('trash', 16)} Clear chat</button>
     </div>
-    <p class="olc-preview-note">QA preview: conversations are stored in this browser, not on Openline’s servers. Replies are simulated.</p>
     <a class="olc-changes" href="/qa#qa-changes">Changes &amp; delivery notes ${icon('chev', 14)}</a>
   </div>`;
 }
@@ -471,9 +473,8 @@ function confirmClear() {
     <div class="olc-dialog-icon">${ic('trash', 34)}</div>
     <span class="olc-dialog-kicker">A fresh start</span>
     <h2 id="olc-dialog-title">Clear this chat?</h2>
-    <p>In the live service, clearing a chat will erase the discussion from our servers and close the current issue as solved. You’ll return to the welcome screen and can start a new conversation.</p>
-    <div class="olc-clear-warning"><b>This /qa preview is local only.</b><span>It clears this browser’s demo conversation and attachments. No server discussion is deleted and no real support ticket is changed.</span></div>
-    <p class="olc-dialog-fine">This preview action cannot be undone. Download your transcript first if you’d like to keep it.</p>
+    <p>Clear this conversation and return to the welcome screen for a fresh start.</p>
+    <p class="olc-dialog-fine">This action cannot be undone. Download your transcript first if you’d like to keep it.</p>
     <div class="olc-dialog-actions"><button type="button" data-dismiss autofocus>Keep chatting</button><button type="button" class="is-primary" data-confirm-clear>Clear chat &amp; start fresh</button></div>`);
   d.querySelector('[data-confirm-clear]').addEventListener('click', () => {
     if (S !== owner) return;
@@ -488,7 +489,7 @@ function confirmClear() {
     // On a small screen, reveal the welcome instead of leaving it behind the sidebar.
     if (innerWidth <= 980) { S.panel = false; syncPanel(); save(); }
     S.root.querySelector('.olc-ta').focus({ preventScroll: true });
-    toast('Local chat cleared. Ready for a fresh start.');
+    toast('Chat cleared. Ready for a fresh start.');
   });
 }
 
@@ -510,7 +511,7 @@ function wirePanel() {
   root.querySelector('[data-transcript]').addEventListener('click', () => {
     const txt = S.msgs.filter((m) => !m.typing).map((m) => (m.day ? `\n— ${m.day} —` : `[${m.t}] ${AGENTS[m.from].n}: ${m.text || ''}${m.voice ? ' (voice message)' : ''}${m.files ? ` (${m.files.map((f) => f.name).join(', ')})` : ''}${m.card && m.card.title ? ` [${m.card.title}]` : ''}`)).join('\n');
     const a = document.createElement('a');
-    a.href = URL.createObjectURL(new Blob([`Openline support · QA conversation (local preview)\n${txt}\n`], { type: 'text/plain' }));
+    a.href = URL.createObjectURL(new Blob([`Openline support\n${txt}\n`], { type: 'text/plain' }));
     a.download = 'openline-chat-transcript.txt'; a.click();
     setTimeout(() => URL.revokeObjectURL(a.href), 1000);
   });
@@ -539,7 +540,7 @@ export function openChat(o = {}) {
     <header class="olc-head">
       <div class="olc-brand">
         <img class="olc-brand-mark" src="${OPENLINE_MARK}" width="34" height="34" alt="">
-        <div><h2>Talk to <em>Openline</em></h2><p><i class="olc-live"></i>Here to help · QA preview</p></div>
+        <div><h2>Talk to <em>Openline</em></h2><p><i class="olc-live"></i>Here to help</p></div>
       </div>
       <div class="olc-hacts">
         <button type="button" class="olc-hbtn" data-ol-open="kb">${icon('book', 18)}<span>Knowledge base</span></button>
@@ -560,7 +561,7 @@ export function openChat(o = {}) {
             <textarea class="olc-ta" rows="1" placeholder="Write a message…" aria-label="Message"></textarea>
             <div class="olc-rec" aria-live="polite">
               <i class="olc-recdot"></i><span class="olc-time">0:00</span><span class="olc-meter"></span>
-              <small class="olc-demo" hidden>Mic unavailable — demo recording</small>
+              <small class="olc-demo" hidden></small>
               <button type="button" class="olc-cbtn" data-rec-cancel aria-label="Discard recording">${ic('trash', 19)}</button>
               <button type="button" class="olc-cbtn is-send" data-rec-send aria-label="Send voice message">${ic('send', 20)}</button>
             </div>

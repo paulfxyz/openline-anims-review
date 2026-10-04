@@ -122,7 +122,7 @@ tick in the nav, a highlighted matrix row, and makes it the default on load.
   (upload or `qa/modal-illus.js` illustrations), 0–2 CTAs plus a text link; preview over a real page or a phone.
 - **Support chat** `/qa/chat`: capture of /all-countries; the support badge opens a full-screen chat
   (`qa/support/chat.js`) — fresh guest welcome, local history, composer with files (pick, drop, paste), voice notes (MediaRecorder,
-  demo fallback), simulated replies, and a collapsible panel: WhatsApp / Instagram / Messenger / email,
+  explicit permission-error handling), simulated replies, and a collapsible panel: WhatsApp / Instagram / Messenger / email,
   "Ask an AI about us" (ChatGPT, Claude, Perplexity, Gemini, Grok, Copilot, Le Chat, clipboard handoff), KB and
   compatibility. The badge opens it on every /qa page.
 - **Help modals** `/qa/kb`: the knowledge-base and device-compatibility modals (`qa/support/support.js`) on the
@@ -193,7 +193,7 @@ Run `python3 qa/tools/producthunt.py` to rebuild the QA copy and combined page s
   label rather than guessing a new date. Rewards, example pricing, eligibility, review timing and
   platform-policy compatibility remain unapproved campaign concepts.
 - The QA-only native claim dialog validates URL/email format, checks the Product Hunt hostname for
-  that lane, and animates a simulated review. It generates only a visibly non-redeemable `DEMO-PH-10-…`
+  that lane, and animates code preparation. It generates only a non-redeemable `PH-QA-10-…`
   string. No proof link is opened, no email/reward is sent, and no claim details enter storage or a backend.
 - Closing cancels pending work; clipboard denial gets selectable fallback text, not a false “Copied”
   confirmation. Modal state headings, focus containment, keyboard access and mobile layout are tested.
@@ -240,10 +240,11 @@ use the shared native UI stack, Openline's orange/ink palette and the live site'
 - An optional label, existing sample folder or newly named folder update the visible profile. Only
   `{label, folder}` is session-stored under `openline-qa-profile-organisation-v1`, never codes,
   installation credentials or the plan state. Storage failure is disclosed and retains an in-memory
-  result. Restart demo clears this demo organisation state.
+  result. Restart flow clears this organisation state.
 - The completion screen shows the saved label/folder and links to the existing `/qa/login` sign-in
-  preview. The intended “You're connected” finale is explicitly labelled a simulated demo connection,
-  with an adjacent no-real-activation disclosure. Production needs authoritative status before showing it.
+  preview. Paul requested that simulation notices move out of the customer-facing design into this
+  handoff and the QA panel. The clean “You're connected” finale remains simulated; production needs
+  authoritative provisioning and connectivity status before showing it.
 - The final handoff is recorded separately in the global QA manifest/export. This completes the
   review prototype of the purchase-code activation journey; no `/delivery` or account backend was added.
 - Full copy/layout/interaction handoff: `qa/start-changelog.md`, included in the QA panel/export registry.
@@ -296,7 +297,7 @@ use the shared native UI stack, Openline's orange/ink palette and the live site'
 - Chat branding now uses the actual Openline mark (`qa/assets/start-brand-mark.png`) in the header,
   animated welcome and Gary's AI avatar, rather than the earlier hand-drawn ring and sparkle.
 - Seven [CC0 Pravatar placeholder portraits](https://pravatar.cc/) sit in a single centred row above
-  “Here to help you stay connected” in both fresh and existing conversations. They are explicitly
+  “Here to help you stay connected” in both fresh and existing conversations. They remain
   illustrative, not real employee identities or availability signals, and are served locally from
   `qa/assets/support-portraits/`. Their order is shuffled once per opened chat, not on each render.
 
@@ -315,12 +316,12 @@ use the shared native UI stack, Openline's orange/ink palette and the live site'
 - Provider favicons/logos are stored locally under `qa/assets/ai/`. ChatGPT, Claude, Gemini, Grok and
   Copilot use their published icon assets; Perplexity and Le Chat use Google's cached site favicon
   because those public source pages blocked retrieval. These identify external services, not Openline partners.
-- “Clear chat” requires confirmation, defaults to keeping the chat, explains intended live deletion /
-  issue-solved semantics, and explicitly discloses that this prototype only clears local data.
+- “Clear chat” requires confirmation, defaults to keeping the chat and returns to the welcome.
+  Its technical local-only boundary is recorded here, not in a customer-facing warning.
   No server deletion API or actual ticket closure is connected. Clearing cancels pending replies,
   stops recordings/playback, releases attachments and returns to an animated guest welcome with Gary's greeting.
 - New visitors also begin at the welcome. Saved conversations remain until explicitly cleared.
-  The preview labels simulated replies; it does not claim an actual assigned agent or server-encrypted session.
+  Replies remain simulated even though the user requested removal of the intrusive preview labels.
 
 ### Redesign button parity
 
@@ -436,9 +437,28 @@ use the shared native UI stack, Openline's orange/ink palette and the live site'
   function and USD, not the reference modal's mismatched fixed daily estimate.
 - Latest calendar polish hides the visible shortcut hint while preserving accessibility, separates
   the day-count/total/daily-rate quote, uses orange Reset and a stronger Apply action, and aligns
-  Unlimited duration-control styling and icon motion. Text stays steady and reduced motion is static.
+  Unlimited control styling. The later duration-card revision removes the six preset icons and
+  adds original-style card shadows and a restrained selected lift. Other control icons retain motion.
 - `python qa/tools/country_fr.py --refresh-local` updates only the controlled dialogs and scoped
   stylesheet, so modal iterations preserve the surrounding captured page.
 - `qa/country-fr-changelog.md` and the shared panel/export explicitly record the rejection and
   current restrained direction for Irina. Page 22 is classified as a refinement, not a retained
   redesign. No source-app write, production checkout, provisioning or `/delivery` is introduced.
+
+### Latest contextual refinements and clean presentation
+
+- France's unrelated FAQ coverage illustration is replaced by a responsive KB → AI → human support
+  sequence. Emphasis cycles slowly, steps are clickable, pause/resume works, offscreen playback stops,
+  and reduced motion stays static. Chat and KB CTAs open the existing support tools.
+- The shared Multi Tier-1 / Unlimited replacement explainer now has shorter copy, 28px card headings,
+  18px body text, clearer diagrams and an expandable detailed disclosure. The local-MNO caveat,
+  best-effort replacement and fixed-data recommendation are retained, not softened into guarantees.
+- `/qa/start` uses the normal 64px Openline header and source-style nav/cart/Sign In/locale controls.
+  Entry gift/account actions and completion details/edit actions are full buttons. The lower
+  compatibility/help row is removed. Header locale is English/USD only; cart is not backend-connected.
+- Per Paul's request, customer-facing demo notices are removed from Start, France, chat, Product Hunt,
+  Contact and installation instructions. Technical boundaries remain documented here and in the QA
+  panel/export. This changes presentation, not backend availability, safe fixtures or production approval.
+- Microphone denial no longer creates a pretend recording. It shows a normal permission error instead;
+  actual clipboard/storage errors remain truthful. No email, purchase, reward, activation or support
+  ticket operation is newly connected by this revision.

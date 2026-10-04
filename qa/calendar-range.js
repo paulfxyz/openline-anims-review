@@ -60,11 +60,11 @@ export function createRangeCalendar({element,getSelection,onApply,priceForDays,o
     $('#fuc-edit-start').setAttribute('aria-pressed',mode==='start'||mode==='edit-start');
     $('#fuc-edit-end').setAttribute('aria-pressed',mode==='end');$('#fuc-edit-end').disabled=start===null;
     $('#fuc-prev').disabled=base<=monthStart(today);$('#fu-date-apply').disabled=!valid();
-    $('#fuc-instruction').textContent=complete()&&!valid()?'Choose up to 365 days in this preview.':mode==='end'?'Now choose your last day':mode==='edit-start'?'Choose a new start date':complete()?'Your dates are selected':'Choose your start date';
+    $('#fuc-instruction').textContent=complete()&&!valid()?'Choose up to 365 days.':mode==='end'?'Now choose your last day':mode==='edit-start'?'Choose a new start date':complete()?'Your dates are selected':'Choose your start date';
     const n=complete()?inclusiveDays(start,end):0;
     $('#fuc-duration').textContent=complete()?`${n}-day plan`:start===null?'Select your dates':'Select your last day';
     $('.fuc-quote').classList.toggle('has-price',valid());
-    $('#fuc-plan-caption').textContent=valid()?'Unlimited data · preview':complete()?'Maximum 365 days in this preview':'First and last day included';
+    $('#fuc-plan-caption').textContent=valid()?'Unlimited data':complete()?'Maximum 365 days':'First and last day included';
     $('#fuc-total').textContent=valid()?money(priceForDays(n)):'—';
     $('#fuc-daily').textContent=valid()?`${money(priceForDays(n)/n)} / day`:'Preview total';
     $('#fu-date-apply').setAttribute('aria-label',valid()?`Apply ${n}-day plan for ${money(priceForDays(n))} USD`:'Apply dates');
