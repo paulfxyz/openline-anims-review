@@ -17,8 +17,9 @@ fragment have been deleted. This is not an additional alternative to keep or inc
 - Limit visual changes to the Unlimited block: align the date selector and day counter in a
   lighter control strip; keep all six presets level, with no selected-card scale jump; reduce
   heavy borders/shadows; align feature rows; give Purchase / Add to Cart consistent heights and icons.
-- Keep the corrected short Unlimited introduction and plan-wide promise. Do not reintroduce the
-  original statement that every unlimited plan is free from local-operator throttling.
+- Use Paul's restored original Unlimited introduction: “Perfect for heavy users. Stream, video call,
+  and browse without limits.” Keep the corrected plan-wide promise and the separate fair-use
+  disclosure; do not restore the claim that every unlimited plan is free from local-operator throttling.
 - Show “Fair usage applies” without an underline, followed by a separate question-mark button.
   Use a compact policy modal in the original template's style, not the rejected large selector UI.
 - The modal explains fixed-data full-speed allowance, unlimited with no Openline-imposed cap or
@@ -47,6 +48,16 @@ than introducing another page layout.
 
 The panel/export has a separate `country-fr-calendar-range` record for Irina. No surrounding
 page capture or Fixed Plan layout was changed during this modal-only update.
+
+## Unlimited introduction restored
+
+At Paul's explicit request on 2026-10-04, only the description below “Unlimited Data” changes:
+
+- Before: “No data cap from Openline. Local network fair use applies.”
+- After: “Perfect for heavy users. Stream, video call, and browse without limits.”
+
+The separate fair-use notice, its policy modal, the plan-wide explanation and calendar range
+picker remain unchanged. The panel/export records this as `country-fr-unlimited-intro`.
 
 ## Prototype boundaries
 

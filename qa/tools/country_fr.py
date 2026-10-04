@@ -101,7 +101,7 @@ async def main():
           const unlimitedTitle=[...section.querySelectorAll('h3')].find(e=>e.textContent==='Unlimited Data');
           const unlimited=unlimitedTitle.parentElement.parentElement;
           unlimited.id='fu-unlimited';unlimited.classList.add('fu-unlimited');
-          unlimitedTitle.nextElementSibling.textContent='No data cap from Openline. Local network fair use applies.';
+          unlimitedTitle.nextElementSibling.textContent='Perfect for heavy users. Stream, video call, and browse without limits.';
           const ub=[...unlimited.querySelectorAll('button')];
           const date=ub.find(b=>b.textContent.trim()==='Select travel dates');
           date.id='fu-date-open';date.parentElement.parentElement.parentElement.classList.add('fu-controls');
@@ -186,6 +186,8 @@ if "--refresh-local" in sys.argv:
     # Modal-only iterations must not recapture or change the surrounding source page.
     path = Q / (SLUG+".html")
     text = path.read_text()
+    text = text.replace('No data cap from Openline. Local network fair use applies.',
+        'Perfect for heavy users. Stream, video call, and browse without limits.', 1)
     text, styles = re.subn(r'<style data-fr(?:="")?>[\s\S]*?</style>',
         lambda m:'<style data-fr="">'+(Q/"country-fr-refinement.css").read_text()+'</style>', text, count=1)
     text, dialogs = re.subn(r'<dialog id="fu-fair"[\s\S]*?<div class="fu-toast" id="fu-toast"[\s\S]*?</div>',
