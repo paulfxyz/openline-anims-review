@@ -30,18 +30,23 @@ const GUIDE = {
   ],
 };
 
-export function initProfileFlow({ canOpen, copyText, openDialog }) {
+export function initProfileFlow({ canOpen, copyText, openDialog, getJourney = ()=>'purchase' }) {
   const $ = s => document.querySelector(s);
   const root = $('#sp-success');
   const label = $('#spf-label'), folder = $('#spf-folder'), custom = $('#spf-new-folder');
   const editLabel = $('#spf-edit-label'), editFolder = $('#spf-edit-folder'), editCustom = $('#spf-edit-new');
+  let activeStore = getJourney()==='recipient' ? STORE+'-recipient' : STORE;
   let saved = null;
-  try {
-    const value = JSON.parse(sessionStorage.getItem(STORE) || 'null');
-    if (value && typeof value.label === 'string' && typeof value.folder === 'string') {
-      saved = { label: value.label.slice(0, 48), folder: value.folder.slice(0, 32) };
-    }
-  } catch { /* In-memory preview remains available. */ }
+  function loadOrganisation() {
+    saved = null;
+    try {
+      const value = JSON.parse(sessionStorage.getItem(activeStore) || 'null');
+      if (value && typeof value.label === 'string' && typeof value.folder === 'string') {
+        saved = { label: value.label.slice(0,48),folder:value.folder.slice(0,32) };
+      }
+    } catch { /* In-memory preview remains available. */ }
+  }
+  loadOrganisation();
   const clean = s => s.trim().replace(/\s+/g, ' ');
   const currentFolder = () => clean(folder.value === '__new' ? custom.value : folder.value.startsWith('folder:') ? folder.value.slice(7) : '');
   const addFolder = name => {
@@ -78,11 +83,17 @@ export function initProfileFlow({ canOpen, copyText, openDialog }) {
       organise: ['Make it yours.', 'A name and a folder. Easy to find, wherever you go.'],
       done: ['You’re connected.', 'Your eSIM is activated. Your next stop: your account.'],
     };
+    if(getJourney()==='recipient') {
+      titles.details=['Your gift is now your eSIM.','Here’s your QR. Install it, connect, and make it yours.'];
+      titles.done=['You’re connected.','Your gift is activated. Your next stop: your account.'];
+    }
     if (!titles[name] || (focus && !canOpen())) return;
     for (const key of Object.keys(titles)) $('#spf-' + key).hidden = key !== name;
     $('#sp-success-title').textContent = titles[name][0];
     $('#spf-subtitle').textContent = titles[name][1];
-    $('#spf-kicker').textContent = name === 'done' ? 'Ready for your next adventure' : 'Your plan is activated';
+    $('#spf-kicker').textContent = getJourney()==='recipient'
+      ? name==='done'?'A gift that goes with you':'Gift redeemed · plan activated'
+      : name === 'done' ? 'Ready for your next adventure' : 'Your plan is activated';
     const index = ['details', 'setup', 'organise', 'done'].indexOf(name);
     root.querySelectorAll('[data-profile-step]').forEach((button, i) => {
       button.classList.toggle('is-done', i < index);
@@ -125,7 +136,7 @@ export function initProfileFlow({ canOpen, copyText, openDialog }) {
   function saveOrganisation(next) {
     saved = next;
     let persisted = false;
-    try { sessionStorage.setItem(STORE, JSON.stringify(saved)); persisted = true; } catch { /* In-memory changes still apply. */ }
+    try { sessionStorage.setItem(activeStore, JSON.stringify(saved)); persisted = true; } catch { /* In-memory changes still apply. */ }
     addFolder(saved.folder);
     label.value = saved.label; folder.value = saved.folder ? `folder:${saved.folder}` : '';
     custom.value = '';
@@ -190,9 +201,18 @@ export function initProfileFlow({ canOpen, copyText, openDialog }) {
   restore(); device('iphone'); step('details', false);
   return {
     open(name = 'details') { if (canOpen()) step(name); },
+    setContext(context) {
+      activeStore=context==='recipient'?STORE+'-recipient':STORE;
+      for(const select of [folder,editFolder]) [...select.options].filter(o=>!['','folder:Travel','folder:Personal','folder:Work','__new'].includes(o.value)).forEach(o=>o.remove());
+      loadOrganisation(); restore(); device('iphone'); step('details',false);
+      root.querySelector('.spf-manual').open=false;
+      $('#spf-edit-form').reset(); syncEdit();
+      $('#spf-save-status').textContent=''; $('#spf-save-status').hidden=true;
+      $('#sp-valid-until').textContent=''; $('#sp-valid-until').removeAttribute('datetime');
+    },
     reset() {
       saved = null;
-      try { sessionStorage.removeItem(STORE); } catch { /* Unavailable. */ }
+      try { sessionStorage.removeItem(activeStore); } catch { /* Unavailable. */ }
       for (const select of [folder,editFolder]) [...select.options].filter(o => !['','folder:Travel','folder:Personal','folder:Work','__new'].includes(o.value)).forEach(o => o.remove());
       $('#spf-edit-form').reset(); syncEdit();
       $('#sp-valid-until').textContent = '';

@@ -62,5 +62,17 @@ The current version is on [Openline QA /start](https://openline-anims-review.ver
 - **Owner email:** Gifting explains Paul’s product rule: the purchase owner will still receive an email to validate the purchase. No email destination, delivery time or completed validation is invented.
 - **Explicit unlock:** Unused codes begin “Locked for transfer”. Unlock for transfer opens a confirmation explaining that anyone with the unlocked code can redeem it, without starting plan validity or removing owner email validation.
 - **Ready to share:** Confirming changes the state to “Ready to transfer · not activated” and reveals Copy gift message. Cancel or closing the pending confirmation does not unlock.
-- **State safeguards:** Reopening retains the current code’s unlocked state. Changing codes or restarting clears it; used/activated codes cannot enter gifting. No code or unlock state is stored persistently.
+- **State safeguards:** Unlock state is scoped to each code in memory, so a different code never inherits permission. Restart clears the run; used/activated codes cannot enter gifting. No code or unlock state is stored persistently.
 - **Production boundary:** This is local concept behaviour, not an ownership change. A live version needs authenticated ownership checks, transfer/unlock and purchase-validation email services. No email was sent and no real purchase was unlocked during this work.
+
+## Recipient journey
+
+- **Open it:** Use [the recipient entry](https://openline-anims-review.vercel.app/qa/start?recipient=1), “Received a gift?” on the normal entry, or “Open recipient view” after a sender unlocks a code. The latter carries the code in memory into the recipient input, not into the URL or browser storage.
+- **Receive and check:** The recipient gets a distinct gift welcome, code input and read-only check. Review shows the plan and its unlocked state, without the sender’s gifting actions or private account information.
+- **Choose the moment:** Keep it for later leaves the code unused. Redeem & activate opens the existing readiness switch with recipient-specific wording about immediate validity and no further transfer.
+- **Finish the gift:** The selected code-to-profile animation leads directly to “Your gift is now your eSIM”, QR/manual details, Setup & connect, Make it yours and the account handoff. Quick QR/edit modals continue working without backtracking.
+- **Blocked paths:** Locked transfer asks the sender to unlock. Pending purchase validation asks the purchase owner to confirm their email. Both prevent activation and offer Check again plus a copyable private message. No email is resent or fabricated.
+- **Retry and reuse:** Activation failure leaves the gift unused. Successful activation marks its code redeemed in the current run; the sender cannot redeem that same code again. This in-memory behaviour is not a substitute for server-side single-use enforcement.
+- **Separate organisation:** Only label/folder values are session-stored, under separate purchase and recipient keys. Sender names, emails, labels, custom folders and purchase codes are not handed over to the recipient.
+- **Review controls:** Journey selects sender or recipient. Gift locked and owner-validation-pending responses join the existing unknown, used, network and activation-failure states. Ready is the eligible gift fixture; production must obtain eligibility and validation status from the server.
+- **Backend boundary:** No live redemption, email validation, recipient account binding or eSIM activation is performed. The production claim must validate all eligibility conditions and consume the code atomically before reporting activation success.

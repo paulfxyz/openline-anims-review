@@ -58,6 +58,7 @@
           <p class="sp-safe"><span data-icon="lock" aria-hidden="true"></span>Checking won’t start your plan.</p>
         </form>
         <div class="sp-entry-links"><button type="button" class="sp-btn sp-entry-gift" id="sp-entry-gift"><span data-icon="gift" aria-hidden="true"></span>Gift this code <span class="sp-action-arrow" data-action-arrow="right" aria-hidden="true"></span></button><a class="sp-btn sp-secondary" href="/qa/login"><span data-icon="user" aria-hidden="true"></span>Go to my account <span class="sp-action-arrow" data-action-arrow="right" aria-hidden="true"></span></a></div>
+        <button type="button" class="sp-link sp-journey-link" id="sp-switch-journey">Received a gift? Open your gift</button>
       </section>
 
       <section id="sp-review" class="sp-review" aria-labelledby="sp-review-title" hidden>
@@ -74,6 +75,16 @@
           <button type="button" class="sp-choice is-primary" id="sp-open-confirm"><span class="sp-choice-icon" data-icon="esim" aria-hidden="true"></span><strong>Activate my plan</strong><span>Start using it now.</span><span class="sp-choice-action">Activate <span class="sp-action-arrow" data-action-arrow="right" aria-hidden="true"></span></span></button>
           <button type="button" class="sp-choice" id="sp-review-gift"><span class="sp-choice-icon" data-icon="gift" aria-hidden="true"></span><strong>Gift this code</strong><span>Let them choose when.</span><span class="sp-choice-action">Prepare my gift <span class="sp-action-arrow" data-action-arrow="right" aria-hidden="true"></span></span></button>
           <a class="sp-choice" href="/qa/login"><span class="sp-choice-icon" data-icon="user" aria-hidden="true"></span><strong>My account</strong><span>Manage my eSIMs.</span><span class="sp-choice-action">Go to my account <span class="sp-action-arrow" data-action-arrow="right" aria-hidden="true"></span></span></a>
+        </div>
+        <div id="sp-recipient-review" class="sp-recipient-review" hidden>
+          <div class="sp-recipient-status" id="sp-recipient-status" role="status"><span id="sp-recipient-status-icon" data-icon="gift" aria-hidden="true"></span><div><h2 id="sp-recipient-status-title">Unlocked and ready for you.</h2><p id="sp-recipient-status-copy">The sender has made this code transferable. Your plan hasn’t started.</p></div></div>
+          <div class="sp-recipient-actions">
+            <button type="button" class="sp-btn sp-primary" id="sp-recipient-activate">Redeem &amp; activate my gift <span class="sp-action-arrow" data-action-arrow="right" aria-hidden="true"></span></button>
+            <button type="button" class="sp-btn sp-secondary" id="sp-recipient-later"><span data-icon="clock" aria-hidden="true"></span>Keep it for later</button>
+            <button type="button" class="sp-btn sp-primary" id="sp-recipient-retry" hidden>Check again <span class="sp-action-arrow" data-action-arrow="right" aria-hidden="true"></span></button>
+            <button type="button" class="sp-btn sp-secondary" id="sp-recipient-ask-sender" hidden><span data-icon="copy" aria-hidden="true"></span>Copy a message for the sender</button>
+          </div>
+          <button type="button" class="sp-link sp-recipient-policy" data-open-dialog="sp-gift-validation">How gift validation works <span data-icon="info" aria-hidden="true"></span></button>
         </div>
         <p class="sp-wait-inline"><span data-icon="clock" aria-hidden="true"></span>Travelling later? Keep your code and activate when you’re ready.</p>
         <button type="button" class="sp-link" id="sp-change-code">Use a different code</button>
@@ -183,6 +194,7 @@
       <div class="sp-dialog-actions"><button type="button" class="sp-btn sp-secondary" id="sp-cancel-unlock">Keep locked</button><button type="button" class="sp-btn sp-primary" id="sp-confirm-unlock">Yes, unlock</button></div>
     </div>
     <button type="button" class="sp-btn sp-primary sp-wide" id="sp-copy-gift" hidden><span data-icon="copy" aria-hidden="true"></span>Copy gift message</button>
+    <button type="button" class="sp-btn sp-secondary sp-wide sp-recipient-handoff" id="sp-open-recipient" hidden>Open recipient view <span class="sp-action-arrow" data-action-arrow="right" aria-hidden="true"></span></button>
     <p class="sp-gift-private">Share privately. Keep the code safe until you give it away.</p>
     <button type="button" class="sp-link sp-wide sp-keep" id="sp-keep-gift" data-close>Keep it for later</button>
   </dialog>
@@ -237,8 +249,20 @@
   <dialog id="sp-preview" class="sp-dialog" aria-labelledby="sp-preview-title">
     <button class="sp-dialog-close sp-icon-button" type="button" data-close aria-label="Close review controls"><span data-icon="x" aria-hidden="true"></span></button>
     <div class="sp-symbol" data-icon="info" aria-hidden="true"></div><h2 id="sp-preview-title">Review controls</h2>
-    <div class="sp-preview-controls"><label for="sp-scenario">Code response</label><select id="sp-scenario"><option value="ready">Ready to activate</option><option value="not-found">Code not found</option><option value="used">Already activated</option><option value="network">Connection error</option><option value="activation-error">Activation failure</option></select><button type="button" class="sp-btn sp-secondary sp-wide" id="sp-reset">Restart flow</button></div>
+    <div class="sp-preview-controls"><label for="sp-journey-control">Journey</label><select id="sp-journey-control"><option value="purchase">Purchase owner / sender</option><option value="recipient">Gift recipient</option></select><label for="sp-scenario">Code response</label><select id="sp-scenario"><option value="ready">Ready to activate</option><option value="not-found">Code not found</option><option value="used">Already activated</option><option value="network">Connection error</option><option value="activation-error">Activation failure</option><option value="gift-locked">Gift: sender has not unlocked</option><option value="gift-pending">Gift: owner email validation pending</option></select><button type="button" class="sp-btn sp-secondary sp-wide" id="sp-reset">Restart flow</button></div>
     <a class="sp-link" href="/qa#qa-changes">Changes &amp; delivery notes</a>
+  </dialog>
+  <dialog id="sp-gift-validation" class="sp-dialog" aria-labelledby="sp-gift-validation-title">
+    <button class="sp-dialog-close sp-icon-button" type="button" data-close aria-label="Close gift validation details"><span data-icon="x" aria-hidden="true"></span></button>
+    <div class="sp-symbol" data-icon="gift" aria-hidden="true"></div><h2 id="sp-gift-validation-title">A gift, ready for your trip.</h2>
+    <ul class="sp-detail-bullets"><li><strong>The sender unlocks the code.</strong> This makes the unused purchase code available for transfer.</li><li><strong>The purchase owner validates the purchase.</strong> The validation email goes to the person who bought the gift. If that confirmation is still needed, ask them to check their inbox.</li><li><strong>You decide when to start.</strong> Checking a code doesn’t use it. Redeeming and activating starts the plan immediately, so wait if your trip is later.</li></ul>
+    <button class="sp-btn sp-primary sp-wide" type="button" data-close>Got it</button>
+  </dialog>
+  <dialog id="sp-gift-later" class="sp-dialog" aria-labelledby="sp-gift-later-title">
+    <button class="sp-dialog-close sp-icon-button" type="button" data-close aria-label="Close gift timing"><span data-icon="x" aria-hidden="true"></span></button>
+    <div class="sp-symbol" data-icon="clock" aria-hidden="true"></div><h2 id="sp-gift-later-title">Your gift can wait.</h2><p>Keep the purchase code from your gift message. Come back when you’re ready to start the plan.</p>
+    <div class="sp-gift-code"><span>Your gift code</span><code data-current-code></code></div>
+    <button class="sp-btn sp-secondary sp-wide" type="button" data-copy-code><span data-icon="copy" aria-hidden="true"></span>Copy my gift code</button><button class="sp-btn sp-primary sp-wide spf-modal-done" type="button" data-close>Back to my gift</button>
   </dialog>
   <dialog id="sp-cart" class="sp-dialog" aria-labelledby="sp-cart-title"><button class="sp-dialog-close sp-icon-button" type="button" data-close aria-label="Close cart"><span data-icon="x"></span></button><div class="sp-symbol" data-icon="cart"></div><h2 id="sp-cart-title">Your cart is empty.</h2><p>Find a plan for your next destination.</p><a class="sp-btn sp-primary sp-wide" href="/qa/home">Explore destinations <span data-action-arrow="right" class="sp-action-arrow"></span></a></dialog>
   <dialog id="sp-locale-dialog" class="sp-dialog" aria-labelledby="sp-locale-title"><button class="sp-dialog-close sp-icon-button" type="button" data-close aria-label="Close preferences"><span data-icon="x"></span></button><div class="sp-symbol" data-icon="globe"></div><h2 id="sp-locale-title">Language &amp; currency</h2><div class="sp-preview-controls"><label for="sp-language">Language</label><select id="sp-language"><option>English</option></select><label for="sp-currency">Currency</label><select id="sp-currency"><option>USD · US Dollar ($)</option></select></div><button type="button" class="sp-btn sp-primary sp-wide" data-close>Done</button></dialog>

@@ -228,7 +228,7 @@ use the shared native UI stack, Openline's orange/ink palette and the live site'
   [GSMA consumer eSIM architecture](https://www.gsma.com/solutions-and-impact/technologies/esim/wp-content/uploads/2024/09/SGP.21-v2.6.pdf).
 - `qa/tools/start_demo_qr.py` generates a genuine QR image whose payload is a harmless QA notice, not
   an LPA installation string. The separately displayed manual credentials use the reserved `.invalid`
-  domain and an explicit NOT-INSTALLABLE token. All IDs are fictional; no real profile can be installed.
+  domain and an explicit QA example token. All IDs are fictional; no real profile can be installed.
 - Device-specific instruction summaries use existing KB articles 17/18/20/21/22 and article 8's
   connection checklist. The full guide opens `/qa/installation-guide#ig-install-steps` in a new tab,
   preserving its layout and animation. Manual iPhone installation terminology is consistent with
@@ -238,7 +238,8 @@ use the shared native UI stack, Openline's orange/ink palette and the live site'
   mobile data, automatic data switching OFF, and roaming ON for Openline. Device paths and the
   user's private-Wi-Fi / avoid airport-public-Wi-Fi and 4G/5G setup guidance are in detail dialogs.
 - An optional label, existing sample folder or newly named folder update the visible profile. Only
-  `{label, folder}` is session-stored under `openline-qa-profile-organisation-v1`, never codes,
+  `{label, folder}` is session-stored under `openline-qa-profile-organisation-v1` for the purchaser and
+  the separate `openline-qa-profile-organisation-v1-recipient` key for the recipient, never codes,
   installation credentials or the plan state. Storage failure is disclosed and retains an in-memory
   result. Restart flow clears this organisation state.
 - The completion screen shows the saved label/folder and links to the existing `/qa/login` sign-in
@@ -474,3 +475,9 @@ use the shared native UI stack, Openline's orange/ink palette and the live site'
 - Gifting includes the purchase-owner validation-email rule and an explicit unlock-for-transfer
   confirmation before Copy gift message. Unlocking is separate from activation and exists only in
   local concept state; ownership checks, email and transfer APIs still need production integration.
+- The recipient flow is available at `/qa/start?recipient=1`, through “Received a gift?”, and through
+  “Open recipient view” after the sender unlocks. It carries the code only in memory, reviews the gift,
+  offers keep-for-later, requires the readiness switch to redeem/activate, and continues through the
+  QR/setup/organisation/account handoff. Locked and pending-owner-validation branches block activation.
+  Sender and recipient label/folder storage are isolated. A local ledger prevents reuse in the current
+  run; real ownership, purchase validation and one-time redemption need authoritative server checks.
