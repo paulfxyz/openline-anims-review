@@ -481,3 +481,9 @@ use the shared native UI stack, Openline's orange/ink palette and the live site'
   QR/setup/organisation/account handoff. Locked and pending-owner-validation branches block activation.
   Sender and recipient label/folder storage are isolated. A local ledger prevents reuse in the current
   run; real ownership, purchase validation and one-time redemption need authoritative server checks.
+- The Multi Tier-1 operator wall is now two slow counter-moving logo ribbons, with pause/play,
+  hover/focus/offscreen pausing, reduced-motion scrollable rows and a searchable native directory.
+  The 36-name roster, surrounding wording and existing chosen animations are preserved. Three
+  incorrect source-logo mappings are corrected in this showcase only. Use
+  `python qa/tools/operator_showcase.py`; details and asset provenance are in
+  `qa/operator-showcase-changelog.md` and `qa/assets/operators/README.md`.

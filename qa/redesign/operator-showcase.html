@@ -1,0 +1,20 @@
+<!-- qa-operator-showcase:start -->
+<div class="ops-showcase" id="operator-showcase" data-ops-running="false">
+  <div class="ops-toolbar"><span>{{COUNT}} featured operators</span><div>
+    <button type="button" id="ops-motion" aria-label="Pause operator animation" hidden><span data-ops-icon="pause" aria-hidden="true"></span><span data-ops-motion-label>Pause motion</span></button>
+    <button type="button" id="ops-browse" aria-haspopup="dialog" aria-controls="ops-directory" hidden><span data-ops-icon="search" aria-hidden="true"></span>Browse operators</button>
+  </div></div>
+  <div class="ops-rows" aria-label="Featured operator logos">
+    {{ROWS}}
+  </div>
+</div>
+<dialog class="ops-dialog" id="ops-directory" aria-labelledby="ops-directory-title">
+  <div class="ops-dialog-head">
+    <div><h2 id="ops-directory-title">Browse operators</h2><p>Featured examples. Availability varies by plan, profile and destination.</p></div>
+    <button type="button" class="ops-close" data-ops-close aria-label="Close operator list"><span data-ops-icon="close" aria-hidden="true"></span></button>
+  </div>
+  <div class="ops-search"><span data-ops-icon="search" aria-hidden="true"></span><input type="search" id="ops-search" aria-label="Search operators" placeholder="Find an operator…" autocomplete="off"><span id="ops-count" role="status">{{COUNT}} operators</span></div>
+  <ul class="ops-directory-grid" id="ops-directory-grid">{{CARDS}}</ul>
+  <p id="ops-empty" class="ops-empty" hidden>No operator found. Try another name.</p>
+</dialog>
+<!-- qa-operator-showcase:end -->

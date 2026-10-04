@@ -1,0 +1,254 @@
+[
+  {
+    "name": "Vodafone",
+    "slug": "vodafone",
+    "original": "/qa/assets/5ab47022f03a.png",
+    "src": "/qa/assets/operators/vodafone.webp",
+    "asset_source": "/qa/assets/5ab47022f03a.png"
+  },
+  {
+    "name": "Orange",
+    "slug": "orange",
+    "original": "/qa/assets/507db32031cd.png",
+    "src": "/qa/assets/operators/orange.webp",
+    "asset_source": "/qa/assets/507db32031cd.png"
+  },
+  {
+    "name": "T-Mobile",
+    "slug": "t-mobile",
+    "original": "/qa/assets/614adfd6caa8.png",
+    "src": "/qa/assets/operators/t-mobile.webp",
+    "asset_source": "/qa/assets/614adfd6caa8.png"
+  },
+  {
+    "name": "Telefónica",
+    "slug": "telefonica",
+    "original": "/qa/assets/691c3346e21f.png",
+    "src": "/qa/assets/operators/telefonica.webp",
+    "asset_source": "/qa/assets/operators/telefonica-original.png"
+  },
+  {
+    "name": "AT&T",
+    "slug": "at-t",
+    "original": "/qa/assets/0efcac3e4105.png",
+    "src": "/qa/assets/operators/at-t.webp",
+    "asset_source": "/qa/assets/0efcac3e4105.png"
+  },
+  {
+    "name": "Verizon",
+    "slug": "verizon",
+    "original": "/qa/assets/2d746c3d5964.png",
+    "src": "/qa/assets/operators/verizon.webp",
+    "asset_source": "/qa/assets/2d746c3d5964.png"
+  },
+  {
+    "name": "Airtel",
+    "slug": "airtel",
+    "original": "/qa/assets/f0aa3950bbe0.png",
+    "src": "/qa/assets/operators/airtel.webp",
+    "asset_source": "/qa/assets/f0aa3950bbe0.png"
+  },
+  {
+    "name": "NTT Docomo",
+    "slug": "ntt-docomo",
+    "original": "/qa/assets/399a31f86e31.png",
+    "src": "/qa/assets/operators/ntt-docomo.webp",
+    "asset_source": "/qa/assets/399a31f86e31.png"
+  },
+  {
+    "name": "SoftBank",
+    "slug": "softbank",
+    "original": "/qa/assets/6fca62b99354.png",
+    "src": "/qa/assets/operators/softbank.webp",
+    "asset_source": "/qa/assets/6fca62b99354.png"
+  },
+  {
+    "name": "SK Telecom",
+    "slug": "sk-telecom",
+    "original": "/qa/assets/5c10a68e901b.png",
+    "src": "/qa/assets/operators/sk-telecom.webp",
+    "asset_source": "/qa/assets/operators/sk-telecom-original.png"
+  },
+  {
+    "name": "KDDI",
+    "slug": "kddi",
+    "original": "/qa/assets/c1240bc0736a.png",
+    "src": "/qa/assets/operators/kddi.webp",
+    "asset_source": "/qa/assets/c1240bc0736a.png"
+  },
+  {
+    "name": "Telstra",
+    "slug": "telstra",
+    "original": "/qa/assets/bdc82698dc3d.png",
+    "src": "/qa/assets/operators/telstra.webp",
+    "asset_source": "/qa/assets/bdc82698dc3d.png"
+  },
+  {
+    "name": "Claro",
+    "slug": "claro",
+    "original": "/qa/assets/28a93eff57f9.png",
+    "src": "/qa/assets/operators/claro.webp",
+    "asset_source": "/qa/assets/28a93eff57f9.png"
+  },
+  {
+    "name": "Turkcell",
+    "slug": "turkcell",
+    "original": "/qa/assets/9627130aad87.png",
+    "src": "/qa/assets/operators/turkcell.webp",
+    "asset_source": "/qa/assets/9627130aad87.png"
+  },
+  {
+    "name": "SingTel",
+    "slug": "singtel",
+    "original": "/qa/assets/fe1dd54127a9.png",
+    "src": "/qa/assets/operators/singtel.webp",
+    "asset_source": "/qa/assets/fe1dd54127a9.png"
+  },
+  {
+    "name": "EE",
+    "slug": "ee",
+    "original": "/qa/assets/a9652c993b5e.webp",
+    "src": "/qa/assets/operators/ee.webp",
+    "asset_source": "/qa/assets/a9652c993b5e.webp"
+  },
+  {
+    "name": "O2",
+    "slug": "o2",
+    "original": "/qa/assets/2909c389b093.png",
+    "src": "/qa/assets/operators/o2.webp",
+    "asset_source": "/qa/assets/2909c389b093.png"
+  },
+  {
+    "name": "Three",
+    "slug": "three",
+    "original": "/qa/assets/5ab47022f03a.png",
+    "src": "/qa/assets/operators/three.webp",
+    "asset_source": "/qa/assets/operators/three-original.svg"
+  },
+  {
+    "name": "TIM",
+    "slug": "tim",
+    "original": "/qa/assets/ca99a298e596.png",
+    "src": "/qa/assets/operators/tim.webp",
+    "asset_source": "/qa/assets/ca99a298e596.png"
+  },
+  {
+    "name": "Swisscom",
+    "slug": "swisscom",
+    "original": "/qa/assets/fcd1a0cb701c.png",
+    "src": "/qa/assets/operators/swisscom.webp",
+    "asset_source": "/qa/assets/fcd1a0cb701c.png"
+  },
+  {
+    "name": "KPN",
+    "slug": "kpn",
+    "original": "/qa/assets/d334772191b5.png",
+    "src": "/qa/assets/operators/kpn.webp",
+    "asset_source": "/qa/assets/d334772191b5.png"
+  },
+  {
+    "name": "Telenor",
+    "slug": "telenor",
+    "original": "/qa/assets/74c2d71d67eb.png",
+    "src": "/qa/assets/operators/telenor.webp",
+    "asset_source": "/qa/assets/74c2d71d67eb.png"
+  },
+  {
+    "name": "Telia",
+    "slug": "telia",
+    "original": "/qa/assets/c3c57adbf017.png",
+    "src": "/qa/assets/operators/telia.webp",
+    "asset_source": "/qa/assets/c3c57adbf017.png"
+  },
+  {
+    "name": "SFR",
+    "slug": "sfr",
+    "original": "/qa/assets/f123bb5af99f.png",
+    "src": "/qa/assets/operators/sfr.webp",
+    "asset_source": "/qa/assets/f123bb5af99f.png"
+  },
+  {
+    "name": "Bouygues",
+    "slug": "bouygues",
+    "original": "/qa/assets/a7d36303f1a7.png",
+    "src": "/qa/assets/operators/bouygues.webp",
+    "asset_source": "/qa/assets/a7d36303f1a7.png"
+  },
+  {
+    "name": "Proximus",
+    "slug": "proximus",
+    "original": "/qa/assets/70de0b4e87e1.png",
+    "src": "/qa/assets/operators/proximus.webp",
+    "asset_source": "/qa/assets/70de0b4e87e1.png"
+  },
+  {
+    "name": "Rogers",
+    "slug": "rogers",
+    "original": "/qa/assets/de958ef9b351.png",
+    "src": "/qa/assets/operators/rogers.webp",
+    "asset_source": "/qa/assets/de958ef9b351.png"
+  },
+  {
+    "name": "Bell",
+    "slug": "bell",
+    "original": "/qa/assets/8e30a4c15df8.png",
+    "src": "/qa/assets/operators/bell.webp",
+    "asset_source": "/qa/assets/8e30a4c15df8.png"
+  },
+  {
+    "name": "Telus",
+    "slug": "telus",
+    "original": "/qa/assets/b02df6742b50.png",
+    "src": "/qa/assets/operators/telus.webp",
+    "asset_source": "/qa/assets/b02df6742b50.png"
+  },
+  {
+    "name": "Optus",
+    "slug": "optus",
+    "original": "/qa/assets/dac165742bf3.png",
+    "src": "/qa/assets/operators/optus.webp",
+    "asset_source": "/qa/assets/dac165742bf3.png"
+  },
+  {
+    "name": "LG U+",
+    "slug": "lg-u",
+    "original": "/qa/assets/db280d6c4e99.png",
+    "src": "/qa/assets/operators/lg-u.webp",
+    "asset_source": "/qa/assets/db280d6c4e99.png"
+  },
+  {
+    "name": "A1 Telekom",
+    "slug": "a1-telekom",
+    "original": "/qa/assets/4debf6553091.webp",
+    "src": "/qa/assets/operators/a1-telekom.webp",
+    "asset_source": "/qa/assets/4debf6553091.webp"
+  },
+  {
+    "name": "Etisalat",
+    "slug": "etisalat",
+    "original": "/qa/assets/0c90812f9f92.png",
+    "src": "/qa/assets/operators/etisalat.webp",
+    "asset_source": "/qa/assets/0c90812f9f92.png"
+  },
+  {
+    "name": "Movistar",
+    "slug": "movistar",
+    "original": "/qa/assets/691c3346e21f.png",
+    "src": "/qa/assets/operators/movistar.webp",
+    "asset_source": "/qa/assets/691c3346e21f.png"
+  },
+  {
+    "name": "Telmex",
+    "slug": "telmex",
+    "original": "/qa/assets/f9a7e7976cf0.png",
+    "src": "/qa/assets/operators/telmex.webp",
+    "asset_source": "/qa/assets/f9a7e7976cf0.png"
+  },
+  {
+    "name": "Play",
+    "slug": "play",
+    "original": "/qa/assets/16c8934576f2.png",
+    "src": "/qa/assets/operators/play.webp",
+    "asset_source": "/qa/assets/16c8934576f2.png"
+  }
+]
