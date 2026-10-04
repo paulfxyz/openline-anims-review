@@ -11,8 +11,8 @@ export const QA_CHANGES = [
     summary: 'Animations are evaluated inside measured page slots, with responsive sizing, background clearing and panel warnings for remaining aspect-ratio mismatches.',
     delivery: 'Retain the chosen animation concepts. A panel fit warning is an unresolved review item, not an automatic production approval.' },
   { id: 'page-browser', title: 'Quick page dropdown', pages: ['*'], status: 'Implemented in QA', route: '/qa',
-    summary: 'The bottom page label opens a searchable, keyboard-accessible menu for 21 page entries plus four extra tools.',
-    delivery: '18 original pages, the retained About / Contact alternatives, and the explicitly requested Product Hunt redesign. The rejected 16-page alternative batch remains removed and must not be delivered.' },
+    summary: 'The bottom page label opens a searchable, keyboard-accessible menu for 22 page entries plus four extra tools.',
+    delivery: '18 original pages, the retained About / Contact alternatives, and the explicitly requested Product Hunt and France plan-selector redesigns. The rejected 16-page alternative batch remains removed and must not be delivered.' },
   { id: 'producthunt-qa', title: 'Product Hunt redesign added to QA', pages: ['producthunt'], status: 'Campaign draft / interactive prototype', route: '/qa/producthunt',
     summary: 'The existing /producthunt redesign is available as the 21st QA page, preserving Kitty, the two reward lanes, four-rung ladder, steps, eligibility table, claim area and fine print. It has the shared page menu, review panel, page notes, theme controls, export and support tools.',
     delivery: 'Original /producthunt files remain unchanged. The QA adapter uses the official Openline mark, shared native typography and subtle arrow motion. The stale September launch label is now Launch date to be confirmed. Claim checks, coupon issuance and email delivery are explicitly simulated: only local format validation runs, PH lane requires a producthunt.com host, no proof URL is fetched, no data is submitted or stored, and DEMO codes cannot be redeemed. Closing cancels timers; native-dialog focus and clipboard failure are handled. Rewards, prices, launch timing, review promises and platform-policy compatibility require approval before any real campaign.' },
@@ -54,6 +54,17 @@ export const QA_CHANGES = [
       {area:'Plan recommendation and support',text:'Choose a fixed package for guaranteed no usage-based throttling. If unlimited throttling recurs, we’ll try another profile/infrastructure for a better-fitting fair-use policy, without guaranteeing an improvement.'}
     ],
     copyChanges: UNLIMITED_PLAN_COPY, changelogUrl: '/qa/connectivity-changelog.md' },
+  { id: 'country-fr-plan-selector', title: 'France: Unlimited / Fixed selection redesign', pages: ['country-fr-redesign'], status: 'Interactive QA alternative / Irina handoff', route: '/qa/country-fr-redesign#fr-plans', changedAt: '2026-10-04',
+    summary: 'The supplied France page is preserved as the original. A 22nd QA page keeps its hero and surrounding content, while Buy your eSIM in France now and View Plans scroll to a new plan-type selector. Two clear choice cards lead to duration/date configuration or fixed-package cards, with a shared selection/price summary and contextual next action.',
+    delivery: 'Irina: use the new structure, orange/native-UI styling, source-like button arrows, responsive cards, selection feedback and plan summary together. Six unlimited presets and all 25 fixed-package amounts/validities/USD prices are source-review fixtures. Custom prices mirror the source interpolation; inclusive travel dates estimate duration only, never schedule activation. Preview input guard is 1–365 days, not a declared commercial maximum. Data/validity filters are derived from actual fixture combinations, support an empty state and reset, and clear a hidden selection rather than quote the wrong package. Keyboard tabs/radios, reduced motion, purchase review, local cart add/view/remove and repeated selections are included. No payment, order, provisioning, account sync or server persistence is connected. Preserved comparison/review claims are labelled reference material, not newly verified evidence. Original source app, animation picks and other QA pages remain unchanged.',
+    changelogUrl: '/qa/country-fr-changelog.md' },
+  { id: 'country-fr-fair-use', title: 'France: question-mark fair-use modal', pages: ['country-fr-redesign'], status: 'Implemented in QA / shared product policy', route: '/qa/country-fr-redesign#fr-plans', changedAt: '2026-10-04',
+    summary: 'Fair usage applies is plain text with no underline. A separate accessible question-mark icon opens a branded native dialog: fixed-data full-speed guarantee, unlimited with no Openline cap/throttling, local MNO slowdown after heavy use within 24 hours, and best-effort replacement via another provider/infrastructure.',
+    delivery: 'The modal is generated from the latest Unlimited policy data, not a conflicting new policy. It has the actual Openline mark, two plan-promise cards, a local-network explanation, a quiet profile-connector illustration, links to Unlimited and Multi Tier-1, and Choose a Fixed Plan which closes the dialog and changes the selector. Escape/backdrop/close and native focus handling are supported, with 44px mobile question-mark hit areas and a static reduced-motion connector. Preserve the fixed-package no-throttling guarantee and the explicit boundary that replacement may not improve fair use or speed. Apply this modal and trigger change together with the selector, colours, motion and extra elements.',
+    newCopy: [
+      {area:'Fixed versus unlimited',text:'Every purchased GB at full available network speed, without usage-based throttling, on fixed packages. Unlimited plans have no Openline-imposed cap or throttling, while local MNO fair-use rules can still apply.'},
+      {area:'Repeated throttling',text:'We’ll try another eSIM profile/infrastructure whose fair-use rules may better suit your location and usage. A better result is not guaranteed, and setup may be needed.'}
+    ], changelogUrl: '/qa/country-fr-changelog.md' },
   { id: 'iot-chrome', title: 'IoT: selected Chrome default', pages: ['iot'], status: 'Selected default', route: '/qa/iot',
     summary: 'Purple and indigo accents become neutral steel, graphite and gunmetal with a restrained chrome sheen.',
     delivery: 'Chrome starts selected. Keep orange branding and green online status meaningful; honour the reviewer’s explicit identity toggle.' },
@@ -133,7 +144,7 @@ export function changesMarkdown() {
       ...(c.newCopy || []).flatMap(x=>[`#### ${x.area}`,x.text,'']),
       ...(c.copyChanges || []).flatMap(x=>[`#### ${x.area}`,`- **Before:** ${x.before}`,`- **After:** ${x.after}`,''])]),
     '## Review decisions', '',
-    '- Keep the previous About / Contact alternatives and the separately requested Product Hunt redesign. The rejected later batch of 16 alternatives remains removed.',
+    '- Keep the previous About / Contact alternatives and the separately requested Product Hunt and France plan-selector redesigns. The rejected later batch of 16 alternatives remains removed.',
     '- Finish /qa first. A separate /delivery and its documentation have not been requested for execution yet.',
     '- QA examples, marketing claims and activation-policy differences still need product/content approval before production.',
     ''].join('\n');

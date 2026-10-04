@@ -62,6 +62,8 @@ export const PAGES = [
     { key: 'affil', hero: true, w: 576, h: 420, clearFill: true }] },
   { slug: 'producthunt', title: 'Product Hunt — redesign', path: '/producthunt', group: 'Launch', standaloneRedesign: true, sourcePath: '/producthunt', slots: [],
     pageNote: 'The existing Product Hunt redesign, now in QA: Kitty hero, reward lanes, pricing ladder, eligibility table and a clearly labelled claim simulation. Its page animations are built in, not selectable board slots. Review the design and flow, then leave page notes below.' },
+  { slug: 'country-fr-redesign', title: 'France plan selector', path: '/country-fr', group: 'Purchase', standaloneRedesign: true, sourcePath: 'https://openline-revisions-hub.vercel.app/country-fr', slots: [],
+    pageNote: 'A separate France plan-selection alternative. The hero scrolls to Unlimited / Fixed choices, with duration presets, travel dates, 25 source-review fixed packages, one clear summary, a redesigned fair-use modal and a local demo cart. Prices are review fixtures, not live quotes. New interaction motion is built in, not an animation-board choice. The original page is preserved.' },
 ];
 
 export const pageOf = (key) => PAGES.find((p) => !p.redesignOf && p.slots.some((s) => (s.boards || [s.key]).includes(key)));

@@ -395,3 +395,24 @@ use the shared native UI stack, Openline's orange/ink palette and the live site'
   page notes and the inventory. Export contains no entered purchase codes or private chat content.
 - The modal builder retains its separate detailed draft and HTML exports; those should accompany the
   global inventory when handing off a specific modal. No `/delivery` has been created.
+
+### France Unlimited / Fixed selector alternative
+
+- `/qa/country-fr-redesign` is a separately requested alternative to the
+  [France revisions page](https://openline-revisions-hub.vercel.app/country-fr), which stays untouched.
+  It is page 22 in QA, with source comparison, page notes, theme controls, panel records and export.
+- `python qa/tools/country_fr.py` captures the supplied source read-only and replaces its plan section
+  with `qa/redesign/country-fr-plans.html` and `qa/country-fr.css`. Behaviour is in `qa/country-fr.js`;
+  the source-review fixture catalogue and pricing function are in `qa/country-fr-data.js`.
+- The original hero and surrounding page remain. Main purchase CTAs scroll to clear Unlimited /
+  Fixed choices. The selector retains duration presets, custom days, inclusive travel dates and all
+  25 fixed packages, but uses one selection summary rather than scattered purchase buttons.
+  Purchase review and cart add/view/remove are honest local-only previews.
+- Fair usage is plain text plus a question-mark trigger, not an underlined sentence. The branded
+  native modal reads its fixed/full-speed and unlimited/local-MNO policy from
+  `qa/unlimited-plan-copy.json` at build time. Rebuild it after policy edits as well as the Unlimited
+  page builder. It explains best-effort profile replacement and can switch directly to Fixed.
+- `qa/country-fr-changelog.md` records the full Irina handoff: copy, colours, native type, motion,
+  selector, modal, source fixtures and preview limits. `qa/assets/country-fr-manifest.md` records real
+  source assets and the verified native font. Legacy surrounding claims are labelled reference content.
+  No source-app write, real checkout, payment, provisioning or `/delivery` is introduced.
