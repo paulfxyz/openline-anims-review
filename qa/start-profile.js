@@ -30,10 +30,11 @@ const GUIDE = {
   ],
 };
 
-export function initProfileFlow({ canOpen, copyText }) {
+export function initProfileFlow({ canOpen, copyText, openDialog }) {
   const $ = s => document.querySelector(s);
   const root = $('#sp-success');
   const label = $('#spf-label'), folder = $('#spf-folder'), custom = $('#spf-new-folder');
+  const editLabel = $('#spf-edit-label'), editFolder = $('#spf-edit-folder'), editCustom = $('#spf-edit-new');
   let saved = null;
   try {
     const value = JSON.parse(sessionStorage.getItem(STORE) || 'null');
@@ -44,8 +45,10 @@ export function initProfileFlow({ canOpen, copyText }) {
   const clean = s => s.trim().replace(/\s+/g, ' ');
   const currentFolder = () => clean(folder.value === '__new' ? custom.value : folder.value.startsWith('folder:') ? folder.value.slice(7) : '');
   const addFolder = name => {
-    if (name && ![...folder.options].some(o => o.value === `folder:${name}`)) {
-      folder.add(new Option(name, `folder:${name}`), folder.querySelector('[value="__new"]'));
+    for (const select of [folder, editFolder]) {
+      if (name && ![...select.options].some(o => o.value === `folder:${name}`)) {
+        select.add(new Option(name, `folder:${name}`), select.querySelector('[value="__new"]'));
+      }
     }
   };
   function syncPreview() {
@@ -59,6 +62,7 @@ export function initProfileFlow({ canOpen, copyText }) {
     $('#sp-profile-label').textContent = saved?.label || DEFAULT_LABEL;
     $('#spf-saved-label').textContent = saved?.label || DEFAULT_LABEL;
     $('#spf-saved-folder').textContent = saved?.folder || 'Unfiled';
+    $('#spf-quick-name').textContent = saved?.label || DEFAULT_LABEL;
   }
   function restore() {
     label.value = saved?.label || '';
@@ -99,8 +103,8 @@ export function initProfileFlow({ canOpen, copyText }) {
     }));
     document.querySelectorAll('[data-profile-device]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.profileDevice === name)));
   }
-  root.querySelectorAll('[data-profile-value]').forEach(el => { el.textContent = PROFILE[el.dataset.profileValue]; });
-  root.querySelectorAll('[data-copy-profile]').forEach(b => {
+  document.querySelectorAll('[data-profile-value]').forEach(el => { el.textContent = PROFILE[el.dataset.profileValue]; });
+  document.querySelectorAll('[data-copy-profile]').forEach(b => {
     const original = b.innerHTML;
     b.addEventListener('click', async () => {
       if (!canOpen()) return;
@@ -118,6 +122,18 @@ export function initProfileFlow({ canOpen, copyText }) {
   label.addEventListener('input', syncPreview);
   custom.addEventListener('input', syncPreview);
   folder.addEventListener('change', () => { syncPreview(); if (folder.value === '__new') custom.focus(); });
+  function saveOrganisation(next) {
+    saved = next;
+    let persisted = false;
+    try { sessionStorage.setItem(STORE, JSON.stringify(saved)); persisted = true; } catch { /* In-memory changes still apply. */ }
+    addFolder(saved.folder);
+    label.value = saved.label; folder.value = saved.folder ? `folder:${saved.folder}` : '';
+    custom.value = '';
+    syncPreview(); paintSaved();
+    $('#spf-save-status').hidden = persisted;
+    $('#spf-save-status').textContent = persisted ? '' : 'Your browser could not save these preferences. Keep this page open to retain them.';
+    return persisted;
+  }
   $('#spf-organise-form').addEventListener('submit', e => {
     e.preventDefault();
     if (!canOpen()) return;
@@ -127,15 +143,49 @@ export function initProfileFlow({ canOpen, copyText }) {
       $('#spf-form-error').hidden = false;
       custom.setAttribute('aria-invalid', 'true'); custom.focus(); return;
     }
-    saved = { label: (clean(label.value) || DEFAULT_LABEL).slice(0, 48), folder:name.slice(0, 32) };
-    let persisted = false;
-    try { sessionStorage.setItem(STORE, JSON.stringify(saved)); persisted = true; } catch { /* Honest fallback below. */ }
-    addFolder(saved.folder);
-    label.value = saved.label; folder.value = saved.folder ? `folder:${saved.folder}` : '';
-    syncPreview(); paintSaved();
-    $('#spf-save-status').hidden = persisted;
-    $('#spf-save-status').textContent = persisted ? '' : 'Your browser could not save these preferences. Keep this page open to retain them.';
+    saveOrganisation({ label: (clean(label.value) || DEFAULT_LABEL).slice(0, 48), folder:name.slice(0, 32) });
     step('done');
+  });
+  const syncEdit = () => {
+    $('#spf-edit-new-wrap').hidden = editFolder.value !== '__new';
+    $('#spf-edit-error').hidden = true;
+    $('#spf-edit-status').hidden = true;
+    editCustom.removeAttribute('aria-invalid');
+  };
+  root.querySelectorAll('[data-profile-dialog]').forEach(button=>button.addEventListener('click',()=>{
+    if (!canOpen() || root.dataset.profileStep !== 'done') return;
+    if (button.dataset.profileDialog === 'view') {
+      const dialog = $('#spf-quick-view');
+      dialog.querySelector('details').open = false;
+      dialog.querySelector('.sp-copy-feedback').textContent = '';
+      openDialog(dialog); dialog.scrollTop = 0;
+    } else {
+      addFolder(saved?.folder);
+      editLabel.value = saved?.label || DEFAULT_LABEL;
+      editFolder.value = saved?.folder ? `folder:${saved.folder}` : '';
+      editCustom.value = ''; syncEdit();
+      openDialog($('#spf-quick-edit'));
+      $('#spf-quick-edit').scrollTop = 0;
+      editLabel.focus({preventScroll:true});
+    }
+  }));
+  editLabel.addEventListener('input',syncEdit);
+  editCustom.addEventListener('input',syncEdit);
+  editFolder.addEventListener('change',()=>{syncEdit();if(editFolder.value==='__new')editCustom.focus();});
+  $('#spf-edit-form').addEventListener('submit',event=>{
+    event.preventDefault();
+    if (!canOpen() || root.dataset.profileStep !== 'done') return;
+    const name = clean(editFolder.value==='__new' ? editCustom.value : editFolder.value.startsWith('folder:') ? editFolder.value.slice(7) : '');
+    if (editFolder.value==='__new' && !name) {
+      $('#spf-edit-error').textContent='Name your new folder, or choose Unfiled.';
+      $('#spf-edit-error').hidden=false; editCustom.setAttribute('aria-invalid','true'); editCustom.focus(); return;
+    }
+    const persisted=saveOrganisation({label:(clean(editLabel.value)||DEFAULT_LABEL).slice(0,48),folder:name.slice(0,32)});
+    if (persisted) $('#spf-quick-edit').close();
+    else {
+      $('#spf-edit-status').hidden=false;
+      $('#spf-edit-status').textContent='Changes applied. Your browser could not save them; keep this page open to retain them.';
+    }
   });
   restore(); device('iphone'); step('details', false);
   return {
@@ -143,7 +193,8 @@ export function initProfileFlow({ canOpen, copyText }) {
     reset() {
       saved = null;
       try { sessionStorage.removeItem(STORE); } catch { /* Unavailable. */ }
-      [...folder.options].filter(o => !['','folder:Travel','folder:Personal','folder:Work','__new'].includes(o.value)).forEach(o => o.remove());
+      for (const select of [folder,editFolder]) [...select.options].filter(o => !['','folder:Travel','folder:Personal','folder:Work','__new'].includes(o.value)).forEach(o => o.remove());
+      $('#spf-edit-form').reset(); syncEdit();
       $('#sp-valid-until').textContent = '';
       $('#sp-valid-until').removeAttribute('datetime');
       root.querySelector('.spf-manual').open = false;

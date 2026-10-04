@@ -46,3 +46,13 @@ The current version is on [Openline QA /start](https://openline-anims-review.ver
 - **Entry buttons:** Gift this code and Go to my account are larger icon-and-arrow buttons with distinct orange-tinted and neutral treatments.
 - **Removed clutter:** The Check my device / Need a hand row is gone. Customer-facing demo, no-real-activation, simulated-connection and browser-tab-save notices are removed throughout the flow.
 - **Review controls:** Scenario testing and restart remain behind a footer review-controls entry. Activation still requires the readiness switch and stays a safe local fixture; QR and `.invalid` manual details cannot install a real plan.
+
+## QR reminder and quick completion actions
+
+- **Install your eSIM:** The QR is repeated in a compact card above iPhone/Samsung/Pixel instructions, with a download action. Users do not need to close setup to find it.
+- **Unambiguous data settings:** Select Openline as the primary mobile-data line. Turn OFF mobile data on other SIMs/eSIMs and automatic data switching. Turn ON roaming for the Openline eSIM. The details clarify that other lines may remain available for calls and texts.
+- **Connection refresh:** A short airplane-mode ON/OFF reminder follows the three settings. Let the phone reconnect, then try a webpage; this is not a guarantee or detected connectivity.
+- **Aligned completion buttons:** Icon wrappers and text use explicit flex centring; the view/edit icon and label centres are aligned.
+- **View my eSIM:** Opens a small native dialog with the current label, QR, download and collapsed manual details. The completion screen stays underneath.
+- **Edit label or folder:** Opens a focused form with saved values. Existing folders and new folders work; unnamed new folders are rejected. Save synchronises all profile displays without returning to previous steps. Cancel, Escape and backdrop dismissal discard uncommitted edits.
+- **Boundaries unchanged:** Only label/folder storage is attempted locally. The QR and credentials remain safe fixtures, and no device settings or service activation are performed.

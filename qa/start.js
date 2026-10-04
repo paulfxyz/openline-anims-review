@@ -275,7 +275,7 @@ $('#sp-copy-gift').addEventListener('click', e => {
   if (state !== 'review' || activatedAt) return;
   copyText(`A little connection for your next trip.\n\nYour Openline purchase code: ${currentCode}\n\nRedeem it at https://openline.com/start when you’re ready to travel. Activating starts the plan immediately, so wait if your trip is later.`, e.currentTarget);
 });
-const profileFlow = initProfileFlow({ canOpen: () => state === 'success' && !!activatedAt, copyText });
+const profileFlow = initProfileFlow({ canOpen: () => state === 'success' && !!activatedAt, copyText, openDialog });
 document.querySelectorAll('[data-open-dialog]').forEach(button => {
   button.setAttribute('aria-haspopup', 'dialog');
   button.setAttribute('aria-controls', button.dataset.openDialog);

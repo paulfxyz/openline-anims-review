@@ -129,10 +129,11 @@
             <div class="spf-wifi"><span class="spf-large-icon" data-icon="wifi" aria-hidden="true"></span><div><h2>Install on <span class="spf-nowrap">private Wi-Fi.</span></h2><p>Scan your QR or enter the manual details.</p></div><button type="button" class="sp-link" data-open-dialog="sp-device-guide">Show me how <span class="sp-action-arrow" data-action-arrow="right" aria-hidden="true"></span></button></div>
             <p class="spf-settings-title">At your destination, use these three settings.</p>
             <div class="spf-settings">
-              <article><span class="spf-large-icon" data-icon="esim" aria-hidden="true"></span><h3>Mobile data</h3><p>Choose your Openline eSIM.</p><strong>Openline</strong></article>
-              <article><span class="spf-large-icon" data-icon="repeat" aria-hidden="true"></span><h3>Data switching</h3><p>Keep data on this eSIM.</p><strong>OFF</strong></article>
-              <article><span class="spf-large-icon" data-icon="globe" aria-hidden="true"></span><h3>Data roaming</h3><p>Enable it for Openline.</p><strong>ON</strong></article>
+              <article><span class="spf-large-icon" data-icon="esim" aria-hidden="true"></span><h3>Primary data</h3><p>Choose your Openline eSIM as the primary mobile data line.</p><strong>Openline</strong></article>
+              <article><span class="spf-large-icon" data-icon="repeat" aria-hidden="true"></span><h3>Other SIMs &amp; switching</h3><p>Turn OFF mobile data on other SIMs/eSIMs and automatic data switching.</p><strong>OFF</strong></article>
+              <article><span class="spf-large-icon" data-icon="globe" aria-hidden="true"></span><h3>Data roaming</h3><p>Enable data roaming on your Openline eSIM.</p><strong>ON</strong></article>
             </div>
+            <div class="spf-airplane"><span class="spf-large-icon" data-icon="plane" aria-hidden="true"></span><div><h3>One quick refresh.</h3><p>Turn airplane mode ON, then OFF. Let the network reconnect, then try opening a webpage.</p></div></div>
             <div class="spf-setup-links"><button type="button" class="sp-link" data-open-dialog="sp-connection-tips">Timing &amp; connection tips <span data-icon="info" aria-hidden="true"></span></button><a class="sp-link" href="/qa/installation-guide#ig-install-steps" target="_blank" rel="noopener">Full installation guide <span class="sp-action-arrow" data-action-arrow="external" aria-hidden="true"></span></a></div>
             <div class="spf-actions"><button type="button" class="sp-link" data-profile-next="details"><span class="sp-action-arrow" data-action-arrow="back" aria-hidden="true"></span> My QR &amp; details</button><button type="button" class="sp-btn sp-primary" data-profile-next="organise">Make it yours <span class="sp-action-arrow" data-action-arrow="right" aria-hidden="true"></span></button></div>
           </section>
@@ -153,8 +154,8 @@
           <section id="spf-done" aria-label="Setup complete" hidden>
             <div class="spf-finish-icon" data-icon="check-circle" aria-hidden="true"></div>
             <p class="spf-complete-status"><span data-icon="esim" aria-hidden="true"></span>eSIM activated · setup complete</p>
-            <div class="spf-saved-card"><span data-icon="esim" aria-hidden="true"></span><div><strong id="spf-saved-label"></strong><span id="spf-saved-folder"></span></div><span>10 GB</span></div>
-            <div class="spf-finish-actions"><a class="sp-btn sp-primary" href="/qa/login">Go to my account <span class="sp-action-arrow" data-action-arrow="right" aria-hidden="true"></span></a><button type="button" class="sp-btn sp-secondary" data-profile-next="details"><span data-icon="esim" aria-hidden="true"></span>View my eSIM</button><button type="button" class="sp-btn sp-secondary" data-profile-next="organise"><span data-icon="folder" aria-hidden="true"></span>Edit label or folder</button></div>
+            <div class="spf-saved-card" aria-live="polite"><span data-icon="esim" aria-hidden="true"></span><div><strong id="spf-saved-label"></strong><span id="spf-saved-folder"></span></div><span>10 GB</span></div>
+            <div class="spf-finish-actions"><a class="sp-btn sp-primary" href="/qa/login">Go to my account <span class="sp-action-arrow" data-action-arrow="right" aria-hidden="true"></span></a><button type="button" class="sp-btn sp-secondary" data-profile-dialog="view" aria-haspopup="dialog" aria-controls="spf-quick-view"><span data-icon="esim" aria-hidden="true"></span><span class="sp-button-label">View my eSIM</span></button><button type="button" class="sp-btn sp-secondary" data-profile-dialog="edit" aria-haspopup="dialog" aria-controls="spf-quick-edit"><span data-icon="folder" aria-hidden="true"></span><span class="sp-button-label">Edit label or folder</span></button></div>
           </section>
         </div>
       </section>
@@ -188,15 +189,39 @@
   </dialog>
   <dialog id="sp-device-guide" class="sp-dialog sp-guide-dialog" aria-labelledby="sp-device-title">
     <button class="sp-dialog-close sp-icon-button" type="button" data-close aria-label="Close device guide"><span data-icon="x" aria-hidden="true"></span></button>
-    <div class="sp-symbol" data-icon="phone" aria-hidden="true"></div><h2 id="sp-device-title">Install your eSIM.</h2><p>Use a compatible, carrier-unlocked phone on stable private Wi-Fi.</p>
+    <h2 id="sp-device-title">Install your eSIM.</h2><p>Use private Wi-Fi and a compatible, carrier-unlocked phone.</p>
+    <div class="spf-guide-qr"><img src="/qa/assets/start-demo-qr.png" width="152" height="152" alt="Your eSIM QR code"><div><strong>Your eSIM QR</strong><p>Japan · 10 GB · 30 days</p><span>Scan from another screen.</span><a class="sp-link" href="/qa/assets/start-demo-qr.png" download="openline-esim-qr.png">Download QR <span class="sp-action-arrow" data-action-arrow="down" aria-hidden="true"></span></a></div></div>
     <div class="spf-device-picker" role="group" aria-label="Choose your phone"><button type="button" data-profile-device="iphone" aria-pressed="true">iPhone</button><button type="button" data-profile-device="samsung" aria-pressed="false">Samsung</button><button type="button" data-profile-device="pixel" aria-pressed="false">Pixel / Android</button></div>
     <ol class="spf-instructions" id="spf-install-steps"></ol><p>Menu names can vary with your device and OS.</p><button type="button" class="sp-btn sp-primary sp-wide" data-close>Back to setup</button>
   </dialog>
   <dialog id="sp-connection-tips" class="sp-dialog" aria-labelledby="sp-connection-title">
     <button class="sp-dialog-close sp-icon-button" type="button" data-close aria-label="Close connection tips"><span data-icon="x" aria-hidden="true"></span></button>
     <div class="sp-symbol" data-icon="wifi" aria-hidden="true"></div><h2 id="sp-connection-title">A smooth first connection.</h2>
-    <ul class="sp-detail-bullets"><li><strong>Choose the right moment.</strong> Activate just before departure or on arrival. Your validity starts as soon as you confirm activation.</li><li><strong>Use private Wi-Fi.</strong> Avoid airport/public Wi-Fi and 4G/5G for installation: these networks may block profile download or activation.</li><li><strong>Keep data on Openline.</strong> Set Openline as your primary Mobile/Cellular Data line and turn automatic data switching OFF.</li><li><strong>Roam with the right line.</strong> Enable Data Roaming for Openline, not your home SIM. Turn off airplane mode and open a browser to check the connection.</li></ul>
+    <ul class="sp-detail-bullets"><li><strong>Choose the right moment.</strong> Activate just before departure or on arrival. Your validity starts as soon as you confirm activation.</li><li><strong>Use private Wi-Fi.</strong> Avoid airport/public Wi-Fi and 4G/5G for installation: these networks may block profile download or activation.</li><li><strong>Make Openline your primary data line.</strong> Choose the Openline eSIM for Mobile/Cellular Data.</li><li><strong>Keep other lines off mobile data.</strong> Turn OFF mobile data on your other SIMs/eSIMs and disable automatic data switching. You can keep other lines available for calls and texts.</li><li><strong>Enable roaming on Openline.</strong> Turn Data Roaming ON for the Openline eSIM, not your home SIM.</li><li><strong>Refresh the connection.</strong> Toggle airplane mode ON, then OFF. Allow the phone to reconnect and open a webpage to check.</li></ul>
     <button type="button" class="sp-btn sp-primary sp-wide" data-close>Back to setup</button>
+  </dialog>
+  <dialog id="spf-quick-view" class="sp-dialog spf-quick-dialog" aria-labelledby="spf-quick-view-title">
+    <button class="sp-dialog-close sp-icon-button" type="button" data-close aria-label="Close eSIM details"><span data-icon="x" aria-hidden="true"></span></button>
+    <h2 id="spf-quick-view-title">Your eSIM.</h2>
+    <div class="spf-quick-plan"><span class="sp-japan" aria-hidden="true"></span><div><strong id="spf-quick-name">Japan eSIM</strong><span>Japan · 10 GB · 30 days</span></div></div>
+    <div class="spf-quick-qr"><img src="/qa/assets/start-demo-qr.png" width="224" height="224" alt="Your eSIM QR code"><a class="sp-link" href="/qa/assets/start-demo-qr.png" download="openline-esim-qr.png">Download QR <span class="sp-action-arrow" data-action-arrow="down" aria-hidden="true"></span></a></div>
+    <details class="spf-manual"><summary><span data-icon="key" aria-hidden="true"></span><span>Manual installation</span><span class="spf-chevron" data-icon="chevron-down" aria-hidden="true"></span></summary><div class="spf-manual-inner">
+      <div class="spf-field"><span>SM-DP+ address</span><div><code data-profile-value="smdp"></code><button type="button" class="sp-icon-button" data-copy-profile="smdp" aria-label="Copy SM-DP+ address"><span data-icon="copy" aria-hidden="true"></span></button></div></div>
+      <div class="spf-field"><span>Activation code</span><div><code data-profile-value="activation"></code><button type="button" class="sp-icon-button" data-copy-profile="activation" aria-label="Copy activation code"><span data-icon="copy" aria-hidden="true"></span></button></div></div>
+    </div></details>
+    <p class="sp-copy-feedback" role="status"></p>
+    <button class="sp-btn sp-primary sp-wide spf-modal-done" type="button" data-close>Done</button>
+  </dialog>
+  <dialog id="spf-quick-edit" class="sp-dialog spf-quick-dialog" aria-labelledby="spf-quick-edit-title">
+    <button class="sp-dialog-close sp-icon-button" type="button" data-close aria-label="Close profile editor"><span data-icon="x" aria-hidden="true"></span></button>
+    <div class="sp-symbol" data-icon="folder" aria-hidden="true"></div><h2 id="spf-quick-edit-title">Label &amp; folder.</h2><p>A little organisation for your next adventure.</p>
+    <form id="spf-edit-form" class="spf-edit-form" novalidate>
+      <label for="spf-edit-label">Name your eSIM <span>Optional</span></label><input id="spf-edit-label" maxlength="48" placeholder="e.g. My Japan trip" autocomplete="off">
+      <label for="spf-edit-folder">Choose a folder <span>Optional</span></label><select id="spf-edit-folder"><option value="">Unfiled</option><option value="folder:Travel">Travel</option><option value="folder:Personal">Personal</option><option value="folder:Work">Work</option><option value="__new">+ Create a folder</option></select>
+      <div id="spf-edit-new-wrap" hidden><label for="spf-edit-new">New folder name</label><input id="spf-edit-new" maxlength="32" placeholder="e.g. My adventures" autocomplete="off"></div>
+      <p id="spf-edit-error" class="sp-error" role="alert" hidden></p><p id="spf-edit-status" role="status" hidden></p>
+      <div class="sp-dialog-actions"><button type="button" class="sp-btn sp-secondary" data-close>Cancel</button><button type="submit" class="sp-btn sp-primary"><span data-icon="check" aria-hidden="true"></span><span class="sp-button-label">Save changes</span></button></div>
+    </form>
   </dialog>
   <dialog id="sp-save-info" class="sp-dialog" aria-labelledby="sp-save-title">
     <button class="sp-dialog-close sp-icon-button" type="button" data-close aria-label="Close label information"><span data-icon="x" aria-hidden="true"></span></button>

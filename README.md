@@ -462,3 +462,8 @@ use the shared native UI stack, Openline's orange/ink palette and the live site'
 - Microphone denial no longer creates a pretend recording. It shows a normal permission error instead;
   actual clipboard/storage errors remain truthful. No email, purchase, reward, activation or support
   ticket operation is newly connected by this revision.
+- `/qa/start` now repeats the QR inside the installation-help dialog and spells out primary Openline
+  data, other-line data OFF, automatic switching OFF and Openline roaming ON, followed by an airplane
+  ON/OFF reconnect suggestion. The two completion actions have vertically centred icons and open
+  compact QR/edit dialogs without changing the current step. Editing has isolated draft state,
+  save/cancel semantics, custom-folder validation and synchronised profile displays.
