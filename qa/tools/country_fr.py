@@ -126,7 +126,7 @@ async def main():
           quote.children[1].classList.add('fu-features');
           const fair=ub.find(b=>b.textContent.trim()==='Fair usage applies');
           const helpSvg=fair.querySelector('svg').outerHTML;
-          fair.outerHTML='<span class="fu-fair-label">Fair usage applies</span><button type="button" class="fu-help" data-fu-fair aria-label="Explain fair usage">'+helpSvg+'</button>';
+          fair.outerHTML='<button type="button" class="fu-help" data-fu-fair aria-haspopup="dialog" aria-controls="fu-fair"><span class="fu-fair-label">Fair usage applies</span>'+helpSvg.replace('<svg ','<svg aria-hidden="true" ')+'</button>';
           const error=document.createElement('p');error.id='fu-error';error.className='fu-error';error.hidden=true;error.setAttribute('role','status');quote.before(error);
           const fixedTitle=[...section.querySelectorAll('h3')].find(e=>e.textContent==='Data Bundles');
           const fixed=fixedTitle.parentElement.parentElement;fixed.id='fu-fixed';
@@ -188,6 +188,11 @@ if "--refresh-local" in sys.argv:
     text = path.read_text()
     text = text.replace('No data cap from Openline. Local network fair use applies.',
         'Perfect for heavy users. Stream, video call, and browse without limits.', 1)
+    text = re.sub(
+        r'<span class="fu-fair-label">Fair usage applies</span><button\b[^>]*class="fu-help"[^>]*>(<svg[\s\S]*?</svg>)</button>',
+        lambda m:'<button type="button" class="fu-help" data-fu-fair aria-haspopup="dialog" aria-controls="fu-fair"><span class="fu-fair-label">Fair usage applies</span>'
+            + m[1].replace('<svg ', '<svg aria-hidden="true" ', 1) + '</button>',
+        text, count=1)
     text, styles = re.subn(r'<style data-fr(?:="")?>[\s\S]*?</style>',
         lambda m:'<style data-fr="">'+(Q/"country-fr-refinement.css").read_text()+'</style>', text, count=1)
     text, dialogs = re.subn(r'<dialog id="fu-fair"[\s\S]*?<div class="fu-toast" id="fu-toast"[\s\S]*?</div>',

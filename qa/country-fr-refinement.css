@@ -14,8 +14,8 @@
 .fu-features { row-gap:13px!important; column-gap:28px!important; align-items:center; }
 .fu-features > div { min-height:28px; }
 .fu-fair-label { font-size:14px; white-space:nowrap; text-decoration:none; border:0; }
-.fu-help { flex:none; width:30px; height:30px; padding:0; display:inline-grid; place-items:center; background:transparent; color:#737B86; border:0; border-radius:50%; }
-.fu-help svg { width:16px; height:16px; }
+.fu-help { flex:none; width:auto; min-height:32px; padding:0; display:inline-flex; align-items:center; gap:4px; background:transparent; color:inherit; font:inherit; border:0; border-radius:4px; text-decoration:none; cursor:pointer; }
+.fu-help svg { width:16px; height:16px; flex:none; color:#737B86; pointer-events:none; }
 .fu-help:hover { color:#FF5314; }.fu-help:focus-visible { outline:2px solid #FF5314; outline-offset:2px; }
 .fu-actions { gap:12px!important; max-width:490px; margin-left:auto; margin-right:auto; }
 .fu-actions > button { height:48px!important; min-height:48px; padding:12px 22px!important; font-size:16px!important; font-weight:500; min-width:0!important; flex:1; border-radius:8px; }
@@ -48,7 +48,7 @@
   .fu-unlimited { padding:22px 18px!important; }
   .fu-controls { padding:16px!important; }.fu-controls > div { gap:16px; align-items:stretch; }.fu-controls > div > div { width:100%; }.fu-controls > div > div:last-child { justify-content:space-between; gap:8px; }
   .fu-controls label { font-size:12px; }.fu-controls button { min-width:0!important; }.fu-controls .fu-stepper button { width:37px; }.fu-controls input { width:42px; }
-  .fu-features { max-width:100%; grid-template-columns:minmax(0,1fr) minmax(0,1.6fr)!important; gap:10px 8px!important; }.fu-features > div { gap:6px!important; }.fu-fair-label { font-size:12px; }.fu-help { width:30px; height:44px; margin:-8px 0; }.fu-features span { font-size:12px; }
+  .fu-features { max-width:100%; grid-template-columns:max-content minmax(0,1fr)!important; gap:10px 8px!important; }.fu-features > div { gap:6px!important; }.fu-fair-label { font-size:12px; }.fu-help { width:auto; min-height:44px; margin:-8px 0; }.fu-features span { font-size:12px; white-space:nowrap; }
   .fu-quote { padding:21px 16px!important; }.fu-actions { display:grid!important; grid-template-columns:1fr; gap:9px!important; }.fu-actions > button { width:100%; }.fu-actions > button span { display:inline!important; }
   .fu-dialog { padding:23px 20px; max-width:calc(100% - 20px); border-radius:12px; }.fu-dialog-actions { flex-direction:column; }.fu-dialog-close { width:44px; height:44px; }
   #fr-plans,#fu-fixed { scroll-margin-top:125px; }

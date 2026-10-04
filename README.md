@@ -266,10 +266,14 @@ use the shared native UI stack, Openline's orange/ink palette and the live site'
   24/7 Global Support, labelled **Coming soon**, displaying `+1 (8) 123 - ONLINE` without a `tel:` action.
 - All three support-process steps are keyboard-clickable and seek the SVG's own timeline. The
   loop continues; pressed states follow the current scene. Reduced motion keeps manual seeking.
-- `qa/tools/installation_preflight.py` replaces only the two blocks in the marked installation
-  screenshot: purchase-code/profile explainer and four-step roadmap. Source is
-  `qa/redesign/installation-preflight.html`; CSS is scoped `.igp-*`. The rest of the captured HTML
-  and selected installation animation are preserved. Runtime only adds section-anchor IDs.
+- `qa/tools/installation_preflight.py` replaces only the marked installation preflight region.
+  The latest version consolidates its text-heavy explainer and separate roadmap into one visual
+  three-step journey: find the purchase code, create the profile at /start, install and connect.
+  Source is `qa/redesign/installation-preflight.html`; CSS is scoped `.igp-*`.
+  Compatibility, redemption, installation and connection links remain. Terminology is in an optional
+  details row; a short notice keeps activation timing/gifting visible without repeating the whole flow.
+  The rest of the captured HTML and selected installation animation are preserved byte-for-byte.
+  Runtime only fills icons and adds section-anchor IDs. See `qa/installation-preflight-changelog.md`.
 - Content handoff issue: the existing installation guide says activate at destination; the requested
   /start prototype warns that validity starts immediately. Product must resolve this policy distinction
   before production rather than silently changing unrelated guide copy during a targeted design edit.
@@ -407,7 +411,8 @@ use the shared native UI stack, Openline's orange/ink palette and the live site'
 - `python qa/tools/country_fr.py` captures the original read-only and annotates its own Unlimited
   markup. It adds `qa/country-fr-refinement.css`, `qa/country-fr-refinement.js` and the compact
   `qa/redesign/country-fr-dialogs.html`. No wholesale selector substitution remains.
-- The fair-use question mark remains un-underlined, and the policy modal is built from
+- The fair-use text and closely spaced question mark form one un-underlined clickable button,
+  and the policy modal is built from
   `qa/unlimited-plan-copy.json`. Its fixed-package action scrolls to Data Bundles, not a new selector.
   Source prices, custom days, date-duration and local cart/review remain safe demonstrations.
   The original calculator is accessed through the reference page, outside this focused refinement.

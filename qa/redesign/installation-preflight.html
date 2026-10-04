@@ -2,37 +2,42 @@
 <div class="igp-wrap" id="ig-preflight">
   <section class="igp-card" aria-labelledby="igp-title">
     <header class="igp-head">
-      <span class="igp-head-icon" data-ig-icon="key"></span>
-      <div><p class="igp-kicker">Before you install</p><h2 id="igp-title">First, turn your code into an eSIM.</h2><p>Same for iPhone and Android. It takes about a minute.</p></div>
+      <div><p class="igp-kicker">Before you install</p><h2 id="igp-title">From purchase code to connected.</h2><p>Three steps. The same starting point for iPhone and Android.</p></div>
+      <button type="button" class="igp-compat" data-ol-open="compat"><span data-ig-icon="phone"></span>Check compatibility</button>
     </header>
-    <div class="igp-flow">
-      <article class="igp-step">
-        <div class="igp-step-heading"><span>01</span><h3>You bought a plan.<br>You got a purchase code.</h3></div>
-        <p>Right after purchase, we send it to your email, and it’s waiting in your dashboard.</p>
-        <div class="igp-code-ticket"><span data-ig-icon="mail"></span><div><small>Your purchase code looks like this</small><code>MOUNT34-RIVER90-STONE67</code></div></div>
-        <p class="igp-caption">This is your proof of purchase. It’s <b>not the eSIM itself</b> yet.</p>
-        <p class="igp-rename">Previously called an “activation code”. Same thing, new name.</p>
-      </article>
-      <span class="igp-connector" aria-hidden="true"><span data-ig-icon="arrow"></span></span>
-      <article class="igp-step is-profile">
-        <div class="igp-step-heading"><span>02</span><h3>Redeem it at<br>openline.com/start.</h3></div>
-        <p>Enter your purchase code to create your <b>eSIM profile</b>: the QR code, with its own eSIM activation code, that you’ll install below.</p>
-        <div class="igp-profile"><span class="igp-sim" data-ig-icon="esim"></span><div><b>Your Openline eSIM</b><span>One profile. Ready for your phone.</span></div><span class="igp-qr" data-ig-icon="qr"></span></div>
-        <a class="igp-button" href="/qa/start" title="Open the /qa/start redemption preview">Redeem purchase code <span data-ig-icon="arrow"></span></a>
-        <p class="igp-caption">Already done this? <a href="#ig-install-steps">Skip to the installation steps.</a></p>
-      </article>
-    </div>
-    <div class="igp-distinction"><span data-ig-icon="info"></span><p><b>Purchase code ≠ eSIM profile.</b> The code from your order unlocks your eSIM at /start. The profile you receive is what goes on your phone. This guide picks up once you have that profile.</p></div>
-    <div class="igp-check"><div><b>First time here?</b><span>Make sure your phone supports eSIM before you start.</span></div><button type="button" data-ol-open="compat"><span data-ig-icon="phone"></span>Check device compatibility <span aria-hidden="true">→</span></button></div>
-  </section>
-  <nav class="igp-roadmap" aria-label="How this page works">
-    <div class="igp-roadmap-title"><span>Then, follow the guide</span><h2>How this page works</h2></div>
-    <ol>
-      <li><a href="#ig-install-steps"><span class="igp-n">1</span><span data-ig-icon="phone"></span><b>Select your<br>device</b></a></li>
-      <li><a href="#ig-install-steps"><span class="igp-n">2</span><span data-ig-icon="qr"></span><b>Choose your<br>installation method</b></a></li>
-      <li><a href="#ig-install-steps"><span class="igp-n">3</span><span data-ig-icon="settings"></span><b>Follow the<br>step-by-step guide</b></a></li>
-      <li><a href="#ig-activation-steps"><span class="igp-n">4</span><span data-ig-icon="check"></span><b>Activate your eSIM<br>at your destination</b></a></li>
+    <ol class="igp-journey">
+      <li class="igp-stage">
+        <div class="igp-visual igp-code-visual" aria-label="Example purchase code">
+          <span data-ig-icon="key" aria-hidden="true"></span><span class="igp-visual-label">Purchase code</span>
+          <code>GAZE19-<wbr>MULCH29-<wbr>NYMPH13</code>
+        </div>
+        <div class="igp-stage-copy"><h3><span>1</span>Find your code</h3><p>It’s in your order email and dashboard.</p></div>
+        <span class="igp-flow-arrow" data-ig-icon="arrow" aria-hidden="true"></span>
+      </li>
+      <li class="igp-stage">
+        <div class="igp-visual igp-profile-visual" aria-hidden="true">
+          <span class="igp-profile-icon" data-ig-icon="esim"></span><div><b>Openline eSIM</b><span>QR + setup details</span></div><span class="igp-profile-qr" data-ig-icon="qr"></span>
+        </div>
+        <div class="igp-stage-copy"><h3><span>2</span>Create your eSIM</h3><p>Redeem at <a href="/qa/start">openline.com/start</a> for your QR code and manual setup details.</p></div>
+        <span class="igp-flow-arrow" data-ig-icon="arrow" aria-hidden="true"></span>
+      </li>
+      <li class="igp-stage">
+        <div class="igp-visual igp-phone-visual" aria-hidden="true"><span class="igp-phone" data-ig-icon="phone"></span><span class="igp-phone-check" data-ig-icon="check"></span><span class="igp-visual-label">Ready for your phone</span></div>
+        <div class="igp-stage-copy"><h3><span>3</span>Install &amp; connect</h3><p>Select your device and setup method, then follow the guide below.</p></div>
+      </li>
     </ol>
-  </nav>
+    <div class="igp-actions">
+      <a class="igp-button" href="/qa/start" title="Open the purchase-code preview">Redeem purchase code <span data-ig-icon="arrow"></span></a>
+      <a class="igp-skip" href="#ig-install-steps">I already have my eSIM <span data-ig-icon="arrow"></span></a>
+    </div>
+    <p class="igp-timing"><span data-ig-icon="info" aria-hidden="true"></span><span><b>Travelling later?</b> Wait before confirming activation at /start. Your plan starts then, and gifting ends.</span></p>
+    <div class="igp-help-row">
+      <details class="igp-code-help">
+        <summary>Which code is which?<span aria-hidden="true">+</span></summary>
+        <div><p><b>Purchase code:</b> your order code, previously called an “activation code”. It unlocks your eSIM profile at /start.</p><p><b>eSIM activation code:</b> part of the manual installation details issued with that profile. It is not your purchase code.</p></div>
+      </details>
+      <a href="#ig-activation-steps" class="igp-connect-link">Connection checklist <span data-ig-icon="arrow"></span></a>
+    </div>
+  </section>
 </div>
 <!-- qa-installation-preflight:end -->

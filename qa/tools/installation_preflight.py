@@ -1,5 +1,5 @@
-"""Replace only the two adjacent blocks in screenshot ZHlG5kGZ.
-The rest of installation-guide.html is preserved byte-for-byte."""
+"""Consolidate only the marked preflight/roadmap region into one visual flow.
+The rest of installation-guide.html, including its chosen animation, is preserved byte-for-byte."""
 from pathlib import Path
 Q=Path(__file__).resolve().parents[1]
 page=Q/"installation-guide.html"
@@ -23,4 +23,4 @@ text=before+fragment.rstrip()+after
 js='<script type="module" src="/qa/installation-preflight.js"></script>'
 if js not in text:text=text.replace('</body>',js+'\n</body>',1)
 page.write_text(text)
-print("Updated the two preflight blocks only; preserved surrounding HTML.")
+print("Updated only the marked preflight region; preserved surrounding HTML.")

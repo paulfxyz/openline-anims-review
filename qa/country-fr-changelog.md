@@ -20,7 +20,8 @@ fragment have been deleted. This is not an additional alternative to keep or inc
 - Use Paul's restored original Unlimited introduction: “Perfect for heavy users. Stream, video call,
   and browse without limits.” Keep the corrected plan-wide promise and the separate fair-use
   disclosure; do not restore the claim that every unlimited plan is free from local-operator throttling.
-- Show “Fair usage applies” without an underline, followed by a separate question-mark button.
+- Show “Fair usage applies” and the question-mark icon in one clickable/tappable button,
+  without an underline and with a close 4px gap between the text and icon.
   Use a compact policy modal in the original template's style, not the rejected large selector UI.
 - The modal explains fixed-data full-speed allowance, unlimited with no Openline-imposed cap or
   throttling, possible local MNO fair-use slowdown after heavy use within 24 hours, and trying
@@ -58,6 +59,13 @@ At Paul's explicit request on 2026-10-04, only the description below “Unlimite
 
 The separate fair-use notice, its policy modal, the plan-wide explanation and calendar range
 picker remain unchanged. The panel/export records this as `country-fr-unlimited-intro`.
+
+## Combined fair-use trigger
+
+At Paul's follow-up request on 2026-10-04, the icon moves closer to “Fair usage applies”.
+The whole text-and-icon group is now one native button, so clicking or tapping either opens
+the same policy modal. It has a 4px gap, no underline, keyboard support and a 44px-high mobile
+hit area. The modal content and the rest of the France page remain unchanged.
 
 ## Prototype boundaries
 
