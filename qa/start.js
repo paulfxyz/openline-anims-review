@@ -34,6 +34,10 @@ let state = 'entry';
 let currentCode = '';
 let generation = 0;
 let activatedAt = null;
+// A local presentation state only. A production unlock requires the server
+// to verify ownership and carry out the user's email-validation policy.
+let giftUnlocked = false;
+let giftConfirmation = false;
 let toastTimer = 0;
 
 const normalize = (value) => String(value).trim().toUpperCase()
@@ -118,6 +122,8 @@ async function checkCode(intent = 'review') {
     };
     return showCodeError(errors[response]);
   }
+  if (currentCode !== code) giftUnlocked = false;
+  giftConfirmation = false;
   currentCode = code;
   activatedAt = null;
   populateCode();
@@ -147,7 +153,20 @@ function openGift() {
   if (state !== 'review' || !currentCode || activatedAt) return;
   populateCode();
   $('#sp-gift .sp-copy-feedback')?.remove();
+  giftConfirmation = false;
+  renderGiftTransfer();
   openDialog($('#sp-gift'));
+  $('#sp-gift').scrollTop = 0;
+}
+
+function renderGiftTransfer() {
+  $('#sp-gift-state').textContent = giftUnlocked ? 'Ready to transfer · not activated' : 'Locked for transfer';
+  $('#sp-gift-state-icon').innerHTML = glyphSVG(giftUnlocked ? 'check-circle' : 'lock', {size:20,sw:1.8});
+  $('.sp-gift-transfer-status').classList.toggle('is-unlocked',giftUnlocked);
+  $('#sp-unlock-gift').hidden = giftUnlocked || giftConfirmation;
+  $('#sp-transfer-confirm').hidden = !giftConfirmation;
+  $('#sp-copy-gift').hidden = !giftUnlocked;
+  $('#sp-keep-gift').hidden = giftConfirmation;
 }
 
 function progress(value, completedSteps) {
@@ -236,6 +255,7 @@ function reset() {
   dialogs.forEach(d => { if (d.open) d.close(); });
   currentCode = '';
   activatedAt = null;
+  giftUnlocked = false; giftConfirmation = false; renderGiftTransfer();
   profileFlow.reset();
   input.value = '';
   $('#sp-clear').hidden = true;
@@ -268,12 +288,27 @@ consent.addEventListener('change', () => {
   $('.sp-switch-state').textContent = consent.checked ? 'Ready' : 'Not yet';
 });
 confirmButton.addEventListener('click', activate);
-$('#sp-change-code').addEventListener('click', () => { generation++; currentCode = ''; setState('entry', false); input.focus(); input.select(); });
+$('#sp-change-code').addEventListener('click', () => { generation++; currentCode = ''; giftUnlocked = false; giftConfirmation = false; setState('entry', false); input.focus(); input.select(); });
 $('#sp-reset').addEventListener('click', reset);
 document.querySelectorAll('[data-copy-code]').forEach(b => b.addEventListener('click', () => copyText(currentCode, b)));
 $('#sp-copy-gift').addEventListener('click', e => {
-  if (state !== 'review' || activatedAt) return;
+  if (state !== 'review' || activatedAt || !giftUnlocked || !currentCode) return;
   copyText(`A little connection for your next trip.\n\nYour Openline purchase code: ${currentCode}\n\nRedeem it at https://openline.com/start when you’re ready to travel. Activating starts the plan immediately, so wait if your trip is later.`, e.currentTarget);
+});
+$('#sp-unlock-gift').addEventListener('click',()=>{
+  if(state!=='review'||activatedAt||giftUnlocked||!currentCode)return;
+  giftConfirmation=true;renderGiftTransfer();
+  $('#sp-transfer-title').focus({preventScroll:true});
+  $('#sp-transfer-confirm').scrollIntoView({block:'nearest',behavior:reduced()?'auto':'smooth'});
+});
+$('#sp-cancel-unlock').addEventListener('click',()=>{
+  giftConfirmation=false;renderGiftTransfer();$('#sp-unlock-gift').focus();
+});
+$('#sp-confirm-unlock').addEventListener('click',()=>{
+  if(state!=='review'||activatedAt||giftUnlocked||!giftConfirmation||!currentCode)return;
+  giftUnlocked=true;giftConfirmation=false;renderGiftTransfer();
+  $('#sp-copy-gift').focus({preventScroll:true});
+  $('#sp-gift').scrollTop=0;
 });
 const profileFlow = initProfileFlow({ canOpen: () => state === 'success' && !!activatedAt, copyText, openDialog });
 document.querySelectorAll('[data-open-dialog]').forEach(button => {

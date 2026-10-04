@@ -173,11 +173,18 @@
   </dialog>
   <dialog id="sp-gift" class="sp-dialog" aria-labelledby="sp-gift-title">
     <button class="sp-dialog-close sp-icon-button" type="button" data-close aria-label="Close gifting"><span data-icon="x" aria-hidden="true"></span></button>
-    <div class="sp-symbol" data-icon="gift" aria-hidden="true"></div><h2 id="sp-gift-title">Give them a connection.</h2><p>Send the unused purchase code. They choose when to activate it.</p>
+    <div class="sp-symbol" data-icon="gift" aria-hidden="true"></div><h2 id="sp-gift-title">Give them a connection.</h2><p>Unlock your unused purchase code, then share it. They choose when to activate.</p>
     <div class="sp-gift-code"><span>Your gift</span><code data-current-code></code><small>Japan · 10 GB · 30 days</small></div>
-    <p class="sp-private"><span data-icon="lock" aria-hidden="true"></span>Share privately. Whoever has this code can redeem it.</p>
-    <button type="button" class="sp-btn sp-primary sp-wide" id="sp-copy-gift"><span data-icon="copy" aria-hidden="true"></span>Copy gift message</button>
-    <button type="button" class="sp-link sp-wide sp-keep" data-close>Keep it for later</button>
+    <div class="sp-gift-email"><span data-icon="mail" aria-hidden="true"></span><div><h3>Owner email validation</h3><p>The purchase owner will still receive an email to validate the purchase.</p></div></div>
+    <div class="sp-gift-transfer-status" role="status"><span id="sp-gift-state-icon" data-icon="lock" aria-hidden="true"></span><span id="sp-gift-state">Locked for transfer</span></div>
+    <button type="button" class="sp-btn sp-primary sp-wide" id="sp-unlock-gift">Unlock for transfer <span class="sp-action-arrow" data-action-arrow="right" aria-hidden="true"></span></button>
+    <div class="sp-transfer-confirm" id="sp-transfer-confirm" hidden>
+      <h3 id="sp-transfer-title" tabindex="-1">Unlock this purchase code?</h3><p>Anyone with the unlocked code can redeem it. Unlocking does not start the plan or remove the owner’s email-validation step.</p>
+      <div class="sp-dialog-actions"><button type="button" class="sp-btn sp-secondary" id="sp-cancel-unlock">Keep locked</button><button type="button" class="sp-btn sp-primary" id="sp-confirm-unlock">Yes, unlock</button></div>
+    </div>
+    <button type="button" class="sp-btn sp-primary sp-wide" id="sp-copy-gift" hidden><span data-icon="copy" aria-hidden="true"></span>Copy gift message</button>
+    <p class="sp-gift-private">Share privately. Keep the code safe until you give it away.</p>
+    <button type="button" class="sp-link sp-wide sp-keep" id="sp-keep-gift" data-close>Keep it for later</button>
   </dialog>
   <dialog id="sp-code-help-dialog" class="sp-dialog" aria-labelledby="sp-code-help-title">
     <button class="sp-dialog-close sp-icon-button" type="button" data-close aria-label="Close code help"><span data-icon="x" aria-hidden="true"></span></button>

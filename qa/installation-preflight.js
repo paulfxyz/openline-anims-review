@@ -15,6 +15,15 @@ for (const h of document.querySelectorAll('main h2')) {
   if (text === 'Learn step by step') h.id = 'ig-install-steps';
   if (text === 'Activate your Openline eSIM on iPhone') h.id = 'ig-activation-steps';
 }
+root?.querySelector('[data-ig-main-jump]')?.addEventListener('click',event=>{
+  const target=document.getElementById('ig-install-steps');
+  if(!target)return;
+  event.preventDefault();
+  target.tabIndex=-1;
+  target.focus({preventScroll:true});
+  target.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'});
+  history.replaceState(null,'','#ig-install-steps');
+});
 
 // Dedicated, native detail dialogs. They explain settings; they never change
 // the device, provision a profile or store purchase/activation credentials.

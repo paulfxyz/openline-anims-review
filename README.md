@@ -276,14 +276,15 @@ use the shared native UI stack, Openline's orange/ink palette and the live site'
 - All three support-process steps are keyboard-clickable and seek the SVG's own timeline. The
   loop continues; pressed states follow the current scene. Reduced motion keeps manual seeking.
 - `qa/tools/installation_preflight.py` replaces only the marked installation preflight region.
-  The latest version uses two large Purchase code → Openline eSIM panels with the three steps below:
-  find the code, create the profile at /start, install and connect. The 56px redemption CTA now uses
-  `/start`, a lightweight redirect alias to the existing `/qa/start` preview, not a production action.
+  The latest version is a two-path choice: the primary Install my eSIM card leads to the existing
+  walkthrough, while the secondary purchase-code card links to `/start`, a lightweight redirect
+  alias to `/qa/start`. The former comparison bridge and three-step roadmap are superseded.
   Source is `qa/redesign/installation-preflight.html`; CSS is scoped `.igp-*`.
   Compatibility, redemption and installation links remain. Two larger icon-led help buttons open
   native detail dialogs for code terminology and connection guidance. The latter covers private Wi-Fi,
-  activation just before departure/on arrival, Openline as primary data, automatic data switching OFF,
-  and roaming ON for the Openline eSIM; these are instructions, not detected phone settings.
+  activation near the trip, Openline as primary data, other SIM/eSIM mobile data and automatic
+  switching OFF, roaming ON for Openline, and an airplane-mode refresh. These are instructions,
+  not detected phone settings.
   The rest of the captured HTML and selected installation animation are preserved byte-for-byte.
   Runtime fills icons, adds anchors/focus targets and handles the two dialogs. See
   `qa/installation-preflight-changelog.md`.
@@ -467,3 +468,9 @@ use the shared native UI stack, Openline's orange/ink palette and the live site'
   ON/OFF reconnect suggestion. The two completion actions have vertically centred icons and open
   compact QR/edit dialogs without changing the current step. Editing has isolated draft state,
   save/cancel semantics, custom-folder validation and synchronised profile displays.
+- The installation preflight now prioritises “I already have my eSIM” with an orange Install my eSIM
+  CTA into the existing walkthrough. A separate neutral “I have a purchase code” card links to `/start`.
+  The earlier code-to-profile bridge and forced three-step roadmap are superseded; help dialogs remain.
+- Gifting includes the purchase-owner validation-email rule and an explicit unlock-for-transfer
+  confirmation before Copy gift message. Unlocking is separate from activation and exists only in
+  local concept state; ownership checks, email and transfer APIs still need production integration.

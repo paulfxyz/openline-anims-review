@@ -1,22 +1,22 @@
-# Installation preflight: purchase code to Openline eSIM
+# Installation preflight: install first, redeem if needed
 
-Updated 2026-10-04 from [Paul's latest marked section](https://snap.paulfleury.com/tdNf9Nv5).
+Updated 2026-10-04 from [Paul's latest marked section](https://snap.paulfleury.com/5jVTMFQm).
 Review it in the [QA installation guide](https://openline-anims-review.vercel.app/qa/installation-guide#ig-preflight).
 
 ## Current layout for Irina
 
-- Two large comparison columns: **Purchase code → Openline eSIM**. The order code is what the
-  customer redeems; the resulting profile is what they install on their phone.
-- Below the comparison, retain the three short steps: find the code, create the eSIM, install/connect.
-- The main orange redemption action is 56px high with larger type and icon. It links to `/start`.
-  In this review app that path redirects to the existing `/qa/start` preview, so the experience
-  remains in QA. It does not provision a profile by itself.
-- Keep the compatibility checker and the existing “I already have my eSIM” installation anchor.
+- Two clear choices replace the compulsory redemption journey.
+- **Primary, first:** “I already have my eSIM.” Visitors with a QR or manual details use the large
+  orange **Install my eSIM** CTA. It scrolls and focuses the existing Learn step by step guide.
+- **Secondary:** “I have a purchase code.” A neutral card explains that the code must first create
+  a profile. Its outlined **Redeem purchase code** button links to `/start`, which redirects to
+  `/qa/start` in this app. Both actions have 58px targets, aligned arrows and larger native type.
+- Retain the compatibility checker, and stack the install-ready card first on mobile.
 - Two larger icon-led buttons replace the former small detail links. Each opens a dedicated
   native dialog with readable text, clear close controls, focus management and mobile scrolling.
 
-The prior three-small-preview arrangement and inline code disclosure are superseded by this
-latest layout. The old text-heavy explainer plus separate four-step roadmap also remains retired.
+The earlier Purchase code → Openline eSIM bridge, three-step roadmap and primary redemption
+button are superseded. The old text-heavy four-step arrangement also remains retired.
 
 ## Which code is which?
 
@@ -27,8 +27,9 @@ The dedicated code dialog explains:
 - **eSIM activation code:** supplied with the eSIM profile, alongside the SM-DP+ address, for
   manual phone setup. The QR code is the alternative installation method.
 - Older wording called the purchase code an “activation code”; the two codes are not interchangeable.
-- A purchase code can be gifted before activation. Confirming at `/start` starts validity and ends
-  gifting, so customers travelling later should wait.
+- An unused purchase code can be unlocked for transfer in the `/start` gifting flow. The purchase
+  owner still receives an email to validate the purchase. Confirming activation starts validity and
+  ends gifting, so customers travelling later should wait.
 
 The example code and QR illustration are not installable credentials.
 
@@ -40,8 +41,9 @@ The second dialog incorporates Paul's supplied Openline setup guidance:
 - Use stable, private Wi-Fi during activation. Avoid airport/public Wi-Fi and 4G/5G, since those
   networks may block the profile download or activation process.
 - Select the Openline eSIM as the primary Mobile Data / Cellular Data line.
-- Turn automatic data switching **OFF**.
+- Turn mobile data on other SIMs/eSIMs **OFF**, along with automatic data switching.
 - Turn data roaming **ON for the Openline eSIM**, not the home SIM.
+- Briefly turn airplane mode ON, then OFF. Allow reconnection and try opening a webpage.
 
 The settings badges are recommendations, not interactive toggles or detected device state.
 The preview cannot change the phone’s settings. Device labels may vary.
@@ -50,7 +52,7 @@ The preview cannot change the phone’s settings. Device labels may vary.
 ## Styling and behaviour
 
 Use the native Openline font, orange actions, consistent panel padding, larger help-button text
-and short arrow motion. The large comparison panels stack on mobile; the three steps remain below.
+and short arrow motion. The two route cards stack on mobile, with installation first.
 All important instructions are in the dedicated dialogs rather than repeated throughout the main card.
 Reduced motion leaves icons static. Escape, backdrop dismissal and close buttons return to the trigger.
 
@@ -67,5 +69,5 @@ surrounding captured HTML block remain unchanged. The rest of the walkthrough is
 No checkout, payment, code redemption, profile provisioning or actual device configuration is performed.
 
 The panel and Copy for Computer export contain the current layout record
-`installation-preflight-simplified` and the new `installation-preflight-detail-modals` record.
+`installation-preflight-install-first` and the updated `installation-preflight-detail-modals` record.
 This remains QA work; no `/delivery` is created.

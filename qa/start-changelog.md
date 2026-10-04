@@ -56,3 +56,11 @@ The current version is on [Openline QA /start](https://openline-anims-review.ver
 - **View my eSIM:** Opens a small native dialog with the current label, QR, download and collapsed manual details. The completion screen stays underneath.
 - **Edit label or folder:** Opens a focused form with saved values. Existing folders and new folders work; unnamed new folders are rejected. Save synchronises all profile displays without returning to previous steps. Cancel, Escape and backdrop dismissal discard uncommitted edits.
 - **Boundaries unchanged:** Only label/folder storage is attempted locally. The QR and credentials remain safe fixtures, and no device settings or service activation are performed.
+
+## Gift ownership and transfer unlock
+
+- **Owner email:** Gifting explains Paul’s product rule: the purchase owner will still receive an email to validate the purchase. No email destination, delivery time or completed validation is invented.
+- **Explicit unlock:** Unused codes begin “Locked for transfer”. Unlock for transfer opens a confirmation explaining that anyone with the unlocked code can redeem it, without starting plan validity or removing owner email validation.
+- **Ready to share:** Confirming changes the state to “Ready to transfer · not activated” and reveals Copy gift message. Cancel or closing the pending confirmation does not unlock.
+- **State safeguards:** Reopening retains the current code’s unlocked state. Changing codes or restarting clears it; used/activated codes cannot enter gifting. No code or unlock state is stored persistently.
+- **Production boundary:** This is local concept behaviour, not an ownership change. A live version needs authenticated ownership checks, transfer/unlock and purchase-validation email services. No email was sent and no real purchase was unlocked during this work.
