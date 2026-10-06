@@ -7,15 +7,24 @@
 <title>Openline · Delivery for Irina</title>
 <link rel="icon" href="../qa/assets/start-brand-mark.png">
 <link rel="stylesheet" href="./delivery.css"><link rel="stylesheet" href="./runtime/animation.css">
+<link rel="stylesheet" href="./checklist.css">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header class="header">
   <a class="brand" href="./index.html"><img src="../qa/assets/start-brand-mark.png" width="34" height="34" alt=""><span>Openline <span class="brand-label">Delivery</span></span></a>
-  <nav aria-label="Delivery navigation"><a href="#animations">Animations</a><a href="#pages">Pages & flows</a><a href="#changes">Changelog</a><a href="#import">Import</a></nav>
+  <nav aria-label="Delivery navigation"><a href="#checklist">Checklist</a><a href="#animations">Animations</a><a href="#pages">Pages & flows</a><a href="#changes">Changelog</a><a href="#import">Import</a></nav>
   <a class="header-qa" href="../qa/index.html">Back to QA <span aria-hidden="true">↗︎</span></a>
 </header>
 <main id="main">
+<section class="irina-intro" aria-labelledby="irina-heading">
+  <div class="intro-label"><span class="status-dot"></span>A note from Paul</div>
+  <div><h2 id="irina-heading">Hi Irina, here’s the complete handoff.</h2>
+  <p>I’ve taken over the animation redesign work entirely, from exploration to refinement, and spent time bringing the pages, flows and details into the direction I want for Openline. I expect you to carry all the retained work into your build: the animations, redesigned blocks, wording, colours, spacing, buttons and interactions, not just a selection of the visuals.</p>
+  <p>In return for the animation work I’ve taken off your plate, I’m asking you to put extra design care and initiative into the <strong>web panel, cart and checkout, and mobile app</strong>. Add more character and polish while keeping things useful and unmistakably Openline. Give Kerem complete, ready-to-build journeys, including payment, purchase codes, gifting, activation and eSIM details, with their pending and error states too.</p>
+  <p>Use the checklist below to track every item, verify it in context, and flag blockers rather than quietly skipping anything. Please send a first update on Thursday 8 October and a full progress report by Friday 9 October around 13:00 Lisbon, with staging links, desktop/mobile evidence and the next ETA for anything outstanding. Thank you for carrying this through carefully.</p>
+  <div class="intro-signoff"><span>Paul</span><a class="button primary" href="#checklist">Start the implementation checklist <span class="arrow" aria-hidden="true">→</span></a></div></div>
+</section>
 <section class="hero">
   <div>
     <p class="eyebrow"><span class="status-dot"></span> Implementation handoff · 06 October 2026</p>
@@ -25,9 +34,9 @@
     <p class="micro">Editable HTML, CSS, JS, assets and Markdown. No framework migration required.</p>
   </div>
   <aside class="release-card" aria-label="Release summary">
-    <div class="release-top"><span class="caps">Frozen from QA</span><span class="release-tag">r1</span></div>
+    <div class="release-top"><span class="caps">Frozen from QA</span><span class="release-tag">r2</span></div>
     <h2>One clear source<br>of direction.</h2>
-    <div class="stats"><div><strong>30</strong><span>submitted picks</span></div><div><strong>22</strong><span>page entries</span></div><div><strong id="change-stat">55</strong><span>change records</span></div></div>
+    <div class="stats"><div><strong>30</strong><span>submitted picks</span></div><div><strong>22</strong><span>page entries</span></div><div><strong id="change-stat">56</strong><span>change records</span></div></div>
     <ul class="release-list"><li><span class="check">✓</span> Saved choices checked, no newer overrides</li><li><span class="check">✓</span> Layout, wording and interactions included</li><li><span class="check">✓</span> Four extra tools + the recipient journey</li></ul>
     <p>Design direction is ready to integrate.<br><strong>Production wiring still needs its own sign-off.</strong></p>
   </aside>
@@ -36,6 +45,21 @@
 <section class="start-here" aria-labelledby="first-heading">
   <div><p class="eyebrow">Start here</p><h2 id="first-heading">Three passes. Nothing missed.</h2></div>
   <ol class="steps"><li><span>01</span><div><h3>Read the decisions</h3><p>Use the selected defaults. Keep rejected work out.</p></div></li><li><span>02</span><div><h3>Import in context</h3><p>Motion, copy and the surrounding block belong together.</p></div></li><li><span>03</span><div><h3>Show the result</h3><p>Return staging links, mobile views, test evidence and blockers.</p></div></li></ol>
+</section>
+
+<section id="checklist" class="section implementation-checklist" aria-labelledby="checklist-heading">
+  <div class="section-heading"><div><p class="eyebrow">Every detail, accounted for</p><h2 id="checklist-heading">Your implementation checklist.</h2><p>Work page by page. Mark each item applied, then verified in the real build. A completed check is your progress report, not automatic production approval.</p></div><button class="text-button" data-doc="checklist-guide.md">How progress is saved ↗︎</button></div>
+  <div class="ck-progress-panel">
+    <div class="ck-progress-main"><span id="ck-percent">0%</span><div><strong id="ck-completed">Loading checklist…</strong><p id="ck-progress-caption">Selected work, current changes and final checks.</p></div></div>
+    <progress id="ck-progress" value="0" max="100" aria-label="Verified implementation progress"></progress>
+    <div class="ck-metrics"><span><b id="ck-applied">0</b> applied</span><span><b id="ck-blocked">0</b> blocked</span><span><b id="ck-remaining">0</b> awaiting verification</span></div>
+  </div>
+  <p class="ck-save-note" id="ck-save-note" role="status">Progress is kept in this page’s URL, not on a shared server. Copy your progress link or export a backup before leaving; the original delivery URL starts a fresh checklist.</p>
+  <div class="ck-actions"><button class="button primary" id="ck-copy-link" type="button">Copy my progress link ↗︎</button><button class="button" id="ck-export" type="button">Export progress</button><button class="button" id="ck-report" type="button">Export report</button><button class="button" id="ck-import" type="button">Import progress</button><input type="file" id="ck-file" accept=".json,application/json" hidden><button class="text-button" id="ck-reset" type="button">Reset checklist</button></div>
+  <div class="toolbar ck-toolbar"><label class="search-label"><span>Find an item</span><input id="ck-search" type="search" placeholder="Referral, QR, wording, cart…"></label><label><span>Page / area</span><select id="ck-page"><option value="all">All pages & areas</option></select></label><label><span>Type</span><select id="ck-type"><option value="all">All types</option></select></label><label><span>Progress</span><select id="ck-status"><option value="all">All items</option><option value="todo">Not applied</option><option value="applied">Applied, not verified</option><option value="verified">Verified</option><option value="blocked">Blocked</option></select></label></div>
+  <div class="ck-list-heading"><span id="ck-results"></span><div><button class="text-button" id="ck-expand">Expand shown groups</button><button class="text-button" id="ck-collapse">Collapse groups</button></div></div>
+  <div id="ck-list"><p class="empty">Loading the complete implementation inventory…</p></div>
+  <p class="micro">Rejected and superseded versions are excluded. Retained alternatives are decision checks, not an instruction to install conflicting versions. Individual wording entries are deduplicated; the full before/after history stays in the changelog.</p>
 </section>
 
 <section class="decisions" aria-labelledby="decisions-heading">
@@ -84,7 +108,7 @@
     <article><span class="request-number">03</span><h3>Bring the orange treatment across</h3><p>Apply Global eSIM’s orange-only QA direction to the real page, including the boxes, icon tiles and backgrounds, not just the animation.</p><a href="https://snap.paulfleury.com/qkt0DcHt" target="_blank" rel="noopener">Reference A ↗︎</a> <a href="https://snap.paulfleury.com/TvGQ270G" target="_blank" rel="noopener">Reference B ↗︎</a></article>
     <article><span class="request-number">04</span><h3>Restore the three original scenes</h3><p>Under “How does Openline work?” restore the approved originals. Preserve the two selected home replacements and the good Tier-1-related work.</p><a href="https://snap.paulfleury.com/WFyHY3dq" target="_blank" rel="noopener">Restore this block ↗︎</a> <a href="https://snap.paulfleury.com/sYy1sv34" target="_blank" rel="noopener">Keep this direction ↗︎</a></article>
   </div>
-  <div class="app-request"><div><p class="eyebrow">For the panel, the app and Kerem</p><h3>Design the whole experience.<br>Not just its happy ending.</h3><p>Give the web panel and mobile app the same care: legible details, coherent actions, clear states and useful motion. Supply ready-to-build flows and component notes.</p></div><ul><li>Payment, 3DS, pending, failure, retry and receipt</li><li>Purchase-code details, copy and owner validation</li><li>Gift unlock, recipient redemption and activation</li><li>QR, manual profile details and setup guidance</li><li>Label, folder, account return and persisted status</li></ul></div>
+  <div class="app-request"><div><p class="eyebrow">For the panel, cart, app and Kerem</p><h3>Design the whole experience.<br>Not just its happy ending.</h3><p>Paul has taken over the animation exploration and refinement. Bring extra design initiative and polish to the web panel, cart/checkout and mobile app in return, while preserving Openline’s identity. Supply complete, ready-to-build flows and component notes, not just decorated happy paths.</p></div><ul><li>Cart, order summary, payment, 3DS, pending, failure, retry and receipt</li><li>Purchase-code details, copy and owner validation</li><li>Gift unlock, recipient redemption and activation</li><li>QR, manual profile details and setup guidance</li><li>Label, folder, account return and persisted status</li></ul></div>
 </section>
 
 <section id="import" class="section">
@@ -98,10 +122,12 @@
   <details class="history-note"><summary>Important: what still needs product or engineering approval</summary><p>Actual provisioning, ownership, atomic one-time redemption, gifting/email validation, account saving, physical connectivity, server-side chat deletion, live support/AI, payments and campaign rewards are not newly connected by these UI prototypes. Confirm replacement policy, coverage counts, certification evidence and other commercial claims. The clean customer presentation is not permission to assert unverified success.</p><button class="text-button" data-doc="import-guide.md">Read the integration contracts →</button></details>
 </section>
 
-<section class="closing" id="download"><div><p class="eyebrow">The next handoff</p><h2>Show us what’s ready.<br>Tell us what’s still needed.</h2><p>First update Thursday 8 October. Full progress report by Friday 9 October, around 13:00 Lisbon. Include staging links, desktop/mobile evidence, blockers and the next ETA.</p><div class="actions"><a class="button primary download-pack" href="https://openline-anims-review.vercel.app/delivery/downloads/openline-delivery-2026-10-06.zip" target="_blank" rel="noopener">Download the full pack <span class="arrow" aria-hidden="true">↓</span></a><button class="button dark-outline" data-doc="report-template.md">Open report template →</button></div></div><div class="release-files"><span>2026-10-06-r1</span><a href="./manifest.json" target="_blank" rel="noopener">Machine-readable manifest ↗︎</a><a href="./integrity.json" target="_blank" rel="noopener">File checksums ↗︎</a><button class="text-button" data-doc="qa-report.md">Release verification ↗︎</button><p>Technical delivery only.<br>Commercial terms are in Paul’s separate private note.</p></div></section>
+<section class="closing" id="download"><div><p class="eyebrow">The next handoff</p><h2>Show us what’s ready.<br>Tell us what’s still needed.</h2><p>First update Thursday 8 October. Full progress report by Friday 9 October, around 13:00 Lisbon. Include staging links, desktop/mobile evidence, blockers and the next ETA.</p><div class="actions"><a class="button primary download-pack" href="https://openline-anims-review.vercel.app/delivery/downloads/openline-delivery-2026-10-06.zip" target="_blank" rel="noopener">Download the full pack <span class="arrow" aria-hidden="true">↓</span></a><button class="button dark-outline" data-doc="report-template.md">Open report template →</button></div></div><div class="release-files"><span>2026-10-06-r2</span><a href="./manifest.json" target="_blank" rel="noopener">Machine-readable manifest ↗︎</a><a href="./integrity.json" target="_blank" rel="noopener">File checksums ↗︎</a><button class="text-button" data-doc="qa-report.md">Release verification ↗︎</button><p>Technical delivery only.<br>Commercial terms are in Paul’s separate private note.</p></div></section>
 </main>
 <footer><span>Openline · Design to implementation</span><span>Prepared for Irina · QA baseline <code>b32598f</code></span><a href="../qa/index.html">Continue reviewing /qa ↗︎</a></footer>
 <dialog id="delivery-dialog"><div class="dialog-top"><h2 id="dialog-title">Delivery document</h2><div><a id="dialog-external" class="small-button" target="_blank" rel="noopener">Open separately ↗︎</a><button class="small-button" id="dialog-close" aria-label="Close dialog">Close ×</button></div></div><div id="dialog-body"></div></dialog>
+<dialog id="ck-confirm" class="ck-confirm"><form method="dialog"><h2 id="ck-confirm-title">Reset this checklist?</h2><p id="ck-confirm-text">This clears the progress in this URL. It does not change source files or a previously exported backup.</p><div id="ck-link-fallback" hidden><label for="ck-link-text">Select and copy your progress link</label><textarea id="ck-link-text" rows="4" readonly></textarea></div><div class="actions"><button value="cancel" class="button" autofocus>Cancel</button><button id="ck-confirm-action" value="confirm" class="button primary">Reset checklist</button></div></form></dialog>
 <div id="toast" role="status" aria-live="polite"></div>
 <script type="module" src="./delivery.js"></script>
+<script type="module" src="./checklist.js"></script>
 </body></html>

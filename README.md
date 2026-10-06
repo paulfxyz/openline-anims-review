@@ -5,7 +5,10 @@
 `/delivery` is now explicitly authorized and implemented. Open
 https://openline-anims-review.vercel.app/delivery for Irina's full brief,
 30 frozen animation choices, 22 page entries, four extra tools plus the gift
-recipient entry, 55 change records and the source ZIP.
+recipient entry, 56 change records and the source ZIP. Release r2 adds Paul's
+introductory handoff note and a 297-item interactive implementation checklist,
+with applied/verified/blocked states, URL progress snapshots, JSON backup/restore
+and Markdown reporting. This is self-reported progress, not a shared server tracker.
 
 Start with `delivery/brief.md`, `delivery/import-guide.md`,
 `delivery/page-matrix.md`, `delivery/copy-changes.md` and

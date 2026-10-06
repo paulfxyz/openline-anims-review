@@ -52,6 +52,7 @@ This checklist separates visual integration from live product behaviour. A check
 
 ## Mobile app and panel package for Kerem
 
+- [ ] Cart and checkout: coherent item/total hierarchy, mobile layout, empty state, validation, payment selection and complete payment outcomes.
 - [ ] Payment/3DS, pending, failure, cancellation, retry, success and receipt.
 - [ ] Purchase-code details, retrieval/copy, validation pending and already-used states.
 - [ ] Owner gift unlock and recipient redeem/keep-for-later flows.

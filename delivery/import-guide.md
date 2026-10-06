@@ -18,6 +18,8 @@ This pack contains editable source, not a set of GIFs. Use its isolated animatio
 | `qa/*-changelog.md` | Detailed scope-specific implementation history |
 | `qa/`, `js/`, `css/`, `img/` | Editable original source and assets in the ZIP |
 | `delivery/integrity.json` | SHA-256 inventory of files in this release pack |
+| `delivery/checklist-data.json` | Blank, generated inventory of import and verification items |
+| `delivery/checklist-guide.md` | Interactive progress tracking, URL snapshots and backup/restore instructions |
 
 The ZIP is a frozen source snapshot. Links to `/qa` show the working review site and may change later; the manifest, frozen runtime and downloaded source pack are the release record. Historical alternatives may remain in shared registry files because selected artwork depends on those modules, but they are not selected deliverables. Deleted/rejected page designs are not reintroduced.
 

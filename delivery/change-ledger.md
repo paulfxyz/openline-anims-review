@@ -1,6 +1,19 @@
 # Openline full change ledger
 
-Release 2026-10-06-r1. Historical records retain rejected/superseded labels; do not implement them. Additional Irina tasks are requests, not completed QA changes.
+Release 2026-10-06-r2. Historical records retain rejected/superseded labels; do not implement them. Additional Irina tasks are requests, not completed QA changes.
+
+## Delivery: interactive implementation checklist and introduction
+
+- **ID:** `delivery-checklist`
+- **Disposition:** Current · Handoff tooling / not a customer-site component
+- **Scope:** delivery
+- **Review:** [Open affected view](https://openline-anims-review.vercel.app/delivery#checklist)
+
+Added a short introduction from Paul and a detailed applied/verified checklist for selected animations, current block and interaction changes, deduplicated wording, page/flow sign-offs, additional requests and final acceptance.
+
+Track progress item by item; blocked work remains incomplete. Progress is encoded in the URL fragment, with a copyable progress link, JSON backup/import and Markdown report. It is not a shared server tracker or automatic approval. Rejected/superseded versions are excluded and conditional alternatives are decision checks. Paul explicitly expects the whole retained handoff implemented, with extra design initiative for panel, cart/checkout and mobile app because he took over the animation exploration/refinement. Private compensation details remain outside the public site.
+
+Files: `delivery/index.html`, `delivery/checklist.js`, `delivery/checklist.css`, `delivery/checklist-data.json`, `delivery/checklist-guide.md`
 
 ## Delivery: frozen implementation handoff for Irina
 
@@ -48,14 +61,14 @@ Marked section: https://snap.paulfleury.com/WFyHY3dq. Retain good Multiple Tier-
 
 Files: `js/home-why.js`, `js/referral.js`
 
-## Irina task: web panel and mobile app flow coverage
+## Irina task: web panel, cart/checkout and mobile app flow coverage
 
 - **ID:** `delivery-app-panel-polish`
 - **Disposition:** Irina task · Additional design work / not built in this pack
 - **Scope:** *
 - **Review:** [Open affected view](https://openline-anims-review.vercel.app/delivery#requests)
 
-Apply the same visual and interaction care to web panel and mobile app. Supply Kerem with ready-to-build payment, purchase-code, activation, gifting, eSIM details, setup and account-management states.
+Paul expects all retained work integrated and additional design initiative in the web panel, cart/checkout and mobile app in return for taking over animation exploration/refinement. Supply Kerem with ready-to-build cart, payment, purchase-code, activation, gifting, eSIM details, setup and account-management states.
 
 Include loading, empty, failure, retry, pending validation and success; annotate backend dependencies instead of presenting them as completed. First progress update Thursday 8 October; full report by Friday 9 October 2026 around 13:00 Europe/Lisbon. Report completion, blockers and estimates; this is not an assertion that all integrations can finish in 72 hours.
 

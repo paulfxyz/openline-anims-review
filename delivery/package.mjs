@@ -11,7 +11,7 @@ for(const f of files){
   const b=await fs.readFile(path.join(root,f));
   hashes.push({path:f,bytes:b.length,sha256:crypto.createHash('sha256').update(b).digest('hex')});
 }
-const integrity={release:'2026-10-06-r1',qaSourceCommit:'b32598f579f45ac0514c81ed64c87e07970de587',note:'Checksums cover public source files; ZIP and this integrity inventory exclude themselves. Private commercial correspondence is not included.',files:hashes};
+const integrity={release:JSON.parse(await fs.readFile(path.join(root,'delivery/manifest.json'),'utf8')).release,qaSourceCommit:'b32598f579f45ac0514c81ed64c87e07970de587',note:'Checksums cover public source files; ZIP and this integrity inventory exclude themselves. Private commercial correspondence is not included.',files:hashes};
 await fs.writeFile(path.join(root,'delivery/integrity.json'),JSON.stringify(integrity,null,2)+'\n');
 await fs.mkdir(path.join(root,'delivery/downloads'),{recursive:true});
 const output='delivery/downloads/openline-delivery-2026-10-06.zip';

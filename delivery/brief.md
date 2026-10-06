@@ -1,6 +1,12 @@
 # Openline implementation brief for Irina
 
-Release: 6 October 2026, r1. This is the implementation handoff from Paul's design review, not a production launch or a claim that the prototype backends exist. Begin at the [delivery hub](https://openline-anims-review.vercel.app/delivery), then use the source pack and per-item import notes.
+Release: 6 October 2026, r2. This is the implementation handoff from Paul's design review, not a production launch or a claim that the prototype backends exist. Begin at the [delivery hub](https://openline-anims-review.vercel.app/delivery), read Paul's introduction and use the interactive checklist alongside the source pack.
+
+## Paul's expectation
+
+Paul has taken over the animation exploration and refinement and expects the complete retained handoff to be implemented, not only selected visuals. In return for that work taken off Irina's plate, he asks for additional design initiative, character and polish in the web panel, cart/checkout and mobile app, while respecting the existing Openline identity.
+
+Use the interactive checklist to mark each item applied, then verified in context, and flag blocked work instead of silently skipping it. Copy the progress link or export a JSON backup to resume or share your status; it is a snapshot, not a shared live server tracker. See `checklist-guide.md` for the save/restore rules.
 
 ## What to deliver
 
@@ -91,6 +97,7 @@ These are explicit new implementation/design tasks, not claims that every captur
 - **Certification trigger:** One shield badge reading `GDPR · SOC2 ···`, opening the certification modal. Check evidence, scope and wording before publication; a condensed badge is not a certification audit. [Marked reference](https://snap.paulfleury.com/hgg5y4Gk).
 - **Global eSIM and homepage:** Bring the orange-only QA treatment into your implementation and restore the three original How-it-works illustrations as described above.
 - **Web panel:** Apply the same native typography, spacing, button/modal consistency and clear state hierarchy to purchases, profile cards, code details, receipts, status, gifting and account organisation.
+- **Cart and checkout:** Give the cart, order summary, totals, validation, payment selection and responsive checkout more design care. Cover empty cart, pending/failure/cancel/retry, 3DS, confirmation and receipts; do not silently add unsupported payment methods or commercial rules.
 - **Mobile app for Kerem:** Produce ready-to-build screens and state annotations for checkout/payment/3DS, pending/failure/retry/success, purchase-code viewing/copying, owner validation, gift unlock/recipient redemption, activation readiness/errors, QR/manual details, installation guidance, profile naming/folders and account return. Show a same-device installation route only if the supported platform/API permits it.
 - **Implementation handoff:** Include component names, assets, responsive rules, transitions, API dependencies and accessibility notes. UI polish should reduce engineering guesswork, not merely add decoration.
 

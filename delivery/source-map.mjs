@@ -33,6 +33,7 @@ export const SOURCE_MAP = {
 };
 
 export const PAGE_FILES = {
+  delivery:['delivery/index.html','delivery/checklist.js','delivery/checklist.css','delivery/checklist-data.json','delivery/checklist-guide.md'],
   home:['js/home-why.js','js/referral.js'],
   'multiple-tier1':['qa/connectivity-copy.json','qa/connectivity-changes.js','qa/redesign/profile-switching.html','qa/profile-switching.css','qa/redesign/operator-showcase.html','qa/operator-showcase.js','qa/operator-showcase.css','qa/operators.json','qa/assets/operators/README.md'],
   'global-esim':['qa/core.js','qa/recolor.js','qa/paint.js'],
