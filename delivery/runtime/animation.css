@@ -1,0 +1,12 @@
+@import url('./helpers/typography.css');
+@import url('./helpers/anim.css');
+.ol-animation {position:relative;isolation:isolate;width:100%;overflow:hidden;border-radius:14px}
+.ol-animation .qa-mount {position:absolute;inset:0;overflow:hidden}
+.ol-animation .qa-mount>svg {display:block;width:100%;height:100%}
+.ol-animation-icon {max-width:56px;min-width:56px;margin:auto}
+.ol-animation-icon .qa-mount {display:grid;place-items:center;background:linear-gradient(135deg,#ff5314,#ff9430);border-radius:12px}
+.ol-animation-icon svg {width:34px!important;height:34px!important}
+.ol-art-pill {position:absolute;display:inline-flex;align-items:center;gap:6px;max-width:95%;padding:8px 12px;border-radius:999px;white-space:nowrap;font-size:12px;font-weight:700;box-shadow:0 10px 26px #0b0b0f20;pointer-events:none}
+.ol-art-pill .ic {width:14px;height:14px}
+.ol-art-pill .dot {width:8px;height:8px;border-radius:50%;background:#4ade80}
+.ol-static * {animation-play-state:paused!important;transition:none!important}

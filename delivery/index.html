@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<base href="/delivery/">
+<meta name="robots" content="noindex"><meta name="description" content="Openline design-to-implementation handoff for Irina. Selected animations, page flows, source code and the complete change ledger.">
+<title>Openline · Delivery for Irina</title>
+<link rel="icon" href="../qa/assets/start-brand-mark.png">
+<link rel="stylesheet" href="./delivery.css"><link rel="stylesheet" href="./runtime/animation.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="header">
+  <a class="brand" href="./index.html"><img src="../qa/assets/start-brand-mark.png" width="34" height="34" alt=""><span>Openline <span class="brand-label">Delivery</span></span></a>
+  <nav aria-label="Delivery navigation"><a href="#animations">Animations</a><a href="#pages">Pages & flows</a><a href="#changes">Changelog</a><a href="#import">Import</a></nav>
+  <a class="header-qa" href="../qa/index.html">Back to QA <span aria-hidden="true">↗︎</span></a>
+</header>
+<main id="main">
+<section class="hero">
+  <div>
+    <p class="eyebrow"><span class="status-dot"></span> Implementation handoff · 06 October 2026</p>
+    <h1>From good direction<br>to <span>great execution.</span></h1>
+    <p class="lead">Irina, this is the complete Openline handoff. The chosen motion, the refined pages, the words and the details. All in one place, ready to bring into your work.</p>
+    <div class="actions"><a class="button primary download-pack" href="https://openline-anims-review.vercel.app/delivery/downloads/openline-delivery-2026-10-06.zip" target="_blank" rel="noopener">Download the full pack <span class="arrow" aria-hidden="true">↓</span></a><button class="button" data-doc="brief.md">Read your brief <span class="arrow" aria-hidden="true">→</span></button></div>
+    <p class="micro">Editable HTML, CSS, JS, assets and Markdown. No framework migration required.</p>
+  </div>
+  <aside class="release-card" aria-label="Release summary">
+    <div class="release-top"><span class="caps">Frozen from QA</span><span class="release-tag">r1</span></div>
+    <h2>One clear source<br>of direction.</h2>
+    <div class="stats"><div><strong>30</strong><span>submitted picks</span></div><div><strong>22</strong><span>page entries</span></div><div><strong id="change-stat">55</strong><span>change records</span></div></div>
+    <ul class="release-list"><li><span class="check">✓</span> Saved choices checked, no newer overrides</li><li><span class="check">✓</span> Layout, wording and interactions included</li><li><span class="check">✓</span> Four extra tools + the recipient journey</li></ul>
+    <p>Design direction is ready to integrate.<br><strong>Production wiring still needs its own sign-off.</strong></p>
+  </aside>
+</section>
+
+<section class="start-here" aria-labelledby="first-heading">
+  <div><p class="eyebrow">Start here</p><h2 id="first-heading">Three passes. Nothing missed.</h2></div>
+  <ol class="steps"><li><span>01</span><div><h3>Read the decisions</h3><p>Use the selected defaults. Keep rejected work out.</p></div></li><li><span>02</span><div><h3>Import in context</h3><p>Motion, copy and the surrounding block belong together.</p></div></li><li><span>03</span><div><h3>Show the result</h3><p>Return staging links, mobile views, test evidence and blockers.</p></div></li></ol>
+</section>
+
+<section class="decisions" aria-labelledby="decisions-heading">
+  <div class="section-heading"><div><p class="eyebrow">The guardrails</p><h2 id="decisions-heading">Keep the direction. Skip the detours.</h2></div><button class="text-button" data-doc="selections.md">Read all decisions <span aria-hidden="true">↗︎</span></button></div>
+  <div class="decision-grid">
+    <article class="decision"><span class="tag">Selected defaults</span><h3>Orange for Global.<br>Chrome for IoT.</h3><p>Native Openline typography throughout. Preserve the selected animation concepts and their context-specific fixes.</p><div class="swatches" aria-label="Openline orange, neutral chrome"><i style="background:#ff5314"></i><i style="background:#fff0e9"></i><i style="background:#d1d5db"></i><i style="background:#6b7280"></i><i style="background:#1f2329"></i></div></article>
+    <article class="decision"><span class="tag">Keep / restore</span><h3>The two home picks.<br>The three originals.</h3><p>Keep Why Openline and Referral. Restore the original three How-it-works illustrations from Irina’s last approved source version.</p><a href="#requests">See the exact scope <span aria-hidden="true">→</span></a></article>
+    <article class="decision"><span class="tag caution">One choice still open</span><h3>Blog has one slot.<br>Not two.</h3><p>Topic Picker is the current QA default. The Long Read is a retained alternative. KYC option 0 means keep current.</p><button class="text-button" data-select="blog">Compare the Blog choices <span aria-hidden="true">→</span></button></article>
+  </div>
+  <details class="history-note"><summary>Not for implementation: rejected alternatives and older iterations</summary><p>The later 16-page redesign batch and full France selector redesign were rejected and removed. About and Contact’s earlier alternatives remain. France keeps its original template with slight Unlimited refinements; older installation explanations are superseded by the install-first choice. Other enabled QA page colour identities remain review options, not newly approved production defaults.</p></details>
+</section>
+
+<section id="animations" class="section">
+  <div class="section-heading"><div><p class="eyebrow">Motion, with its source</p><h2>Every submitted choice.</h2><p>One live preview at a time. The selected options are frozen, not pulled from your browser settings.</p></div><span class="count-tag">30 picks · 29 slots</span></div>
+  <div class="animation-workbench">
+    <aside class="animation-browser"><label class="field-label" for="animation-search">Find an animation</label><input id="animation-search" type="search" placeholder="Referral, IoT, network…"><div id="animation-list" class="animation-list" aria-label="Selected animation list"></div></aside>
+    <div class="animation-detail">
+      <div class="animation-heading"><div><p class="eyebrow" id="animation-context"></p><h3 id="animation-title">Loading…</h3></div><button id="motion-toggle" class="small-button" type="button" aria-pressed="false">Pause motion</button></div>
+      <div class="art-surround"><div id="animation-art"></div></div>
+      <div class="animation-meta" id="animation-meta"></div>
+      <p class="fit-note" id="animation-fit"></p>
+      <div class="actions"><button class="button primary" id="animation-guide">Import this item <span class="arrow" aria-hidden="true">→</span></button><a class="button" id="animation-page" target="_blank" rel="noopener">See in its page <span aria-hidden="true">↗︎</span></a><a class="text-button" id="animation-source" target="_blank" rel="noopener">Source JS</a></div>
+      <details class="code-details"><summary>Quick mount snippet</summary><pre><code id="animation-code"></code></pre><button class="small-button" id="copy-code">Copy snippet</button></details>
+    </div>
+  </div>
+</section>
+
+<section id="pages" class="section">
+  <div class="section-heading"><div><p class="eyebrow">Beyond the animations</p><h2>Pages, blocks and complete journeys.</h2><p>Open a working view or read its source map. The ZIP freezes the source; the linked QA site remains the working reference.</p></div><button class="text-button" data-doc="page-matrix.md">Full implementation matrix <span aria-hidden="true">↗︎</span></button></div>
+  <div class="toolbar"><label class="search-label"><span>Search pages</span><input id="page-search" type="search" placeholder="Start, France, About…"></label><label><span>Show</span><select id="page-filter"><option value="all">All pages & tools</option><option value="flows">Extra flows & tools</option><option value="retained">Retained redesigns</option></select></label><span id="page-count" class="results-count"></span></div>
+  <div id="page-grid" class="page-grid"></div>
+  <p class="micro">Additional reference only: <a href="../omdm.html" target="_blank" rel="noopener">full-page OMDM concept</a>, <a href="../producthunt.html" target="_blank" rel="noopener">original Product Hunt concept</a>, <a href="../choice.html" target="_blank" rel="noopener">choice history</a> and <a href="../index.html" target="_blank" rel="noopener">all review boards</a>. Their unselected alternatives are not approved deliverables.</p>
+</section>
+
+<section id="changes" class="section">
+  <div class="section-heading"><div><p class="eyebrow">The implementation ledger</p><h2>The small changes count, too.</h2><p>Colour, copy, spacing, buttons, dialogs and flow behaviour are first-class delivery items.</p></div><div class="actions"><button class="text-button" data-doc="copy-changes.md">Exact wording changes ↗︎</button><button class="text-button" data-doc="change-ledger.md">Full ledger ↗︎</button></div></div>
+  <div class="toolbar"><label class="search-label"><span>Search changes</span><input id="change-search" type="search" placeholder="Font, QR, gift, padding…"></label><label><span>Status</span><select id="change-filter"><option value="active">Current + retained + requested</option><option value="all">All, including history</option><option value="Current">Current</option><option value="Irina task">Additional Irina tasks</option><option value="Retained / review">Retained / review</option><option value="History">Rejected / superseded</option></select></label><span class="results-count" id="change-count"></span></div>
+  <div id="change-list" class="change-list"></div>
+</section>
+
+<section id="requests" class="section">
+  <div class="section-heading"><div><p class="eyebrow">Also on your list</p><h2>A little more care, across the product.</h2><p>These are additional requests for Irina. They are not marked as completed changes across the captured QA pages.</p></div></div>
+  <div class="request-grid">
+    <article><span class="request-number">01</span><h3>Clean up the floating badges</h3><p>“Openline Mobile” becomes <strong>“Mobile app”</strong>. Move “Revisions” to the top right without overlapping header or mobile controls.</p><a href="https://snap.paulfleury.com/gF4BQJty" target="_blank" rel="noopener">Marked reference ↗︎</a></article>
+    <article><span class="request-number">02</span><h3>One certification button</h3><p>A shield icon and <strong>GDPR · SOC2 ···</strong> open the existing modal. Keep the details there, and verify the evidence before publishing the claims.</p><a href="https://snap.paulfleury.com/hgg5y4Gk" target="_blank" rel="noopener">Marked reference ↗︎</a></article>
+    <article><span class="request-number">03</span><h3>Bring the orange treatment across</h3><p>Apply Global eSIM’s orange-only QA direction to the real page, including the boxes, icon tiles and backgrounds, not just the animation.</p><a href="https://snap.paulfleury.com/qkt0DcHt" target="_blank" rel="noopener">Reference A ↗︎</a> <a href="https://snap.paulfleury.com/TvGQ270G" target="_blank" rel="noopener">Reference B ↗︎</a></article>
+    <article><span class="request-number">04</span><h3>Restore the three original scenes</h3><p>Under “How does Openline work?” restore the approved originals. Preserve the two selected home replacements and the good Tier-1-related work.</p><a href="https://snap.paulfleury.com/WFyHY3dq" target="_blank" rel="noopener">Restore this block ↗︎</a> <a href="https://snap.paulfleury.com/sYy1sv34" target="_blank" rel="noopener">Keep this direction ↗︎</a></article>
+  </div>
+  <div class="app-request"><div><p class="eyebrow">For the panel, the app and Kerem</p><h3>Design the whole experience.<br>Not just its happy ending.</h3><p>Give the web panel and mobile app the same care: legible details, coherent actions, clear states and useful motion. Supply ready-to-build flows and component notes.</p></div><ul><li>Payment, 3DS, pending, failure, retry and receipt</li><li>Purchase-code details, copy and owner validation</li><li>Gift unlock, recipient redemption and activation</li><li>QR, manual profile details and setup guidance</li><li>Label, folder, account return and persisted status</li></ul></div>
+</section>
+
+<section id="import" class="section">
+  <div class="section-heading"><div><p class="eyebrow">A practical handoff</p><h2>Bring it into your existing build.</h2><p>Keep your architecture. Use the source, the state diagrams in the code and the explicit acceptance checks.</p></div></div>
+  <div class="doc-grid">
+    <button data-doc="brief.md"><span class="doc-number">A</span><h3>Your full brief</h3><p>Scope, priorities, latest decisions and the small details.</p><span>Read brief →</span></button>
+    <button data-doc="import-guide.md"><span class="doc-number">B</span><h3>Import guide</h3><p>Vanilla JS, React lifecycle, assets, palettes and backend boundaries.</p><span>Open the guide →</span></button>
+    <button data-doc="acceptance.md"><span class="doc-number">C</span><h3>Acceptance checklist</h3><p>Visual, interaction, content, production and mobile-app checks.</p><span>Review the checklist →</span></button>
+    <button data-doc="report-template.md"><span class="doc-number">D</span><h3>Your progress report</h3><p>One format for status, staging links, evidence, blockers and ETA.</p><span>Use the template →</span></button>
+  </div>
+  <details class="history-note"><summary>Important: what still needs product or engineering approval</summary><p>Actual provisioning, ownership, atomic one-time redemption, gifting/email validation, account saving, physical connectivity, server-side chat deletion, live support/AI, payments and campaign rewards are not newly connected by these UI prototypes. Confirm replacement policy, coverage counts, certification evidence and other commercial claims. The clean customer presentation is not permission to assert unverified success.</p><button class="text-button" data-doc="import-guide.md">Read the integration contracts →</button></details>
+</section>
+
+<section class="closing" id="download"><div><p class="eyebrow">The next handoff</p><h2>Show us what’s ready.<br>Tell us what’s still needed.</h2><p>First update Thursday 8 October. Full progress report by Friday 9 October, around 13:00 Lisbon. Include staging links, desktop/mobile evidence, blockers and the next ETA.</p><div class="actions"><a class="button primary download-pack" href="https://openline-anims-review.vercel.app/delivery/downloads/openline-delivery-2026-10-06.zip" target="_blank" rel="noopener">Download the full pack <span class="arrow" aria-hidden="true">↓</span></a><button class="button dark-outline" data-doc="report-template.md">Open report template →</button></div></div><div class="release-files"><span>2026-10-06-r1</span><a href="./manifest.json" target="_blank" rel="noopener">Machine-readable manifest ↗︎</a><a href="./integrity.json" target="_blank" rel="noopener">File checksums ↗︎</a><button class="text-button" data-doc="qa-report.md">Release verification ↗︎</button><p>Technical delivery only.<br>Commercial terms are in Paul’s separate private note.</p></div></section>
+</main>
+<footer><span>Openline · Design to implementation</span><span>Prepared for Irina · QA baseline <code>b32598f</code></span><a href="../qa/index.html">Continue reviewing /qa ↗︎</a></footer>
+<dialog id="delivery-dialog"><div class="dialog-top"><h2 id="dialog-title">Delivery document</h2><div><a id="dialog-external" class="small-button" target="_blank" rel="noopener">Open separately ↗︎</a><button class="small-button" id="dialog-close" aria-label="Close dialog">Close ×</button></div></div><div id="dialog-body"></div></dialog>
+<div id="toast" role="status" aria-live="polite"></div>
+<script type="module" src="./delivery.js"></script>
+</body></html>

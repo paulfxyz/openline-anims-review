@@ -1,0 +1,4189 @@
+{
+  "release": "2026-10-06-r1",
+  "qaSourceCommit": "b32598f579f45ac0514c81ed64c87e07970de587",
+  "verifiedAt": "2026-10-06",
+  "verification": "Saved Comet choice and QA decision keys checked; no QA overrides; no customer codes or chat contents collected.",
+  "counts": {
+    "choices": 30,
+    "pages": 22,
+    "tools": 4,
+    "extraEntries": 5,
+    "changes": 55
+  },
+  "decisions": {
+    "theme": "original",
+    "qaOverrides": {},
+    "pageStyleOverrides": {},
+    "sharedSlotOverrides": {},
+    "blogDefault": "blog",
+    "blogAlternative": "blogv",
+    "retainCurrent": "pluskyc"
+  },
+  "styles": {
+    "global-esim": {
+      "id": "ps-global-esim",
+      "name": "Openline orange",
+      "hex": "#FF5314",
+      "scope": "families",
+      "families": [
+        "red",
+        "orange",
+        "amber",
+        "gold",
+        "green",
+        "teal",
+        "cyan",
+        "blue",
+        "indigo",
+        "purple",
+        "pink"
+      ],
+      "floor": 0.006,
+      "keepStatus": false,
+      "selected": true,
+      "sw": [
+        "#FF5314",
+        "#FFB08F",
+        "#FFF3EB"
+      ],
+      "note": "Selected. All section accents, icon tiles, washes and animation colours use the Openline orange family, including the previous blue, purple and green treatments. Neutral surfaces, photographs and partner logos keep their original appearance."
+    },
+    "network": {
+      "id": "ps-network",
+      "name": "Corporate blue",
+      "hex": "#1E40AF",
+      "scope": "all",
+      "keepStatus": true,
+      "ink": 264,
+      "inkC": 0.07,
+      "sw": [
+        "#1E3A8A",
+        "#1E40AF",
+        "#2563EB"
+      ],
+      "note": "Royal blue accents over navy ink: dark blue for depth, royal blue for action, corporate rather than consumer."
+    },
+    "security": {
+      "id": "ps-security",
+      "name": "Vault teal",
+      "hex": "#0F766E",
+      "scope": "all",
+      "keepStatus": true,
+      "ink": 190,
+      "inkC": 0.05,
+      "sw": [
+        "#134E4A",
+        "#0F766E",
+        "#14B8A6"
+      ],
+      "note": "Deep teal: protective and calm, clearly apart from the green used for \"connected\" states."
+    },
+    "adblocking": {
+      "id": "ps-adblocking",
+      "name": "Ultraviolet",
+      "hex": "#6D28D9",
+      "scope": "all",
+      "keepStatus": true,
+      "ink": 292,
+      "inkC": 0.05,
+      "sw": [
+        "#4C1D95",
+        "#6D28D9",
+        "#8B5CF6"
+      ],
+      "note": "Ultraviolet: filtering and shielding, distinct from every other Features page."
+    },
+    "unlimited": {
+      "id": "ps-unlimited",
+      "name": "Hot magenta",
+      "hex": "#DB2777",
+      "scope": "all",
+      "keepStatus": true,
+      "ink": 350,
+      "inkC": 0.04,
+      "sw": [
+        "#831843",
+        "#DB2777",
+        "#F472B6"
+      ],
+      "note": "Hot magenta: energy and abundance for the no-limits page."
+    },
+    "iot": {
+      "id": "ps-iot",
+      "name": "Chrome",
+      "hex": "#6B7280",
+      "scope": "families",
+      "families": [
+        "purple",
+        "indigo"
+      ],
+      "floor": 0.012,
+      "chroma": 0.06,
+      "keepStatus": true,
+      "sheen": true,
+      "selected": true,
+      "sw": [
+        "#1F2329",
+        "#6B7280",
+        "#D1D5DB"
+      ],
+      "note": "Selected. Greyscale like the rest of the page: the purple accents become steel and graphite, the dark cell a neutral gunmetal. Green \"online\" states and the orange brand stay."
+    },
+    "blog": {
+      "id": "ps-blog",
+      "name": "Newsprint",
+      "hex": "#111111",
+      "scope": "all",
+      "chroma": 0,
+      "keepStatus": false,
+      "cls": "qa-journal",
+      "sw": [
+        "#111111",
+        "#6B6B6B",
+        "#FBFAF7"
+      ],
+      "note": "Black and white, Openline typography, square corners, no drop shadows — an editorial voice for the blog."
+    }
+  },
+  "animations": [
+    {
+      "key": "tier1",
+      "opt": 3,
+      "id": "auction",
+      "name": "Price Auction",
+      "family": "Data-led",
+      "description": "Three live carrier cards with signal bars, latency and €/GB. A cyan winner frame moves between them and fires a packet into the chip — the proof that AI picks best signal and lowest price, in one glance.",
+      "note": "",
+      "page": "multiple-tier1",
+      "section": "Hero",
+      "embed": {
+        "w": 640,
+        "h": 460
+      },
+      "tone": null,
+      "slot": {
+        "key": "tier1",
+        "hero": true,
+        "w": 576,
+        "h": 420
+      },
+      "viewBox": "0 0 640 560",
+      "hasInit": true,
+      "module": "registry.js",
+      "export": "VARIANTS",
+      "decision": "Selected direction",
+      "fitReview": true,
+      "fitNote": "Native artwork and destination slot differ. QA context-fit is included; validate in the final responsive component, never stretch.",
+      "source": "js/registry.js",
+      "runtime": "delivery/runtime/js/registry.js",
+      "preview": "/delivery/preview.html?key=tier1",
+      "guide": "delivery/items/tier1.md",
+      "identity": "As shipped"
+    },
+    {
+      "key": "t1ai",
+      "opt": 3,
+      "id": "aineural",
+      "name": "Neural Sweep",
+      "family": "Literal AI",
+      "description": "A small three-layer network: signal, congestion, price and latency as inputs, a hidden layer, four operator outputs. Pulses travel the edges continuously, edge weights brighten and dim, and the winning output node flares with its operator name. If the section headline is going to say \"machine learning algorithms\", this is the picture of that sentence.",
+      "note": "",
+      "page": "multiple-tier1",
+      "section": "AI-Powered Network Selection",
+      "embed": {
+        "w": 640,
+        "h": 460
+      },
+      "tone": null,
+      "slot": {
+        "key": "t1ai",
+        "w": 584,
+        "h": 560
+      },
+      "viewBox": "0 0 640 460",
+      "hasInit": true,
+      "module": "t1-sections.js",
+      "export": "AI_VARIANTS",
+      "decision": "Selected direction",
+      "fitReview": true,
+      "fitNote": "Native artwork and destination slot differ. QA context-fit is included; validate in the final responsive component, never stretch.",
+      "source": "js/t1-sections.js",
+      "runtime": "delivery/runtime/js/t1-sections.js",
+      "preview": "/delivery/preview.html?key=t1ai",
+      "guide": "delivery/items/t1ai.md",
+      "identity": "As shipped"
+    },
+    {
+      "key": "t1market",
+      "opt": 5,
+      "id": "mktape",
+      "name": "Ticker Tape",
+      "family": "Minimal",
+      "description": "A horizontal tape of regional wholesale prices scrolls continuously — EU 0.42 ▼, APAC 0.58 ▲, LATAM 0.71 ▼ — above a single headline figure for the average discount. No chart, no card, almost no ink. It is the lightest way to say \"this is a live market with many prices in it\" and the easiest to keep honest.",
+      "note": "",
+      "page": "multiple-tier1",
+      "section": "The Data Stock Market",
+      "embed": {
+        "w": 640,
+        "h": 460
+      },
+      "tone": null,
+      "slot": {
+        "key": "t1market",
+        "w": 584,
+        "h": 440
+      },
+      "viewBox": "0 0 640 460",
+      "hasInit": true,
+      "module": "t1-market.js",
+      "export": "MARKET_VARIANTS",
+      "decision": "Selected direction",
+      "fitReview": true,
+      "fitNote": "Native artwork and destination slot differ. QA context-fit is included; validate in the final responsive component, never stretch.",
+      "source": "js/t1-market.js",
+      "runtime": "delivery/runtime/js/t1-market.js",
+      "preview": "/delivery/preview.html?key=t1market",
+      "guide": "delivery/items/t1market.md",
+      "identity": "As shipped"
+    },
+    {
+      "key": "t1access",
+      "opt": 1,
+      "id": "acroster",
+      "name": "Operator Roster",
+      "family": "Breadth",
+      "description": "A fanned deck of operator cards — real Tier-1 names, each with its country and generation — shuffles behind the phone, bringing a different one to the front every couple of seconds while the phone's \"connected via\" line follows it. A counter holds at 50+ partners. The headline is about the size of the roster, so this shows the roster. In QA, the phone labels now distinguish network options from occasional profile replacement and possible setup. Operator availability depends on the plan, profile and destination.",
+      "note": "",
+      "page": "multiple-tier1",
+      "section": "Access to 50+ Tier-1 Networks",
+      "embed": {
+        "w": 640,
+        "h": 460
+      },
+      "tone": null,
+      "slot": {
+        "key": "t1access",
+        "w": 584,
+        "h": 470
+      },
+      "viewBox": "0 0 640 460",
+      "hasInit": true,
+      "module": "t1-access.js",
+      "export": "ACCESS_VARIANTS",
+      "decision": "Selected direction",
+      "fitReview": true,
+      "fitNote": "Native artwork and destination slot differ. QA context-fit is included; validate in the final responsive component, never stretch.",
+      "source": "js/t1-access.js",
+      "runtime": "delivery/runtime/js/t1-access.js",
+      "preview": "/delivery/preview.html?key=t1access",
+      "guide": "delivery/items/t1access.md",
+      "identity": "As shipped"
+    },
+    {
+      "key": "what",
+      "opt": 1,
+      "id": "etch",
+      "name": "Etch & Activate",
+      "family": "Product truth",
+      "description": "A QR code is scanned by a sweeping beam, the profile streams across as packets, and inside the phone a SIM outline draws itself line by line while a ring counts 0 → 100% and the signal bars fill. It ends on \"eSIM ACTIVE · 28s\" and restarts. The headline claims a 30-second install; this is the only option that actually shows one.",
+      "note": "",
+      "page": "global-esim",
+      "section": "What is an eSIM?",
+      "embed": {
+        "w": 640,
+        "h": 460
+      },
+      "tone": null,
+      "slot": {
+        "key": "what",
+        "w": 584,
+        "h": 420
+      },
+      "viewBox": "0 0 640 460",
+      "hasInit": false,
+      "module": "esim-what.js",
+      "export": "WHAT_VARIANTS",
+      "decision": "Selected direction",
+      "fitReview": false,
+      "fitNote": "Native geometry closely matches the measured slot. Check responsive label size and companion pills.",
+      "source": "js/esim-what.js",
+      "runtime": "delivery/runtime/js/esim-what.js",
+      "preview": "/delivery/preview.html?key=what",
+      "guide": "delivery/items/what.md",
+      "identity": "Openline orange"
+    },
+    {
+      "key": "travel",
+      "opt": 3,
+      "id": "triptape",
+      "name": "Trip Tape",
+      "family": "Data-led",
+      "description": "An itinerary tape scrolls upward beside the phone. Each leg arrives blank, then fills itself in — network found, signal, data used, cost — and stamps a check. The phone mirrors the active leg. No illustration at all: it reads like the Openline app working, which is exactly what the eight bullets beside it describe, and it extends to any number of countries without redesign.",
+      "note": "",
+      "page": "global-esim",
+      "section": "Everything You Need for Seamless Travel",
+      "embed": {
+        "w": 640,
+        "h": 460
+      },
+      "tone": null,
+      "slot": {
+        "key": "travel",
+        "w": 584,
+        "h": 520
+      },
+      "viewBox": "0 0 640 460",
+      "hasInit": true,
+      "module": "esim-travel.js",
+      "export": "TRAVEL_VARIANTS",
+      "decision": "Selected direction",
+      "fitReview": true,
+      "fitNote": "Native artwork and destination slot differ. QA context-fit is included; validate in the final responsive component, never stretch.",
+      "source": "js/esim-travel.js",
+      "runtime": "delivery/runtime/js/esim-travel.js",
+      "preview": "/delivery/preview.html?key=travel",
+      "guide": "delivery/items/travel.md",
+      "identity": "Openline orange"
+    },
+    {
+      "key": "referral",
+      "opt": 3,
+      "id": "linkflight",
+      "name": "Link in Flight",
+      "family": "Mechanic",
+      "description": "The referral link appears as a pill, a cursor copies it, it flies off as a message into a friend's phone, the phone shows an eSIM activating, and both balances tick up. It is the only option that shows the four steps the paragraph describes, which is exactly what someone hesitating over the form wants to know.",
+      "note": "",
+      "page": "home",
+      "section": "Refer a friend box",
+      "embed": {
+        "w": 640,
+        "h": 460
+      },
+      "tone": "orange",
+      "slot": {
+        "key": "referral",
+        "w": 576,
+        "h": 520,
+        "clear": true
+      },
+      "viewBox": "0 0 576 520",
+      "hasInit": true,
+      "module": "referral.js",
+      "export": "REFERRAL_VARIANTS",
+      "decision": "Selected direction",
+      "fitReview": false,
+      "fitNote": "Native geometry closely matches the measured slot. Check responsive label size and companion pills.",
+      "source": "js/referral.js",
+      "runtime": "delivery/runtime/js/referral.js",
+      "preview": "/delivery/preview.html?key=referral",
+      "guide": "delivery/items/referral.md",
+      "identity": "As shipped"
+    },
+    {
+      "key": "homewhy",
+      "opt": 3,
+      "id": "hw-handover",
+      "name": "The Handover",
+      "family": "Mechanism",
+      "description": "The grid claims \"always connected to strongest operator\" two cells to the left and then never shows it. Here the operator name swaps three times, the signal bars stay at four of four through every swap, and a single unbroken line runs the width of the card with a dot travelling along it — crossing each handover without a gap. It demonstrates the one thing that makes \"reliable\" credible rather than asserted: you can see the thing change and see that nothing drops.",
+      "note": "",
+      "page": "home",
+      "section": "Why choose Openline? — the product panel",
+      "embed": {
+        "w": 407,
+        "h": 302
+      },
+      "tone": null,
+      "slot": {
+        "key": "homewhy",
+        "w": 407,
+        "h": 302,
+        "hideUp": true
+      },
+      "viewBox": "0 0 407 302",
+      "hasInit": false,
+      "module": "home-why.js",
+      "export": "HOME_WHY_VARIANTS",
+      "decision": "Selected direction",
+      "fitReview": false,
+      "fitNote": "Native geometry closely matches the measured slot. Check responsive label size and companion pills.",
+      "source": "js/home-why.js",
+      "runtime": "delivery/runtime/js/home-why.js",
+      "preview": "/delivery/preview.html?key=homewhy",
+      "guide": "delivery/items/homewhy.md",
+      "identity": "As shipped"
+    },
+    {
+      "key": "nethero",
+      "opt": 6,
+      "id": "nethud",
+      "name": "Network HUD",
+      "family": "Credibility",
+      "description": "A dark telemetry panel: active carrier, band, latency, throughput, switches today, a live uptime sparkline and a scrolling event log that records each handoff as it happens. Nothing is illustrated — the artwork is the readout. The most convincing register available for an enterprise-grade claim, and the cheapest to keep truthful because it can be wired to real values.",
+      "note": "",
+      "page": "network",
+      "section": "Hero",
+      "embed": {
+        "w": 640,
+        "h": 460
+      },
+      "tone": null,
+      "slot": {
+        "key": "nethero",
+        "hero": true,
+        "w": 576,
+        "h": 420
+      },
+      "viewBox": "0 0 640 460",
+      "hasInit": true,
+      "module": "network.js",
+      "export": "NET_HERO_VARIANTS",
+      "decision": "Selected direction",
+      "fitReview": false,
+      "fitNote": "Native geometry closely matches the measured slot. Check responsive label size and companion pills.",
+      "source": "js/network.js",
+      "runtime": "delivery/runtime/js/network.js",
+      "preview": "/delivery/preview.html?key=nethero",
+      "guide": "delivery/items/nethero.md",
+      "identity": "Corporate blue"
+    },
+    {
+      "key": "why",
+      "opt": 3,
+      "id": "whystack",
+      "name": "Feature Stack",
+      "family": "Feature-led",
+      "description": "Four labelled layers — Automatic Switching, LTE/5G, Redundancy, Global Roaming — stacked as a diagram of the network. Each lights in turn with its own small animation and its metric, in perfect step with the four cards sitting beside it. The panel stops being decorative texture and becomes a legend for the content next to it.",
+      "note": "",
+      "page": "network",
+      "section": "Why Our Network is Different",
+      "embed": {
+        "w": 640,
+        "h": 460
+      },
+      "tone": null,
+      "slot": {
+        "key": "why",
+        "w": 592,
+        "h": 430
+      },
+      "viewBox": "0 0 640 460",
+      "hasInit": true,
+      "module": "network.js",
+      "export": "WHY_VARIANTS",
+      "decision": "Selected direction",
+      "fitReview": false,
+      "fitNote": "Native geometry closely matches the measured slot. Check responsive label size and companion pills.",
+      "source": "js/network.js",
+      "runtime": "delivery/runtime/js/network.js",
+      "preview": "/delivery/preview.html?key=why",
+      "guide": "delivery/items/why.md",
+      "identity": "Corporate blue"
+    },
+    {
+      "key": "bizhero",
+      "opt": 2,
+      "id": "bizinvoice",
+      "name": "Invoice Showdown",
+      "family": "Cost",
+      "description": "Two invoices for the same month. On the left, traditional roaming: line items arrive one by one and the total climbs past three thousand dollars. On the right, the Openline bill fills with the same trips at a fraction of the price and lands flat. The gap is stamped as the saving. The first number in the copy is 75%; this is that number happening.",
+      "note": "",
+      "page": "business",
+      "section": "Hero",
+      "embed": {
+        "w": 640,
+        "h": 460
+      },
+      "tone": null,
+      "slot": {
+        "key": "bizhero",
+        "w": 576,
+        "h": 560
+      },
+      "viewBox": "0 0 640 460",
+      "hasInit": true,
+      "module": "business.js",
+      "export": "BIZ_HERO_VARIANTS",
+      "decision": "Selected direction",
+      "fitReview": true,
+      "fitNote": "Native artwork and destination slot differ. QA context-fit is included; validate in the final responsive component, never stretch.",
+      "source": "js/business.js",
+      "runtime": "delivery/runtime/js/business.js",
+      "preview": "/delivery/preview.html?key=bizhero",
+      "guide": "delivery/items/bizhero.md",
+      "identity": "As shipped"
+    },
+    {
+      "key": "bizneeds",
+      "opt": 1,
+      "id": "ntabs",
+      "name": "Console Tabs",
+      "family": "Feature coverage",
+      "description": "The same console, but it cycles through its own tabs — Usage, Alerts, Security, Billing, SLA, API — and each tab renders the capability listed beside it: a usage chart, a firing alert with an auto-resolve, an SSO and encryption panel, a consolidated invoice, an uptime figure, a code snippet. One panel finally covers the whole list.",
+      "note": "",
+      "page": "business",
+      "section": "Everything Your Business Needs",
+      "embed": {
+        "w": 640,
+        "h": 460
+      },
+      "tone": null,
+      "slot": {
+        "key": "bizneeds",
+        "w": 584,
+        "h": 440
+      },
+      "viewBox": "0 0 640 460",
+      "hasInit": true,
+      "module": "business-needs.js",
+      "export": "BIZ_NEEDS_VARIANTS",
+      "decision": "Selected direction",
+      "fitReview": true,
+      "fitNote": "Native artwork and destination slot differ. QA context-fit is included; validate in the final responsive component, never stretch.",
+      "source": "js/business-needs.js",
+      "runtime": "delivery/runtime/js/business-needs.js",
+      "preview": "/delivery/preview.html?key=bizneeds",
+      "guide": "delivery/items/bizneeds.md",
+      "identity": "As shipped"
+    },
+    {
+      "key": "hosp",
+      "opt": 3,
+      "id": "hprops",
+      "name": "Every Property Type",
+      "family": "Breadth",
+      "description": "The illustration morphs between the four property types the page sells to — city hotel, resort, vacation rental, travel operator — each with its own headline figure and room count, on a slow cycle. It keeps the warm illustration everyone likes and makes it earn its place by answering \"is this for a property like mine?\".",
+      "note": "",
+      "page": "hospitality",
+      "section": "Hero",
+      "embed": {
+        "w": 640,
+        "h": 460
+      },
+      "tone": null,
+      "slot": {
+        "key": "hosp",
+        "hero": true,
+        "w": 576,
+        "h": 420
+      },
+      "viewBox": "0 0 640 460",
+      "hasInit": true,
+      "module": "hosp.js",
+      "export": "HOSP_VARIANTS",
+      "decision": "Selected direction",
+      "fitReview": false,
+      "fitNote": "Native geometry closely matches the measured slot. Check responsive label size and companion pills.",
+      "source": "js/hosp.js",
+      "runtime": "delivery/runtime/js/hosp.js",
+      "preview": "/delivery/preview.html?key=hosp",
+      "guide": "delivery/items/hosp.md",
+      "identity": "As shipped"
+    },
+    {
+      "key": "iotwide",
+      "opt": 6,
+      "id": "c1-shelf",
+      "name": "The Shelf, Collapsed",
+      "family": "Before / after",
+      "description": "The left two thirds of the cell hold a shelf of five labelled SIM trays with their stock counts. On cue they lift, slide right and fold into one eSIM chip on the far right, leaving the shelf visibly empty with its outlines still drawn. The abandoned outlines are the point: the reader sees the space that used to be occupied. It is the most direct before-and-after available in a cell this wide.",
+      "note": "",
+      "page": "iot",
+      "section": "Cell 1 · wide, beside \"Global Out of the Box\"",
+      "embed": {
+        "w": 740,
+        "h": 234,
+        "layout": "wide"
+      },
+      "tone": null,
+      "slot": {
+        "key": "iotwide",
+        "w": 740,
+        "h": 234
+      },
+      "viewBox": "0 0 740 234",
+      "hasInit": false,
+      "module": "iot-cells.js",
+      "export": "C1_VARIANTS",
+      "decision": "Selected direction",
+      "fitReview": false,
+      "fitNote": "Native geometry closely matches the measured slot. Check responsive label size and companion pills.",
+      "source": "js/iot-cells.js",
+      "runtime": "delivery/runtime/js/iot-cells.js",
+      "preview": "/delivery/preview.html?key=iotwide",
+      "guide": "delivery/items/iotwide.md",
+      "identity": "Chrome"
+    },
+    {
+      "key": "iotchip",
+      "opt": 1,
+      "id": "c2-tray",
+      "name": "The Tray Ejects",
+      "family": "Literal",
+      "description": "A SIM tray slides out of the board and off the edge of the cell. The slot it leaves collapses, an eSIM drops into its place and solders down, and a single figure resolves beneath: 30 mm² to 6 mm². It is the most literal reading of \"no SIM card slot needed\" and it produces the one number the two cards in that row are both about.",
+      "note": "",
+      "page": "iot",
+      "section": "Cell 2 · small, beside \"Smaller Form Factor\"",
+      "embed": {
+        "w": 360,
+        "h": 234,
+        "layout": "small"
+      },
+      "tone": null,
+      "slot": {
+        "key": "iotchip",
+        "w": 360,
+        "h": 234
+      },
+      "viewBox": "0 0 360 234",
+      "hasInit": false,
+      "module": "iot-cells.js",
+      "export": "C2_VARIANTS",
+      "decision": "Selected direction",
+      "fitReview": false,
+      "fitNote": "Native geometry closely matches the measured slot. Check responsive label size and companion pills.",
+      "source": "js/iot-cells.js",
+      "runtime": "delivery/runtime/js/iot-cells.js",
+      "preview": "/delivery/preview.html?key=iotchip",
+      "guide": "delivery/items/iotchip.md",
+      "identity": "Chrome"
+    },
+    {
+      "key": "iotdark",
+      "opt": 1,
+      "id": "c3-night",
+      "name": "Night Side",
+      "family": "Scale",
+      "description": "The dark panel becomes the night side of the earth, stretched across the full width of the cell. Devices power on in region after region and each one lights the instant it attaches, with a millisecond figure beside it and an odometer of devices online climbing at the right. It keeps everything that makes this cell the best-looking one on the page and finally gives it a subject.",
+      "note": "",
+      "page": "iot",
+      "section": "Cell 3 · wide dark, beside \"Instant Activation\"",
+      "embed": {
+        "w": 740,
+        "h": 234,
+        "layout": "wide"
+      },
+      "tone": "dark",
+      "slot": {
+        "key": "iotdark",
+        "w": 740,
+        "h": 234
+      },
+      "viewBox": "0 0 740 234",
+      "hasInit": false,
+      "module": "iot-cells.js",
+      "export": "C3_VARIANTS",
+      "decision": "Selected direction",
+      "fitReview": false,
+      "fitNote": "Native geometry closely matches the measured slot. Check responsive label size and companion pills.",
+      "source": "js/iot-cells.js",
+      "runtime": "delivery/runtime/js/iot-cells.js",
+      "preview": "/delivery/preview.html?key=iotdark",
+      "guide": "delivery/items/iotdark.md",
+      "identity": "Chrome"
+    },
+    {
+      "key": "pluslounge",
+      "opt": 1,
+      "id": "lg-lanes",
+      "name": "Two Lanes, One Clock",
+      "family": "Comparison",
+      "description": "Two vertical queues run down the panel side by side, each a column of waiting figures, with one clock counting for both. In the fast-track lane you advance and clear security at 04:12; in the regular lane the column has barely moved and its own readout keeps climbing past thirty minutes. The tall panel is the reason this works — a queue is a vertical object, and this is the shape for it.",
+      "note": "",
+      "page": "openline-plus",
+      "section": "Airport Lounge & Fast Track Access",
+      "embed": {
+        "w": 574,
+        "h": 642,
+        "layout": "split"
+      },
+      "tone": "plus",
+      "slot": {
+        "key": "pluslounge",
+        "w": 574,
+        "h": 642
+      },
+      "viewBox": "0 0 574 642",
+      "hasInit": false,
+      "module": "plus.js",
+      "export": "LOUNGE_VARIANTS",
+      "decision": "Selected direction",
+      "fitReview": false,
+      "fitNote": "Native geometry closely matches the measured slot. Check responsive label size and companion pills.",
+      "source": "js/plus.js",
+      "runtime": "delivery/runtime/js/plus.js",
+      "preview": "/delivery/preview.html?key=pluslounge",
+      "guide": "delivery/items/pluslounge.md",
+      "identity": "As shipped"
+    },
+    {
+      "key": "plusnomad",
+      "opt": 1,
+      "id": "nm-cities",
+      "name": "Six Cities, One Number",
+      "family": "Core promise",
+      "description": "A year of moves runs down the panel — Lisbon in January, Bali in March, Medellín in May, Tbilisi in July, Cape Town in September, Bangkok in November. Beside each the local carrier changes, and in a fixed column to the right the same +1 number never does. It is the single most important promise on this page, and nothing currently illustrates it.",
+      "note": "",
+      "page": "openline-plus",
+      "section": "Built for Digital Nomads",
+      "embed": {
+        "w": 574,
+        "h": 656,
+        "layout": "split"
+      },
+      "tone": "plus",
+      "slot": {
+        "key": "plusnomad",
+        "w": 574,
+        "h": 656
+      },
+      "viewBox": "0 0 574 656",
+      "hasInit": false,
+      "module": "plus.js",
+      "export": "NOMAD_VARIANTS",
+      "decision": "Selected direction",
+      "fitReview": false,
+      "fitNote": "Native geometry closely matches the measured slot. Check responsive label size and companion pills.",
+      "source": "js/plus.js",
+      "runtime": "delivery/runtime/js/plus.js",
+      "preview": "/delivery/preview.html?key=plusnomad",
+      "guide": "delivery/items/plusnomad.md",
+      "identity": "As shipped"
+    },
+    {
+      "key": "pluskyc",
+      "opt": 0,
+      "id": "ky-current",
+      "name": "Current",
+      "family": "Live today",
+      "description": "A REQUIRED form card listing passport number, home address, selfie and phone number with a green tick on each, beside a phone reading \"Identity verified\", plus a VERIFIED stamp and a \"Card payment required\" note. It is the most complete of the three panels on this page — but the stamp is printed directly over the Selfie row, the ticks are all present from the first frame so nothing is ever verified, and it never says why any of this is required.",
+      "note": "",
+      "page": "openline-plus",
+      "section": "Verified & Secure",
+      "embed": {
+        "w": 574,
+        "h": 432,
+        "layout": "split"
+      },
+      "tone": "plusgreen",
+      "slot": {
+        "key": "pluskyc",
+        "w": 574,
+        "h": 440
+      },
+      "viewBox": "0 0 574 432",
+      "hasInit": false,
+      "module": "plus.js",
+      "export": "KYC_VARIANTS",
+      "decision": "Keep current",
+      "fitReview": false,
+      "fitNote": "Native geometry closely matches the measured slot. Check responsive label size and companion pills.",
+      "source": "js/plus.js",
+      "runtime": "delivery/runtime/js/plus.js",
+      "preview": "/delivery/preview.html?key=pluskyc",
+      "guide": "delivery/items/pluskyc.md",
+      "identity": "As shipped"
+    },
+    {
+      "key": "aloha",
+      "opt": 6,
+      "id": "ic-globe",
+      "name": "Globe & Pin",
+      "family": "Openline",
+      "description": "The globe turns and a pin drops onto it with a ripple, over and over in different places. It is the most on-brand option — 190+ countries is the company's core claim — and it works on a login page for any market.",
+      "note": "",
+      "page": "login",
+      "section": "The \"Aloha!\" icon",
+      "embed": {
+        "w": 640,
+        "h": 460
+      },
+      "tone": null,
+      "slot": {
+        "key": "aloha",
+        "w": 56,
+        "h": 56
+      },
+      "viewBox": "0 0 64 64",
+      "hasInit": false,
+      "module": "icons.js",
+      "export": "ICONS",
+      "decision": "Selected direction",
+      "fitReview": false,
+      "fitNote": "Native geometry closely matches the measured slot. Check responsive label size and companion pills.",
+      "source": "js/icons.js",
+      "runtime": "delivery/runtime/js/icons.js",
+      "preview": "/delivery/preview.html?key=aloha",
+      "guide": "delivery/items/aloha.md",
+      "identity": "As shipped"
+    },
+    {
+      "key": "prin",
+      "opt": 3,
+      "id": "pr-switches",
+      "name": "Switches We Left Off",
+      "family": "Anti-pattern",
+      "description": "A settings panel of the six toggles the industry ships on by default — auto-renew, marketing email, data sharing, silent throttling, roaming lock, contract rollover — each one shown already off, with a short line explaining what it would have cost the traveller. A last row, \"Your data\", stays on. It turns \"no dark patterns\" into a list of specific decisions the reader can audit.",
+      "note": "",
+      "page": "about",
+      "section": "Our Principles",
+      "embed": {
+        "w": 592,
+        "h": 430
+      },
+      "tone": null,
+      "slot": {
+        "key": "prin",
+        "w": 592,
+        "h": 430
+      },
+      "viewBox": "0 0 640 460",
+      "hasInit": false,
+      "module": "about.js",
+      "export": "PRIN_VARIANTS",
+      "decision": "Selected direction",
+      "fitReview": false,
+      "fitNote": "Native geometry closely matches the measured slot. Check responsive label size and companion pills.",
+      "source": "js/about.js",
+      "runtime": "delivery/runtime/js/about.js",
+      "preview": "/delivery/preview.html?key=prin",
+      "guide": "delivery/items/prin.md",
+      "identity": "As shipped"
+    },
+    {
+      "key": "team",
+      "opt": 3,
+      "id": "tm-versus",
+      "name": "Against the Industry",
+      "family": "Positioning",
+      "description": "Two stacked bars grow side by side: a typical eSIM reseller, where marketing and sales take roughly sixty percent of headcount and engineering takes ten, and Openline, where engineering takes forty-five and marketing is a sliver. A line underneath draws the consequence — their cost goes into acquisition, ours goes into the stack, which is why the price is lower. It states the argument the paragraph below makes, rather than the composition alone.",
+      "note": "",
+      "page": "about",
+      "section": "Built by Travelers, for Travelers",
+      "embed": {
+        "w": 592,
+        "h": 480
+      },
+      "tone": null,
+      "slot": {
+        "key": "team",
+        "w": 592,
+        "h": 480
+      },
+      "viewBox": "0 0 640 519",
+      "hasInit": false,
+      "module": "about.js",
+      "export": "TEAM_VARIANTS",
+      "decision": "Selected direction",
+      "fitReview": false,
+      "fitNote": "Native geometry closely matches the measured slot. Check responsive label size and companion pills.",
+      "source": "js/about.js",
+      "runtime": "delivery/runtime/js/about.js",
+      "preview": "/delivery/preview.html?key=team",
+      "guide": "delivery/items/team.md",
+      "identity": "As shipped"
+    },
+    {
+      "key": "omhero",
+      "opt": 7,
+      "id": "om-finboard",
+      "name": "The Board",
+      "family": "B · fintech-clean",
+      "description": "A direct A/B against option 1: identical information, opposite surface. Zebra rows, soft indigo depth bars, one accent, no gold, and far more air between the numbers. Useful precisely because it isolates the surface question — if this reads as credible as the navy version, the page does not need to go dark at all.",
+      "note": "",
+      "page": "omdm-market",
+      "section": "Hero — the live book",
+      "embed": {
+        "w": 576,
+        "h": 460
+      },
+      "tone": null,
+      "slot": {
+        "key": "omhero",
+        "w": 576,
+        "h": 460
+      },
+      "viewBox": "0 0 576 460",
+      "hasInit": false,
+      "module": "omdm-hero.js",
+      "export": "OMDM_HERO_VARIANTS",
+      "decision": "Selected direction",
+      "fitReview": false,
+      "fitNote": "Native geometry closely matches the measured slot. Check responsive label size and companion pills.",
+      "source": "js/omdm-hero.js",
+      "runtime": "delivery/runtime/js/omdm-hero.js",
+      "preview": "/delivery/preview.html?key=omhero",
+      "guide": "delivery/items/omhero.md",
+      "identity": "As shipped"
+    },
+    {
+      "key": "ombook",
+      "opt": 6,
+      "id": "ob-alive",
+      "name": "Cards, Alive",
+      "family": "B · fintech-clean",
+      "description": "The most conservative option and therefore the most likely to actually ship: the six cards stay exactly where they are, on the light surface, and each gains a live micro-chart plus one ticking value from its own signal set. No layout change, no new section, no copy rewrite — the grid simply stops being dead.",
+      "note": "",
+      "page": "omdm-market",
+      "section": "What moves a price",
+      "embed": {
+        "w": 1280,
+        "h": 420,
+        "layout": "wide"
+      },
+      "tone": null,
+      "slot": {
+        "key": "ombook",
+        "w": 1232,
+        "h": 404
+      },
+      "viewBox": "0 0 1280 420",
+      "hasInit": false,
+      "module": "omdm-book.js",
+      "export": "OMDM_BOOK_VARIANTS",
+      "decision": "Selected direction",
+      "fitReview": false,
+      "fitNote": "Native geometry closely matches the measured slot. Check responsive label size and companion pills.",
+      "source": "js/omdm-book.js",
+      "runtime": "delivery/runtime/js/omdm-book.js",
+      "preview": "/delivery/preview.html?key=ombook",
+      "guide": "delivery/items/ombook.md",
+      "identity": "As shipped"
+    },
+    {
+      "key": "omctrl",
+      "opt": 6,
+      "id": "oc-onboard",
+      "name": "Onboarding",
+      "family": "B · fintech-clean",
+      "description": "The light-surface reading of the gate: one counterparty card working through the four controls as a progress flow, each resolving to a green state with the specific thing that was checked named beside it. Calm rather than dramatic, and it reads as a product screen the reader could imagine using.",
+      "note": "",
+      "page": "omdm-market",
+      "section": "Built to be audited",
+      "embed": {
+        "w": 624,
+        "h": 440
+      },
+      "tone": null,
+      "slot": {
+        "key": "omctrl",
+        "w": 624,
+        "h": 440
+      },
+      "viewBox": "0 0 624 440",
+      "hasInit": false,
+      "module": "omdm-ctrl.js",
+      "export": "OMDM_CTRL_VARIANTS",
+      "decision": "Selected direction",
+      "fitReview": false,
+      "fitNote": "Native geometry closely matches the measured slot. Check responsive label size and companion pills.",
+      "source": "js/omdm-ctrl.js",
+      "runtime": "delivery/runtime/js/omdm-ctrl.js",
+      "preview": "/delivery/preview.html?key=omctrl",
+      "guide": "delivery/items/omctrl.md",
+      "identity": "As shipped"
+    },
+    {
+      "key": "blog",
+      "opt": 2,
+      "id": "blogtopics",
+      "name": "Topic Picker",
+      "family": "Navigation",
+      "description": "Four topic chips — Guides, Destinations, Devices, Deals — cycle as the active one, and the three cards beneath swap to real headlines from that topic with its article count. It answers the question the current hero does not: what is actually in here, and is any of it for me.",
+      "note": "",
+      "page": "blog",
+      "section": "Hero",
+      "embed": {
+        "w": 640,
+        "h": 460
+      },
+      "tone": null,
+      "slot": {
+        "key": "blog",
+        "w": 576,
+        "h": 540,
+        "boards": [
+          "blog",
+          "blogv"
+        ]
+      },
+      "viewBox": "0 0 640 460",
+      "hasInit": true,
+      "module": "iot-blog.js",
+      "export": "BLOG_VARIANTS",
+      "decision": "Current Blog default; shared-slot decision remains",
+      "fitReview": true,
+      "fitNote": "Native artwork and destination slot differ. QA context-fit is included; validate in the final responsive component, never stretch.",
+      "source": "js/iot-blog.js",
+      "runtime": "delivery/runtime/js/iot-blog.js",
+      "preview": "/delivery/preview.html?key=blog",
+      "guide": "delivery/items/blog.md",
+      "identity": "Newsprint"
+    },
+    {
+      "key": "blogv",
+      "opt": 6,
+      "id": "bv-long",
+      "name": "The Long Read",
+      "family": "Editorial",
+      "description": "Instead of a title, the cover leads with a line from the piece itself — the sentence that would make someone want to read it — set large, with the article credited beneath. It is how serious publications sell an article, and it is the only option here that demonstrates the quality of the writing rather than asserting that guides exist.",
+      "note": "",
+      "page": "blog",
+      "section": "Article panel as a video cover",
+      "embed": {
+        "w": 576,
+        "h": 540
+      },
+      "tone": null,
+      "slot": {
+        "key": "blog",
+        "w": 576,
+        "h": 540,
+        "boards": [
+          "blog",
+          "blogv"
+        ]
+      },
+      "viewBox": "0 0 576 540",
+      "hasInit": false,
+      "module": "blogvideo.js",
+      "export": "BLOGV_VARIANTS",
+      "decision": "Retained alternative, shared Blog slot",
+      "fitReview": false,
+      "fitNote": "Native geometry closely matches the measured slot. Check responsive label size and companion pills.",
+      "source": "js/blogvideo.js",
+      "runtime": "delivery/runtime/js/blogvideo.js",
+      "preview": "/delivery/preview.html?key=blogv",
+      "guide": "delivery/items/blogv.md",
+      "identity": "Newsprint"
+    },
+    {
+      "key": "install",
+      "opt": 3,
+      "id": "ig-chapters",
+      "name": "Chapter Deck",
+      "family": "Informational",
+      "description": "A placeholder that earns the click by answering \"what will I get?\". The four chapters of the video are listed with real timecodes, and the active row slides its orange marker down the list on a loop, previewing the shape of the thing. The left column carries the title and the CTA. Someone who has already scanned their code can see the video covers the bit they are stuck on, which a bare play button can never tell them.",
+      "note": "",
+      "page": "installation-guide",
+      "section": "Hero video placeholder — whole-surface CTA",
+      "embed": {
+        "w": 576,
+        "h": 324
+      },
+      "tone": null,
+      "slot": {
+        "key": "install",
+        "w": 576,
+        "h": 324
+      },
+      "viewBox": "0 0 576 324",
+      "hasInit": true,
+      "module": "install-cta.js",
+      "export": "INSTALL_VARIANTS",
+      "decision": "Selected direction",
+      "fitReview": false,
+      "fitNote": "Native geometry closely matches the measured slot. Check responsive label size and companion pills.",
+      "source": "js/install-cta.js",
+      "runtime": "delivery/runtime/js/install-cta.js",
+      "preview": "/delivery/preview.html?key=install",
+      "guide": "delivery/items/install.md",
+      "identity": "As shipped"
+    },
+    {
+      "key": "contact",
+      "opt": 10,
+      "id": "ct-doors",
+      "name": "Two Doors",
+      "family": "Utility",
+      "description": "The page offers live chat and the FAQ with no guidance, so readers pick wrong and are disappointed by whichever they chose. This splits them honestly: the FAQ for the twelve questions everyone asks, answered instantly, and chat for anything about your specific line, answered by a person. Both sides fill in as you watch.",
+      "note": "",
+      "page": "contact",
+      "section": "Hero — support status",
+      "embed": {
+        "w": 576,
+        "h": 420
+      },
+      "tone": null,
+      "slot": {
+        "key": "contact",
+        "hero": true,
+        "w": 576,
+        "h": 420,
+        "clearFill": true
+      },
+      "viewBox": "0 0 576 420",
+      "hasInit": false,
+      "module": "contact-affil.js",
+      "export": "CONTACT_VARIANTS",
+      "decision": "Selected direction",
+      "fitReview": false,
+      "fitNote": "Native geometry closely matches the measured slot. Check responsive label size and companion pills.",
+      "source": "js/contact-affil.js",
+      "runtime": "delivery/runtime/js/contact-affil.js",
+      "preview": "/delivery/preview.html?key=contact",
+      "guide": "delivery/items/contact.md",
+      "identity": "As shipped"
+    },
+    {
+      "key": "affil",
+      "opt": 3,
+      "id": "af-actual",
+      "name": "What You Actually Get",
+      "family": "Money",
+      "description": "Nobody can feel a percentage. This puts the real plan prices beside the commission they pay at 30% and at 40%, so a reader can see that a mid-size plan returns a specific amount of money. It is the most honest option here and the one most likely to make somebody sign up, because it removes the arithmetic.",
+      "note": "",
+      "page": "affiliate",
+      "section": "Hero — earnings card",
+      "embed": {
+        "w": 592,
+        "h": 430
+      },
+      "tone": null,
+      "slot": {
+        "key": "affil",
+        "hero": true,
+        "w": 576,
+        "h": 420,
+        "clearFill": true
+      },
+      "viewBox": "0 0 592 430",
+      "hasInit": false,
+      "module": "contact-affil.js",
+      "export": "AFFIL_VARIANTS",
+      "decision": "Selected direction",
+      "fitReview": false,
+      "fitNote": "Native geometry closely matches the measured slot. Check responsive label size and companion pills.",
+      "source": "js/contact-affil.js",
+      "runtime": "delivery/runtime/js/contact-affil.js",
+      "preview": "/delivery/preview.html?key=affil",
+      "guide": "delivery/items/affil.md",
+      "identity": "As shipped"
+    }
+  ],
+  "pages": [
+    {
+      "slug": "home",
+      "title": "Home",
+      "path": "/home",
+      "slots": [
+        {
+          "key": "homewhy",
+          "w": 407,
+          "h": 302,
+          "hideUp": true
+        },
+        {
+          "key": "referral",
+          "w": 576,
+          "h": 520,
+          "clear": true
+        }
+      ],
+      "route": "/qa/home",
+      "file": "qa/home.html",
+      "files": [
+        "qa/home.html",
+        "js/home-why.js",
+        "js/referral.js"
+      ],
+      "changeIds": [
+        "delivery-release",
+        "delivery-general-badges",
+        "delivery-certification-badge",
+        "delivery-home-original-three",
+        "delivery-app-panel-polish",
+        "native-typography",
+        "context-fit",
+        "page-browser",
+        "home-why-fit",
+        "referral-fit",
+        "clean-customer-presentation",
+        "qa-reporting"
+      ],
+      "kind": "Contextual page"
+    },
+    {
+      "slug": "multiple-tier1",
+      "title": "Multiple Tier-1",
+      "path": "/multiple-tier1",
+      "slots": [
+        {
+          "key": "tier1",
+          "hero": true,
+          "w": 576,
+          "h": 420
+        },
+        {
+          "key": "t1ai",
+          "w": 584,
+          "h": 560
+        },
+        {
+          "key": "t1market",
+          "w": 584,
+          "h": 440
+        },
+        {
+          "key": "t1access",
+          "w": 584,
+          "h": 470
+        }
+      ],
+      "route": "/qa/multiple-tier1",
+      "file": "qa/multiple-tier1.html",
+      "files": [
+        "qa/multiple-tier1.html",
+        "qa/connectivity-copy.json",
+        "qa/connectivity-changes.js",
+        "qa/redesign/profile-switching.html",
+        "qa/profile-switching.css",
+        "qa/redesign/operator-showcase.html",
+        "qa/operator-showcase.js",
+        "qa/operator-showcase.css",
+        "qa/operators.json",
+        "qa/assets/operators/README.md"
+      ],
+      "changeIds": [
+        "delivery-release",
+        "delivery-general-badges",
+        "delivery-certification-badge",
+        "delivery-app-panel-polish",
+        "native-typography",
+        "context-fit",
+        "page-browser",
+        "profile-switching-explainer",
+        "compact-profile-explainer",
+        "multi-tier1-profile-copy",
+        "multi-tier1-operator-ribbons",
+        "clean-customer-presentation",
+        "qa-reporting"
+      ],
+      "kind": "Contextual page"
+    },
+    {
+      "slug": "global-esim",
+      "title": "Global eSIM",
+      "path": "/global-esim",
+      "slots": [
+        {
+          "key": "what",
+          "w": 584,
+          "h": 420
+        },
+        {
+          "key": "travel",
+          "w": 584,
+          "h": 520
+        }
+      ],
+      "route": "/qa/global-esim",
+      "file": "qa/global-esim.html",
+      "files": [
+        "qa/global-esim.html",
+        "qa/core.js",
+        "qa/recolor.js",
+        "qa/paint.js"
+      ],
+      "changeIds": [
+        "delivery-release",
+        "delivery-general-badges",
+        "delivery-certification-badge",
+        "delivery-app-panel-polish",
+        "native-typography",
+        "context-fit",
+        "page-browser",
+        "global-esim-orange",
+        "clean-customer-presentation",
+        "qa-reporting"
+      ],
+      "kind": "Contextual page"
+    },
+    {
+      "slug": "network",
+      "title": "Network",
+      "path": "/network",
+      "group": "Features",
+      "slots": [
+        {
+          "key": "nethero",
+          "hero": true,
+          "w": 576,
+          "h": 420
+        },
+        {
+          "key": "why",
+          "w": 592,
+          "h": 430
+        }
+      ],
+      "route": "/qa/network",
+      "file": "qa/network.html",
+      "files": [
+        "qa/network.html",
+        "qa/core.js",
+        "qa/recolor.js",
+        "qa/paint.js"
+      ],
+      "changeIds": [
+        "delivery-release",
+        "delivery-general-badges",
+        "delivery-certification-badge",
+        "delivery-app-panel-polish",
+        "native-typography",
+        "context-fit",
+        "page-browser",
+        "page-identities",
+        "clean-customer-presentation",
+        "qa-reporting"
+      ],
+      "kind": "Contextual page"
+    },
+    {
+      "slug": "security",
+      "title": "Security",
+      "path": "/security",
+      "group": "Features",
+      "slots": [],
+      "route": "/qa/security",
+      "file": "qa/security.html",
+      "files": [
+        "qa/security.html",
+        "qa/core.js",
+        "qa/recolor.js",
+        "qa/paint.js"
+      ],
+      "changeIds": [
+        "delivery-release",
+        "delivery-general-badges",
+        "delivery-certification-badge",
+        "delivery-app-panel-polish",
+        "native-typography",
+        "context-fit",
+        "page-browser",
+        "page-identities",
+        "clean-customer-presentation",
+        "qa-reporting"
+      ],
+      "kind": "Contextual page"
+    },
+    {
+      "slug": "adblocking",
+      "title": "AdBlocking",
+      "path": "/adblocking",
+      "group": "Features",
+      "slots": [],
+      "route": "/qa/adblocking",
+      "file": "qa/adblocking.html",
+      "files": [
+        "qa/adblocking.html",
+        "qa/core.js",
+        "qa/recolor.js",
+        "qa/paint.js"
+      ],
+      "changeIds": [
+        "delivery-release",
+        "delivery-general-badges",
+        "delivery-certification-badge",
+        "delivery-app-panel-polish",
+        "native-typography",
+        "context-fit",
+        "page-browser",
+        "page-identities",
+        "clean-customer-presentation",
+        "qa-reporting"
+      ],
+      "kind": "Contextual page"
+    },
+    {
+      "slug": "unlimited",
+      "title": "Unlimited",
+      "path": "/unlimited",
+      "group": "Features",
+      "slots": [],
+      "route": "/qa/unlimited",
+      "file": "qa/unlimited.html",
+      "files": [
+        "qa/unlimited.html",
+        "qa/connectivity-copy.json",
+        "qa/unlimited-plan-copy.json",
+        "qa/connectivity-changes.js",
+        "qa/redesign/profile-switching.html",
+        "qa/profile-switching.css"
+      ],
+      "changeIds": [
+        "delivery-release",
+        "delivery-general-badges",
+        "delivery-certification-badge",
+        "delivery-app-panel-polish",
+        "native-typography",
+        "context-fit",
+        "page-browser",
+        "page-identities",
+        "profile-switching-explainer",
+        "compact-profile-explainer",
+        "unlimited-profile-copy",
+        "unlimited-fixed-vs-mno-fair-use",
+        "clean-customer-presentation",
+        "qa-reporting"
+      ],
+      "kind": "Contextual page"
+    },
+    {
+      "slug": "business",
+      "title": "Business",
+      "path": "/business",
+      "slots": [
+        {
+          "key": "bizhero",
+          "w": 576,
+          "h": 560
+        },
+        {
+          "key": "bizneeds",
+          "w": 584,
+          "h": 440
+        }
+      ],
+      "route": "/qa/business",
+      "file": "qa/business.html",
+      "files": [
+        "qa/business.html"
+      ],
+      "changeIds": [
+        "delivery-release",
+        "delivery-general-badges",
+        "delivery-certification-badge",
+        "delivery-app-panel-polish",
+        "native-typography",
+        "context-fit",
+        "page-browser",
+        "clean-customer-presentation",
+        "qa-reporting"
+      ],
+      "kind": "Contextual page"
+    },
+    {
+      "slug": "hospitality",
+      "title": "Hospitality",
+      "path": "/hospitality",
+      "slots": [
+        {
+          "key": "hosp",
+          "hero": true,
+          "w": 576,
+          "h": 420
+        }
+      ],
+      "route": "/qa/hospitality",
+      "file": "qa/hospitality.html",
+      "files": [
+        "qa/hospitality.html"
+      ],
+      "changeIds": [
+        "delivery-release",
+        "delivery-general-badges",
+        "delivery-certification-badge",
+        "delivery-app-panel-polish",
+        "native-typography",
+        "context-fit",
+        "page-browser",
+        "clean-customer-presentation",
+        "qa-reporting"
+      ],
+      "kind": "Contextual page"
+    },
+    {
+      "slug": "iot",
+      "title": "IoT",
+      "path": "/iot",
+      "slots": [
+        {
+          "key": "iotwide",
+          "w": 740,
+          "h": 234
+        },
+        {
+          "key": "iotchip",
+          "w": 360,
+          "h": 234
+        },
+        {
+          "key": "iotdark",
+          "w": 740,
+          "h": 234
+        }
+      ],
+      "route": "/qa/iot",
+      "file": "qa/iot.html",
+      "files": [
+        "qa/iot.html",
+        "js/iot-cells.js",
+        "qa/core.js",
+        "qa/paint.js",
+        "qa/recolor.js"
+      ],
+      "changeIds": [
+        "delivery-release",
+        "delivery-general-badges",
+        "delivery-certification-badge",
+        "delivery-app-panel-polish",
+        "native-typography",
+        "context-fit",
+        "page-browser",
+        "iot-chrome",
+        "clean-customer-presentation",
+        "qa-reporting"
+      ],
+      "kind": "Contextual page"
+    },
+    {
+      "slug": "openline-plus",
+      "title": "Openline+",
+      "path": "/openline-plus",
+      "slots": [
+        {
+          "key": "pluslounge",
+          "w": 574,
+          "h": 642
+        },
+        {
+          "key": "plusnomad",
+          "w": 574,
+          "h": 656
+        },
+        {
+          "key": "pluskyc",
+          "w": 574,
+          "h": 440
+        }
+      ],
+      "route": "/qa/openline-plus",
+      "file": "qa/openline-plus.html",
+      "files": [
+        "qa/openline-plus.html",
+        "js/plus.js",
+        "qa/animation-fixes.js"
+      ],
+      "changeIds": [
+        "delivery-release",
+        "delivery-general-badges",
+        "delivery-certification-badge",
+        "delivery-app-panel-polish",
+        "native-typography",
+        "context-fit",
+        "page-browser",
+        "nomad-stability",
+        "clean-customer-presentation",
+        "qa-reporting"
+      ],
+      "kind": "Contextual page"
+    },
+    {
+      "slug": "login",
+      "title": "Login",
+      "path": "/login",
+      "slots": [
+        {
+          "key": "aloha",
+          "w": 56,
+          "h": 56
+        }
+      ],
+      "route": "/qa/login",
+      "file": "qa/login.html",
+      "files": [
+        "qa/login.html"
+      ],
+      "changeIds": [
+        "delivery-release",
+        "delivery-general-badges",
+        "delivery-certification-badge",
+        "delivery-app-panel-polish",
+        "native-typography",
+        "context-fit",
+        "page-browser",
+        "clean-customer-presentation",
+        "qa-reporting"
+      ],
+      "kind": "Contextual page"
+    },
+    {
+      "slug": "about",
+      "title": "About",
+      "path": "/about",
+      "redesign": "about-redesign",
+      "slots": [
+        {
+          "key": "prin",
+          "w": 592,
+          "h": 430
+        },
+        {
+          "key": "team",
+          "w": 592,
+          "h": 480
+        }
+      ],
+      "route": "/qa/about",
+      "file": "qa/about.html",
+      "files": [
+        "qa/about.html"
+      ],
+      "changeIds": [
+        "delivery-release",
+        "delivery-general-badges",
+        "delivery-certification-badge",
+        "delivery-app-panel-polish",
+        "native-typography",
+        "context-fit",
+        "page-browser",
+        "about-layout",
+        "clean-customer-presentation",
+        "qa-reporting"
+      ],
+      "kind": "Contextual page"
+    },
+    {
+      "slug": "about-redesign",
+      "title": "About — redesign",
+      "path": "/about",
+      "redesignOf": "about",
+      "slots": [
+        {
+          "key": "prin",
+          "w": 592,
+          "h": 430
+        },
+        {
+          "key": "team",
+          "w": 592,
+          "h": 480
+        }
+      ],
+      "route": "/qa/about-redesign",
+      "file": "qa/about-redesign.html",
+      "files": [
+        "qa/about-redesign.html",
+        "qa/redesign/about.main.html",
+        "qa/redesign/rd.css",
+        "qa/redesign.js"
+      ],
+      "changeIds": [
+        "delivery-release",
+        "delivery-general-badges",
+        "delivery-certification-badge",
+        "delivery-app-panel-polish",
+        "native-typography",
+        "context-fit",
+        "page-browser",
+        "about-layout",
+        "about-network-spacing",
+        "about-startup-locked",
+        "about-team-cities",
+        "redesign-button-parity",
+        "clean-customer-presentation",
+        "qa-reporting"
+      ],
+      "kind": "Retained alternative"
+    },
+    {
+      "slug": "omdm-market",
+      "title": "OMDM Market",
+      "path": "/omdm-market",
+      "slots": [
+        {
+          "key": "omhero",
+          "w": 576,
+          "h": 460
+        },
+        {
+          "key": "ombook",
+          "w": 1232,
+          "h": 404
+        },
+        {
+          "key": "omctrl",
+          "w": 624,
+          "h": 440
+        }
+      ],
+      "route": "/qa/omdm-market",
+      "file": "qa/omdm-market.html",
+      "files": [
+        "qa/omdm-market.html"
+      ],
+      "changeIds": [
+        "delivery-release",
+        "delivery-general-badges",
+        "delivery-certification-badge",
+        "delivery-app-panel-polish",
+        "native-typography",
+        "context-fit",
+        "page-browser",
+        "clean-customer-presentation",
+        "qa-reporting"
+      ],
+      "kind": "Contextual page"
+    },
+    {
+      "slug": "blog",
+      "title": "Blog",
+      "path": "/blog",
+      "slots": [
+        {
+          "key": "blog",
+          "w": 576,
+          "h": 540,
+          "boards": [
+            "blog",
+            "blogv"
+          ]
+        }
+      ],
+      "route": "/qa/blog",
+      "file": "qa/blog.html",
+      "files": [
+        "qa/blog.html"
+      ],
+      "changeIds": [
+        "delivery-release",
+        "delivery-general-badges",
+        "delivery-certification-badge",
+        "delivery-app-panel-polish",
+        "native-typography",
+        "context-fit",
+        "page-browser",
+        "page-identities",
+        "clean-customer-presentation",
+        "qa-reporting"
+      ],
+      "kind": "Contextual page"
+    },
+    {
+      "slug": "installation-guide",
+      "title": "Installation Guide",
+      "path": "/installation-guide",
+      "slots": [
+        {
+          "key": "install",
+          "w": 576,
+          "h": 324
+        }
+      ],
+      "route": "/qa/installation-guide",
+      "file": "qa/installation-guide.html",
+      "files": [
+        "qa/installation-guide.html",
+        "qa/redesign/installation-preflight.html",
+        "qa/installation-preflight.js",
+        "qa/installation-preflight.css",
+        "qa/support/boot.js"
+      ],
+      "changeIds": [
+        "delivery-release",
+        "delivery-general-badges",
+        "delivery-certification-badge",
+        "delivery-app-panel-polish",
+        "native-typography",
+        "context-fit",
+        "page-browser",
+        "installation-preflight",
+        "installation-preflight-simplified",
+        "installation-preflight-install-first",
+        "installation-preflight-detail-modals",
+        "start-flow",
+        "start-gift-unlock-transfer",
+        "clean-customer-presentation",
+        "help-modals",
+        "qa-reporting"
+      ],
+      "kind": "Contextual page"
+    },
+    {
+      "slug": "contact",
+      "title": "Contact",
+      "path": "/contact",
+      "redesign": "contact-redesign",
+      "slots": [
+        {
+          "key": "contact",
+          "hero": true,
+          "w": 576,
+          "h": 420,
+          "clearFill": true
+        }
+      ],
+      "route": "/qa/contact",
+      "file": "qa/contact.html",
+      "files": [
+        "qa/contact.html"
+      ],
+      "changeIds": [
+        "delivery-release",
+        "delivery-general-badges",
+        "delivery-certification-badge",
+        "delivery-app-panel-polish",
+        "native-typography",
+        "context-fit",
+        "page-browser",
+        "contact-layout",
+        "clean-customer-presentation",
+        "qa-reporting"
+      ],
+      "kind": "Contextual page"
+    },
+    {
+      "slug": "contact-redesign",
+      "title": "Contact — redesign",
+      "path": "/contact",
+      "redesignOf": "contact",
+      "slots": [
+        {
+          "key": "contact",
+          "w": 576,
+          "h": 420
+        }
+      ],
+      "route": "/qa/contact-redesign",
+      "file": "qa/contact-redesign.html",
+      "files": [
+        "qa/contact-redesign.html",
+        "qa/redesign/contact.main.html",
+        "qa/redesign/rd.css",
+        "qa/redesign.js",
+        "qa/support/boot.js"
+      ],
+      "changeIds": [
+        "delivery-release",
+        "delivery-general-badges",
+        "delivery-certification-badge",
+        "delivery-app-panel-polish",
+        "native-typography",
+        "context-fit",
+        "page-browser",
+        "redesign-button-parity",
+        "contact-layout",
+        "contact-channels",
+        "contact-chat-seeking",
+        "clean-customer-presentation",
+        "qa-reporting"
+      ],
+      "kind": "Retained alternative"
+    },
+    {
+      "slug": "affiliate",
+      "title": "Affiliate",
+      "path": "/affiliate",
+      "slots": [
+        {
+          "key": "affil",
+          "hero": true,
+          "w": 576,
+          "h": 420,
+          "clearFill": true
+        }
+      ],
+      "route": "/qa/affiliate",
+      "file": "qa/affiliate.html",
+      "files": [
+        "qa/affiliate.html"
+      ],
+      "changeIds": [
+        "delivery-release",
+        "delivery-general-badges",
+        "delivery-certification-badge",
+        "delivery-app-panel-polish",
+        "native-typography",
+        "context-fit",
+        "page-browser",
+        "clean-customer-presentation",
+        "qa-reporting"
+      ],
+      "kind": "Contextual page"
+    },
+    {
+      "slug": "producthunt",
+      "title": "Product Hunt — redesign",
+      "path": "/producthunt",
+      "group": "Launch",
+      "standaloneRedesign": true,
+      "sourcePath": "/producthunt",
+      "slots": [],
+      "pageNote": "The existing Product Hunt redesign, now in QA: Kitty hero, reward lanes, pricing ladder, eligibility table and a clearly labelled claim simulation. Its page animations are built in, not selectable board slots. Review the design and flow, then leave page notes below.",
+      "route": "/qa/producthunt",
+      "file": "qa/producthunt.html",
+      "files": [
+        "qa/producthunt.html",
+        "qa/producthunt.js",
+        "qa/producthunt.css",
+        "qa/producthunt-page.css",
+        "qa/support/boot.js"
+      ],
+      "changeIds": [
+        "delivery-release",
+        "delivery-general-badges",
+        "delivery-certification-badge",
+        "delivery-app-panel-polish",
+        "native-typography",
+        "context-fit",
+        "page-browser",
+        "producthunt-qa",
+        "clean-customer-presentation",
+        "qa-reporting"
+      ],
+      "kind": "Campaign concept"
+    },
+    {
+      "slug": "country-fr-redesign",
+      "title": "France",
+      "path": "/country-fr",
+      "group": "Original template",
+      "standaloneRefinement": true,
+      "sourcePath": "https://openline-revisions-hub.vercel.app/country-fr",
+      "slots": [],
+      "pageNote": "Original France template with slight Unlimited-block refinements only. The rejected plan-type cards, dark sidebar and rebuilt fixed cards are removed. Original stacked sections and Data Bundles appearance remain. Duration controls, purchase previews and the corrected fair-use explanation work locally; no payment or activation is connected. The existing URL is retained so earlier review links open the corrected version.",
+      "route": "/qa/country-fr-redesign",
+      "file": "qa/country-fr-redesign.html",
+      "files": [
+        "qa/country-fr-redesign.html",
+        "qa/country-fr-refinement.js",
+        "qa/country-fr-refinement.css",
+        "qa/calendar-range.js",
+        "qa/country-fr-data.js",
+        "qa/redesign/country-fr-dialogs.html",
+        "qa/redesign/country-fr-support.html",
+        "qa/country-fr-support.js",
+        "qa/country-fr-support.css"
+      ],
+      "changeIds": [
+        "delivery-release",
+        "delivery-general-badges",
+        "delivery-certification-badge",
+        "delivery-app-panel-polish",
+        "native-typography",
+        "context-fit",
+        "page-browser",
+        "country-fr-unlimited-refinement",
+        "country-fr-plan-selector",
+        "country-fr-fair-use",
+        "country-fr-calendar-range",
+        "country-fr-calendar-polish",
+        "france-duration-cards-and-support",
+        "country-fr-unlimited-intro",
+        "clean-customer-presentation",
+        "qa-reporting"
+      ],
+      "kind": "Original-template refinement"
+    }
+  ],
+  "extras": [
+    {
+      "slug": "start",
+      "title": "Activate a plan",
+      "route": "/qa/start",
+      "kind": "Activation + gift sender",
+      "file": "qa/start.html",
+      "files": [
+        "qa/start.html",
+        "qa/start.js",
+        "qa/start.css",
+        "qa/start-profile.js",
+        "qa/start-profile.css",
+        "qa/start-changelog.md",
+        "qa/assets/start-brand-mark.png",
+        "qa/assets/start-demo-qr.png"
+      ],
+      "changeIds": [
+        "delivery-release",
+        "delivery-general-badges",
+        "delivery-certification-badge",
+        "delivery-app-panel-polish",
+        "native-typography",
+        "context-fit",
+        "page-browser",
+        "start-flow",
+        "start-gift-unlock-transfer",
+        "start-gift-recipient",
+        "start-profile-handoff",
+        "start-focused-redesign",
+        "start-normal-header-actions",
+        "start-quick-profile-modals",
+        "clean-customer-presentation",
+        "start-action-arrows",
+        "help-modals",
+        "qa-reporting"
+      ]
+    },
+    {
+      "slug": "recipient",
+      "title": "Receive a gifted eSIM",
+      "route": "/qa/start?recipient=1",
+      "kind": "Recipient journey",
+      "file": "qa/start.html",
+      "files": [
+        "qa/start.html",
+        "qa/start.js",
+        "qa/start.css",
+        "qa/start-profile.js",
+        "qa/start-profile.css",
+        "qa/start-changelog.md",
+        "qa/assets/start-brand-mark.png",
+        "qa/assets/start-demo-qr.png"
+      ],
+      "changeIds": [
+        "delivery-release",
+        "delivery-general-badges",
+        "delivery-certification-badge",
+        "delivery-app-panel-polish",
+        "native-typography",
+        "context-fit",
+        "page-browser",
+        "start-flow",
+        "start-gift-unlock-transfer",
+        "start-gift-recipient",
+        "start-profile-handoff",
+        "start-focused-redesign",
+        "start-normal-header-actions",
+        "start-quick-profile-modals",
+        "clean-customer-presentation",
+        "start-action-arrows",
+        "help-modals",
+        "qa-reporting"
+      ]
+    },
+    {
+      "slug": "chat",
+      "title": "Support chat",
+      "route": "/qa/chat",
+      "kind": "Interactive support concept",
+      "file": "qa/chat.html",
+      "files": [
+        "qa/chat.html",
+        "qa/support/chat.js",
+        "qa/support/support.js",
+        "qa/support/support.css",
+        "qa/support/boot.js",
+        "qa/assets/ai/README.md",
+        "qa/assets/support-portraits/README.md"
+      ],
+      "changeIds": [
+        "delivery-release",
+        "delivery-general-badges",
+        "delivery-certification-badge",
+        "delivery-app-panel-polish",
+        "native-typography",
+        "context-fit",
+        "page-browser",
+        "contact-channels",
+        "clean-customer-presentation",
+        "chat-sidebar-ai",
+        "chat-fresh-clear",
+        "chat-brand-portraits",
+        "help-modals",
+        "qa-reporting"
+      ]
+    },
+    {
+      "slug": "kb",
+      "title": "Knowledge base + device checker",
+      "route": "/qa/kb",
+      "kind": "Help tools",
+      "file": "qa/kb.html",
+      "files": [
+        "qa/kb.html",
+        "qa/support/support.js",
+        "qa/support/search.mjs",
+        "qa/support/minisearch.mjs",
+        "qa/support/md.js",
+        "qa/data/kb-articles.json",
+        "qa/data/devices.js",
+        "qa/kb.css"
+      ],
+      "changeIds": [
+        "delivery-release",
+        "delivery-general-badges",
+        "delivery-certification-badge",
+        "delivery-app-panel-polish",
+        "native-typography",
+        "context-fit",
+        "page-browser",
+        "clean-customer-presentation",
+        "help-modals",
+        "qa-reporting"
+      ]
+    },
+    {
+      "slug": "modals",
+      "title": "Modal builder",
+      "route": "/qa/modals",
+      "kind": "Design tool",
+      "file": "qa/modals.html",
+      "files": [
+        "qa/modals.html",
+        "qa/modals.js",
+        "qa/modals.css",
+        "qa/modal-templates.js",
+        "qa/modal-illus.js",
+        "qa/icons-lib.js"
+      ],
+      "changeIds": [
+        "delivery-release",
+        "delivery-general-badges",
+        "delivery-certification-badge",
+        "delivery-app-panel-polish",
+        "native-typography",
+        "context-fit",
+        "page-browser",
+        "clean-customer-presentation",
+        "modal-builder",
+        "qa-reporting"
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "id": "delivery-release",
+      "title": "Delivery: frozen implementation handoff for Irina",
+      "pages": [
+        "*"
+      ],
+      "status": "Delivery authorized / production integration pending",
+      "route": "/delivery",
+      "changedAt": "2026-10-06",
+      "summary": "The delivery pack freezes the 30 submitted choices, 22 contextual page entries and four extra tools, with the gift-recipient entry, portable animation previews, source files, exact wording changes and implementation instructions.",
+      "delivery": "The saved Comet decisions were checked on 6 October: no newer QA overrides, global theme original, page identities enabled by default. Blog Topic Picker is the current contextual default; The Long Read remains a retained alternative for the same slot. Openline+ KYC stays current. Reject the removed 16-page batch and full France redesign. This authorizes documentation and handoff, not production backend claims. Public technical pack excludes the private commercial cover note.",
+      "disposition": "Current",
+      "files": []
+    },
+    {
+      "id": "delivery-general-badges",
+      "title": "Irina task: Mobile app label and top-right Revisions",
+      "pages": [
+        "*"
+      ],
+      "status": "Requested / Irina to implement",
+      "route": "/delivery#requests",
+      "changedAt": "2026-10-06",
+      "summary": "Rename the floating Openline Mobile entry to Mobile app. Move the Revisions badge to the top right, with safe spacing from header controls and mobile safe areas.",
+      "delivery": "Reference https://snap.paulfleury.com/gF4BQJty. Preserve existing actions and keyboard access. Check desktop/mobile overlap, sticky header, menu and chat. This is an additional production/staging task, not an already implemented change across QA captures.",
+      "disposition": "Irina task",
+      "files": []
+    },
+    {
+      "id": "delivery-certification-badge",
+      "title": "Irina task: one compact certification trigger",
+      "pages": [
+        "*"
+      ],
+      "status": "Requested / content evidence required",
+      "route": "/delivery#requests",
+      "changedAt": "2026-10-06",
+      "summary": "Replace the row of separate certification labels with one shield-icon badge reading GDPR · SOC2 ···, opening the existing certification modal.",
+      "delivery": "Reference https://snap.paulfleury.com/hgg5y4Gk. One accessible button, sensible hit area, Escape/close/focus return. Keep evidence and explanations in the modal; do not interpret this design request as verification of certifications.",
+      "disposition": "Irina task",
+      "files": []
+    },
+    {
+      "id": "delivery-home-original-three",
+      "title": "Irina task: restore the three original How it works illustrations",
+      "pages": [
+        "home"
+      ],
+      "status": "Requested / original source version to confirm",
+      "route": "/delivery#requests",
+      "changedAt": "2026-10-06",
+      "summary": "Restore the last approved original illustrations under How does Openline work? for Choose your destination, Buy an eSIM in seconds and Scan & connect. Keep the selected Why Openline and Referral replacements.",
+      "delivery": "Marked section: https://snap.paulfleury.com/WFyHY3dq. Retain good Multiple Tier-1 and related illustrations: https://snap.paulfleury.com/sYy1sv34. Screenshot identifies scope, not the historical source commit; Irina should recover the approved source or confirm it with Paul. Do not replace these three with newly invented artwork.",
+      "disposition": "Irina task",
+      "files": [
+        "js/home-why.js",
+        "js/referral.js"
+      ]
+    },
+    {
+      "id": "delivery-app-panel-polish",
+      "title": "Irina task: web panel and mobile app flow coverage",
+      "pages": [
+        "*"
+      ],
+      "status": "Additional design work / not built in this pack",
+      "route": "/delivery#requests",
+      "changedAt": "2026-10-06",
+      "summary": "Apply the same visual and interaction care to web panel and mobile app. Supply Kerem with ready-to-build payment, purchase-code, activation, gifting, eSIM details, setup and account-management states.",
+      "delivery": "Include loading, empty, failure, retry, pending validation and success; annotate backend dependencies instead of presenting them as completed. First progress update Thursday 8 October; full report by Friday 9 October 2026 around 13:00 Europe/Lisbon. Report completion, blockers and estimates; this is not an assertion that all integrations can finish in 72 hours.",
+      "disposition": "Irina task",
+      "files": []
+    },
+    {
+      "id": "native-typography",
+      "title": "Openline typography everywhere",
+      "pages": [
+        "*"
+      ],
+      "status": "Implemented in QA",
+      "route": "/qa",
+      "summary": "One native Openline UI font stack across captured pages, retained redesigns, animations, navigation, chat, help and modal tools.",
+      "delivery": "Play is reserved for the wordmark; monospace remains only for genuine code and technical fields. Original review-board typography is unchanged.",
+      "disposition": "Current",
+      "files": []
+    },
+    {
+      "id": "context-fit",
+      "title": "Animation fit and background coherence",
+      "pages": [
+        "*"
+      ],
+      "status": "Implemented in QA",
+      "route": "/qa",
+      "summary": "Animations are evaluated inside measured page slots, with responsive sizing, background clearing and panel warnings for remaining aspect-ratio mismatches.",
+      "delivery": "Retain the chosen animation concepts. A panel fit warning is an unresolved review item, not an automatic production approval.",
+      "disposition": "Current",
+      "files": []
+    },
+    {
+      "id": "page-browser",
+      "title": "Quick page dropdown",
+      "pages": [
+        "*"
+      ],
+      "status": "Implemented in QA",
+      "route": "/qa",
+      "summary": "The bottom page label opens a searchable, keyboard-accessible menu for 22 page entries plus four extra tools.",
+      "delivery": "18 original pages, the retained About / Contact alternatives, Product Hunt and the original-template France refinement. The rejected 16-page alternative batch and the rejected France selector redesign must not be delivered.",
+      "disposition": "Current",
+      "files": []
+    },
+    {
+      "id": "producthunt-qa",
+      "title": "Product Hunt redesign added to QA",
+      "pages": [
+        "producthunt"
+      ],
+      "status": "Campaign draft / interactive prototype",
+      "route": "/qa/producthunt",
+      "summary": "The existing /producthunt redesign is available as the 21st QA page, preserving Kitty, the two reward lanes, four-rung ladder, steps, eligibility table, claim area and fine print. It has the shared page menu, review panel, page notes, theme controls, export and support tools.",
+      "delivery": "Original /producthunt files remain unchanged. The QA adapter uses the official Openline mark, shared native typography and subtle arrow motion. Launch date remains to be confirmed. Technical boundary: only local format validation runs, PH lane requires a producthunt.com host, no proof URL is fetched, no data is submitted or stored, and PH-QA codes cannot be redeemed. Customer-facing simulation banners and notices were removed at Paul’s request; the boundary is documented here instead. Working rows now describe link format, email format and code preparation, not verified external/account checks, and the result does not claim an email was sent. Closing cancels timers; native-dialog focus and clipboard failure are handled. Rewards, prices, launch timing and campaign rules still need approval before production.",
+      "disposition": "Retained / review",
+      "files": [
+        "qa/producthunt.js",
+        "qa/producthunt.css",
+        "qa/producthunt-page.css",
+        "qa/support/boot.js"
+      ]
+    },
+    {
+      "id": "home-why-fit",
+      "title": "Why Openline: context-sized artwork",
+      "pages": [
+        "home"
+      ],
+      "status": "Implemented in QA",
+      "route": "/qa/home",
+      "summary": "Option 3 is fitted to the 407 × 302 home slot, with readable content and without the board wrapper competing with the page.",
+      "delivery": "Use the actual slot geometry rather than stretching the nominal board canvas.",
+      "disposition": "Current",
+      "files": [
+        "js/home-why.js",
+        "js/referral.js"
+      ]
+    },
+    {
+      "id": "referral-fit",
+      "title": "Referral: one orange, a softer edge",
+      "pages": [
+        "home"
+      ],
+      "status": "Implemented",
+      "route": "/qa/home",
+      "summary": "Referral option 3 matches the original orange, fits its 576 × 520 slot and keeps the selected animation. Background plus signs fade smoothly from 0% on the left to full treatment on the right.",
+      "delivery": "The shared option also fixes the original review board. Preserve its motion and transparent integration with the surrounding block.",
+      "disposition": "Current",
+      "files": [
+        "js/home-why.js",
+        "js/referral.js"
+      ]
+    },
+    {
+      "id": "page-identities",
+      "title": "Page-specific colour treatments",
+      "pages": [
+        "network",
+        "security",
+        "adblocking",
+        "unlimited",
+        "blog"
+      ],
+      "status": "Review options",
+      "route": "/qa",
+      "summary": "Network blue, Security teal, AdBlocking ultraviolet, Unlimited magenta and Blog newsprint are switchable within each page.",
+      "delivery": "The export includes each identity’s current on/off state and the global theme. Do not treat these proposals as approved production defaults.",
+      "disposition": "Retained / review",
+      "files": [
+        "qa/core.js",
+        "qa/recolor.js",
+        "qa/paint.js",
+        "qa/connectivity-copy.json",
+        "qa/unlimited-plan-copy.json",
+        "qa/connectivity-changes.js",
+        "qa/redesign/profile-switching.html",
+        "qa/profile-switching.css",
+        "qa/blog.html"
+      ]
+    },
+    {
+      "id": "global-esim-orange",
+      "title": "Global eSIM: consistent Openline orange",
+      "pages": [
+        "global-esim"
+      ],
+      "status": "Selected default",
+      "route": "/qa/global-esim",
+      "changedAt": "2026-10-04",
+      "summary": "All section accents, tinted blocks, icon tiles and contextual animations now use the Openline orange family instead of the mixed blue, purple and green treatments.",
+      "delivery": "Selected page identity, on by default and recorded in the export. Green accent/status treatments are recoloured on this page as requested; labels still carry their meaning. Neutral surfaces and raster images/partner logos are not repainted. Other page identities, including IoT Chrome, are unchanged.",
+      "disposition": "Current",
+      "files": [
+        "qa/core.js",
+        "qa/recolor.js",
+        "qa/paint.js"
+      ]
+    },
+    {
+      "id": "profile-switching-explainer",
+      "title": "New entry: network switch versus new eSIM profile",
+      "pages": [
+        "multiple-tier1",
+        "unlimited"
+      ],
+      "status": "Added in QA",
+      "route": "/qa/multiple-tier1#profile-switching",
+      "changedAt": "2026-10-04",
+      "summary": "A new, prominent two-route explainer replaces the marked eSIM-switching warning and probability cards on Multi Tier-1, with a matching entry on Unlimited replacing the old competitor-throttling comparison. It distinguishes network selection within one profile from occasionally issuing an entirely new profile/provider setup.",
+      "delivery": "The user-supplied operating principle is explicit on both pages: profile replacement should be uncommon, but can be part of maintaining service. Possible installation/activation and variable reconnection time are disclosed. The 90% / 10% split, fixed 30-second promise and instruction to remove the old profile first are gone. Diagrams are illustrative with reduced-motion support. No silent-install, zero-interruption, balance/validity carry-over or free-replacement guarantee is invented; these live-process details need product confirmation.",
+      "newCopy": [
+        {
+          "area": "Multi Tier-1 entry",
+          "text": "A better connection. More than one way. When a network switch is not enough, we can replace your eSIM and change the provider behind it."
+        },
+        {
+          "area": "Unlimited entry (latest clarification)",
+          "text": "Throttled too often? We’ll try another route. For recurring unlimited-plan throttling, Openline will try an alternative profile/infrastructure with a fair-use policy better suited to the customer’s location and usage. Improvement is not guaranteed."
+        },
+        {
+          "area": "Profile setup disclosure",
+          "text": "A replacement may require installing or enabling a new profile, with guidance if needed. On Unlimited, the latest disclosure also recommends fixed data for guaranteed no usage-based throttling."
+        }
+      ],
+      "changelogUrl": "/qa/connectivity-changelog.md",
+      "disposition": "Current",
+      "files": [
+        "qa/connectivity-copy.json",
+        "qa/connectivity-changes.js",
+        "qa/redesign/profile-switching.html",
+        "qa/profile-switching.css",
+        "qa/redesign/operator-showcase.html",
+        "qa/operator-showcase.js",
+        "qa/operator-showcase.css",
+        "qa/operators.json",
+        "qa/assets/operators/README.md",
+        "qa/unlimited-plan-copy.json"
+      ]
+    },
+    {
+      "id": "compact-profile-explainer",
+      "title": "Multi Tier-1 and Unlimited: shorter copy, larger cards",
+      "pages": [
+        "multiple-tier1",
+        "unlimited"
+      ],
+      "status": "Current presentation / Irina handoff",
+      "route": "/qa/unlimited#profile-switching",
+      "changedAt": "2026-10-04",
+      "summary": "The marked section now uses two equal cards with larger diagrams, 28px headings and 18px body text, replacing the dense multi-paragraph layout and tiny technical labels. One card explains a network change within the same eSIM; the other explains an entirely new profile/provider. Longer policy details are collapsed beneath.",
+      "delivery": "Keep each page’s chosen colour identity and selected animations outside this block. Profile changes remain occasional and may require guided installation. The Unlimited page keeps its visible local-rules / no-guaranteed-improvement caveat and fixed-data recommendation. The unchanged fuller policy remains available in the disclosure and France fair-use modal. New Talk to support buttons open the shared chat. These are explanatory diagrams, not actual profile switching. No provisioning backend or commercial guarantee was added.",
+      "newCopy": [
+        {
+          "area": "Multi Tier-1 introduction",
+          "text": "When a network switch is not enough, we can replace your eSIM and change the provider behind it."
+        },
+        {
+          "area": "Multi Tier-1 cards",
+          "text": "Same eSIM. Another network. We use another network available to your current plan. Your eSIM stays the same. / New eSIM. Different provider. Sometimes we replace the whole profile to move your connection to a better-fitting provider."
+        },
+        {
+          "area": "Multi Tier-1 short note",
+          "text": "Profile changes are rare. If a new installation is needed, we’ll guide you."
+        },
+        {
+          "area": "Unlimited introduction",
+          "text": "If local fair-use rules keep slowing you down, we’ll try another eSIM from a different provider."
+        },
+        {
+          "area": "Unlimited cards",
+          "text": "Same eSIM. Another network. A network switch keeps your current eSIM. It does not necessarily change its fair-use rules. / New eSIM. Different provider. We’ll try a replacement profile with fair-use rules better suited to your location and usage."
+        },
+        {
+          "area": "Unlimited short note",
+          "text": "Local rules still apply. A better result is not guaranteed; choose fixed data to avoid usage-based throttling."
+        }
+      ],
+      "changelogUrl": "/qa/connectivity-changelog.md",
+      "disposition": "Current",
+      "files": [
+        "qa/connectivity-copy.json",
+        "qa/connectivity-changes.js",
+        "qa/redesign/profile-switching.html",
+        "qa/profile-switching.css",
+        "qa/redesign/operator-showcase.html",
+        "qa/operator-showcase.js",
+        "qa/operator-showcase.css",
+        "qa/operators.json",
+        "qa/assets/operators/README.md",
+        "qa/unlimited-plan-copy.json"
+      ]
+    },
+    {
+      "id": "multi-tier1-profile-copy",
+      "title": "Multi Tier-1: profile-aware wording throughout",
+      "pages": [
+        "multiple-tier1"
+      ],
+      "status": "Reworded in QA",
+      "route": "/qa/multiple-tier1",
+      "changedAt": "2026-10-04",
+      "summary": "Hero, infrastructure explanation, partner introductions, selection cards, market narrative, three-step process, access checklist and closing copy now explain the network/profile distinction without promising the strongest signal, cheapest price, millisecond handoffs or no setup in every situation.",
+      "delivery": "Existing page structure and four selected animation choices remain. The selected Operator Roster phone labels now read Network options / Profile may change / Setup if needed; its geometry and motion are preserved. Original review-board files remain untouched. Other historical alternative illustrations are reference material, not newly approved product claims.",
+      "copyChanges": [
+        {
+          "area": "Hero badge",
+          "before": "AI-Powered Multi-Network",
+          "after": "Adaptive Multi-Network"
+        },
+        {
+          "area": "Hero introduction",
+          "before": "Unlike competitors who lock you to a single provider, Openline uses AI to automatically switch between multiple premium Tier-1 networks - delivering both the best signal and lowest prices, always.",
+          "after": "Openline is not tied to one underlying provider. We can adapt the networks available on your current eSIM or, when needed, issue another profile to move you to a different provider and connectivity setup. Profile replacement should be uncommon, but it is part of how we work to keep your service performing well."
+        },
+        {
+          "area": "Infrastructure heading",
+          "before": "What is a Tier-1 Network?",
+          "after": "The networks behind your connection"
+        },
+        {
+          "area": "Infrastructure explanation",
+          "before": "A Tier-1 network operator is a historic or national carrier that owns and operates the physical antenna infrastructure at ground level. Unlike resellers who just rent capacity, Tier-1 operators built and maintain the actual towers and antennas that provide mobile coverage.",
+          "after": "Your connection relies on a mobile network, an underlying connectivity provider and the eSIM profile on your phone. Access to established operators gives us more options, while the ability to replace a profile lets us change the service setup behind it when that is the better route."
+        },
+        {
+          "area": "Infrastructure card",
+          "before": "Historic Operators",
+          "after": "Established Operators"
+        },
+        {
+          "area": "Infrastructure card",
+          "before": "National carriers who built the actual antennas and towers",
+          "after": "Established mobile networks in the destinations we serve"
+        },
+        {
+          "area": "Infrastructure card",
+          "before": "Antenna Ownership",
+          "after": "Network Infrastructure"
+        },
+        {
+          "area": "Infrastructure card",
+          "before": "Own and maintain physical network, not just resell",
+          "after": "The radio network is one part of your connectivity setup"
+        },
+        {
+          "area": "Quality card",
+          "before": "Best signal, fastest speeds, most reliable",
+          "after": "Service options chosen for local coverage and performance"
+        },
+        {
+          "area": "Coverage card",
+          "before": "Complete infrastructure in remote and urban areas",
+          "after": "Coverage depends on your destination, device and available partners"
+        },
+        {
+          "area": "Why the network matters",
+          "before": "Tier-1 operators like Vodafone, T-Mobile, and Orange own the physical infrastructure, giving them direct control over signal quality, network capacity, and coverage. This means better speeds, stronger signals, and more reliable connections compared to virtual operators who only resell capacity.",
+          "after": "A strong local network matters, but it is not the whole picture. If the provider or configuration behind a profile is no longer a good fit, changing the network alone may not be enough. We can issue a replacement eSIM to move the service to a different setup."
+        },
+        {
+          "area": "Partner introduction",
+          "before": "Featured partners from our network of 200+ Tier-1 operators worldwide",
+          "after": "Examples from our wider operator ecosystem. Available networks depend on your profile, plan and destination."
+        },
+        {
+          "area": "Partner caption",
+          "before": "Featured operators from 200+ Tier-1 network partners with their own infrastructure",
+          "after": "Carrier and connectivity-partner examples; availability varies by location and profile"
+        },
+        {
+          "area": "Regional introduction",
+          "before": "In addition to global Tier-1 operators, we partner with leading regional carriers to ensure exceptional coverage in every market",
+          "after": "Global and regional partners give us different ways to deliver service. A replacement profile can open a different provider setup where your current profile is not the right fit."
+        },
+        {
+          "area": "Regional selection heading",
+          "before": "AI Selects the Best Network Automatically",
+          "after": "Network selection is only one part of the service"
+        },
+        {
+          "area": "Regional selection explanation",
+          "before": "Whether you're connecting through Vodafone in London, MTN in Johannesburg, du in Dubai, China Mobile in Shanghai, or giffgaff for value roaming - our AI continuously evaluates all available partners to ensure you always get the optimal combination of signal quality and pricing. You never need to manually choose or configure anything.",
+          "after": "We look for a suitable service path among the options available to your plan and location. Usually that means using your current eSIM profile. Occasionally, a better option means issuing a new profile and changing the underlying provider. If installation or activation is needed on your phone, we will guide you through that step."
+        },
+        {
+          "area": "Selection introduction",
+          "before": "Our advanced machine learning algorithms continuously analyze signal strength, network congestion, and real-time pricing data to automatically connect you to the optimal Tier-1 network every second.",
+          "after": "Our selection approach considers connection quality, congestion and provider options. We can change networks within the current profile where supported, or replace the profile when a different underlying service setup is needed."
+        },
+        {
+          "area": "Selection card",
+          "before": "Machine learning analyzes signal strength, congestion, and pricing in real-time.",
+          "after": "Connection quality, congestion and pricing inform the service options we consider."
+        },
+        {
+          "area": "Selection card",
+          "before": "Continuously monitor all networks and switch when better options appear.",
+          "after": "Adapt to the network options available to your current profile, plan and location."
+        },
+        {
+          "area": "Selection card",
+          "before": "Track wholesale prices to route you through the most cost-effective option.",
+          "after": "Consider provider pricing alongside the quality and availability of the connection."
+        },
+        {
+          "area": "Switching card heading",
+          "before": "Instant Switching",
+          "after": "Profile Flexibility"
+        },
+        {
+          "area": "Switching card explanation",
+          "before": "Seamless transitions in milliseconds - you won't even notice when it happens.",
+          "after": "When a network switch is not enough, we can issue another eSIM profile. A setup step or reconnection may be needed."
+        },
+        {
+          "area": "Market introduction",
+          "before": "Mobile data operates like a stock market - prices fluctuate constantly based on demand, network capacity, and market conditions. Our proprietary OMDM™ (Openline Mobile Data Market) platform trades this market 24/7 with AI to secure the lowest wholesale prices and pass the savings directly to you.",
+          "after": "Provider pricing and service conditions can change. OMDM™ (Openline Mobile Data Market) helps us compare the options behind your connection. If a more suitable option uses a different provider or profile configuration, we may issue a new eSIM rather than keep you on the same service setup."
+        },
+        {
+          "area": "Market benefit",
+          "before": "Our AI continuously monitors these price fluctuations to purchase data at the lowest possible rates, 24/7.",
+          "after": "Compare available provider offers alongside service quality, rather than choose on price alone."
+        },
+        {
+          "area": "Market benefit",
+          "before": "We pass these wholesale savings directly to customers, ensuring you always get the cheapest prices.",
+          "after": "Provider flexibility helps us balance value and usable service. It is not a guarantee of the cheapest price at every moment."
+        },
+        {
+          "area": "Market benefit",
+          "before": "Our algorithms execute thousands of data purchases daily across different networks and regions to optimize pricing.",
+          "after": "A service change can happen within your current profile or, occasionally, through a replacement profile on a different provider setup."
+        },
+        {
+          "area": "How it works introduction",
+          "before": "Real-time optimization in three simple steps to ensure you always have the best connection.",
+          "after": "Review the available options, choose a suitable service path, then adapt the network or the whole profile when needed."
+        },
+        {
+          "area": "Monitor step",
+          "before": "Scan all available Tier-1 networks every second for signal strength and performance metrics.",
+          "after": "Review connection conditions and the service options available to your plan and location."
+        },
+        {
+          "area": "Analyze step",
+          "before": "AI evaluates signal quality, congestion levels, and wholesale pricing data in real-time.",
+          "after": "Consider connection quality, congestion, provider options and pricing together."
+        },
+        {
+          "area": "Adapt step heading",
+          "before": "Switch",
+          "after": "Adapt"
+        },
+        {
+          "area": "Adapt step",
+          "before": "Automatically connect to the optimal network for best performance and lowest cost.",
+          "after": "Use a suitable network on the existing profile, or issue a replacement eSIM to change the underlying provider and setup."
+        },
+        {
+          "area": "Access introduction",
+          "before": "We partner with the world's leading mobile network operators to provide you with unmatched coverage, speed, and reliability across 190+ countries - all powered by AI.",
+          "after": "Our partner ecosystem gives us several ways to deliver connectivity. Access depends on your plan, destination and eSIM profile; not every network is available on every profile. Where necessary, we can issue a new profile to move you to a different service setup."
+        },
+        {
+          "area": "Access checklist",
+          "before": "Always connected to the strongest available signal",
+          "after": "Choose among suitable, available network options"
+        },
+        {
+          "area": "Access checklist",
+          "before": "AI automatically selects best network every second",
+          "after": "Consider service quality, availability and value"
+        },
+        {
+          "area": "Access checklist",
+          "before": "Access to 50+ premium Tier-1 network partners",
+          "after": "Access varies across our 50+ Tier-1 partner ecosystem"
+        },
+        {
+          "area": "Access checklist",
+          "before": "Seamless handoffs between networks",
+          "after": "Network changes within a supported profile"
+        },
+        {
+          "area": "Access checklist",
+          "before": "Lower prices through intelligent market analysis",
+          "after": "Provider choices informed by market conditions"
+        },
+        {
+          "area": "Access checklist",
+          "before": "Better performance in congested areas",
+          "after": "Alternative service paths when performance suffers"
+        },
+        {
+          "area": "Access checklist",
+          "before": "Reduced dead zones and coverage gaps",
+          "after": "Profile replacement when a different setup is needed"
+        },
+        {
+          "area": "Access checklist",
+          "before": "No manual configuration ever needed",
+          "after": "Guided installation if a new profile is required"
+        },
+        {
+          "area": "Closing headline",
+          "before": "Experience AI-Powered Connectivity",
+          "after": "Connectivity that can adapt"
+        },
+        {
+          "area": "Closing introduction",
+          "before": "Join thousands of travelers who never worry about connectivity. Get access to multiple Tier-1 networks with AI-powered switching for the best signal and lowest prices.",
+          "after": "Choose a plan backed by more than one service option. We can adapt the network where supported and occasionally replace the eSIM profile to move you to a better underlying setup."
+        },
+        {
+          "area": "Closing badge",
+          "before": "Best signal always",
+          "after": "Adapt to local conditions"
+        },
+        {
+          "area": "Closing badge",
+          "before": "Lowest prices",
+          "after": "Quality and value"
+        },
+        {
+          "area": "Closing badge",
+          "before": "No manual switching",
+          "after": "Profile changes may apply"
+        }
+      ],
+      "changelogUrl": "/qa/connectivity-changelog.md",
+      "disposition": "Current",
+      "files": [
+        "qa/connectivity-copy.json",
+        "qa/connectivity-changes.js",
+        "qa/redesign/profile-switching.html",
+        "qa/profile-switching.css",
+        "qa/redesign/operator-showcase.html",
+        "qa/operator-showcase.js",
+        "qa/operator-showcase.css",
+        "qa/operators.json",
+        "qa/assets/operators/README.md"
+      ]
+    },
+    {
+      "id": "multi-tier1-operator-ribbons",
+      "title": "Multi Tier-1: rolling operator showcase",
+      "pages": [
+        "multiple-tier1"
+      ],
+      "status": "Implemented / Irina handoff",
+      "route": "/qa/multiple-tier1#operator-showcase",
+      "changedAt": "2026-10-04",
+      "summary": "Replaced the large static 36-logo wall with two seamless rows moving slowly in opposite directions, consistent logo sizing, readable names and soft edge fades. Pause motion and a searchable Browse operators dialog provide direct control and access to the full roster without waiting.",
+      "delivery": "Retain the existing partner headline, availability wording, purchase CTA, 36 operator names and all chosen animation picks elsewhere. Brand colours are preserved. Motion pauses offscreen, in hidden tabs, on ribbon hover/focus, while the directory is open and when manually paused. Reduced motion uses static horizontally scrollable rows; original groups remain accessible and decorative loop copies are hidden/inert. Search handles accents, punctuation and Three/3; Escape/backdrop/close return focus to Browse operators. Logos are lightweight derived WebP assets. Corrected source mismatches only within this showcase: Three had repeated Vodafone, Telefónica had repeated Movistar, and SK Telecom displayed KT. Sources/derivatives are documented; the existing partnership claims and use permissions are not newly verified.",
+      "changelogUrl": "/qa/operator-showcase-changelog.md",
+      "disposition": "Current",
+      "files": [
+        "qa/connectivity-copy.json",
+        "qa/connectivity-changes.js",
+        "qa/redesign/profile-switching.html",
+        "qa/profile-switching.css",
+        "qa/redesign/operator-showcase.html",
+        "qa/operator-showcase.js",
+        "qa/operator-showcase.css",
+        "qa/operators.json",
+        "qa/assets/operators/README.md"
+      ]
+    },
+    {
+      "id": "unlimited-profile-copy",
+      "title": "Unlimited: consolidated original-to-current copy",
+      "pages": [
+        "unlimited"
+      ],
+      "status": "Current copy / latest clarification applied",
+      "route": "/qa/unlimited",
+      "changedAt": "2026-10-04",
+      "summary": "The consolidated copy now distinguishes the fixed-package full-speed allowance guarantee from unlimited plans with no Openline-imposed cap or throttling, while local MNO fair-use rules can still apply. Hero, feature cards, use cases, checklist, illustration labels and closing copy are aligned.",
+      "delivery": "Use these current After values rather than the earlier generic adaptive-service wording. Fixed means all purchased GB at full available network speed, without usage-based throttling; it does not promise a universal Mbps rate or congestion-free radio service. Unsupported competitor limits remain removed and customer-use rows stay neutral grey. Existing animation geometry and timing, page colour treatment and added elements are preserved. The separate latest-clarification record includes previous-to-current copy and the replacement section for Irina.",
+      "copyChanges": [
+        {
+          "area": "Hero badge",
+          "before": "Truly Unlimited",
+          "after": "No Throttling from Openline"
+        },
+        {
+          "area": "Hero heading",
+          "before": "Unlimited Speed,No Limits",
+          "after": "Your data. Full speed. Our promise, explained."
+        },
+        {
+          "area": "Hero introduction",
+          "before": "No throttling. No fair usage policy. No hidden limits. When we say unlimited, we mean it. Use your full data allocation at full speed, always.",
+          "after": "Buy 10 GB and get all 10 GB at full speed, guaranteed, with no usage-based throttling. Openline adds no data cap or throttling to unlimited plans either, but the local mobile operator’s fair-use rules can still reduce their speed after heavy use."
+        },
+        {
+          "area": "Meaning heading",
+          "before": "What Unlimited Really Means",
+          "after": "One promise. Two types of plan."
+        },
+        {
+          "area": "Meaning introduction",
+          "before": "While other providers use \"unlimited\" as a marketing term, Openline delivers genuinely unlimited data at full speed with zero throttling or hidden restrictions.",
+          "after": "On a fixed-data package, your entire purchased allowance is guaranteed at full available network speed, without usage-based throttling. On an unlimited plan, Openline imposes no data cap or throttling, but local operator fair-use rules still apply. Full speed means the speed the network can deliver: signal, congestion and your device can affect it."
+        },
+        {
+          "area": "Feature heading",
+          "before": "No Speed Throttling",
+          "after": "10 GB means all 10 GB"
+        },
+        {
+          "area": "Feature copy",
+          "before": "Full speed from the first byte to the last. Your connection never slows down, no matter how much you use.",
+          "after": "Buy a 10 GB package and every GB is available at full speed. We guarantee no usage-based throttling anywhere within your purchased allowance."
+        },
+        {
+          "area": "Feature heading",
+          "before": "No Fair Usage Policy",
+          "after": "Unlimited on our side"
+        },
+        {
+          "area": "Feature copy",
+          "before": "Truly unlimited means unlimited. Use your full data allocation without any hidden restrictions.",
+          "after": "For unlimited plans, we guarantee that Openline adds no data cap or usage-based speed restriction. The local mobile network operator’s rules are a separate matter."
+        },
+        {
+          "area": "Feature heading",
+          "before": "4K Streaming Ready",
+          "after": "Local network fair use"
+        },
+        {
+          "area": "Feature copy",
+          "before": "Stream in the highest quality without buffering. Perfect for Netflix, YouTube, and video calls.",
+          "after": "On unlimited plans, using a lot of data quickly within 24 hours may trigger a local MNO fair-use policy and temporarily reduce your speed. Thresholds and recovery times vary by network and plan."
+        },
+        {
+          "area": "Feature heading",
+          "before": "Consistent Performance",
+          "after": "Want no throttling? Go fixed."
+        },
+        {
+          "area": "Feature copy",
+          "before": "Same high speed whether you're the first user or the millionth. No congestion, no slowdowns.",
+          "after": "Choose a fixed-data package if avoiding usage-based slowdowns is your priority. This is where we can guarantee your full purchased allowance at full available network speed."
+        },
+        {
+          "area": "Usage introduction",
+          "before": "See how Openline handles common use cases versus competitors",
+          "after": "Streaming, downloads and backups can use a lot of data quickly. For guaranteed no-throttling access to your purchased allowance, choose a fixed package. Unlimited plans offer no Openline data cap, with local operator fair use still applying."
+        },
+        {
+          "area": "Usage-card label",
+          "before": "Others",
+          "after": "Your use"
+        },
+        {
+          "area": "Video example",
+          "before": "Throttled to 480p after 5GB",
+          "after": "Watch video at the quality your connection supports"
+        },
+        {
+          "area": "Video example",
+          "before": "Full 4K quality always",
+          "after": "Fixed package: no usage-based slowdown"
+        },
+        {
+          "area": "Download example",
+          "before": "Speed reduced by 80%",
+          "after": "Move the files you need for work or travel"
+        },
+        {
+          "area": "Download example",
+          "before": "Full speed guaranteed",
+          "after": "All purchased GB at full speed"
+        },
+        {
+          "area": "Calling example",
+          "before": "Limited to 1 hour/day",
+          "after": "Stay in touch through voice and video apps"
+        },
+        {
+          "area": "Calling example",
+          "before": "Unlimited HD calls",
+          "after": "No Openline speed restriction"
+        },
+        {
+          "area": "Backup example",
+          "before": "Not allowed on mobile",
+          "after": "Sync photos and backups on the go"
+        },
+        {
+          "area": "Backup example",
+          "before": "Upload without limits",
+          "after": "Choose fixed for heavy uploads"
+        },
+        {
+          "area": "Illustration badge",
+          "before": "Full speed, always",
+          "after": "No Openline throttling"
+        },
+        {
+          "area": "Illustration label",
+          "before": "buffering: none",
+          "after": "quality varies"
+        },
+        {
+          "area": "Service section kicker",
+          "before": "Zero Restrictions",
+          "after": "Choose with Confidence"
+        },
+        {
+          "area": "Service section heading",
+          "before": "Use Your Data Without Limits",
+          "after": "Know your plan. Know our promise."
+        },
+        {
+          "area": "Service section introduction",
+          "before": "While other providers quietly throttle your speeds or impose usage restrictions, Openline delivers exactly what you paid for. Your full data allocation at full speed, every single time.",
+          "after": "Fixed packages give you the clearest guarantee: all the data you buy, at full available network speed, without usage-based throttling. Unlimited plans have no cap or throttling added by Openline, but the local MNO may apply fair use. If that slows you down too often, we’ll try a replacement eSIM on another infrastructure with rules that better suit your location and usage."
+        },
+        {
+          "area": "Service checklist",
+          "before": "No speed throttling after certain usage",
+          "after": "Fixed package: every purchased GB at full speed"
+        },
+        {
+          "area": "Service checklist",
+          "before": "No daily usage limits or caps",
+          "after": "No usage-based throttling on fixed packages"
+        },
+        {
+          "area": "Service checklist",
+          "before": "No video quality restrictions",
+          "after": "Unlimited: no data cap added by Openline"
+        },
+        {
+          "area": "Service checklist",
+          "before": "No 'fair usage policy' slowdowns",
+          "after": "Unlimited: local MNO fair-use rules still apply"
+        },
+        {
+          "area": "Service checklist",
+          "before": "No time-of-day speed reductions",
+          "after": "Heavy use within 24h may trigger a slowdown"
+        },
+        {
+          "area": "Service checklist",
+          "before": "No application-specific throttling",
+          "after": "We’ll try another infrastructure if it happens often"
+        },
+        {
+          "area": "Service checklist",
+          "before": "No tethering/hotspot restrictions",
+          "after": "Better fair use is our aim, not a guarantee"
+        },
+        {
+          "area": "Service checklist",
+          "before": "No peak-hour congestion",
+          "after": "Guided setup if a replacement profile is needed"
+        },
+        {
+          "area": "Usage illustration",
+          "before": "NO CAP",
+          "after": "LOCAL FUP MAY APPLY"
+        },
+        {
+          "area": "Usage illustration",
+          "before": "No throttling",
+          "after": "No Openline cap"
+        },
+        {
+          "area": "Usage illustration",
+          "before": "No fair-use",
+          "after": "Local fair use"
+        },
+        {
+          "area": "Usage illustration",
+          "before": "Full speed",
+          "after": "Support if needed"
+        },
+        {
+          "area": "Usage illustration",
+          "before": "Unlimited speed",
+          "after": "Unlimited from Openline"
+        },
+        {
+          "area": "Closing headline",
+          "before": "Experience True Unlimited",
+          "after": "Your full allowance. Our full commitment."
+        },
+        {
+          "area": "Closing introduction",
+          "before": "Stop settling for throttled \"unlimited\" plans. Get genuinely unlimited speeds with Openline - use every MB at full speed.",
+          "after": "Choose fixed data for guaranteed no-throttling access to every GB you buy. Choose unlimited for no Openline data cap, with local MNO fair-use rules still applying. If those rules limit you too often, we’ll try to find a better-fitting infrastructure for you."
+        },
+        {
+          "area": "Closing badge",
+          "before": "No limits",
+          "after": "Fixed: full-speed data"
+        },
+        {
+          "area": "Closing badge",
+          "before": "Always reliable",
+          "after": "Help with repeat slowdowns"
+        },
+        {
+          "area": "Hero illustration",
+          "before": "150 Mbps Download",
+          "after": "Full-speed fixed data"
+        },
+        {
+          "area": "Hero illustration",
+          "before": "75 Mbps Upload",
+          "after": "No Openline throttling"
+        },
+        {
+          "area": "Hero illustration",
+          "before": "12ms Latency",
+          "after": "Local rules apply"
+        },
+        {
+          "area": "Hero illustration",
+          "before": "8.7 GB Used, No Throttling",
+          "after": "Unlimited plans: local fair use may apply"
+        },
+        {
+          "area": "Hero usage statistic",
+          "before": "5X",
+          "after": "∞"
+        },
+        {
+          "area": "Hero usage statistic",
+          "before": "Faster",
+          "after": "Unlimited data"
+        },
+        {
+          "area": "Hero flexibility statistic",
+          "before": "0 · Throttling",
+          "after": "0 · Fixed-plan throttling"
+        },
+        {
+          "area": "Hero replacement frequency",
+          "before": "24/7 · Always Fast",
+          "after": "10 GB · All at full speed"
+        }
+      ],
+      "changelogUrl": "/qa/connectivity-changelog.md",
+      "disposition": "Current",
+      "files": [
+        "qa/connectivity-copy.json",
+        "qa/unlimited-plan-copy.json",
+        "qa/connectivity-changes.js",
+        "qa/redesign/profile-switching.html",
+        "qa/profile-switching.css"
+      ]
+    },
+    {
+      "id": "unlimited-fixed-vs-mno-fair-use",
+      "title": "Unlimited: fixed-data guarantee and local MNO fair use",
+      "pages": [
+        "unlimited"
+      ],
+      "status": "Latest product clarification / Irina handoff",
+      "route": "/qa/unlimited",
+      "changedAt": "2026-10-04",
+      "summary": "Fixed packages guarantee the entire purchased allowance at full available network speed without usage-based throttling: 10 GB means all 10 GB. Openline imposes no cap or throttling on unlimited plans, but a local mobile network operator may temporarily reduce speed after heavy use within 24 hours. Fixed data is the recommendation for avoiding that throttling. For recurring unlimited-plan slowdowns, Openline will try another profile/infrastructure whose fair-use policy may better suit the customer’s location and usage.",
+      "delivery": "Irina: apply the latest page copy and illustration labels together with the existing QA colours, native font, animation geometry/timing, neutral use-case cards and added profile-replacement block. Do not restore the previous generic copy or treat the older original-to-current log as a separate version. Keep the no-throttling guarantee explicit for fixed purchased data, the unlimited local-MNO caveat prominent, and replacement best-effort, not a guaranteed cure. Do not invent a universal data threshold, guaranteed speed-recovery time or automatic midnight reset. Full available network speed still depends on signal, congestion and device. Profile installation may be needed; balance/validity carry-over and charges remain unspecified. This is a recorded QA handoff, not a message sent to Irina or a production update.",
+      "newCopy": [
+        {
+          "area": "Fixed-data guarantee",
+          "text": "Buy 10 GB and get all 10 GB at full speed, guaranteed, with no usage-based throttling."
+        },
+        {
+          "area": "Unlimited distinction",
+          "text": "Openline adds no data cap or throttling to unlimited plans. Local MNO fair-use rules can still reduce speed after heavy use within 24 hours; thresholds and recovery times vary."
+        },
+        {
+          "area": "Plan recommendation and support",
+          "text": "Choose a fixed package for guaranteed no usage-based throttling. If unlimited throttling recurs, we’ll try another profile/infrastructure for a better-fitting fair-use policy, without guaranteeing an improvement."
+        }
+      ],
+      "copyChanges": [
+        {
+          "area": "Hero badge",
+          "before": "Unlimited Use, Adaptive Service",
+          "after": "No Throttling from Openline"
+        },
+        {
+          "area": "Hero heading",
+          "before": "Unlimited usage. Service that adapts.",
+          "after": "Your data. Full speed. Our promise, explained."
+        },
+        {
+          "area": "Hero introduction",
+          "before": "Our unlimited-use approach is built on flexibility, not one fixed connection. We can use another network where your profile supports it or, occasionally, issue a new eSIM profile to change the underlying provider and connectivity setup. Speeds still depend on local conditions.",
+          "after": "Buy 10 GB and get all 10 GB at full speed, guaranteed, with no usage-based throttling. Openline adds no data cap or throttling to unlimited plans either, but the local mobile operator’s fair-use rules can still reduce their speed after heavy use."
+        },
+        {
+          "area": "Meaning heading",
+          "before": "Unlimited use needs a service that can adapt",
+          "after": "One promise. Two types of plan."
+        },
+        {
+          "area": "Meaning introduction",
+          "before": "Our ability to move you to another eSIM profile is part of what supports unlimited use. If the current provider or service setup is no longer suitable, we can replace it rather than leave you stuck with it. Unlimited usage is not a promise of one constant speed everywhere.",
+          "after": "On a fixed-data package, your entire purchased allowance is guaranteed at full available network speed, without usage-based throttling. On an unlimited plan, Openline imposes no data cap or throttling, but local operator fair-use rules still apply. Full speed means the speed the network can deliver: signal, congestion and your device can affect it."
+        },
+        {
+          "area": "Fixed-package feature heading",
+          "before": "Built for continued use",
+          "after": "10 GB means all 10 GB"
+        },
+        {
+          "area": "Fixed-package guarantee",
+          "before": "Our aim is to keep your service usable as you use your plan. Network conditions and provider constraints can still affect performance.",
+          "after": "Buy a 10 GB package and every GB is available at full speed. We guarantee no usage-based throttling anywhere within your purchased allowance."
+        },
+        {
+          "area": "Openline-side feature heading",
+          "before": "More than one service setup",
+          "after": "Unlimited on our side"
+        },
+        {
+          "area": "Openline-side promise",
+          "before": "If your current service path stops being a good fit, we can issue another profile and move to a different underlying provider.",
+          "after": "For unlimited plans, we guarantee that Openline adds no data cap or usage-based speed restriction. The local mobile network operator’s rules are a separate matter."
+        },
+        {
+          "area": "Local-MNO feature heading",
+          "before": "Streaming, calls and more",
+          "after": "Local network fair use"
+        },
+        {
+          "area": "24-hour heavy-use disclosure",
+          "before": "Use your plan for the things you need on the move. Video quality and call performance depend on the connection available.",
+          "after": "On unlimited plans, using a lot of data quickly within 24 hours may trigger a local MNO fair-use policy and temporarily reduce your speed. Thresholds and recovery times vary by network and plan."
+        },
+        {
+          "area": "Plan recommendation heading",
+          "before": "A rare change, explained",
+          "after": "Want no throttling? Go fixed."
+        },
+        {
+          "area": "Fixed-package recommendation",
+          "before": "Profile changes should be uncommon. If a replacement is needed, we will explain the change and any installation or activation step.",
+          "after": "Choose a fixed-data package if avoiding usage-based slowdowns is your priority. This is where we can guarantee your full purchased allowance at full available network speed."
+        },
+        {
+          "area": "Usage introduction",
+          "before": "Everyday uses need a suitable connection. We can adapt the network or, occasionally, the whole eSIM profile to help maintain service.",
+          "after": "Streaming, downloads and backups can use a lot of data quickly. For guaranteed no-throttling access to your purchased allowance, choose a fixed package. Unlimited plans offer no Openline data cap, with local operator fair use still applying."
+        },
+        {
+          "area": "Video recommendation",
+          "before": "Adapt the service when needed",
+          "after": "Fixed package: no usage-based slowdown"
+        },
+        {
+          "area": "Download recommendation",
+          "before": "More than one service path",
+          "after": "All purchased GB at full speed"
+        },
+        {
+          "area": "Calling recommendation",
+          "before": "Connection quality matters",
+          "after": "No Openline speed restriction"
+        },
+        {
+          "area": "Backup recommendation",
+          "before": "A new profile if the setup needs to change",
+          "after": "Choose fixed for heavy uploads"
+        },
+        {
+          "area": "Streaming illustration badge",
+          "before": "Service that adapts",
+          "after": "No Openline throttling"
+        },
+        {
+          "area": "Service section kicker",
+          "before": "Flexible Delivery",
+          "after": "Choose with Confidence"
+        },
+        {
+          "area": "Service section heading",
+          "before": "Use your plan. Let the service adapt.",
+          "after": "Know your plan. Know our promise."
+        },
+        {
+          "area": "Service section introduction",
+          "before": "Unlimited use does not mean one eSIM profile must stay in place forever. To maintain a good service, Openline may occasionally replace the profile and move you to a different underlying provider and connectivity setup. Some changes may need a setup step on your phone.",
+          "after": "Fixed packages give you the clearest guarantee: all the data you buy, at full available network speed, without usage-based throttling. Unlimited plans have no cap or throttling added by Openline, but the local MNO may apply fair use. If that slows you down too often, we’ll try a replacement eSIM on another infrastructure with rules that better suit your location and usage."
+        },
+        {
+          "area": "Promise checklist",
+          "before": "Unlimited use on eligible unlimited plans",
+          "after": "Fixed package: every purchased GB at full speed"
+        },
+        {
+          "area": "Promise checklist",
+          "before": "Network options depend on your plan and location",
+          "after": "No usage-based throttling on fixed packages"
+        },
+        {
+          "area": "Promise checklist",
+          "before": "Video quality follows the available connection",
+          "after": "Unlimited: no data cap added by Openline"
+        },
+        {
+          "area": "Promise checklist",
+          "before": "Alternative providers when the service needs to change",
+          "after": "Unlimited: local MNO fair-use rules still apply"
+        },
+        {
+          "area": "Promise checklist",
+          "before": "Local congestion can still affect performance",
+          "after": "Heavy use within 24h may trigger a slowdown"
+        },
+        {
+          "area": "Promise checklist",
+          "before": "Data for your everyday work and travel apps",
+          "after": "We’ll try another infrastructure if it happens often"
+        },
+        {
+          "area": "Promise checklist",
+          "before": "Check your plan and device for hotspot support",
+          "after": "Better fair use is our aim, not a guarantee"
+        },
+        {
+          "area": "Unlimited illustration marker",
+          "before": "UNLIMITED PLAN",
+          "after": "LOCAL FUP MAY APPLY"
+        },
+        {
+          "area": "Unlimited illustration badge",
+          "before": "Adaptive service",
+          "after": "No Openline cap"
+        },
+        {
+          "area": "Unlimited illustration badge",
+          "before": "Profile flexibility",
+          "after": "Local fair use"
+        },
+        {
+          "area": "Unlimited illustration badge",
+          "before": "Network-aware",
+          "after": "Support if needed"
+        },
+        {
+          "area": "Unlimited illustration heading",
+          "before": "Unlimited usage",
+          "after": "Unlimited from Openline"
+        },
+        {
+          "area": "Closing headline",
+          "before": "Unlimited use, with flexibility behind it",
+          "after": "Your full allowance. Our full commitment."
+        },
+        {
+          "area": "Closing introduction",
+          "before": "Choose an unlimited plan backed by the flexibility to adapt its delivery. Usually your existing profile does the job; occasionally, a replacement eSIM helps us move you to a better service setup.",
+          "after": "Choose fixed data for guaranteed no-throttling access to every GB you buy. Choose unlimited for no Openline data cap, with local MNO fair-use rules still applying. If those rules limit you too often, we’ll try to find a better-fitting infrastructure for you."
+        },
+        {
+          "area": "Closing badge",
+          "before": "Profile changes may apply",
+          "after": "Fixed: full-speed data"
+        },
+        {
+          "area": "Closing badge",
+          "before": "Built to adapt",
+          "after": "Help with repeat slowdowns"
+        },
+        {
+          "area": "Hero illustration",
+          "before": "Download varies",
+          "after": "Full-speed fixed data"
+        },
+        {
+          "area": "Hero illustration",
+          "before": "Upload varies",
+          "after": "No Openline throttling"
+        },
+        {
+          "area": "Hero illustration",
+          "before": "Latency varies",
+          "after": "Local rules apply"
+        },
+        {
+          "area": "Hero illustration",
+          "before": "Usage supported by profile flexibility",
+          "after": "Unlimited plans: local fair use may apply"
+        },
+        {
+          "area": "Hero usage statistic",
+          "before": "Usage",
+          "after": "Unlimited data"
+        },
+        {
+          "area": "Hero guarantee statistic",
+          "before": "2 · Ways to adapt",
+          "after": "0 · Fixed-plan throttling"
+        },
+        {
+          "area": "Hero allowance statistic",
+          "before": "Rare · Profile changes",
+          "after": "10 GB · All at full speed"
+        },
+        {
+          "area": "Replacement section kicker",
+          "before": "The flexibility behind unlimited",
+          "after": "When unlimited slows you down"
+        },
+        {
+          "area": "Replacement section heading",
+          "before": "Unlimited use does not mean one profile forever.",
+          "after": "Throttled too often? We’ll try another route."
+        },
+        {
+          "area": "Replacement section introduction",
+          "before": "Network selection and profile replacement are two parts of the same approach. If your current service setup is no longer a good fit, we can issue a new eSIM and move you to a different underlying provider. This should be uncommon, but it is part of the service.",
+          "after": "If your unlimited plan repeatedly hits local fair-use restrictions, contact us. We’ll try to issue another eSIM profile using a different provider or infrastructure, aiming for a fair-use policy that works better in your location and for the way you use data."
+        },
+        {
+          "area": "Network-selection distinction",
+          "before": "When your current eSIM has a suitable network option, we can adapt the connection within that profile. The choices depend on your plan and location.",
+          "after": "Selecting another available network keeps the current eSIM profile. It is different from moving your service to another infrastructure with a different fair-use policy."
+        },
+        {
+          "area": "Network-selection boundary",
+          "before": "Your existing eSIM profile remains in use.",
+          "after": "A network change alone does not guarantee different fair-use rules."
+        },
+        {
+          "area": "Replacement-card heading",
+          "before": "A new profile.",
+          "after": "Another infrastructure."
+        },
+        {
+          "area": "Replacement-card heading",
+          "before": "A different service setup.",
+          "after": "A better fit, if available."
+        },
+        {
+          "area": "Best-effort replacement promise",
+          "before": "If a network change is not enough, we can issue another eSIM profile on the fly. That lets us change the underlying provider and connectivity setup, not just the network name on your screen.",
+          "after": "For recurring unlimited-plan throttling, we’ll try to provide a replacement profile from another infrastructure. We hope its fair-use rules will better suit your location, environment and experience. A better result is not guaranteed."
+        },
+        {
+          "area": "Replacement-card boundary",
+          "before": "This flexibility supports both multi-network access and our unlimited-use approach.",
+          "after": "A new profile changes the underlying service setup, not just the network name."
+        },
+        {
+          "area": "Replacement disclosure heading",
+          "before": "Occasionally, we may replace your eSIM profile entirely.",
+          "after": "We’ll try to improve the experience. Local rules still apply."
+        },
+        {
+          "area": "Replacement disclosure",
+          "before": "It should be uncommon, but changing the whole profile is part of how we work to maintain a good service. You may need to install or enable the replacement on your phone. If a setup step is needed, we’ll guide you through it.",
+          "after": "Replacement should be uncommon and depends on available alternatives. We cannot guarantee a more generous fair-use policy, faster service or no future throttling. You may need to install or enable a new profile; we’ll guide you if needed. If you want guaranteed no usage-based throttling, choose a fixed-data package instead."
+        }
+      ],
+      "changelogUrl": "/qa/connectivity-changelog.md",
+      "disposition": "Current",
+      "files": [
+        "qa/connectivity-copy.json",
+        "qa/unlimited-plan-copy.json",
+        "qa/connectivity-changes.js",
+        "qa/redesign/profile-switching.html",
+        "qa/profile-switching.css"
+      ]
+    },
+    {
+      "id": "country-fr-unlimited-refinement",
+      "title": "France: original template, lighter Unlimited block",
+      "pages": [
+        "country-fr-redesign"
+      ],
+      "status": "Current direction / Irina handoff",
+      "route": "/qa/country-fr-redesign#fr-plans",
+      "changedAt": "2026-10-04",
+      "summary": "Paul rejected the full selector redesign. The original France template is restored: centered Unlimited block followed by the original Data Bundles section. Unlimited keeps aligned travel-date/day controls and consistent feature/action spacing. The latest presets use numbers and days only, stronger original-style shadows and a restrained selected lift.",
+      "delivery": "Irina: implement this restrained original-template version, not the rejected type-choice cards, dark sticky summary or redesigned fixed cards. Keep the original hero, section ordering, orange identity, native font, fixed-card markup and surrounding content. Retain Paul’s restored original Unlimited introduction (see country-fr-unlimited-intro), the corrected plan-wide promise, plain fair-use label with question-mark button, and compact policy modal explaining local MNO rules and best-effort profile replacement. The existing France QA URL now serves this replacement. Source-review prices, presets/custom days, local date and cart/purchase demonstrations remain non-production; the input guard is 1–365 days, not a product rule. Original Data Calculator remains available through the source reference, not reimplemented in this scoped pass. No production page, checkout, provisioning or animation picks are changed.",
+      "changelogUrl": "/qa/country-fr-changelog.md",
+      "disposition": "Current",
+      "files": [
+        "qa/country-fr-refinement.js",
+        "qa/country-fr-refinement.css",
+        "qa/calendar-range.js",
+        "qa/country-fr-data.js",
+        "qa/redesign/country-fr-dialogs.html",
+        "qa/redesign/country-fr-support.html",
+        "qa/country-fr-support.js",
+        "qa/country-fr-support.css"
+      ]
+    },
+    {
+      "id": "country-fr-plan-selector",
+      "title": "France: rejected full selector redesign",
+      "pages": [
+        "country-fr-redesign"
+      ],
+      "status": "Rejected by Paul / do not implement",
+      "route": "/qa/country-fr-redesign#fr-plans",
+      "changedAt": "2026-10-04",
+      "summary": "The alternative with Unlimited / Fixed choice cards, a separate dark summary and rebuilt fixed-package cards was rejected. It has been removed from the served page and its old CSS, JS and markup fragment have been deleted.",
+      "delivery": "Historical decision only. Superseded by country-fr-unlimited-refinement. Do not include this rejected layout in Irina’s implementation or any future delivery; preserve the original template and make only slight Unlimited-block improvements.",
+      "changelogUrl": "/qa/country-fr-changelog.md",
+      "disposition": "History",
+      "files": [
+        "qa/country-fr-refinement.js",
+        "qa/country-fr-refinement.css",
+        "qa/calendar-range.js",
+        "qa/country-fr-data.js",
+        "qa/redesign/country-fr-dialogs.html",
+        "qa/redesign/country-fr-support.html",
+        "qa/country-fr-support.js",
+        "qa/country-fr-support.css"
+      ]
+    },
+    {
+      "id": "country-fr-fair-use",
+      "title": "France: question-mark fair-use modal",
+      "pages": [
+        "country-fr-redesign"
+      ],
+      "status": "Implemented in QA / shared product policy",
+      "route": "/qa/country-fr-redesign#fr-plans",
+      "changedAt": "2026-10-04",
+      "summary": "Fair usage applies and its question-mark icon are one clickable/tappable button with no underline and a close 4px text-to-icon gap. Clicking either the words or the icon opens the existing compact policy modal, without changing its explanation.",
+      "delivery": "The whole label plus icon is one native keyboard-accessible button; mobile has a 44px-high hit area. The icon is decorative for assistive technology and the button identifies the dialog it opens. Policy content remains generated from the current Unlimited data: fixed-package guarantee, local MNO fair use and best-effort profile replacement. Three policy sections, links to Unlimited/Multi Tier-1, View fixed packages, Escape/backdrop/close and focus return remain. Keep this combined trigger, not the earlier icon-only click target, when applying Irina’s handoff.",
+      "newCopy": [
+        {
+          "area": "Fixed versus unlimited",
+          "text": "Every purchased GB at full available network speed, without usage-based throttling, on fixed packages. Unlimited plans have no Openline-imposed cap or throttling, while local MNO fair-use rules can still apply."
+        },
+        {
+          "area": "Repeated throttling",
+          "text": "We’ll try another eSIM profile/infrastructure whose fair-use rules may better suit your location and usage. A better result is not guaranteed, and setup may be needed."
+        }
+      ],
+      "changelogUrl": "/qa/country-fr-changelog.md",
+      "disposition": "Current",
+      "files": [
+        "qa/country-fr-refinement.js",
+        "qa/country-fr-refinement.css",
+        "qa/calendar-range.js",
+        "qa/country-fr-data.js",
+        "qa/redesign/country-fr-dialogs.html",
+        "qa/redesign/country-fr-support.html",
+        "qa/country-fr-support.js",
+        "qa/country-fr-support.css"
+      ]
+    },
+    {
+      "id": "country-fr-calendar-range",
+      "title": "France: normal calendar range modal restored",
+      "pages": [
+        "country-fr-redesign"
+      ],
+      "status": "Implemented in QA / Irina handoff",
+      "route": "/qa/country-fr-redesign#fr-plans",
+      "changedAt": "2026-10-04",
+      "summary": "Select travel dates opens an actual start/end calendar range picker again, not two date input fields. The original two-month desktop pattern is retained with readable day targets, clear month navigation, orange endpoints, a soft range band/hover preview, start/end summaries and Reset. Mobile shows one navigable month rather than squeezing two calendars.",
+      "delivery": "Irina: keep the original page and lightly refined Unlimited block. This change is scoped to the calendar modal and selected-date label. First click sets start; second sets end, including same-day and reversed clicks. Past dates are disabled. Arrow/Home/End/Page Up/Down and Shift+Page keys support keyboard travel. Both dates count; calendar-day arithmetic avoids DST errors. Apply updates the existing day counter, label and price; Cancel/Escape/backdrop leave the committed selection intact. Reopening restores applied dates, not abandoned drafts. The preview total uses the same Unlimited pricing function and USD currency as the block, replacing the source modal’s hard-coded daily estimate/mixed currency label. Dates do not schedule activation. The existing 1–365-day preview guard remains, not a new product rule. No fixed-plan restyling, rejected selector, payment or provisioning is reintroduced.",
+      "changelogUrl": "/qa/country-fr-changelog.md",
+      "disposition": "Current",
+      "files": [
+        "qa/country-fr-refinement.js",
+        "qa/country-fr-refinement.css",
+        "qa/calendar-range.js",
+        "qa/country-fr-data.js",
+        "qa/redesign/country-fr-dialogs.html",
+        "qa/redesign/country-fr-support.html",
+        "qa/country-fr-support.js",
+        "qa/country-fr-support.css"
+      ]
+    },
+    {
+      "id": "country-fr-calendar-polish",
+      "title": "France: calendar pricing and consistent duration controls",
+      "pages": [
+        "country-fr-redesign"
+      ],
+      "status": "UI polish / Irina handoff",
+      "route": "/qa/country-fr-redesign#fr-plans",
+      "changedAt": "2026-10-04",
+      "summary": "The calendar’s visible keyboard-instruction line is hidden while the accessible description and shortcuts remain. A clearer quote card separates the X-day plan, Unlimited-data label, total USD price and daily rate. Reset is Openline orange with a reset icon; Apply has a stronger primary treatment and animated trailing arrow.",
+      "delivery": "Date, stepper, purchase/cart and calendar navigation icons retain small user-triggered motions, not moving labels or looping flashes. The later number-only duration-card revision supersedes the six preset calendar icons and selected tick animation. Reduced motion is static. Keep original France layout, pricing, range selection, cancellation and fair-use behaviour; keyboard help remains available to assistive technology. No rejected sidebar/type-selector design is restored.",
+      "changelogUrl": "/qa/country-fr-changelog.md",
+      "disposition": "Current",
+      "files": [
+        "qa/country-fr-refinement.js",
+        "qa/country-fr-refinement.css",
+        "qa/calendar-range.js",
+        "qa/country-fr-data.js",
+        "qa/redesign/country-fr-dialogs.html",
+        "qa/redesign/country-fr-support.html",
+        "qa/country-fr-support.js",
+        "qa/country-fr-support.css"
+      ]
+    },
+    {
+      "id": "france-duration-cards-and-support",
+      "title": "France: original-style durations and a support journey",
+      "pages": [
+        "country-fr-redesign"
+      ],
+      "status": "Implemented / Irina handoff",
+      "route": "/qa/country-fr-redesign",
+      "changedAt": "2026-10-04",
+      "summary": "Removed the icons from 3 / 5 / 7 / 10 / 15 / 30-day tiles. Added subtle neutral shadows and a stronger orange selected shadow with the original-style gentle lift. The unrelated coverage graphic beside the FAQs is replaced with a KB → Openline AI → human team support animation and a prominent live-chat CTA.",
+      "delivery": "Only the marked FAQ illustration is replaced; the source FAQ questions, surrounding page structure and plan selection remain. All three support labels stay visible while emphasis cycles slowly. Clicking a step selects it and restarts the timing; pause/resume is available, playback stops offscreen/hidden, and reduced motion stays static. Start a live chat opens the existing shared chat; Browse the knowledge base opens the KB. This visual explanation does not connect an AI or human-support backend. Number-only cards keep existing pricing, keyboard interaction and calendar handoff.",
+      "changelogUrl": "/qa/country-fr-changelog.md",
+      "disposition": "Current",
+      "files": [
+        "qa/country-fr-refinement.js",
+        "qa/country-fr-refinement.css",
+        "qa/calendar-range.js",
+        "qa/country-fr-data.js",
+        "qa/redesign/country-fr-dialogs.html",
+        "qa/redesign/country-fr-support.html",
+        "qa/country-fr-support.js",
+        "qa/country-fr-support.css"
+      ]
+    },
+    {
+      "id": "country-fr-unlimited-intro",
+      "title": "France: original Unlimited introduction restored",
+      "pages": [
+        "country-fr-redesign"
+      ],
+      "status": "Exact wording requested by Paul",
+      "route": "/qa/country-fr-redesign#fr-plans",
+      "changedAt": "2026-10-04",
+      "summary": "The description below Unlimited Data returns to the original marketing sentence, exactly as requested. No other page copy or layout is changed.",
+      "delivery": "Irina: use the exact After text below. Keep the separate fair-use label/question mark, current policy modal, plan-wide explanation and restored calendar range picker unchanged.",
+      "copyChanges": [
+        {
+          "area": "Unlimited Data introduction",
+          "before": "No data cap from Openline. Local network fair use applies.",
+          "after": "Perfect for heavy users. Stream, video call, and browse without limits."
+        }
+      ],
+      "changelogUrl": "/qa/country-fr-changelog.md",
+      "disposition": "Current",
+      "files": [
+        "qa/country-fr-refinement.js",
+        "qa/country-fr-refinement.css",
+        "qa/calendar-range.js",
+        "qa/country-fr-data.js",
+        "qa/redesign/country-fr-dialogs.html",
+        "qa/redesign/country-fr-support.html",
+        "qa/country-fr-support.js",
+        "qa/country-fr-support.css"
+      ]
+    },
+    {
+      "id": "iot-chrome",
+      "title": "IoT: selected Chrome default",
+      "pages": [
+        "iot"
+      ],
+      "status": "Selected default",
+      "route": "/qa/iot",
+      "summary": "Purple and indigo accents become neutral steel, graphite and gunmetal with a restrained chrome sheen.",
+      "delivery": "Chrome starts selected. Keep orange branding and green online status meaningful; honour the reviewer’s explicit identity toggle.",
+      "disposition": "Current",
+      "files": [
+        "js/iot-cells.js",
+        "qa/core.js",
+        "qa/paint.js",
+        "qa/recolor.js"
+      ]
+    },
+    {
+      "id": "nomad-stability",
+      "title": "Openline+: steady destination labels",
+      "pages": [
+        "openline-plus"
+      ],
+      "status": "Implemented in QA",
+      "route": "/qa/openline-plus",
+      "summary": "Built for Digital Nomads no longer repeatedly fades its city labels. Connection motion continues and the number is the fictional US example +1 202 555 0148.",
+      "delivery": "Context-only refinement of Six Cities, One Number. The original board remains a comparison reference.",
+      "disposition": "Current",
+      "files": [
+        "js/plus.js",
+        "qa/animation-fixes.js"
+      ]
+    },
+    {
+      "id": "about-layout",
+      "title": "Retained About redesign",
+      "pages": [
+        "about",
+        "about-redesign"
+      ],
+      "status": "QA alternative",
+      "route": "/qa/about-redesign",
+      "summary": "The earlier About redesign remains available beside the original, including its principles, team presentation, local clocks and partner strip.",
+      "delivery": "Preserve current/original comparison. Illustrative business claims require content approval before shipping.",
+      "disposition": "Retained / review",
+      "files": [
+        "qa/about.html",
+        "qa/redesign/about.main.html",
+        "qa/redesign/rd.css",
+        "qa/redesign.js"
+      ]
+    },
+    {
+      "id": "about-network-spacing",
+      "title": "Network comparison: corrected card spacing",
+      "pages": [
+        "about-redesign"
+      ],
+      "status": "Implemented in QA",
+      "route": "/qa/about-redesign#rd-network-technology",
+      "summary": "The two Most Reliable Connection cards have consistent inset padding, clear title-to-list spacing and aligned icon/bullet rows. Comparison titles use scoped heading styles instead of inheriting generic paragraph margins and sizing.",
+      "delivery": "Desktop and mobile spacing are explicit. The two network illustrations and their animation timings are unchanged; original About remains a comparison reference.",
+      "disposition": "Current",
+      "files": [
+        "qa/redesign/about.main.html",
+        "qa/redesign/rd.css",
+        "qa/redesign.js"
+      ]
+    },
+    {
+      "id": "about-startup-locked",
+      "title": "Open Startup: locked coming-soon results",
+      "pages": [
+        "about-redesign"
+      ],
+      "status": "Coming very soon",
+      "route": "/qa/about-redesign#rd-open-startup",
+      "summary": "Open Startup now explains that public results are coming very, very soon. A lock notice and keyboard-operable Show / Hide results preview control replace the previous live-looking sample metrics.",
+      "delivery": "Expanded by default, as selected by Paul. All three dashboard cards retain locked placeholders only, not financial figures; the Hide / Show control remains available. Prior sample revenue, margin, growth, active-user and retention numbers and Live badges were removed from this section, not merely blurred. No metrics API or publication date is implied.",
+      "disposition": "Current",
+      "files": [
+        "qa/redesign/about.main.html",
+        "qa/redesign/rd.css",
+        "qa/redesign.js"
+      ]
+    },
+    {
+      "id": "about-team-cities",
+      "title": "Team roster: nine supplied locations",
+      "pages": [
+        "about-redesign"
+      ],
+      "status": "Implemented in QA",
+      "route": "/qa/about-redesign",
+      "summary": "The local-time roster now lists New York, Lisbon, Warsaw, Ankara, Bristol, Berlin, Paris, Singapore and Bali in the supplied order, with city badges instead of fictional staff initials.",
+      "delivery": "Nine locations, one team replaces the old six-timezone claim. Clocks use IANA zones with daylight-saving rules where applicable; Ankara uses Europe/Istanbul, Bristol Europe/London and Bali Asia/Makassar. The currently selected team animation remains unchanged.",
+      "disposition": "Current",
+      "files": [
+        "qa/redesign/about.main.html",
+        "qa/redesign/rd.css",
+        "qa/redesign.js"
+      ]
+    },
+    {
+      "id": "redesign-button-parity",
+      "title": "Redesign buttons: native type and arrow motion",
+      "pages": [
+        "about-redesign",
+        "contact-redesign"
+      ],
+      "status": "Implemented in QA",
+      "route": "/qa/about-redesign",
+      "summary": "About and Contact action buttons use the current Openline type scale and icon sizing: 16px / 24px, weight 500 for main actions; 14px compact contact actions and mobile purchase CTAs; 16px button icons. Trailing arrows match the source shape and slide 4px over 150ms without shifting the text or lifting the button.",
+      "delivery": "Verified against live Openline and the original capture. Arrow motion responds to hover, keyboard focus and press, with a static reduced-motion fallback. Keep 8px corners, 8px base gaps, source-like desktop heights and at least 44px mobile tap targets. Purchase CTAs use the source-style Buy eSIM Now label on small screens, keeping the existing 190+ country count. No arrow motion is applied to chat symbols or disclosure/FAQ chevrons. Page layouts and selected illustration animations are preserved.",
+      "disposition": "Current",
+      "files": [
+        "qa/redesign/about.main.html",
+        "qa/redesign/rd.css",
+        "qa/redesign.js",
+        "qa/redesign/contact.main.html",
+        "qa/support/boot.js"
+      ]
+    },
+    {
+      "id": "contact-layout",
+      "title": "Retained Contact redesign",
+      "pages": [
+        "contact",
+        "contact-redesign"
+      ],
+      "status": "QA alternative",
+      "route": "/qa/contact-redesign",
+      "summary": "The earlier Contact redesign remains alongside the original, with contact methods, support process, chat preview and global support block.",
+      "delivery": "Only this retained Contact alternative receives the latest channel/widget redesign; the original capture is a comparison reference.",
+      "disposition": "Retained / review",
+      "files": [
+        "qa/contact.html",
+        "qa/redesign/contact.main.html",
+        "qa/redesign/rd.css",
+        "qa/redesign.js",
+        "qa/support/boot.js"
+      ]
+    },
+    {
+      "id": "contact-channels",
+      "title": "Contact channels and future hotline",
+      "pages": [
+        "contact-redesign",
+        "chat"
+      ],
+      "status": "Implemented / hotline coming soon",
+      "route": "/qa/contact-redesign",
+      "summary": "WhatsApp +1 (555) 484-2461; Instagram and Messenger/Facebook @askopenline; email ask@openline.com. The Contact page adds a Live hotline widget below 24/7 Global Support: +1 (8) 123 - ONLINE.",
+      "delivery": "WhatsApp https://wa.me/15554842461; Instagram https://www.instagram.com/askopenline/; Messenger https://m.me/askopenline; Facebook https://www.facebook.com/askopenline; mailto:ask@openline.com. Hotline is visibly Coming soon, has no dial action, and is not an operational number.",
+      "disposition": "Current",
+      "files": [
+        "qa/redesign/contact.main.html",
+        "qa/redesign/rd.css",
+        "qa/redesign.js",
+        "qa/support/boot.js",
+        "qa/support/chat.js",
+        "qa/support/support.js",
+        "qa/support/support.css",
+        "qa/assets/ai/README.md",
+        "qa/assets/support-portraits/README.md"
+      ]
+    },
+    {
+      "id": "contact-chat-seeking",
+      "title": "Clickable support-process animation",
+      "pages": [
+        "contact-redesign"
+      ],
+      "status": "Implemented in QA",
+      "route": "/qa/contact-redesign",
+      "summary": "Each of the three How Our Chat Support Works steps seeks its matching animation scene. Automatic playback continues and highlights follow the SVG clock.",
+      "delivery": "Keyboard-operable buttons with pressed state. Reduced-motion pauses autoplay but preserves manual scene selection.",
+      "disposition": "Current",
+      "files": [
+        "qa/redesign/contact.main.html",
+        "qa/redesign/rd.css",
+        "qa/redesign.js",
+        "qa/support/boot.js"
+      ]
+    },
+    {
+      "id": "installation-preflight",
+      "title": "Installation preflight: earlier two-block version",
+      "pages": [
+        "installation-guide"
+      ],
+      "status": "Superseded by install-first choices",
+      "route": "/qa/installation-guide#ig-preflight",
+      "summary": "The earlier text-heavy explainer plus separate four-step roadmap is superseded. Do not restore the duplicated structure or make every visitor redeem a purchase code before installing.",
+      "delivery": "Historical scope only. Follow installation-preflight-install-first and its current handoff document; the selected hero animation and surrounding captured blocks remain preserved.",
+      "disposition": "History",
+      "files": [
+        "qa/redesign/installation-preflight.html",
+        "qa/installation-preflight.js",
+        "qa/installation-preflight.css",
+        "qa/support/boot.js"
+      ]
+    },
+    {
+      "id": "installation-preflight-simplified",
+      "title": "Installation guide: earlier code-to-profile comparison",
+      "pages": [
+        "installation-guide"
+      ],
+      "status": "Superseded by install-first choices",
+      "route": "/qa/installation-guide#ig-preflight",
+      "changedAt": "2026-10-04",
+      "summary": "The Purchase code → Openline eSIM comparison, three steps below and primary redemption CTA were an intermediate version. Paul requested a clearer choice prioritising people who already have their eSIM, so this intermediate layout is no longer served.",
+      "delivery": "Do not restore the primary Redeem purchase code button or the small I already have my eSIM skip link. Use the new first/primary Install my eSIM card and a separate secondary redemption path. Dedicated code-definition and connection-checklist modals are retained.",
+      "changelogUrl": "/qa/installation-preflight-changelog.md",
+      "disposition": "History",
+      "files": [
+        "qa/redesign/installation-preflight.html",
+        "qa/installation-preflight.js",
+        "qa/installation-preflight.css",
+        "qa/support/boot.js"
+      ]
+    },
+    {
+      "id": "installation-preflight-install-first",
+      "title": "Installation guide: install-first, redeem-if-needed",
+      "pages": [
+        "installation-guide"
+      ],
+      "status": "Current targeted redesign / Irina handoff",
+      "route": "/qa/installation-guide#ig-preflight",
+      "changedAt": "2026-10-04",
+      "summary": "The marked block is now a two-path decision: I already have my eSIM is first and primary, with a large orange Install my eSIM button leading directly to the existing setup guide. I have a purchase code is a separate neutral secondary card whose Redeem purchase code button goes to /start. The forced three-step redemption roadmap and directional bridge are removed.",
+      "delivery": "Use larger headings/body copy, aligned card visuals/actions, clear QR/manual-details versus purchase-code examples, native Openline font and orange-only primary emphasis. On mobile the install-ready route remains first. The install CTA scrolls and focuses Learn step by step; /start remains the alias to /qa/start. Compatibility and dedicated detail dialogs stay. The connection checklist now mirrors primary Openline data, other-line data OFF, switching OFF, roaming ON and an airplane-mode refresh. Code help explains unlock-for-transfer and owner email validation. No surrounding captured HTML or chosen animation was changed; no activation, email or transfer backend is added.",
+      "newCopy": [
+        {
+          "area": "Heading",
+          "text": "Ready to install your eSIM? Choose what you have. We’ll take you to the right next step."
+        },
+        {
+          "area": "Primary route",
+          "text": "I already have my eSIM. Got your QR code or manual installation details? You’re ready to continue. → Install my eSIM"
+        },
+        {
+          "area": "Secondary route",
+          "text": "I have a purchase code. Redeem your code to create the eSIM profile you’ll install on your phone. → Redeem purchase code"
+        }
+      ],
+      "changelogUrl": "/qa/installation-preflight-changelog.md",
+      "disposition": "Current",
+      "files": [
+        "qa/redesign/installation-preflight.html",
+        "qa/installation-preflight.js",
+        "qa/installation-preflight.css",
+        "qa/support/boot.js"
+      ]
+    },
+    {
+      "id": "installation-preflight-detail-modals",
+      "title": "Installation guide: code and connection detail modals",
+      "pages": [
+        "installation-guide"
+      ],
+      "status": "Added / user-supplied setup guidance",
+      "route": "/qa/installation-guide#ig-preflight",
+      "changedAt": "2026-10-04",
+      "summary": "Which code is which and Connection checklist are now larger, icon-led buttons opening dedicated native dialogs. The first distinguishes an Openline purchase code from the eSIM activation code and SM-DP+ address used for manual phone setup. The second explains activation timing, private Wi-Fi and the three essential mobile-data settings.",
+      "delivery": "Codes: order email/dashboard code goes to /start, not phone settings; the resulting profile supplies QR/manual details. Retain the old naming explanation and gift-before-activation boundary, now including unlock-for-transfer and owner purchase-validation email. Connection: activate near the trip, use private Wi-Fi rather than airport/public Wi-Fi or cellular setup, select Openline as primary data, disable other SIM/eSIM mobile data and automatic switching, enable Openline roaming and suggest a brief airplane-mode refresh. These are user-supplied recommendations, not detected or changed phone settings. Native focus trapping/return, Escape, backdrop/close and setup-guide jumps are supported. No payment, provisioning, email or device configuration is performed.",
+      "changelogUrl": "/qa/installation-preflight-changelog.md",
+      "disposition": "Current",
+      "files": [
+        "qa/redesign/installation-preflight.html",
+        "qa/installation-preflight.js",
+        "qa/installation-preflight.css",
+        "qa/support/boot.js"
+      ]
+    },
+    {
+      "id": "start-flow",
+      "title": "Purchase code to eSIM extra",
+      "pages": [
+        "start",
+        "installation-guide"
+      ],
+      "status": "Interactive prototype",
+      "route": "/qa/start",
+      "summary": "Animated key, large GAZE19-MULCH29-NYMPH13-format input, code validation, and a concise plan review with three clear Activate / Gift / Account cards. The centred activation confirmation uses an off-by-default readiness switch; the chosen code-to-eSIM animation is preserved.",
+      "delivery": "Current larger-type redesign replaces the earlier text-heavy presentation. Checking does not activate. Confirmation explains immediate validity and the end of gifting, with a large centred readiness switch required before activation. Detailed code help and preview/error controls now live in native dialogs. Invalid/used/network/provisioning-error states, reduced motion and safe cancellation remain. All plan/code/profile values are fixtures: no provisioning API, real account action, persistent code storage or installable QR.",
+      "disposition": "Current",
+      "files": [
+        "qa/start.js",
+        "qa/start.css",
+        "qa/start-profile.js",
+        "qa/start-profile.css",
+        "qa/start-changelog.md",
+        "qa/assets/start-brand-mark.png",
+        "qa/assets/start-demo-qr.png",
+        "qa/redesign/installation-preflight.html",
+        "qa/installation-preflight.js",
+        "qa/installation-preflight.css",
+        "qa/support/boot.js"
+      ]
+    },
+    {
+      "id": "start-gift-unlock-transfer",
+      "title": "Gift a purchase code: owner email and explicit transfer unlock",
+      "pages": [
+        "start",
+        "installation-guide"
+      ],
+      "status": "Interactive concept / product rule from Paul",
+      "route": "/qa/start",
+      "changedAt": "2026-10-04",
+      "summary": "Gift now explains that the purchase owner will still receive an email to validate the purchase. An unused code starts locked for transfer. Unlock for transfer opens an explicit confirmation; confirming exposes Copy gift message and a Ready to transfer / not activated status. Unlocking is separate from activating the plan.",
+      "delivery": "The confirmation explains that anyone with the unlocked code can redeem it and that unlocking does not start validity or remove owner email validation. Cancel/Escape do not unlock. Unlock state is scoped to each code in memory; another code never inherits it, and Restart flow clears the test run. Used/activated codes remain blocked from gifting. Open recipient view hands the current unlocked code to the new recipient entry without placing it in a URL or storage. This is local presentation state only: production requires ownership checks, transfer/unlock and email integration. No email is sent and no purchase is actually unlocked. Keep technical limitations in the QA panel rather than customer-facing notices.",
+      "newCopy": [
+        {
+          "area": "Owner email",
+          "text": "The purchase owner will still receive an email to validate the purchase."
+        },
+        {
+          "area": "Unlock confirmation",
+          "text": "Anyone with the unlocked code can redeem it. Unlocking does not start the plan or remove the owner’s email-validation step."
+        },
+        {
+          "area": "Transfer state",
+          "text": "Locked for transfer → Unlock for transfer → Ready to transfer · not activated → Copy gift message"
+        }
+      ],
+      "changelogUrl": "/qa/start-changelog.md",
+      "disposition": "Current",
+      "files": [
+        "qa/start.js",
+        "qa/start.css",
+        "qa/start-profile.js",
+        "qa/start-profile.css",
+        "qa/start-changelog.md",
+        "qa/assets/start-brand-mark.png",
+        "qa/assets/start-demo-qr.png",
+        "qa/redesign/installation-preflight.html",
+        "qa/installation-preflight.js",
+        "qa/installation-preflight.css",
+        "qa/support/boot.js"
+      ]
+    },
+    {
+      "id": "start-gift-recipient",
+      "title": "Gift recipient: receive, redeem and connect",
+      "pages": [
+        "start"
+      ],
+      "status": "Interactive recipient journey / Irina handoff",
+      "route": "/qa/start?recipient=1",
+      "changedAt": "2026-10-04",
+      "summary": "Added the recipient side of gifting: a gift-code entry, plan review with unlocked status, Keep it for later, guarded Redeem & activate, chosen code-to-profile animation, immediate QR, setup, recipient-specific label/folder and final account handoff. The sender can open the recipient view after unlocking, or a recipient can enter through Received a gift or the dedicated query-mode link.",
+      "delivery": "Entry is /qa/start?recipient=1; only the view mode goes in the URL, never the purchase code. Sender handoff prefills the code in memory and does not auto-redeem it. Checking and keeping for later leave it unused; the readiness switch and confirmation are mandatory. Added locked-transfer and pending-owner-email-validation states with Check again and a privately copyable sender-help message. These states block activation. The default ready fixture represents an eligible unlocked gift; a live implementation must verify purchase validation, ownership and one-time redemption atomically on the server. An in-memory ledger blocks reuse after successful activation within the current run; restart/reload is not production protection. Sender/recipient label and folder storage are isolated; no sender name, email or organisational data is exposed. No email, account binding, transfer, real QR provisioning or phone connection is newly integrated. Existing clean customer presentation and quick final modals remain.",
+      "newCopy": [
+        {
+          "area": "Recipient entry",
+          "text": "Someone’s sent you a connection. Enter the purchase code from your gift message. Your next trip starts with you."
+        },
+        {
+          "area": "Gift review",
+          "text": "A connection, just for you. Unlocked and ready for you. The sender has made this code transferable. Your plan hasn’t started."
+        },
+        {
+          "area": "Pending validation",
+          "text": "One confirmation to go. The purchase owner needs to validate the purchase by email. Ask them to check their inbox, then check again."
+        },
+        {
+          "area": "Activation and handoff",
+          "text": "Ready to use your gift? Redeeming starts your 30 days immediately. Once activated, this gift can’t be transferred again. → Your gift is now your eSIM. → A gift that goes with you."
+        }
+      ],
+      "changelogUrl": "/qa/start-changelog.md",
+      "disposition": "Current",
+      "files": [
+        "qa/start.js",
+        "qa/start.css",
+        "qa/start-profile.js",
+        "qa/start-profile.css",
+        "qa/start-changelog.md",
+        "qa/assets/start-brand-mark.png",
+        "qa/assets/start-demo-qr.png"
+      ]
+    },
+    {
+      "id": "start-profile-handoff",
+      "title": "Complete activation: details, setup, organisation",
+      "pages": [
+        "start"
+      ],
+      "status": "Interactive prototype",
+      "route": "/qa/start",
+      "summary": "After activation, the page immediately shows the eSIM QR and plan card. Manual details and IDs are collapsed underneath. The inline sequence then continues through Setup & connect → Make it yours → a clearly labelled simulated connection and account handoff. There is no Set up my eSIM gate or all-in-one profile modal.",
+      "delivery": "Keep QR visible by default and SM-DP+, activation code, LPA, ICCID, profile ID and unlinked EID behind the manual-details disclosure. Setup uses Openline / OFF / ON cards, with private-Wi-Fi installation and device guidance in dialogs. Label/folder/custom folders remain optional and session-stored; storage failure is still reported. Paul requested removal of customer-facing demo/simulated-connection/local-storage notices, so those boundaries are documented here rather than on the completion screen. Production must use authoritative provisioning and connection status, not timers. Account goes to /qa/login; QR is still a harmless fixture, server uses .invalid and no device EID is fabricated.",
+      "disposition": "Current",
+      "files": [
+        "qa/start.js",
+        "qa/start.css",
+        "qa/start-profile.js",
+        "qa/start-profile.css",
+        "qa/start-changelog.md",
+        "qa/assets/start-brand-mark.png",
+        "qa/assets/start-demo-qr.png"
+      ]
+    },
+    {
+      "id": "start-focused-redesign",
+      "title": "Activate a plan: clearer choices and an inline finish",
+      "pages": [
+        "start"
+      ],
+      "status": "Current redesign / Irina handoff",
+      "route": "/qa/start",
+      "changedAt": "2026-10-04",
+      "summary": "Full /qa/start flow simplification: less visible copy, larger native-font headings and controls, three distinct plan actions, a centred 24px readiness label with a real switch, immediately visible QR, collapsed manual details, three essential phone settings, optional organisation and a clear Go to my account finale.",
+      "delivery": "Irina: implement the structure, copy, typography, spacing, icons, modal details and interactions together, not just the animation. The selected key and code-to-profile motion and directional CTA arrows are preserved. First code check is read-only; only explicit switched-on confirmation consumes the fixture code. Private Wi-Fi guidance, avoid-airport/cellular setup, Openline primary data, switching OFF and Openline roaming ON match the installation-guide changes. No production backend has been added. The delivery handoff was authorized on 6 October 2026.",
+      "newCopy": [
+        {
+          "area": "Plan choices",
+          "text": "Activate my plan · Start using it now. / Gift this code · Let them choose when. / My account · Manage my eSIMs."
+        },
+        {
+          "area": "Confirmation",
+          "text": "Your 30 days begin immediately. This code can no longer be gifted. I’m ready to start this plan now."
+        },
+        {
+          "area": "Inline finish",
+          "text": "Here’s your eSIM. → Let’s get you connected. → Make it yours. → You’re connected. (QA-only implementation boundary is recorded in the panel, not in the customer-facing copy.)"
+        }
+      ],
+      "changelogUrl": "/qa/start-changelog.md",
+      "disposition": "Current",
+      "files": [
+        "qa/start.js",
+        "qa/start.css",
+        "qa/start-profile.js",
+        "qa/start-profile.css",
+        "qa/start-changelog.md",
+        "qa/assets/start-brand-mark.png",
+        "qa/assets/start-demo-qr.png"
+      ]
+    },
+    {
+      "id": "start-normal-header-actions",
+      "title": "Start: normal Openline header and proper secondary actions",
+      "pages": [
+        "start"
+      ],
+      "status": "Implemented / Irina handoff",
+      "route": "/qa/start",
+      "changedAt": "2026-10-04",
+      "summary": "Restored the source-style 64px normal header with logo, Destinations / Features / Pro / Resources, Openline+ Beta, cart, Sign In and EN / $ controls. Mobile has support, cart and a working menu. Gift this code and Go to my account are larger icon-and-arrow buttons; completion View my eSIM and Edit label or folder are full secondary buttons. The bottom Check my device / Need a hand row is removed.",
+      "delivery": "Header menus use the existing QA routes. Cart is a separate empty presentation, not a shared checkout backend; locale shows current English/USD only, not a multilingual implementation. The normal wordmark/native font/spacing follow the supplied reference. The later quick-actions revision makes completion buttons open small QR/edit dialogs while retaining the completion screen underneath. The initial QR handoff still appears inline, without a modal gate. Chosen activation motion and mandatory readiness switch remain.",
+      "changelogUrl": "/qa/start-changelog.md",
+      "disposition": "Current",
+      "files": [
+        "qa/start.js",
+        "qa/start.css",
+        "qa/start-profile.js",
+        "qa/start-profile.css",
+        "qa/start-changelog.md",
+        "qa/assets/start-brand-mark.png",
+        "qa/assets/start-demo-qr.png"
+      ]
+    },
+    {
+      "id": "start-quick-profile-modals",
+      "title": "Start: QR reminder, explicit settings and quick profile modals",
+      "pages": [
+        "start"
+      ],
+      "status": "Implemented / Irina handoff",
+      "route": "/qa/start",
+      "changedAt": "2026-10-04",
+      "summary": "Install your eSIM repeats the QR above device instructions. Setup explicitly selects Openline as primary mobile data, disables mobile data on other SIMs/eSIMs and automatic data switching, enables roaming on Openline, and adds a brief airplane-mode ON/OFF refresh. Completion icons are centred with their labels; View my eSIM and Edit label or folder open compact dialogs rather than revisiting previous steps.",
+      "delivery": "QR view includes the current profile label, a QR download and collapsed copyable manual details. Edit opens saved values, supports existing/custom folders and validates a new folder name. Save updates the completion card, main form and QR modal together without changing the current step; Cancel/Escape/backdrop discard unsaved edits. Native focus trapping and return are preserved. Only mobile data on other lines is disabled in the instructions, not necessarily their calls/texts. Airplane mode is a reconnect suggestion, not a guaranteed connection or detected status. Existing safe fixtures and local storage boundary remain; no new backend or device configuration is connected. Customer-facing demo notices remain removed.",
+      "newCopy": [
+        {
+          "area": "Primary data",
+          "text": "Choose your Openline eSIM as the primary mobile data line."
+        },
+        {
+          "area": "Other SIMs and switching",
+          "text": "Turn OFF mobile data on other SIMs/eSIMs and automatic data switching."
+        },
+        {
+          "area": "Roaming",
+          "text": "Enable data roaming on your Openline eSIM."
+        },
+        {
+          "area": "Quick refresh",
+          "text": "Turn airplane mode ON, then OFF. Let the network reconnect, then try opening a webpage."
+        }
+      ],
+      "changelogUrl": "/qa/start-changelog.md",
+      "disposition": "Current",
+      "files": [
+        "qa/start.js",
+        "qa/start.css",
+        "qa/start-profile.js",
+        "qa/start-profile.css",
+        "qa/start-changelog.md",
+        "qa/assets/start-brand-mark.png",
+        "qa/assets/start-demo-qr.png"
+      ]
+    },
+    {
+      "id": "clean-customer-presentation",
+      "title": "Customer-facing QA screens: remove demo notices",
+      "pages": [
+        "*"
+      ],
+      "status": "Requested presentation cleanup / technical limits retained here",
+      "route": "/qa#qa-changes",
+      "changedAt": "2026-10-04",
+      "summary": "Removed the intrusive Demo only / simulated connection / no real activation / saved in this browser tab notices from the start flow, and the corresponding preview banners, captions and copy in France, Product Hunt, chat, Contact and installation guidance. Startup labels now say Show / Hide results; the explicitly requested locked-coming-soon state remains.",
+      "delivery": "This is UI copy cleanup, not a backend launch. Activation, network connection, reward issuance, human/AI chat and account saving are not newly integrated. Preserve safe .invalid/QA fixtures, local storage boundaries and error handling. No purchase, email, reward or support ticket is sent by these prototypes. Do not infer successful production operations from the clean presentation. Chat microphone denial now gives an actual error rather than simulating a recording; clipboard and storage failures remain truthful. Do not strip documentation, code comments, the QA panel or review controls of necessary technical context. Delivery documentation was authorized on 6 October 2026.",
+      "disposition": "Current",
+      "files": []
+    },
+    {
+      "id": "start-action-arrows",
+      "title": "Activation flow: matching directional arrow motion",
+      "pages": [
+        "start"
+      ],
+      "status": "Implemented in QA",
+      "route": "/qa/start",
+      "summary": "The same source-style 150ms arrow nudge now covers purchase-code entry, review, profile setup, back links, QR download, full-guide and account handoffs. Forward/back arrows move 4px in their direction; diagonal and download arrows follow their own direction.",
+      "delivery": "Hover, keyboard focus and press are supported; disabled/loading controls do not animate, and reduced motion leaves arrows static. Check my code rebuilds the correct SVG arrow after loading or errors. The arrow motion is retained through the later focused redesign, whose larger typography and inline flow supersede the original layout.",
+      "disposition": "Current",
+      "files": [
+        "qa/start.js",
+        "qa/start.css",
+        "qa/start-profile.js",
+        "qa/start-profile.css",
+        "qa/start-changelog.md",
+        "qa/assets/start-brand-mark.png",
+        "qa/assets/start-demo-qr.png"
+      ]
+    },
+    {
+      "id": "modal-builder",
+      "title": "Expanded modal builder",
+      "pages": [
+        "modals"
+      ],
+      "status": "Interactive tool",
+      "route": "/qa/modals",
+      "summary": "Eight types, 60 Openline templates, 358 animated icons, 16 content-block types, custom images, one/two actions and real-page backdrop preview.",
+      "delivery": "The builder keeps its own detailed HTML / Copy for Computer export for the active draft. Global export inventories the capability; export the modal draft separately when handing it off.",
+      "disposition": "Current",
+      "files": [
+        "qa/modals.js",
+        "qa/modals.css",
+        "qa/modal-templates.js",
+        "qa/modal-illus.js",
+        "qa/icons-lib.js"
+      ]
+    },
+    {
+      "id": "chat-sidebar-ai",
+      "title": "Chat sidebar and AI handoffs",
+      "pages": [
+        "chat"
+      ],
+      "status": "Interactive prototype",
+      "route": "/qa/chat",
+      "summary": "Full-height collapsed rail opens on any tap/click; rail arrow, expanded-panel arrow and header icon toggle it. Nine editable prompts and seven AI providers use real locally hosted logos/favicons.",
+      "delivery": "Each AI opens a copy-and-handoff dialog, reports clipboard success/failure accurately and uses its official web interface via a new-tab HTTPS link. No prompt URL parameters or automatic transcript sharing; installed-app handling is device-dependent, not guaranteed.",
+      "disposition": "Current",
+      "files": [
+        "qa/support/chat.js",
+        "qa/support/support.js",
+        "qa/support/support.css",
+        "qa/support/boot.js",
+        "qa/assets/ai/README.md",
+        "qa/assets/support-portraits/README.md"
+      ]
+    },
+    {
+      "id": "chat-fresh-clear",
+      "title": "Fresh guest welcome and Clear chat",
+      "pages": [
+        "chat"
+      ],
+      "status": "Interactive prototype",
+      "route": "/qa/chat",
+      "summary": "Animated welcome icon and Gary’s How can I help you? greeting appear for a new guest or after confirmed Clear chat. Text, files, voice, local history and simulated replies remain.",
+      "delivery": "Confirmation describes the intended live server deletion / issue-solved behaviour, with explicit QA-only disclosure. This demo clears only local history and attachments. Outstanding replies and recordings are cancelled so old content cannot return; backend deletion and ticket closure are not implemented.",
+      "disposition": "Current",
+      "files": [
+        "qa/support/chat.js",
+        "qa/support/support.js",
+        "qa/support/support.css",
+        "qa/support/boot.js",
+        "qa/assets/ai/README.md",
+        "qa/assets/support-portraits/README.md"
+      ]
+    },
+    {
+      "id": "chat-brand-portraits",
+      "title": "Chat: official mark and centred profile portraits",
+      "pages": [
+        "chat"
+      ],
+      "status": "Implemented in QA",
+      "route": "/qa/chat",
+      "summary": "The chat header, animated welcome and Gary avatar use the actual Openline mark already sourced for /start. Seven circular photo portraits form one centred row directly above Here to help you stay connected, in both the fresh welcome and conversation intro.",
+      "delivery": "CC0 demo portraits are hosted locally and labelled illustrative, not actual staff identities or online availability. Their order is shuffled once when opening chat and remains stable through messages, replies and clearing. The row is centred within the conversation area, including when the side panel changes width. Gary’s brand avatar remains visible on mobile.",
+      "disposition": "Current",
+      "files": [
+        "qa/support/chat.js",
+        "qa/support/support.js",
+        "qa/support/support.css",
+        "qa/support/boot.js",
+        "qa/assets/ai/README.md",
+        "qa/assets/support-portraits/README.md"
+      ]
+    },
+    {
+      "id": "help-modals",
+      "title": "Knowledge base and device checker",
+      "pages": [
+        "kb",
+        "chat",
+        "installation-guide",
+        "start"
+      ],
+      "status": "Interactive QA tools",
+      "route": "/qa/kb",
+      "summary": "Searchable help and compatibility modals use the included 2,737-article and 9,496-device datasets, shared launchers, keyboard controls and deep-link states.",
+      "delivery": "Keep dataset provenance and refresh needs in the final handoff. Search results do not turn the separate chat or redemption prototypes into connected production services.",
+      "disposition": "Current",
+      "files": [
+        "qa/support/support.js",
+        "qa/support/search.mjs",
+        "qa/support/minisearch.mjs",
+        "qa/support/md.js",
+        "qa/data/kb-articles.json",
+        "qa/data/devices.js",
+        "qa/kb.css",
+        "qa/support/chat.js",
+        "qa/support/support.css",
+        "qa/support/boot.js",
+        "qa/assets/ai/README.md",
+        "qa/assets/support-portraits/README.md",
+        "qa/redesign/installation-preflight.html",
+        "qa/installation-preflight.js",
+        "qa/installation-preflight.css",
+        "qa/start.js",
+        "qa/start.css",
+        "qa/start-profile.js",
+        "qa/start-profile.css",
+        "qa/start-changelog.md",
+        "qa/assets/start-brand-mark.png",
+        "qa/assets/start-demo-qr.png"
+      ]
+    },
+    {
+      "id": "qa-reporting",
+      "title": "Non-animation change reporting",
+      "pages": [
+        "*"
+      ],
+      "status": "Implemented in QA",
+      "route": "/qa#qa-changes",
+      "summary": "Page panels show relevant changes and shared refinements, with persistent page-level notes. The hub lists every implemented item; Copy for Computer includes the full inventory and machine-readable v3 data.",
+      "delivery": "Animation-pick deltas are counted separately from implemented refinements. Resets preserve page-level notes and this inventory. The authorized /delivery freezes these records and documents their source files; no chat transcripts or entered purchase codes are exported.",
+      "disposition": "Current",
+      "files": []
+    }
+  ]
+}

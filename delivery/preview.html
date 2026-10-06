@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><base href="/delivery/"><meta name="robots" content="noindex"><title>Openline selected animation</title><link rel="stylesheet" href="./runtime/animation.css">
+<style>body{margin:0;background:#fff;color:#0b0b0f;font-family:var(--ol-font-sans)}main{padding:24px;max-width:800px;margin:auto}header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}h1{font-size:18px;margin:0}p{font-size:14px;line-height:1.6;color:#62636b}button{font:inherit;min-height:44px;padding:8px 14px;background:#fff;border:1px solid #ddd;border-radius:8px;cursor:pointer}a{color:#b9390b}.ol-animation{max-height:660px}button:focus-visible,a:focus-visible{outline:3px solid #ff5314;outline-offset:3px}</style></head>
+<body><main><header><h1 id="name">Loading selected artwork…</h1><button id="pause" type="button">Pause</button></header><div id="art"></div><p id="caption"></p><a href="./index.html#animations">Back to delivery</a></main><script type="module">
+import {mountAnimation} from './runtime/mount.js';
+let controller;let paused=matchMedia('(prefers-reduced-motion:reduce)').matches;
+const button=document.querySelector('#pause');
+const update=()=>{button.textContent=paused?'Resume':'Pause';button.setAttribute('aria-pressed',String(paused));};
+try{controller=await mountAnimation(document.querySelector('#art'),new URLSearchParams(location.search).get('key')||'referral',{paused});const a=controller.item;document.querySelector('#name').textContent=a.name;document.title=a.name+' | Openline delivery';document.querySelector('#caption').textContent=a.decision+'. '+a.fitNote;update();}
+catch(e){document.querySelector('#name').textContent='Preview unavailable';document.querySelector('#caption').textContent=e.message;}
+button.addEventListener('click',()=>{paused=!paused;controller?.setPaused(paused);update();});
+addEventListener('pagehide',()=>controller?.dispose());
+</script></body></html>

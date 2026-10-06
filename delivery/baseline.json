@@ -1,0 +1,1184 @@
+{
+  "pages": [
+    {
+      "slug": "home",
+      "title": "Home",
+      "path": "/home",
+      "slots": [
+        {
+          "key": "homewhy",
+          "w": 407,
+          "h": 302,
+          "hideUp": true
+        },
+        {
+          "key": "referral",
+          "w": 576,
+          "h": 520,
+          "clear": true
+        }
+      ]
+    },
+    {
+      "slug": "multiple-tier1",
+      "title": "Multiple Tier-1",
+      "path": "/multiple-tier1",
+      "slots": [
+        {
+          "key": "tier1",
+          "hero": true,
+          "w": 576,
+          "h": 420
+        },
+        {
+          "key": "t1ai",
+          "w": 584,
+          "h": 560
+        },
+        {
+          "key": "t1market",
+          "w": 584,
+          "h": 440
+        },
+        {
+          "key": "t1access",
+          "w": 584,
+          "h": 470
+        }
+      ]
+    },
+    {
+      "slug": "global-esim",
+      "title": "Global eSIM",
+      "path": "/global-esim",
+      "slots": [
+        {
+          "key": "what",
+          "w": 584,
+          "h": 420
+        },
+        {
+          "key": "travel",
+          "w": 584,
+          "h": 520
+        }
+      ]
+    },
+    {
+      "slug": "network",
+      "title": "Network",
+      "path": "/network",
+      "group": "Features",
+      "slots": [
+        {
+          "key": "nethero",
+          "hero": true,
+          "w": 576,
+          "h": 420
+        },
+        {
+          "key": "why",
+          "w": 592,
+          "h": 430
+        }
+      ]
+    },
+    {
+      "slug": "security",
+      "title": "Security",
+      "path": "/security",
+      "group": "Features",
+      "slots": []
+    },
+    {
+      "slug": "adblocking",
+      "title": "AdBlocking",
+      "path": "/adblocking",
+      "group": "Features",
+      "slots": []
+    },
+    {
+      "slug": "unlimited",
+      "title": "Unlimited",
+      "path": "/unlimited",
+      "group": "Features",
+      "slots": []
+    },
+    {
+      "slug": "business",
+      "title": "Business",
+      "path": "/business",
+      "slots": [
+        {
+          "key": "bizhero",
+          "w": 576,
+          "h": 560
+        },
+        {
+          "key": "bizneeds",
+          "w": 584,
+          "h": 440
+        }
+      ]
+    },
+    {
+      "slug": "hospitality",
+      "title": "Hospitality",
+      "path": "/hospitality",
+      "slots": [
+        {
+          "key": "hosp",
+          "hero": true,
+          "w": 576,
+          "h": 420
+        }
+      ]
+    },
+    {
+      "slug": "iot",
+      "title": "IoT",
+      "path": "/iot",
+      "slots": [
+        {
+          "key": "iotwide",
+          "w": 740,
+          "h": 234
+        },
+        {
+          "key": "iotchip",
+          "w": 360,
+          "h": 234
+        },
+        {
+          "key": "iotdark",
+          "w": 740,
+          "h": 234
+        }
+      ]
+    },
+    {
+      "slug": "openline-plus",
+      "title": "Openline+",
+      "path": "/openline-plus",
+      "slots": [
+        {
+          "key": "pluslounge",
+          "w": 574,
+          "h": 642
+        },
+        {
+          "key": "plusnomad",
+          "w": 574,
+          "h": 656
+        },
+        {
+          "key": "pluskyc",
+          "w": 574,
+          "h": 440
+        }
+      ]
+    },
+    {
+      "slug": "login",
+      "title": "Login",
+      "path": "/login",
+      "slots": [
+        {
+          "key": "aloha",
+          "w": 56,
+          "h": 56
+        }
+      ]
+    },
+    {
+      "slug": "about",
+      "title": "About",
+      "path": "/about",
+      "redesign": "about-redesign",
+      "slots": [
+        {
+          "key": "prin",
+          "w": 592,
+          "h": 430
+        },
+        {
+          "key": "team",
+          "w": 592,
+          "h": 480
+        }
+      ]
+    },
+    {
+      "slug": "about-redesign",
+      "title": "About — redesign",
+      "path": "/about",
+      "redesignOf": "about",
+      "slots": [
+        {
+          "key": "prin",
+          "w": 592,
+          "h": 430
+        },
+        {
+          "key": "team",
+          "w": 592,
+          "h": 480
+        }
+      ]
+    },
+    {
+      "slug": "omdm-market",
+      "title": "OMDM Market",
+      "path": "/omdm-market",
+      "slots": [
+        {
+          "key": "omhero",
+          "w": 576,
+          "h": 460
+        },
+        {
+          "key": "ombook",
+          "w": 1232,
+          "h": 404
+        },
+        {
+          "key": "omctrl",
+          "w": 624,
+          "h": 440
+        }
+      ]
+    },
+    {
+      "slug": "blog",
+      "title": "Blog",
+      "path": "/blog",
+      "slots": [
+        {
+          "key": "blog",
+          "w": 576,
+          "h": 540,
+          "boards": [
+            "blog",
+            "blogv"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "installation-guide",
+      "title": "Installation Guide",
+      "path": "/installation-guide",
+      "slots": [
+        {
+          "key": "install",
+          "w": 576,
+          "h": 324
+        }
+      ]
+    },
+    {
+      "slug": "contact",
+      "title": "Contact",
+      "path": "/contact",
+      "redesign": "contact-redesign",
+      "slots": [
+        {
+          "key": "contact",
+          "hero": true,
+          "w": 576,
+          "h": 420,
+          "clearFill": true
+        }
+      ]
+    },
+    {
+      "slug": "contact-redesign",
+      "title": "Contact — redesign",
+      "path": "/contact",
+      "redesignOf": "contact",
+      "slots": [
+        {
+          "key": "contact",
+          "w": 576,
+          "h": 420
+        }
+      ]
+    },
+    {
+      "slug": "affiliate",
+      "title": "Affiliate",
+      "path": "/affiliate",
+      "slots": [
+        {
+          "key": "affil",
+          "hero": true,
+          "w": 576,
+          "h": 420,
+          "clearFill": true
+        }
+      ]
+    },
+    {
+      "slug": "producthunt",
+      "title": "Product Hunt — redesign",
+      "path": "/producthunt",
+      "group": "Launch",
+      "standaloneRedesign": true,
+      "sourcePath": "/producthunt",
+      "slots": [],
+      "pageNote": "The existing Product Hunt redesign, now in QA: Kitty hero, reward lanes, pricing ladder, eligibility table and a clearly labelled claim simulation. Its page animations are built in, not selectable board slots. Review the design and flow, then leave page notes below."
+    },
+    {
+      "slug": "country-fr-redesign",
+      "title": "France",
+      "path": "/country-fr",
+      "group": "Original template",
+      "standaloneRefinement": true,
+      "sourcePath": "https://openline-revisions-hub.vercel.app/country-fr",
+      "slots": [],
+      "pageNote": "Original France template with slight Unlimited-block refinements only. The rejected plan-type cards, dark sidebar and rebuilt fixed cards are removed. Original stacked sections and Data Bundles appearance remain. Duration controls, purchase previews and the corrected fair-use explanation work locally; no payment or activation is connected. The existing URL is retained so earlier review links open the corrected version."
+    }
+  ],
+  "styles": {
+    "global-esim": {
+      "id": "ps-global-esim",
+      "name": "Openline orange",
+      "hex": "#FF5314",
+      "scope": "families",
+      "families": [
+        "red",
+        "orange",
+        "amber",
+        "gold",
+        "green",
+        "teal",
+        "cyan",
+        "blue",
+        "indigo",
+        "purple",
+        "pink"
+      ],
+      "floor": 0.006,
+      "keepStatus": false,
+      "selected": true,
+      "sw": [
+        "#FF5314",
+        "#FFB08F",
+        "#FFF3EB"
+      ],
+      "note": "Selected. All section accents, icon tiles, washes and animation colours use the Openline orange family, including the previous blue, purple and green treatments. Neutral surfaces, photographs and partner logos keep their original appearance."
+    },
+    "network": {
+      "id": "ps-network",
+      "name": "Corporate blue",
+      "hex": "#1E40AF",
+      "scope": "all",
+      "keepStatus": true,
+      "ink": 264,
+      "inkC": 0.07,
+      "sw": [
+        "#1E3A8A",
+        "#1E40AF",
+        "#2563EB"
+      ],
+      "note": "Royal blue accents over navy ink: dark blue for depth, royal blue for action, corporate rather than consumer."
+    },
+    "security": {
+      "id": "ps-security",
+      "name": "Vault teal",
+      "hex": "#0F766E",
+      "scope": "all",
+      "keepStatus": true,
+      "ink": 190,
+      "inkC": 0.05,
+      "sw": [
+        "#134E4A",
+        "#0F766E",
+        "#14B8A6"
+      ],
+      "note": "Deep teal: protective and calm, clearly apart from the green used for \"connected\" states."
+    },
+    "adblocking": {
+      "id": "ps-adblocking",
+      "name": "Ultraviolet",
+      "hex": "#6D28D9",
+      "scope": "all",
+      "keepStatus": true,
+      "ink": 292,
+      "inkC": 0.05,
+      "sw": [
+        "#4C1D95",
+        "#6D28D9",
+        "#8B5CF6"
+      ],
+      "note": "Ultraviolet: filtering and shielding, distinct from every other Features page."
+    },
+    "unlimited": {
+      "id": "ps-unlimited",
+      "name": "Hot magenta",
+      "hex": "#DB2777",
+      "scope": "all",
+      "keepStatus": true,
+      "ink": 350,
+      "inkC": 0.04,
+      "sw": [
+        "#831843",
+        "#DB2777",
+        "#F472B6"
+      ],
+      "note": "Hot magenta: energy and abundance for the no-limits page."
+    },
+    "iot": {
+      "id": "ps-iot",
+      "name": "Chrome",
+      "hex": "#6B7280",
+      "scope": "families",
+      "families": [
+        "purple",
+        "indigo"
+      ],
+      "floor": 0.012,
+      "chroma": 0.06,
+      "keepStatus": true,
+      "sheen": true,
+      "selected": true,
+      "sw": [
+        "#1F2329",
+        "#6B7280",
+        "#D1D5DB"
+      ],
+      "note": "Selected. Greyscale like the rest of the page: the purple accents become steel and graphite, the dark cell a neutral gunmetal. Green \"online\" states and the orange brand stay."
+    },
+    "blog": {
+      "id": "ps-blog",
+      "name": "Newsprint",
+      "hex": "#111111",
+      "scope": "all",
+      "chroma": 0,
+      "keepStatus": false,
+      "cls": "qa-journal",
+      "sw": [
+        "#111111",
+        "#6B6B6B",
+        "#FBFAF7"
+      ],
+      "note": "Black and white, Openline typography, square corners, no drop shadows — an editorial voice for the blog."
+    }
+  },
+  "animations": [
+    {
+      "key": "tier1",
+      "opt": 3,
+      "id": "auction",
+      "name": "Price Auction",
+      "family": "Data-led",
+      "description": "Three live carrier cards with signal bars, latency and €/GB. A cyan winner frame moves between them and fires a packet into the chip — the proof that AI picks best signal and lowest price, in one glance.",
+      "note": "",
+      "page": "multiple-tier1",
+      "section": "Hero",
+      "embed": {
+        "w": 640,
+        "h": 460
+      },
+      "tone": null,
+      "slot": {
+        "key": "tier1",
+        "hero": true,
+        "w": 576,
+        "h": 420
+      },
+      "viewBox": "0 0 640 560",
+      "hasInit": true
+    },
+    {
+      "key": "t1ai",
+      "opt": 3,
+      "id": "aineural",
+      "name": "Neural Sweep",
+      "family": "Literal AI",
+      "description": "A small three-layer network: signal, congestion, price and latency as inputs, a hidden layer, four operator outputs. Pulses travel the edges continuously, edge weights brighten and dim, and the winning output node flares with its operator name. If the section headline is going to say \"machine learning algorithms\", this is the picture of that sentence.",
+      "note": "",
+      "page": "multiple-tier1",
+      "section": "AI-Powered Network Selection",
+      "embed": {
+        "w": 640,
+        "h": 460
+      },
+      "tone": null,
+      "slot": {
+        "key": "t1ai",
+        "w": 584,
+        "h": 560
+      },
+      "viewBox": "0 0 640 460",
+      "hasInit": true
+    },
+    {
+      "key": "t1market",
+      "opt": 5,
+      "id": "mktape",
+      "name": "Ticker Tape",
+      "family": "Minimal",
+      "description": "A horizontal tape of regional wholesale prices scrolls continuously — EU 0.42 ▼, APAC 0.58 ▲, LATAM 0.71 ▼ — above a single headline figure for the average discount. No chart, no card, almost no ink. It is the lightest way to say \"this is a live market with many prices in it\" and the easiest to keep honest.",
+      "note": "",
+      "page": "multiple-tier1",
+      "section": "The Data Stock Market",
+      "embed": {
+        "w": 640,
+        "h": 460
+      },
+      "tone": null,
+      "slot": {
+        "key": "t1market",
+        "w": 584,
+        "h": 440
+      },
+      "viewBox": "0 0 640 460",
+      "hasInit": true
+    },
+    {
+      "key": "t1access",
+      "opt": 1,
+      "id": "acroster",
+      "name": "Operator Roster",
+      "family": "Breadth",
+      "description": "A fanned deck of operator cards — real Tier-1 names, each with its country and generation — shuffles behind the phone, bringing a different one to the front every couple of seconds while the phone's \"connected via\" line follows it. A counter holds at 50+ partners. The headline is about the size of the roster, so this shows the roster. In QA, the phone labels now distinguish network options from occasional profile replacement and possible setup. Operator availability depends on the plan, profile and destination.",
+      "note": "",
+      "page": "multiple-tier1",
+      "section": "Access to 50+ Tier-1 Networks",
+      "embed": {
+        "w": 640,
+        "h": 460
+      },
+      "tone": null,
+      "slot": {
+        "key": "t1access",
+        "w": 584,
+        "h": 470
+      },
+      "viewBox": "0 0 640 460",
+      "hasInit": true
+    },
+    {
+      "key": "what",
+      "opt": 1,
+      "id": "etch",
+      "name": "Etch & Activate",
+      "family": "Product truth",
+      "description": "A QR code is scanned by a sweeping beam, the profile streams across as packets, and inside the phone a SIM outline draws itself line by line while a ring counts 0 → 100% and the signal bars fill. It ends on \"eSIM ACTIVE · 28s\" and restarts. The headline claims a 30-second install; this is the only option that actually shows one.",
+      "note": "",
+      "page": "global-esim",
+      "section": "What is an eSIM?",
+      "embed": {
+        "w": 640,
+        "h": 460
+      },
+      "tone": null,
+      "slot": {
+        "key": "what",
+        "w": 584,
+        "h": 420
+      },
+      "viewBox": "0 0 640 460",
+      "hasInit": false
+    },
+    {
+      "key": "travel",
+      "opt": 3,
+      "id": "triptape",
+      "name": "Trip Tape",
+      "family": "Data-led",
+      "description": "An itinerary tape scrolls upward beside the phone. Each leg arrives blank, then fills itself in — network found, signal, data used, cost — and stamps a check. The phone mirrors the active leg. No illustration at all: it reads like the Openline app working, which is exactly what the eight bullets beside it describe, and it extends to any number of countries without redesign.",
+      "note": "",
+      "page": "global-esim",
+      "section": "Everything You Need for Seamless Travel",
+      "embed": {
+        "w": 640,
+        "h": 460
+      },
+      "tone": null,
+      "slot": {
+        "key": "travel",
+        "w": 584,
+        "h": 520
+      },
+      "viewBox": "0 0 640 460",
+      "hasInit": true
+    },
+    {
+      "key": "referral",
+      "opt": 3,
+      "id": "linkflight",
+      "name": "Link in Flight",
+      "family": "Mechanic",
+      "description": "The referral link appears as a pill, a cursor copies it, it flies off as a message into a friend's phone, the phone shows an eSIM activating, and both balances tick up. It is the only option that shows the four steps the paragraph describes, which is exactly what someone hesitating over the form wants to know.",
+      "note": "",
+      "page": "home",
+      "section": "Refer a friend box",
+      "embed": {
+        "w": 640,
+        "h": 460
+      },
+      "tone": "orange",
+      "slot": {
+        "key": "referral",
+        "w": 576,
+        "h": 520,
+        "clear": true
+      },
+      "viewBox": "0 0 576 520",
+      "hasInit": true
+    },
+    {
+      "key": "homewhy",
+      "opt": 3,
+      "id": "hw-handover",
+      "name": "The Handover",
+      "family": "Mechanism",
+      "description": "The grid claims \"always connected to strongest operator\" two cells to the left and then never shows it. Here the operator name swaps three times, the signal bars stay at four of four through every swap, and a single unbroken line runs the width of the card with a dot travelling along it — crossing each handover without a gap. It demonstrates the one thing that makes \"reliable\" credible rather than asserted: you can see the thing change and see that nothing drops.",
+      "note": "",
+      "page": "home",
+      "section": "Why choose Openline? — the product panel",
+      "embed": {
+        "w": 407,
+        "h": 302
+      },
+      "tone": null,
+      "slot": {
+        "key": "homewhy",
+        "w": 407,
+        "h": 302,
+        "hideUp": true
+      },
+      "viewBox": "0 0 407 302",
+      "hasInit": false
+    },
+    {
+      "key": "nethero",
+      "opt": 6,
+      "id": "nethud",
+      "name": "Network HUD",
+      "family": "Credibility",
+      "description": "A dark telemetry panel: active carrier, band, latency, throughput, switches today, a live uptime sparkline and a scrolling event log that records each handoff as it happens. Nothing is illustrated — the artwork is the readout. The most convincing register available for an enterprise-grade claim, and the cheapest to keep truthful because it can be wired to real values.",
+      "note": "",
+      "page": "network",
+      "section": "Hero",
+      "embed": {
+        "w": 640,
+        "h": 460
+      },
+      "tone": null,
+      "slot": {
+        "key": "nethero",
+        "hero": true,
+        "w": 576,
+        "h": 420
+      },
+      "viewBox": "0 0 640 460",
+      "hasInit": true
+    },
+    {
+      "key": "why",
+      "opt": 3,
+      "id": "whystack",
+      "name": "Feature Stack",
+      "family": "Feature-led",
+      "description": "Four labelled layers — Automatic Switching, LTE/5G, Redundancy, Global Roaming — stacked as a diagram of the network. Each lights in turn with its own small animation and its metric, in perfect step with the four cards sitting beside it. The panel stops being decorative texture and becomes a legend for the content next to it.",
+      "note": "",
+      "page": "network",
+      "section": "Why Our Network is Different",
+      "embed": {
+        "w": 640,
+        "h": 460
+      },
+      "tone": null,
+      "slot": {
+        "key": "why",
+        "w": 592,
+        "h": 430
+      },
+      "viewBox": "0 0 640 460",
+      "hasInit": true
+    },
+    {
+      "key": "bizhero",
+      "opt": 2,
+      "id": "bizinvoice",
+      "name": "Invoice Showdown",
+      "family": "Cost",
+      "description": "Two invoices for the same month. On the left, traditional roaming: line items arrive one by one and the total climbs past three thousand dollars. On the right, the Openline bill fills with the same trips at a fraction of the price and lands flat. The gap is stamped as the saving. The first number in the copy is 75%; this is that number happening.",
+      "note": "",
+      "page": "business",
+      "section": "Hero",
+      "embed": {
+        "w": 640,
+        "h": 460
+      },
+      "tone": null,
+      "slot": {
+        "key": "bizhero",
+        "w": 576,
+        "h": 560
+      },
+      "viewBox": "0 0 640 460",
+      "hasInit": true
+    },
+    {
+      "key": "bizneeds",
+      "opt": 1,
+      "id": "ntabs",
+      "name": "Console Tabs",
+      "family": "Feature coverage",
+      "description": "The same console, but it cycles through its own tabs — Usage, Alerts, Security, Billing, SLA, API — and each tab renders the capability listed beside it: a usage chart, a firing alert with an auto-resolve, an SSO and encryption panel, a consolidated invoice, an uptime figure, a code snippet. One panel finally covers the whole list.",
+      "note": "",
+      "page": "business",
+      "section": "Everything Your Business Needs",
+      "embed": {
+        "w": 640,
+        "h": 460
+      },
+      "tone": null,
+      "slot": {
+        "key": "bizneeds",
+        "w": 584,
+        "h": 440
+      },
+      "viewBox": "0 0 640 460",
+      "hasInit": true
+    },
+    {
+      "key": "hosp",
+      "opt": 3,
+      "id": "hprops",
+      "name": "Every Property Type",
+      "family": "Breadth",
+      "description": "The illustration morphs between the four property types the page sells to — city hotel, resort, vacation rental, travel operator — each with its own headline figure and room count, on a slow cycle. It keeps the warm illustration everyone likes and makes it earn its place by answering \"is this for a property like mine?\".",
+      "note": "",
+      "page": "hospitality",
+      "section": "Hero",
+      "embed": {
+        "w": 640,
+        "h": 460
+      },
+      "tone": null,
+      "slot": {
+        "key": "hosp",
+        "hero": true,
+        "w": 576,
+        "h": 420
+      },
+      "viewBox": "0 0 640 460",
+      "hasInit": true
+    },
+    {
+      "key": "iotwide",
+      "opt": 6,
+      "id": "c1-shelf",
+      "name": "The Shelf, Collapsed",
+      "family": "Before / after",
+      "description": "The left two thirds of the cell hold a shelf of five labelled SIM trays with their stock counts. On cue they lift, slide right and fold into one eSIM chip on the far right, leaving the shelf visibly empty with its outlines still drawn. The abandoned outlines are the point: the reader sees the space that used to be occupied. It is the most direct before-and-after available in a cell this wide.",
+      "note": "",
+      "page": "iot",
+      "section": "Cell 1 · wide, beside \"Global Out of the Box\"",
+      "embed": {
+        "w": 740,
+        "h": 234,
+        "layout": "wide"
+      },
+      "tone": null,
+      "slot": {
+        "key": "iotwide",
+        "w": 740,
+        "h": 234
+      },
+      "viewBox": "0 0 740 234",
+      "hasInit": false
+    },
+    {
+      "key": "iotchip",
+      "opt": 1,
+      "id": "c2-tray",
+      "name": "The Tray Ejects",
+      "family": "Literal",
+      "description": "A SIM tray slides out of the board and off the edge of the cell. The slot it leaves collapses, an eSIM drops into its place and solders down, and a single figure resolves beneath: 30 mm² to 6 mm². It is the most literal reading of \"no SIM card slot needed\" and it produces the one number the two cards in that row are both about.",
+      "note": "",
+      "page": "iot",
+      "section": "Cell 2 · small, beside \"Smaller Form Factor\"",
+      "embed": {
+        "w": 360,
+        "h": 234,
+        "layout": "small"
+      },
+      "tone": null,
+      "slot": {
+        "key": "iotchip",
+        "w": 360,
+        "h": 234
+      },
+      "viewBox": "0 0 360 234",
+      "hasInit": false
+    },
+    {
+      "key": "iotdark",
+      "opt": 1,
+      "id": "c3-night",
+      "name": "Night Side",
+      "family": "Scale",
+      "description": "The dark panel becomes the night side of the earth, stretched across the full width of the cell. Devices power on in region after region and each one lights the instant it attaches, with a millisecond figure beside it and an odometer of devices online climbing at the right. It keeps everything that makes this cell the best-looking one on the page and finally gives it a subject.",
+      "note": "",
+      "page": "iot",
+      "section": "Cell 3 · wide dark, beside \"Instant Activation\"",
+      "embed": {
+        "w": 740,
+        "h": 234,
+        "layout": "wide"
+      },
+      "tone": "dark",
+      "slot": {
+        "key": "iotdark",
+        "w": 740,
+        "h": 234
+      },
+      "viewBox": "0 0 740 234",
+      "hasInit": false
+    },
+    {
+      "key": "pluslounge",
+      "opt": 1,
+      "id": "lg-lanes",
+      "name": "Two Lanes, One Clock",
+      "family": "Comparison",
+      "description": "Two vertical queues run down the panel side by side, each a column of waiting figures, with one clock counting for both. In the fast-track lane you advance and clear security at 04:12; in the regular lane the column has barely moved and its own readout keeps climbing past thirty minutes. The tall panel is the reason this works — a queue is a vertical object, and this is the shape for it.",
+      "note": "",
+      "page": "openline-plus",
+      "section": "Airport Lounge & Fast Track Access",
+      "embed": {
+        "w": 574,
+        "h": 642,
+        "layout": "split"
+      },
+      "tone": "plus",
+      "slot": {
+        "key": "pluslounge",
+        "w": 574,
+        "h": 642
+      },
+      "viewBox": "0 0 574 642",
+      "hasInit": false
+    },
+    {
+      "key": "plusnomad",
+      "opt": 1,
+      "id": "nm-cities",
+      "name": "Six Cities, One Number",
+      "family": "Core promise",
+      "description": "A year of moves runs down the panel — Lisbon in January, Bali in March, Medellín in May, Tbilisi in July, Cape Town in September, Bangkok in November. Beside each the local carrier changes, and in a fixed column to the right the same +1 number never does. It is the single most important promise on this page, and nothing currently illustrates it.",
+      "note": "",
+      "page": "openline-plus",
+      "section": "Built for Digital Nomads",
+      "embed": {
+        "w": 574,
+        "h": 656,
+        "layout": "split"
+      },
+      "tone": "plus",
+      "slot": {
+        "key": "plusnomad",
+        "w": 574,
+        "h": 656
+      },
+      "viewBox": "0 0 574 656",
+      "hasInit": false
+    },
+    {
+      "key": "pluskyc",
+      "opt": 0,
+      "id": "ky-current",
+      "name": "Current",
+      "family": "Live today",
+      "description": "A REQUIRED form card listing passport number, home address, selfie and phone number with a green tick on each, beside a phone reading \"Identity verified\", plus a VERIFIED stamp and a \"Card payment required\" note. It is the most complete of the three panels on this page — but the stamp is printed directly over the Selfie row, the ticks are all present from the first frame so nothing is ever verified, and it never says why any of this is required.",
+      "note": "",
+      "page": "openline-plus",
+      "section": "Verified & Secure",
+      "embed": {
+        "w": 574,
+        "h": 432,
+        "layout": "split"
+      },
+      "tone": "plusgreen",
+      "slot": {
+        "key": "pluskyc",
+        "w": 574,
+        "h": 440
+      },
+      "viewBox": "0 0 574 432",
+      "hasInit": false
+    },
+    {
+      "key": "aloha",
+      "opt": 6,
+      "id": "ic-globe",
+      "name": "Globe & Pin",
+      "family": "Openline",
+      "description": "The globe turns and a pin drops onto it with a ripple, over and over in different places. It is the most on-brand option — 190+ countries is the company's core claim — and it works on a login page for any market.",
+      "note": "",
+      "page": "login",
+      "section": "The \"Aloha!\" icon",
+      "embed": {
+        "w": 640,
+        "h": 460
+      },
+      "tone": null,
+      "slot": {
+        "key": "aloha",
+        "w": 56,
+        "h": 56
+      },
+      "viewBox": "0 0 64 64",
+      "hasInit": false
+    },
+    {
+      "key": "prin",
+      "opt": 3,
+      "id": "pr-switches",
+      "name": "Switches We Left Off",
+      "family": "Anti-pattern",
+      "description": "A settings panel of the six toggles the industry ships on by default — auto-renew, marketing email, data sharing, silent throttling, roaming lock, contract rollover — each one shown already off, with a short line explaining what it would have cost the traveller. A last row, \"Your data\", stays on. It turns \"no dark patterns\" into a list of specific decisions the reader can audit.",
+      "note": "",
+      "page": "about",
+      "section": "Our Principles",
+      "embed": {
+        "w": 592,
+        "h": 430
+      },
+      "tone": null,
+      "slot": {
+        "key": "prin",
+        "w": 592,
+        "h": 430
+      },
+      "viewBox": "0 0 640 460",
+      "hasInit": false
+    },
+    {
+      "key": "team",
+      "opt": 3,
+      "id": "tm-versus",
+      "name": "Against the Industry",
+      "family": "Positioning",
+      "description": "Two stacked bars grow side by side: a typical eSIM reseller, where marketing and sales take roughly sixty percent of headcount and engineering takes ten, and Openline, where engineering takes forty-five and marketing is a sliver. A line underneath draws the consequence — their cost goes into acquisition, ours goes into the stack, which is why the price is lower. It states the argument the paragraph below makes, rather than the composition alone.",
+      "note": "",
+      "page": "about",
+      "section": "Built by Travelers, for Travelers",
+      "embed": {
+        "w": 592,
+        "h": 480
+      },
+      "tone": null,
+      "slot": {
+        "key": "team",
+        "w": 592,
+        "h": 480
+      },
+      "viewBox": "0 0 640 519",
+      "hasInit": false
+    },
+    {
+      "key": "omhero",
+      "opt": 7,
+      "id": "om-finboard",
+      "name": "The Board",
+      "family": "B · fintech-clean",
+      "description": "A direct A/B against option 1: identical information, opposite surface. Zebra rows, soft indigo depth bars, one accent, no gold, and far more air between the numbers. Useful precisely because it isolates the surface question — if this reads as credible as the navy version, the page does not need to go dark at all.",
+      "note": "",
+      "page": "omdm-market",
+      "section": "Hero — the live book",
+      "embed": {
+        "w": 576,
+        "h": 460
+      },
+      "tone": null,
+      "slot": {
+        "key": "omhero",
+        "w": 576,
+        "h": 460
+      },
+      "viewBox": "0 0 576 460",
+      "hasInit": false
+    },
+    {
+      "key": "ombook",
+      "opt": 6,
+      "id": "ob-alive",
+      "name": "Cards, Alive",
+      "family": "B · fintech-clean",
+      "description": "The most conservative option and therefore the most likely to actually ship: the six cards stay exactly where they are, on the light surface, and each gains a live micro-chart plus one ticking value from its own signal set. No layout change, no new section, no copy rewrite — the grid simply stops being dead.",
+      "note": "",
+      "page": "omdm-market",
+      "section": "What moves a price",
+      "embed": {
+        "w": 1280,
+        "h": 420,
+        "layout": "wide"
+      },
+      "tone": null,
+      "slot": {
+        "key": "ombook",
+        "w": 1232,
+        "h": 404
+      },
+      "viewBox": "0 0 1280 420",
+      "hasInit": false
+    },
+    {
+      "key": "omctrl",
+      "opt": 6,
+      "id": "oc-onboard",
+      "name": "Onboarding",
+      "family": "B · fintech-clean",
+      "description": "The light-surface reading of the gate: one counterparty card working through the four controls as a progress flow, each resolving to a green state with the specific thing that was checked named beside it. Calm rather than dramatic, and it reads as a product screen the reader could imagine using.",
+      "note": "",
+      "page": "omdm-market",
+      "section": "Built to be audited",
+      "embed": {
+        "w": 624,
+        "h": 440
+      },
+      "tone": null,
+      "slot": {
+        "key": "omctrl",
+        "w": 624,
+        "h": 440
+      },
+      "viewBox": "0 0 624 440",
+      "hasInit": false
+    },
+    {
+      "key": "blog",
+      "opt": 2,
+      "id": "blogtopics",
+      "name": "Topic Picker",
+      "family": "Navigation",
+      "description": "Four topic chips — Guides, Destinations, Devices, Deals — cycle as the active one, and the three cards beneath swap to real headlines from that topic with its article count. It answers the question the current hero does not: what is actually in here, and is any of it for me.",
+      "note": "",
+      "page": "blog",
+      "section": "Hero",
+      "embed": {
+        "w": 640,
+        "h": 460
+      },
+      "tone": null,
+      "slot": {
+        "key": "blog",
+        "w": 576,
+        "h": 540,
+        "boards": [
+          "blog",
+          "blogv"
+        ]
+      },
+      "viewBox": "0 0 640 460",
+      "hasInit": true
+    },
+    {
+      "key": "blogv",
+      "opt": 6,
+      "id": "bv-long",
+      "name": "The Long Read",
+      "family": "Editorial",
+      "description": "Instead of a title, the cover leads with a line from the piece itself — the sentence that would make someone want to read it — set large, with the article credited beneath. It is how serious publications sell an article, and it is the only option here that demonstrates the quality of the writing rather than asserting that guides exist.",
+      "note": "",
+      "page": "blog",
+      "section": "Article panel as a video cover",
+      "embed": {
+        "w": 576,
+        "h": 540
+      },
+      "tone": null,
+      "slot": {
+        "key": "blog",
+        "w": 576,
+        "h": 540,
+        "boards": [
+          "blog",
+          "blogv"
+        ]
+      },
+      "viewBox": "0 0 576 540",
+      "hasInit": false
+    },
+    {
+      "key": "install",
+      "opt": 3,
+      "id": "ig-chapters",
+      "name": "Chapter Deck",
+      "family": "Informational",
+      "description": "A placeholder that earns the click by answering \"what will I get?\". The four chapters of the video are listed with real timecodes, and the active row slides its orange marker down the list on a loop, previewing the shape of the thing. The left column carries the title and the CTA. Someone who has already scanned their code can see the video covers the bit they are stuck on, which a bare play button can never tell them.",
+      "note": "",
+      "page": "installation-guide",
+      "section": "Hero video placeholder — whole-surface CTA",
+      "embed": {
+        "w": 576,
+        "h": 324
+      },
+      "tone": null,
+      "slot": {
+        "key": "install",
+        "w": 576,
+        "h": 324
+      },
+      "viewBox": "0 0 576 324",
+      "hasInit": true
+    },
+    {
+      "key": "contact",
+      "opt": 10,
+      "id": "ct-doors",
+      "name": "Two Doors",
+      "family": "Utility",
+      "description": "The page offers live chat and the FAQ with no guidance, so readers pick wrong and are disappointed by whichever they chose. This splits them honestly: the FAQ for the twelve questions everyone asks, answered instantly, and chat for anything about your specific line, answered by a person. Both sides fill in as you watch.",
+      "note": "",
+      "page": "contact",
+      "section": "Hero — support status",
+      "embed": {
+        "w": 576,
+        "h": 420
+      },
+      "tone": null,
+      "slot": {
+        "key": "contact",
+        "hero": true,
+        "w": 576,
+        "h": 420,
+        "clearFill": true
+      },
+      "viewBox": "0 0 576 420",
+      "hasInit": false
+    },
+    {
+      "key": "affil",
+      "opt": 3,
+      "id": "af-actual",
+      "name": "What You Actually Get",
+      "family": "Money",
+      "description": "Nobody can feel a percentage. This puts the real plan prices beside the commission they pay at 30% and at 40%, so a reader can see that a mid-size plan returns a specific amount of money. It is the most honest option here and the one most likely to make somebody sign up, because it removes the arithmetic.",
+      "note": "",
+      "page": "affiliate",
+      "section": "Hero — earnings card",
+      "embed": {
+        "w": 592,
+        "h": 430
+      },
+      "tone": null,
+      "slot": {
+        "key": "affil",
+        "hero": true,
+        "w": 576,
+        "h": 420,
+        "clearFill": true
+      },
+      "viewBox": "0 0 592 430",
+      "hasInit": false
+    }
+  ]
+}

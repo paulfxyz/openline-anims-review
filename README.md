@@ -1,5 +1,23 @@
 # Openline — Animation Review
 
+## Current delivery release · 6 October 2026
+
+`/delivery` is now explicitly authorized and implemented. Open
+https://openline-anims-review.vercel.app/delivery for Irina's full brief,
+30 frozen animation choices, 22 page entries, four extra tools plus the gift
+recipient entry, 55 change records and the source ZIP.
+
+Start with `delivery/brief.md`, `delivery/import-guide.md`,
+`delivery/page-matrix.md`, `delivery/copy-changes.md` and
+`delivery/acceptance.md`. `node delivery/serve.mjs` runs the source pack locally.
+The runtime source is frozen under `delivery/runtime/`; shared registry modules
+may contain historical alternatives, but the manifest is the selection contract.
+
+Older sections below and older scoped changelogs describe prior milestones,
+including the former delivery deferral. That deferral is superseded by this
+release. Production backend integration and final publication approval remain
+separate. Private commercial correspondence is deliberately outside this repo.
+
 A review surface for proposed header and section animations across the Openline
 site, plus two full page redesigns. Built as a static site: no build step, no
 dependencies, no framework.

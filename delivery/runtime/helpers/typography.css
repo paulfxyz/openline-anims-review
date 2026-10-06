@@ -1,0 +1,28 @@
+/* Openline's live UI stack, verified on openline.com and the revisions hub.
+   This is deliberately system-native, not Inter. Play remains reserved for
+   the captured wordmark. Shared by pages, tools, support and SVG previews. */
+:root {
+  --ol-font-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --ol-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-sans: var(--ol-font-sans);
+  --font-mono: var(--ol-font-mono);
+}
+
+html, body { font-family: var(--ol-font-sans); }
+button, input, textarea, select { font-family: inherit; }
+code, pre, kbd, samp { font-family: var(--ol-font-mono); }
+
+/* Captured design-tool labels must not silently fall back to Arial. */
+[class*="Inter:"] { font-family: var(--ol-font-sans); }
+
+/* The boards keep their own typography outside /qa. In context, animation
+   labels speak the same visual language as the surrounding Openline page.
+   Family only: preserve every animation's sizes, weights and timing. */
+.qa-mount svg text,
+.qa-mount svg tspan,
+.qa-ic svg text,
+.qa-ic svg tspan,
+.rd svg text {
+  font-family: var(--ol-font-sans) !important;
+  font-variant-numeric: tabular-nums;
+}
