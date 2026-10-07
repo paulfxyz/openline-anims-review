@@ -2,6 +2,12 @@
 
 Release: 6 October 2026, r2. This is the implementation handoff from Paul's design review, not a production launch or a claim that the prototype backends exist. Begin at the [delivery hub](https://openline-anims-review.vercel.app/delivery), read Paul's introduction and use the interactive checklist alongside the source pack.
 
+## Mobile extension added 7 October
+
+Release r3 adds [28 new mobile views](https://openline-anims-review.vercel.app/mobile) across six connected workflows, extending [Irina’s app-screen reference](https://openline-revisions-hub.vercel.app/app-screens). These are new proposals to review alongside her originals, not presumed accepted replacements; editable React source, implementation notes and a per-view checklist are included.
+
+See `mobile/implementation.md` for the matched React/Lucide stack, visual measurements, source map and backend boundaries. Earlier checklist progress links remain restorable by stable item ID, with new tasks starting unchecked.
+
 ## Paul's expectation
 
 Paul has taken over the animation exploration and refinement and expects the complete retained handoff to be implemented, not only selected visuals. In return for that work taken off Irina's plate, he asks for additional design initiative, character and polish in the web panel, cart/checkout and mobile app, while respecting the existing Openline identity.

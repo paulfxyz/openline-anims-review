@@ -426,6 +426,28 @@ Shared typography, context fit and production acceptance checks apply. Review th
 
 Shared typography, context fit and production acceptance checks apply. Review the full ledger for detailed copy and backend boundaries.
 
+## Mobile app · 28 extra views
+
+[Working QA view](https://openline-anims-review.vercel.app/mobile) · New mobile workflow proposals
+
+### Import files
+
+- `mobile/index.html`
+- `mobile/index.html`
+- `mobile/catalog.json`
+- `mobile/implementation.md`
+- `mobile/changelog.md`
+- `mobile-src/src/catalog.js`
+- `mobile-src/src/main.jsx`
+- `mobile-src/src/style.css`
+- `mobile-src/package.json`
+
+### Apply and verify
+
+- **mobile-extra-workflows:** Added a /mobile extension to Irina’s 19-screen app reference: 28 companion views for cart/payment, purchase codes, gifting, activation, QR/setup, labels/folders/top-ups/usage, troubleshooting/profile review, support, orders and account controls. Gallery, search, workflow filtering, deep links, interactive phone player and selected failure states are included.
+
+Shared typography, context fit and production acceptance checks apply. Review the full ledger for detailed copy and backend boundaries.
+
 ## Activate a plan
 
 [Working QA view](https://openline-anims-review.vercel.app/qa/start) · Activation + gift sender

@@ -346,6 +346,7 @@ function act(a) {
 /* ── Page menu (the page name in the dock) ───────────────────────── */
 
 const TOOLS = [
+  { slug: 'mobile', title: 'Mobile app · 28 extra views', path: '/mobile' },
   { slug: 'start', title: 'Purchase code → eSIM', path: '/qa/start' },
   { slug: 'modals', title: 'Modal builder', path: '/qa/modals' },
   { slug: 'chat', title: 'Support chat', path: '/qa/chat' },

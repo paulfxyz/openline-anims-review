@@ -1,6 +1,6 @@
 import crypto from 'node:crypto';
 const hash=s=>crypto.createHash('sha256').update(s).digest('hex').slice(0,12);
-export function buildChecklist(manifest,acceptance) {
+export function buildChecklist(manifest,acceptance,mobileScreens=[]) {
   const tasks=[];
   const add=t=>tasks.push({...t,id:t.id||`${t.type}:${hash(t.title)}`});
   for(const a of manifest.animations){
@@ -40,6 +40,7 @@ export function buildChecklist(manifest,acceptance) {
     ['Ready-to-build handoff for Kerem','Supply reusable components, assets, responsive rules, transition specifications, API-state annotations and complete happy/error/pending paths. Link the design source and state what still needs engineering.'],
   ];
   for(const [title,description] of extra)add({id:'extra:'+hash(title),type:'Additional requests',pages:['panel-cart-app'],title,description,doc:'brief.md',review:false});
+  for(const s of mobileScreens)add({id:'mobile:'+s.id,type:'Mobile proposals',pages:['mobile'],title:`${s.code} · ${s.title}`,description:`New proposal: review against Irina’s existing app template before importing. ${s.description} Production: ${s.backend}`,route:'/mobile#screen='+s.id,files:['mobile-src/src/main.jsx','mobile-src/src/style.css','mobile/implementation.md'],review:true});
   const ids=tasks.map(t=>t.id);
   if(new Set(ids).size!==ids.length)throw Error('Duplicate checklist IDs');
   return {schema:1,release:manifest.release,fingerprint:hash(ids.join('\n')),tasks,excludedHistory:manifest.changes.filter(c=>c.disposition==='History').map(c=>c.id),note:'Applied and verified are self-reported. No backend state or production approval is changed.'};

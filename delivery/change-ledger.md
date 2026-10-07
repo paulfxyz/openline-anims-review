@@ -1,6 +1,19 @@
 # Openline full change ledger
 
-Release 2026-10-06-r2. Historical records retain rejected/superseded labels; do not implement them. Additional Irina tasks are requests, not completed QA changes.
+Release 2026-10-07-r3. Historical records retain rejected/superseded labels; do not implement them. Additional Irina tasks and new mobile proposals are not already completed production changes.
+
+## Mobile: 28 extra views across six connected workflows
+
+- **ID:** `mobile-extra-workflows`
+- **Disposition:** Retained / review · Review options / new mobile proposals
+- **Scope:** mobile
+- **Review:** [Open affected view](https://openline-anims-review.vercel.app/mobile)
+
+Added a /mobile extension to Irina’s 19-screen app reference: 28 companion views for cart/payment, purchase codes, gifting, activation, QR/setup, labels/folders/top-ups/usage, troubleshooting/profile review, support, orders and account controls. Gallery, search, workflow filtering, deep links, interactive phone player and selected failure states are included.
+
+Use the same observed React 18.3.1 and Lucide React 0.487.0 stack, Tailwind styling, native Openline typography, orange accent, 340×700 gallery phones and original component treatment. Editable React source is in mobile-src; built page and implementation notes are under mobile. Preserve Irina’s originals and treat these as new proposals to review, not already accepted replacements. Apply the later QA activation/gifting/fair-use rules rather than contradictory older reference copy. Payment/provisioning/account/support values are fixtures; no native app, PSP, provisioning, email or destructive server operation is connected. Individual mobile review/import tasks are added to the delivery checklist and existing saved checklist snapshots remain restorable.
+
+Files: `mobile/index.html`, `mobile/catalog.json`, `mobile/implementation.md`, `mobile/changelog.md`, `mobile-src/src/catalog.js`, `mobile-src/src/main.jsx`, `mobile-src/src/style.css`, `mobile-src/package.json`
 
 ## Delivery: interactive implementation checklist and introduction
 
@@ -101,7 +114,7 @@ Retain the chosen animation concepts. A panel fit warning is an unresolved revie
 - **Scope:** *
 - **Review:** [Open affected view](https://openline-anims-review.vercel.app/qa)
 
-The bottom page label opens a searchable, keyboard-accessible menu for 22 page entries plus four extra tools.
+The bottom page label opens a searchable, keyboard-accessible menu for 22 page entries plus five extra tools, including the mobile extension.
 
 18 original pages, the retained About / Contact alternatives, Product Hunt and the original-template France refinement. The rejected 16-page alternative batch and the rejected France selector redesign must not be delivered.
 

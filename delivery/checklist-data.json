@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "release": "2026-10-06-r2",
-  "fingerprint": "83a2a8690ddd",
+  "release": "2026-10-07-r3",
+  "fingerprint": "81713a0cf8d9",
   "tasks": [
     {
       "id": "animation:tier1",
@@ -454,6 +454,27 @@
       "review": false
     },
     {
+      "id": "change:mobile-extra-workflows",
+      "type": "Blocks & interactions",
+      "pages": [
+        "mobile"
+      ],
+      "title": "Mobile: 28 extra views across six connected workflows",
+      "description": "Added a /mobile extension to Irina’s 19-screen app reference: 28 companion views for cart/payment, purchase codes, gifting, activation, QR/setup, labels/folders/top-ups/usage, troubleshooting/profile review, support, orders and account controls. Gallery, search, workflow filtering, deep links, interactive phone player and selected failure states are included. Use the same observed React 18.3.1 and Lucide React 0.487.0 stack, Tailwind styling, native Openline typography, orange accent, 340×700 gallery phones and original component treatment. Editable React source is in mobile-src; built page and implementation notes are under mobile. Preserve Irina’s originals and treat these as new proposals to review, not already accepted replacements. Apply the later QA activation/gifting/fair-use rules rather than contradictory older reference copy. Payment/provisioning/account/support values are fixtures; no native app, PSP, provisioning, email or destructive server operation is connected. Individual mobile review/import tasks are added to the delivery checklist and existing saved checklist snapshots remain restorable.",
+      "route": "/mobile",
+      "files": [
+        "mobile/index.html",
+        "mobile/catalog.json",
+        "mobile/implementation.md",
+        "mobile/changelog.md",
+        "mobile-src/src/catalog.js",
+        "mobile-src/src/main.jsx",
+        "mobile-src/src/style.css",
+        "mobile-src/package.json"
+      ],
+      "review": false
+    },
+    {
       "id": "change:delivery-general-badges",
       "type": "Additional requests",
       "pages": [
@@ -535,7 +556,7 @@
         "*"
       ],
       "title": "Quick page dropdown",
-      "description": "The bottom page label opens a searchable, keyboard-accessible menu for 22 page entries plus four extra tools. 18 original pages, the retained About / Contact alternatives, Product Hunt and the original-template France refinement. The rejected 16-page alternative batch and the rejected France selector redesign must not be delivered.",
+      "description": "The bottom page label opens a searchable, keyboard-accessible menu for 22 page entries plus five extra tools, including the mobile extension. 18 original pages, the retained About / Contact alternatives, Product Hunt and the original-template France refinement. The rejected 16-page alternative batch and the rejected France selector redesign must not be delivered.",
       "route": "/qa",
       "files": [],
       "review": true
@@ -3876,6 +3897,28 @@
       "review": true
     },
     {
+      "id": "page:mobile",
+      "type": "Page & flow sign-off",
+      "pages": [
+        "mobile"
+      ],
+      "title": "Final review: Mobile app · 28 extra views",
+      "description": "Review the entire Mobile app · 28 extra views view on desktop and mobile after applying its scoped items. Verify layout, wording, responsive spacing, button states, keyboard/focus and reduced motion.   This sign-off does not mark any individual item automatically.",
+      "route": "/mobile",
+      "files": [
+        "mobile/index.html",
+        "mobile/index.html",
+        "mobile/catalog.json",
+        "mobile/implementation.md",
+        "mobile/changelog.md",
+        "mobile-src/src/catalog.js",
+        "mobile-src/src/main.jsx",
+        "mobile-src/src/style.css",
+        "mobile-src/package.json"
+      ],
+      "review": true
+    },
+    {
       "id": "page:start",
       "type": "Page & flow sign-off",
       "pages": [
@@ -4548,6 +4591,454 @@
       "description": "Supply reusable components, assets, responsive rules, transition specifications, API-state annotations and complete happy/error/pending paths. Link the design source and state what still needs engineering.",
       "doc": "brief.md",
       "review": false
+    },
+    {
+      "id": "mobile:cart",
+      "type": "Mobile proposals",
+      "pages": [
+        "mobile"
+      ],
+      "title": "M01 · Your cart",
+      "description": "New proposal: review against Irina’s existing app template before importing. Edit quantities, remove or restore an item, and keep totals consistent. Top-up selections return here with the chosen allowance. Production: Cart lines and quotes must come from the commerce backend. Revalidate totals before payment.",
+      "route": "/mobile#screen=cart",
+      "files": [
+        "mobile-src/src/main.jsx",
+        "mobile-src/src/style.css",
+        "mobile/implementation.md"
+      ],
+      "review": true
+    },
+    {
+      "id": "mobile:delivery",
+      "type": "Mobile proposals",
+      "pages": [
+        "mobile"
+      ],
+      "title": "M02 · Traveller & receipt",
+      "description": "New proposal: review against Irina’s existing app template before importing. A focused receipt-email form with a gifting intention, without inventing a shipping address for a digital product. Production: Validate email on the server; purchasing for someone is not the same as unlocking transfer.",
+      "route": "/mobile#screen=delivery",
+      "files": [
+        "mobile-src/src/main.jsx",
+        "mobile-src/src/style.css",
+        "mobile/implementation.md"
+      ],
+      "review": true
+    },
+    {
+      "id": "mobile:payment",
+      "type": "Mobile proposals",
+      "pages": [
+        "mobile"
+      ],
+      "title": "M03 · Payment methods",
+      "description": "New proposal: review against Irina’s existing app template before importing. Saved card, wallet and redirect options use one selection pattern and one clear total. No real card details are collected here. Production: Show only PSP methods actually supported by device, currency and country.",
+      "route": "/mobile#screen=payment",
+      "files": [
+        "mobile-src/src/main.jsx",
+        "mobile-src/src/style.css",
+        "mobile/implementation.md"
+      ],
+      "review": true
+    },
+    {
+      "id": "mobile:bank",
+      "type": "Mobile proposals",
+      "pages": [
+        "mobile"
+      ],
+      "title": "M04 · Bank approval",
+      "description": "New proposal: review against Irina’s existing app template before importing. Keep the order visible while authentication happens, with a safe return to payment selection. Production: Use the PSP’s hosted 3DS flow. Never collect bank login or OTP inside an Openline imitation.",
+      "route": "/mobile#screen=bank",
+      "files": [
+        "mobile-src/src/main.jsx",
+        "mobile-src/src/style.css",
+        "mobile/implementation.md"
+      ],
+      "review": true
+    },
+    {
+      "id": "mobile:pending",
+      "type": "Mobile proposals",
+      "pages": [
+        "mobile"
+      ],
+      "title": "M05 · Checking payment",
+      "description": "New proposal: review against Irina’s existing app template before importing. A calm pending state with status checking, failure recovery and no duplicate pay button. Production: Reconcile the original payment intent and webhook. A timeout is not proof of failure or success.",
+      "route": "/mobile#screen=pending",
+      "files": [
+        "mobile-src/src/main.jsx",
+        "mobile-src/src/style.css",
+        "mobile/implementation.md"
+      ],
+      "review": true
+    },
+    {
+      "id": "mobile:receipt",
+      "type": "Mobile proposals",
+      "pages": [
+        "mobile"
+      ],
+      "title": "M06 · Order receipt",
+      "description": "New proposal: review against Irina’s existing app template before importing. View line items, total, payment method and the purchased code; continue to the order or code rather than forcing activation. Production: Use server-confirmed paid status, receipt details and actual taxes. The example totals are design fixtures.",
+      "route": "/mobile#screen=receipt",
+      "files": [
+        "mobile-src/src/main.jsx",
+        "mobile-src/src/style.css",
+        "mobile/implementation.md"
+      ],
+      "review": true
+    },
+    {
+      "id": "mobile:code",
+      "type": "Mobile proposals",
+      "pages": [
+        "mobile"
+      ],
+      "title": "M07 · Purchase-code details",
+      "description": "New proposal: review against Irina’s existing app template before importing. One place for the code, purchase status and the Activate / Gift / Keep choices. Activated codes no longer offer transfer. Production: Authenticate the purchaser and return validation, redemption and transfer status without consuming the code.",
+      "route": "/mobile#screen=code",
+      "files": [
+        "mobile-src/src/main.jsx",
+        "mobile-src/src/style.css",
+        "mobile/implementation.md"
+      ],
+      "review": true
+    },
+    {
+      "id": "mobile:unlock",
+      "type": "Mobile proposals",
+      "pages": [
+        "mobile"
+      ],
+      "title": "M08 · Unlock for gifting",
+      "description": "New proposal: review against Irina’s existing app template before importing. Explain owner validation and the risk of anyone with the code redeeming it; require a separate confirmation. Production: Verify ownership and unused status, record the unlock and preserve the owner-email validation step.",
+      "route": "/mobile#screen=unlock",
+      "files": [
+        "mobile-src/src/main.jsx",
+        "mobile-src/src/style.css",
+        "mobile/implementation.md"
+      ],
+      "review": true
+    },
+    {
+      "id": "mobile:gift-ready",
+      "type": "Mobile proposals",
+      "pages": [
+        "mobile"
+      ],
+      "title": "M09 · Your gift is ready",
+      "description": "New proposal: review against Irina’s existing app template before importing. Copy the unlocked code with clear redemption instructions, without activating it or claiming an email was sent. Production: The system share route is a separate native implementation. Never expose code-bearing links in analytics.",
+      "route": "/mobile#screen=gift-ready",
+      "files": [
+        "mobile-src/src/main.jsx",
+        "mobile-src/src/style.css",
+        "mobile/implementation.md"
+      ],
+      "review": true
+    },
+    {
+      "id": "mobile:gift-received",
+      "type": "Mobile proposals",
+      "pages": [
+        "mobile"
+      ],
+      "title": "M10 · Received a gift",
+      "description": "New proposal: review against Irina’s existing app template before importing. Review a gift without starting it, handle a locked code and proceed only when eligible. Production: Validate gift eligibility atomically again when redeeming. Never disclose sender account details.",
+      "route": "/mobile#screen=gift-received",
+      "files": [
+        "mobile-src/src/main.jsx",
+        "mobile-src/src/style.css",
+        "mobile/implementation.md"
+      ],
+      "review": true
+    },
+    {
+      "id": "mobile:gift-pending",
+      "type": "Mobile proposals",
+      "pages": [
+        "mobile"
+      ],
+      "title": "M11 · Waiting for the owner",
+      "description": "New proposal: review against Irina’s existing app template before importing. Keep the recipient informed, provide a sender-help message and allow rechecking without bypassing validation. Production: Only a verified server transition can make a pending gift eligible. No email is sent in this reference.",
+      "route": "/mobile#screen=gift-pending",
+      "files": [
+        "mobile-src/src/main.jsx",
+        "mobile-src/src/style.css",
+        "mobile/implementation.md"
+      ],
+      "review": true
+    },
+    {
+      "id": "mobile:readiness",
+      "type": "Mobile proposals",
+      "pages": [
+        "mobile"
+      ],
+      "title": "M12 · Ready to start?",
+      "description": "New proposal: review against Irina’s existing app template before importing. A large, off-by-default readiness switch and a concise confirmation before the purchase code is consumed. Production: Use current Openline rules: checking does not activate; confirmed activation begins validity and ends gifting.",
+      "route": "/mobile#screen=readiness",
+      "files": [
+        "mobile-src/src/main.jsx",
+        "mobile-src/src/style.css",
+        "mobile/implementation.md"
+      ],
+      "review": true
+    },
+    {
+      "id": "mobile:provisioning",
+      "type": "Mobile proposals",
+      "pages": [
+        "mobile"
+      ],
+      "title": "M13 · Creating your eSIM",
+      "description": "New proposal: review against Irina’s existing app template before importing. Progress, retry and success states stay within the same process rather than losing the purchase-code context. Production: Use an idempotent provisioning operation, poll safely, and reconcile unknown outcomes before retrying.",
+      "route": "/mobile#screen=provisioning",
+      "files": [
+        "mobile-src/src/main.jsx",
+        "mobile-src/src/style.css",
+        "mobile/implementation.md"
+      ],
+      "review": true
+    },
+    {
+      "id": "mobile:qr",
+      "type": "Mobile proposals",
+      "pages": [
+        "mobile"
+      ],
+      "title": "M14 · Your eSIM profile",
+      "description": "New proposal: review against Irina’s existing app template before importing. Readable QR, copyable SM-DP+ address and activation code, ICCID and a second-device option. Production: Replace the non-installable fixture with authenticated profile details. EID is a device identifier, not an invented profile field.",
+      "route": "/mobile#screen=qr",
+      "files": [
+        "mobile-src/src/main.jsx",
+        "mobile-src/src/style.css",
+        "mobile/implementation.md"
+      ],
+      "review": true
+    },
+    {
+      "id": "mobile:install",
+      "type": "Mobile proposals",
+      "pages": [
+        "mobile"
+      ],
+      "title": "M15 · Install your eSIM",
+      "description": "New proposal: review against Irina’s existing app template before importing. Keep the QR in view and explain the iPhone or Android route in short, readable steps. Production: Native installation links must use supported OS APIs and real provisioning data. Do not promise one-tap installation universally.",
+      "route": "/mobile#screen=install",
+      "files": [
+        "mobile-src/src/main.jsx",
+        "mobile-src/src/style.css",
+        "mobile/implementation.md"
+      ],
+      "review": true
+    },
+    {
+      "id": "mobile:settings",
+      "type": "Mobile proposals",
+      "pages": [
+        "mobile"
+      ],
+      "title": "M16 · Set your mobile data",
+      "description": "New proposal: review against Irina’s existing app template before importing. Primary data, other-line data, switching and roaming are explicit checks, not a claim that the app changed settings. Production: Treat these as user confirmations. The browser cannot configure the device’s mobile-data settings.",
+      "route": "/mobile#screen=settings",
+      "files": [
+        "mobile-src/src/main.jsx",
+        "mobile-src/src/style.css",
+        "mobile/implementation.md"
+      ],
+      "review": true
+    },
+    {
+      "id": "mobile:connected",
+      "type": "Mobile proposals",
+      "pages": [
+        "mobile"
+      ],
+      "title": "M17 · Make it yours",
+      "description": "New proposal: review against Irina’s existing app template before importing. Connection guidance ends with a profile label, folder and a clear route into the account. Production: Provisioned, installed and physically connected are different states. Use actual evidence before asserting connectivity in production.",
+      "route": "/mobile#screen=connected",
+      "files": [
+        "mobile-src/src/main.jsx",
+        "mobile-src/src/style.css",
+        "mobile/implementation.md"
+      ],
+      "review": true
+    },
+    {
+      "id": "mobile:profile",
+      "type": "Mobile proposals",
+      "pages": [
+        "mobile"
+      ],
+      "title": "M18 · Japan eSIM",
+      "description": "New proposal: review against Irina’s existing app template before importing. A legible usage card, plan details, quick actions and a useful route back to setup or support. Production: All usage, validity, network and allowance values need authoritative subscription data.",
+      "route": "/mobile#screen=profile",
+      "files": [
+        "mobile-src/src/main.jsx",
+        "mobile-src/src/style.css",
+        "mobile/implementation.md"
+      ],
+      "review": true
+    },
+    {
+      "id": "mobile:label",
+      "type": "Mobile proposals",
+      "pages": [
+        "mobile"
+      ],
+      "title": "M19 · Label & folder",
+      "description": "New proposal: review against Irina’s existing app template before importing. Change a short label and folder without restarting activation; Cancel discards edits. Production: Persist changes to the authenticated owner. UI validation limits here are design choices, not established product rules.",
+      "route": "/mobile#screen=label",
+      "files": [
+        "mobile-src/src/main.jsx",
+        "mobile-src/src/style.css",
+        "mobile/implementation.md"
+      ],
+      "review": true
+    },
+    {
+      "id": "mobile:folders",
+      "type": "Mobile proposals",
+      "pages": [
+        "mobile"
+      ],
+      "title": "M20 · Your folders",
+      "description": "New proposal: review against Irina’s existing app template before importing. Create folders, browse their contents and move a profile with a clear empty state. Production: Scope folders to the correct account and retain membership consistently across devices.",
+      "route": "/mobile#screen=folders",
+      "files": [
+        "mobile-src/src/main.jsx",
+        "mobile-src/src/style.css",
+        "mobile/implementation.md"
+      ],
+      "review": true
+    },
+    {
+      "id": "mobile:topup",
+      "type": "Mobile proposals",
+      "pages": [
+        "mobile"
+      ],
+      "title": "M21 · Add more data",
+      "description": "New proposal: review against Irina’s existing app template before importing. Compare fixed allowances, then review the actual cart before paying. Do not promise every profile supports top-up. Production: Quote supported products and confirm whether the existing profile can be used or a replacement is needed.",
+      "route": "/mobile#screen=topup",
+      "files": [
+        "mobile-src/src/main.jsx",
+        "mobile-src/src/style.css",
+        "mobile/implementation.md"
+      ],
+      "review": true
+    },
+    {
+      "id": "mobile:usage",
+      "type": "Mobile proposals",
+      "pages": [
+        "mobile"
+      ],
+      "title": "M22 · Usage & alerts",
+      "description": "New proposal: review against Irina’s existing app template before importing. Consistent fixed-plan arithmetic and threshold controls, with functional chart labels instead of decorative telemetry. Production: Usage may be delayed. Notification toggles require permission and durable account settings.",
+      "route": "/mobile#screen=usage",
+      "files": [
+        "mobile-src/src/main.jsx",
+        "mobile-src/src/style.css",
+        "mobile/implementation.md"
+      ],
+      "review": true
+    },
+    {
+      "id": "mobile:troubleshoot",
+      "type": "Mobile proposals",
+      "pages": [
+        "mobile"
+      ],
+      "title": "M23 · Let’s get you online",
+      "description": "New proposal: review against Irina’s existing app template before importing. Use the same installation recommendations as Start, with short actionable steps and a support handoff. Production: Do not infer the user’s settings or radio condition from checklist clicks.",
+      "route": "/mobile#screen=troubleshoot",
+      "files": [
+        "mobile-src/src/main.jsx",
+        "mobile-src/src/style.css",
+        "mobile/implementation.md"
+      ],
+      "review": true
+    },
+    {
+      "id": "mobile:fair-use",
+      "type": "Mobile proposals",
+      "pages": [
+        "mobile"
+      ],
+      "title": "M24 · About your speed",
+      "description": "New proposal: review against Irina’s existing app template before importing. Explain the fixed-allowance guarantee, local MNO rules for unlimited and a best-effort alternative route. Production: No universal speed, threshold, midnight reset or guaranteed improvement is promised.",
+      "route": "/mobile#screen=fair-use",
+      "files": [
+        "mobile-src/src/main.jsx",
+        "mobile-src/src/style.css",
+        "mobile/implementation.md"
+      ],
+      "review": true
+    },
+    {
+      "id": "mobile:replacement",
+      "type": "Mobile proposals",
+      "pages": [
+        "mobile"
+      ],
+      "title": "M25 · Another route",
+      "description": "New proposal: review against Irina’s existing app template before importing. Keep the current eSIM until support advises otherwise and request review before any installation or validity changes. Production: Availability, cost and balance/validity carry-over require product confirmation. No silent profile replacement.",
+      "route": "/mobile#screen=replacement",
+      "files": [
+        "mobile-src/src/main.jsx",
+        "mobile-src/src/style.css",
+        "mobile/implementation.md"
+      ],
+      "review": true
+    },
+    {
+      "id": "mobile:support",
+      "type": "Mobile proposals",
+      "pages": [
+        "mobile"
+      ],
+      "title": "M26 · Openline support",
+      "description": "New proposal: review against Irina’s existing app template before importing. A short contextual conversation, suggested prompts and an explicit human-review path. Production: Connect real ticket/AI/human systems before claiming messages were delivered or an agent joined.",
+      "route": "/mobile#screen=support",
+      "files": [
+        "mobile-src/src/main.jsx",
+        "mobile-src/src/style.css",
+        "mobile/implementation.md"
+      ],
+      "review": true
+    },
+    {
+      "id": "mobile:orders",
+      "type": "Mobile proposals",
+      "pages": [
+        "mobile"
+      ],
+      "title": "M27 · Orders & receipts",
+      "description": "New proposal: review against Irina’s existing app template before importing. Paid and pending-refund entries with receipt access and a clear status timeline. Production: Use the real payment/refund ledger; do not invent refund deadlines or instantly resolved disputes.",
+      "route": "/mobile#screen=orders",
+      "files": [
+        "mobile-src/src/main.jsx",
+        "mobile-src/src/style.css",
+        "mobile/implementation.md"
+      ],
+      "review": true
+    },
+    {
+      "id": "mobile:privacy",
+      "type": "Mobile proposals",
+      "pages": [
+        "mobile"
+      ],
+      "title": "M28 · Privacy & account",
+      "description": "New proposal: review against Irina’s existing app template before importing. Clear privacy preferences and separate export/deletion request confirmations with verification requirements. Production: Account export/deletion requires authenticated server workflows and retention-policy disclosure, not a local UI reset.",
+      "route": "/mobile#screen=privacy",
+      "files": [
+        "mobile-src/src/main.jsx",
+        "mobile-src/src/style.css",
+        "mobile/implementation.md"
+      ],
+      "review": true
     }
   ],
   "excludedHistory": [
@@ -4555,5 +5046,309 @@
     "installation-preflight",
     "installation-preflight-simplified"
   ],
-  "note": "Applied and verified are self-reported. No backend state or production approval is changed."
+  "note": "Applied and verified are self-reported. No backend state or production approval is changed.",
+  "previousInventories": [
+    {
+      "fingerprint": "83a2a8690ddd",
+      "ids": [
+        "animation:tier1",
+        "animation:t1ai",
+        "animation:t1market",
+        "animation:t1access",
+        "animation:what",
+        "animation:travel",
+        "animation:referral",
+        "animation:homewhy",
+        "animation:nethero",
+        "animation:why",
+        "animation:bizhero",
+        "animation:bizneeds",
+        "animation:hosp",
+        "animation:iotwide",
+        "animation:iotchip",
+        "animation:iotdark",
+        "animation:pluslounge",
+        "animation:plusnomad",
+        "animation:pluskyc",
+        "animation:aloha",
+        "animation:prin",
+        "animation:team",
+        "animation:omhero",
+        "animation:ombook",
+        "animation:omctrl",
+        "animation:blog",
+        "animation:blogv",
+        "animation:install",
+        "animation:contact",
+        "animation:affil",
+        "change:delivery-general-badges",
+        "change:delivery-certification-badge",
+        "change:delivery-home-original-three",
+        "change:delivery-app-panel-polish",
+        "change:native-typography",
+        "change:context-fit",
+        "change:page-browser",
+        "change:producthunt-qa",
+        "change:home-why-fit",
+        "change:referral-fit",
+        "change:page-identities",
+        "change:global-esim-orange",
+        "change:profile-switching-explainer",
+        "change:compact-profile-explainer",
+        "change:multi-tier1-profile-copy",
+        "change:multi-tier1-operator-ribbons",
+        "change:unlimited-profile-copy",
+        "change:unlimited-fixed-vs-mno-fair-use",
+        "change:country-fr-unlimited-refinement",
+        "change:country-fr-fair-use",
+        "change:country-fr-calendar-range",
+        "change:country-fr-calendar-polish",
+        "change:france-duration-cards-and-support",
+        "change:country-fr-unlimited-intro",
+        "change:iot-chrome",
+        "change:nomad-stability",
+        "change:about-layout",
+        "change:about-network-spacing",
+        "change:about-startup-locked",
+        "change:about-team-cities",
+        "change:redesign-button-parity",
+        "change:contact-layout",
+        "change:contact-channels",
+        "change:contact-chat-seeking",
+        "change:installation-preflight-install-first",
+        "change:installation-preflight-detail-modals",
+        "change:start-flow",
+        "change:start-gift-unlock-transfer",
+        "change:start-gift-recipient",
+        "change:start-profile-handoff",
+        "change:start-focused-redesign",
+        "change:start-normal-header-actions",
+        "change:start-quick-profile-modals",
+        "change:clean-customer-presentation",
+        "change:start-action-arrows",
+        "change:modal-builder",
+        "change:chat-sidebar-ai",
+        "change:chat-fresh-clear",
+        "change:chat-brand-portraits",
+        "change:help-modals",
+        "change:qa-reporting",
+        "copy:911ee7a8d8dc",
+        "copy:57d68ffaee08",
+        "copy:486d63706a3e",
+        "copy:ac87f11e128f",
+        "copy:52f1376b9842",
+        "copy:5f6c77108d60",
+        "copy:9e923042a765",
+        "copy:d645bcc986ca",
+        "copy:19a35cb9bafe",
+        "copy:b2bbcd53b1b9",
+        "copy:9f8d555cf111",
+        "copy:87e792562c2e",
+        "copy:f1f5c27333a0",
+        "copy:08e152150266",
+        "copy:b8128c74bc1c",
+        "copy:94cc116885a5",
+        "copy:10e73c3b8e54",
+        "copy:240632f087d7",
+        "copy:b1749c45305f",
+        "copy:e36191b41b40",
+        "copy:fb60a4425a1d",
+        "copy:9978f9cf1767",
+        "copy:2a1b55b9a375",
+        "copy:2e2e91b85635",
+        "copy:70b7978fe692",
+        "copy:469a64e4aa9c",
+        "copy:bd05a762af85",
+        "copy:d3a4782a49bf",
+        "copy:e65c65428239",
+        "copy:11c7d3b62158",
+        "copy:35ed9378e349",
+        "copy:0f4f09c38111",
+        "copy:6680318b036c",
+        "copy:b5755c88df66",
+        "copy:ee8c4ac35894",
+        "copy:b00d17d9902e",
+        "copy:ffd7c215f68a",
+        "copy:c648967cf542",
+        "copy:a52f29c20b77",
+        "copy:b7dab8bd736d",
+        "copy:cfb8e82a4cc9",
+        "copy:26bb11f82f3f",
+        "copy:817d2b1591b7",
+        "copy:9eddf96a4567",
+        "copy:38f2f42df9ce",
+        "copy:ae0207b2830d",
+        "copy:a2ff282b424b",
+        "copy:aad91211745b",
+        "copy:8c62fb6d018f",
+        "copy:4ef8c5b5d91a",
+        "copy:e870ccbea029",
+        "copy:e9dcfb00e350",
+        "copy:ea08a9e2457c",
+        "copy:ebaa43c12aef",
+        "copy:e532ec972900",
+        "copy:a4195f37cced",
+        "copy:1548e79bba7e",
+        "copy:6a1b676d97ee",
+        "copy:526c5699ab52",
+        "copy:f2ba8ab038a8",
+        "copy:313d86d62540",
+        "copy:6121fcacdb25",
+        "copy:93ea9350cc9f",
+        "copy:88ca84022024",
+        "copy:32848ca3b97d",
+        "copy:97099215872e",
+        "copy:ca74e4c552ee",
+        "copy:c1246fba8c3a",
+        "copy:f49cdc944940",
+        "copy:8af2fde33e6e",
+        "copy:80cdb5fefa88",
+        "copy:0ff987f96728",
+        "copy:43e544da8cb2",
+        "copy:9c43ebb3b2cd",
+        "copy:b49912de91c1",
+        "copy:5378bca8af92",
+        "copy:faf6de9a2254",
+        "copy:b98757dfef61",
+        "copy:eb2b32775a8b",
+        "copy:89cb347eb2a0",
+        "copy:f8140cffae3a",
+        "copy:aff41b4d7c64",
+        "copy:ed5cfc1f27a1",
+        "copy:1ed663c52c0d",
+        "copy:697348ea9cd8",
+        "copy:0fe0793f6a2f",
+        "copy:a9f864343cd7",
+        "copy:e1d66f5504dc",
+        "copy:541b8adb0ba0",
+        "copy:a19c4f76ba7a",
+        "copy:4a966b40d19f",
+        "copy:0787b6c94d15",
+        "copy:251c3f9344f6",
+        "copy:07c7d38649c9",
+        "copy:54ff94fecf72",
+        "copy:7e5b3359c323",
+        "copy:46c7fa6425c3",
+        "copy:e49ec299472b",
+        "copy:ef70381160d5",
+        "copy:13576328281f",
+        "copy:f50ae8a56d89",
+        "copy:ce37fa80d649",
+        "copy:40e0f51124e2",
+        "copy:64c85a295d29",
+        "copy:5d0c856e2e0d",
+        "copy:5570d683e36d",
+        "copy:f26a17113f4b",
+        "copy:280755f1e643",
+        "copy:940cdd40c3bb",
+        "copy:fe5793a18c3d",
+        "copy:2ad463d75896",
+        "copy:24e5190bfceb",
+        "copy:599bcdbde0c9",
+        "copy:f8c554172045",
+        "copy:0555acde7a83",
+        "copy:a38911ec8c38",
+        "copy:1330392ae8f3",
+        "copy:d4b902d848f7",
+        "copy:00d937f4c718",
+        "copy:444281d10374",
+        "copy:b7242ee2cbe7",
+        "copy:56f51ab1709f",
+        "copy:c8c36a5a1e6d",
+        "copy:2d313475ca92",
+        "copy:e47671baa3ec",
+        "copy:49982120ba57",
+        "copy:a0b5d969a89a",
+        "copy:15a864adf97e",
+        "copy:f8632c5eb54b",
+        "copy:e9ba18b18f12",
+        "copy:4121b14c9a03",
+        "copy:58919884e0dc",
+        "copy:8df59f47f34f",
+        "copy:a306ef7a5774",
+        "copy:660f41f9b02d",
+        "copy:e08896000d63",
+        "copy:2d30b697c4b5",
+        "page:home",
+        "page:multiple-tier1",
+        "page:global-esim",
+        "page:network",
+        "page:security",
+        "page:adblocking",
+        "page:unlimited",
+        "page:business",
+        "page:hospitality",
+        "page:iot",
+        "page:openline-plus",
+        "page:login",
+        "page:about",
+        "page:about-redesign",
+        "page:omdm-market",
+        "page:blog",
+        "page:installation-guide",
+        "page:contact",
+        "page:contact-redesign",
+        "page:affiliate",
+        "page:producthunt",
+        "page:country-fr-redesign",
+        "page:start",
+        "page:recipient",
+        "page:chat",
+        "page:kb",
+        "page:modals",
+        "accept:0e693a364241",
+        "accept:d342923b98ac",
+        "accept:68e733e310ca",
+        "accept:33f7806ea31b",
+        "accept:e2d4984f1783",
+        "accept:28837d992f3d",
+        "accept:9f179a073870",
+        "accept:e1d9e732a4a1",
+        "accept:d9667f7d5f8e",
+        "accept:50757a912843",
+        "accept:acea394f4012",
+        "accept:2be63fb40428",
+        "accept:db47b7a4c690",
+        "accept:ccbccb701899",
+        "accept:072fc9bbcbb2",
+        "accept:6eee96c036e1",
+        "accept:0b2a2edd23ac",
+        "accept:7b23e1c21f29",
+        "accept:b2c42a187000",
+        "accept:702390ea8565",
+        "accept:7a1ec618242a",
+        "accept:8ce5433868cb",
+        "accept:2d44e7478563",
+        "accept:b96adfda6dda",
+        "accept:30c2668337f2",
+        "accept:414647ba8ea7",
+        "accept:3f8f8bfa4c3f",
+        "accept:2af163533c60",
+        "accept:be95893ef318",
+        "accept:a2ca7a2ecbcf",
+        "accept:0c421c01b0e7",
+        "accept:e1a10bb9a70c",
+        "accept:cdd42c4144b9",
+        "accept:5da924a5fc82",
+        "accept:802f457b55b1",
+        "accept:189f96e7fb52",
+        "accept:24e90b919c80",
+        "accept:b0f58a75f328",
+        "accept:5950a05e77c7",
+        "accept:780a18bef89e",
+        "accept:c68a5b232643",
+        "accept:7c03d9b6ebeb",
+        "accept:2469d8b38eda",
+        "accept:647b8c2c1309",
+        "accept:81cf662dbdee",
+        "accept:b0e263a9ec57",
+        "accept:39fb71e645fa",
+        "accept:718009514bd3",
+        "extra:c9cd61893b35",
+        "extra:74ec75be11e4",
+        "extra:476c0698ee92",
+        "extra:404711c2de29"
+      ]
+    }
+  ]
 }

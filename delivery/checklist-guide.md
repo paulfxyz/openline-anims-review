@@ -21,7 +21,7 @@ Progress is encoded in the URL fragment after `#`. The browser does not send tha
 - **Export report:** Downloads a Markdown report of every item, its status and a resume link. Add staging/design links, screenshots, blocker explanations and ETAs before sending it.
 - **Reset:** Requires confirmation. It resets this current progress snapshot, not previously exported backups, source files, production state or other people's links.
 
-The original clean delivery URL opens a fresh checklist. Keep your progress link or JSON export before leaving; changing device, using a clean URL or losing the address bar fragment does not recover your earlier work automatically. If a later release changes the inventory, import the JSON backup to match stable IDs rather than applying a mismatched positional URL.
+The original clean delivery URL opens a fresh checklist. Keep your progress link or JSON export before leaving; changing device, using a clean URL or losing the address bar fragment does not recover your earlier work automatically. Known earlier releases are mapped by stable IDs so their progress links still restore existing items while new tasks start unchecked. For an unknown release, import the JSON backup rather than applying a mismatched positional URL.
 
 ## Work in manageable groups
 

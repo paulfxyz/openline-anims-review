@@ -1,0 +1,367 @@
+{
+  "source": "https://openline-revisions-hub.vercel.app/app-screens",
+  "screens": [
+    {
+      "id": "cart",
+      "title": "Your cart",
+      "group": "purchase",
+      "subtitle": "Cart, quantity and order summary",
+      "description": "Edit quantities, remove or restore an item, and keep totals consistent. Top-up selections return here with the chosen allowance.",
+      "backend": "Cart lines and quotes must come from the commerce backend. Revalidate totals before payment.",
+      "number": 1,
+      "code": "M01"
+    },
+    {
+      "id": "delivery",
+      "title": "Traveller & receipt",
+      "group": "purchase",
+      "subtitle": "Delivery details before payment",
+      "description": "A focused receipt-email form with a gifting intention, without inventing a shipping address for a digital product.",
+      "backend": "Validate email on the server; purchasing for someone is not the same as unlocking transfer.",
+      "number": 2,
+      "code": "M02"
+    },
+    {
+      "id": "payment",
+      "title": "Payment methods",
+      "group": "purchase",
+      "subtitle": "Choose a payment route",
+      "description": "Saved card, wallet and redirect options use one selection pattern and one clear total. No real card details are collected here.",
+      "backend": "Show only PSP methods actually supported by device, currency and country.",
+      "number": 3,
+      "code": "M03"
+    },
+    {
+      "id": "bank",
+      "title": "Bank approval",
+      "group": "purchase",
+      "subtitle": "Authentication in context",
+      "description": "Keep the order visible while authentication happens, with a safe return to payment selection.",
+      "backend": "Use the PSP’s hosted 3DS flow. Never collect bank login or OTP inside an Openline imitation.",
+      "number": 4,
+      "code": "M04"
+    },
+    {
+      "id": "pending",
+      "title": "Checking payment",
+      "group": "purchase",
+      "subtitle": "Unknown outcome, without a second charge",
+      "description": "A calm pending state with status checking, failure recovery and no duplicate pay button.",
+      "backend": "Reconcile the original payment intent and webhook. A timeout is not proof of failure or success.",
+      "number": 5,
+      "code": "M05"
+    },
+    {
+      "id": "receipt",
+      "title": "Order receipt",
+      "group": "purchase",
+      "subtitle": "A useful, detailed receipt",
+      "description": "View line items, total, payment method and the purchased code; continue to the order or code rather than forcing activation.",
+      "backend": "Use server-confirmed paid status, receipt details and actual taxes. The example totals are design fixtures.",
+      "number": 6,
+      "code": "M06"
+    },
+    {
+      "id": "code",
+      "title": "Purchase-code details",
+      "group": "gift",
+      "subtitle": "A purchase is not an installed eSIM",
+      "description": "One place for the code, purchase status and the Activate / Gift / Keep choices. Activated codes no longer offer transfer.",
+      "backend": "Authenticate the purchaser and return validation, redemption and transfer status without consuming the code.",
+      "number": 7,
+      "code": "M07"
+    },
+    {
+      "id": "unlock",
+      "title": "Unlock for gifting",
+      "group": "gift",
+      "subtitle": "An explicit transfer decision",
+      "description": "Explain owner validation and the risk of anyone with the code redeeming it; require a separate confirmation.",
+      "backend": "Verify ownership and unused status, record the unlock and preserve the owner-email validation step.",
+      "number": 8,
+      "code": "M08"
+    },
+    {
+      "id": "gift-ready",
+      "title": "Your gift is ready",
+      "group": "gift",
+      "subtitle": "Share a useful gift message",
+      "description": "Copy the unlocked code with clear redemption instructions, without activating it or claiming an email was sent.",
+      "backend": "The system share route is a separate native implementation. Never expose code-bearing links in analytics.",
+      "number": 9,
+      "code": "M09"
+    },
+    {
+      "id": "gift-received",
+      "title": "Received a gift",
+      "group": "gift",
+      "subtitle": "Recipient entry and eligibility",
+      "description": "Review a gift without starting it, handle a locked code and proceed only when eligible.",
+      "backend": "Validate gift eligibility atomically again when redeeming. Never disclose sender account details.",
+      "number": 10,
+      "code": "M10"
+    },
+    {
+      "id": "gift-pending",
+      "title": "Waiting for the owner",
+      "group": "gift",
+      "subtitle": "Pending owner validation",
+      "description": "Keep the recipient informed, provide a sender-help message and allow rechecking without bypassing validation.",
+      "backend": "Only a verified server transition can make a pending gift eligible. No email is sent in this reference.",
+      "number": 11,
+      "code": "M11"
+    },
+    {
+      "id": "readiness",
+      "title": "Ready to start?",
+      "group": "activate",
+      "subtitle": "Consent before validity begins",
+      "description": "A large, off-by-default readiness switch and a concise confirmation before the purchase code is consumed.",
+      "backend": "Use current Openline rules: checking does not activate; confirmed activation begins validity and ends gifting.",
+      "number": 12,
+      "code": "M12"
+    },
+    {
+      "id": "provisioning",
+      "title": "Creating your eSIM",
+      "group": "activate",
+      "subtitle": "Provisioning and safe recovery",
+      "description": "Progress, retry and success states stay within the same process rather than losing the purchase-code context.",
+      "backend": "Use an idempotent provisioning operation, poll safely, and reconcile unknown outcomes before retrying.",
+      "number": 13,
+      "code": "M13"
+    },
+    {
+      "id": "qr",
+      "title": "Your eSIM profile",
+      "group": "activate",
+      "subtitle": "QR first, manual details nearby",
+      "description": "Readable QR, copyable SM-DP+ address and activation code, ICCID and a second-device option.",
+      "backend": "Replace the non-installable fixture with authenticated profile details. EID is a device identifier, not an invented profile field.",
+      "number": 14,
+      "code": "M14"
+    },
+    {
+      "id": "install",
+      "title": "Install your eSIM",
+      "group": "activate",
+      "subtitle": "Platform-specific install help",
+      "description": "Keep the QR in view and explain the iPhone or Android route in short, readable steps.",
+      "backend": "Native installation links must use supported OS APIs and real provisioning data. Do not promise one-tap installation universally.",
+      "number": 15,
+      "code": "M15"
+    },
+    {
+      "id": "settings",
+      "title": "Set your mobile data",
+      "group": "activate",
+      "subtitle": "Four settings that matter",
+      "description": "Primary data, other-line data, switching and roaming are explicit checks, not a claim that the app changed settings.",
+      "backend": "Treat these as user confirmations. The browser cannot configure the device’s mobile-data settings.",
+      "number": 16,
+      "code": "M16"
+    },
+    {
+      "id": "connected",
+      "title": "Make it yours",
+      "group": "activate",
+      "subtitle": "A coherent finish",
+      "description": "Connection guidance ends with a profile label, folder and a clear route into the account.",
+      "backend": "Provisioned, installed and physically connected are different states. Use actual evidence before asserting connectivity in production.",
+      "number": 17,
+      "code": "M17"
+    },
+    {
+      "id": "profile",
+      "title": "Japan eSIM",
+      "group": "manage",
+      "subtitle": "Everyday profile management",
+      "description": "A legible usage card, plan details, quick actions and a useful route back to setup or support.",
+      "backend": "All usage, validity, network and allowance values need authoritative subscription data.",
+      "number": 18,
+      "code": "M18"
+    },
+    {
+      "id": "label",
+      "title": "Label & folder",
+      "group": "manage",
+      "subtitle": "Quick profile organisation",
+      "description": "Change a short label and folder without restarting activation; Cancel discards edits.",
+      "backend": "Persist changes to the authenticated owner. UI validation limits here are design choices, not established product rules.",
+      "number": 19,
+      "code": "M19"
+    },
+    {
+      "id": "folders",
+      "title": "Your folders",
+      "group": "manage",
+      "subtitle": "A tidy travel workspace",
+      "description": "Create folders, browse their contents and move a profile with a clear empty state.",
+      "backend": "Scope folders to the correct account and retain membership consistently across devices.",
+      "number": 20,
+      "code": "M20"
+    },
+    {
+      "id": "topup",
+      "title": "Add more data",
+      "group": "manage",
+      "subtitle": "Top-up eligibility and selection",
+      "description": "Compare fixed allowances, then review the actual cart before paying. Do not promise every profile supports top-up.",
+      "backend": "Quote supported products and confirm whether the existing profile can be used or a replacement is needed.",
+      "number": 21,
+      "code": "M21"
+    },
+    {
+      "id": "usage",
+      "title": "Usage & alerts",
+      "group": "manage",
+      "subtitle": "Useful usage information",
+      "description": "Consistent fixed-plan arithmetic and threshold controls, with functional chart labels instead of decorative telemetry.",
+      "backend": "Usage may be delayed. Notification toggles require permission and durable account settings.",
+      "number": 22,
+      "code": "M22"
+    },
+    {
+      "id": "troubleshoot",
+      "title": "Let’s get you online",
+      "group": "support",
+      "subtitle": "A guided no-service checklist",
+      "description": "Use the same installation recommendations as Start, with short actionable steps and a support handoff.",
+      "backend": "Do not infer the user’s settings or radio condition from checklist clicks.",
+      "number": 23,
+      "code": "M23"
+    },
+    {
+      "id": "fair-use",
+      "title": "About your speed",
+      "group": "support",
+      "subtitle": "Fixed versus unlimited, honestly",
+      "description": "Explain the fixed-allowance guarantee, local MNO rules for unlimited and a best-effort alternative route.",
+      "backend": "No universal speed, threshold, midnight reset or guaranteed improvement is promised.",
+      "number": 24,
+      "code": "M24"
+    },
+    {
+      "id": "replacement",
+      "title": "Another route",
+      "group": "support",
+      "subtitle": "Consent before profile replacement",
+      "description": "Keep the current eSIM until support advises otherwise and request review before any installation or validity changes.",
+      "backend": "Availability, cost and balance/validity carry-over require product confirmation. No silent profile replacement.",
+      "number": 25,
+      "code": "M25"
+    },
+    {
+      "id": "support",
+      "title": "Openline support",
+      "group": "support",
+      "subtitle": "Knowledge, AI, then people",
+      "description": "A short contextual conversation, suggested prompts and an explicit human-review path.",
+      "backend": "Connect real ticket/AI/human systems before claiming messages were delivered or an agent joined.",
+      "number": 26,
+      "code": "M26"
+    },
+    {
+      "id": "orders",
+      "title": "Orders & receipts",
+      "group": "account",
+      "subtitle": "Order history beyond success",
+      "description": "Paid and pending-refund entries with receipt access and a clear status timeline.",
+      "backend": "Use the real payment/refund ledger; do not invent refund deadlines or instantly resolved disputes.",
+      "number": 27,
+      "code": "M27"
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy & account",
+      "group": "account",
+      "subtitle": "Deliberate sensitive actions",
+      "description": "Clear privacy preferences and separate export/deletion request confirmations with verification requirements.",
+      "backend": "Account export/deletion requires authenticated server workflows and retention-policy disclosure, not a local UI reset.",
+      "number": 28,
+      "code": "M28"
+    }
+  ],
+  "flows": [
+    {
+      "id": "purchase",
+      "name": "Purchase & payment",
+      "short": "Purchase",
+      "description": "From cart to a purchase code, with payment checks along the way.",
+      "steps": [
+        "cart",
+        "delivery",
+        "payment",
+        "bank",
+        "pending",
+        "receipt",
+        "code"
+      ]
+    },
+    {
+      "id": "gift",
+      "name": "Give & receive",
+      "short": "Gifting",
+      "description": "Unlock deliberately. Let the recipient redeem when they are ready.",
+      "steps": [
+        "code",
+        "unlock",
+        "gift-ready",
+        "gift-received",
+        "gift-pending",
+        "readiness"
+      ]
+    },
+    {
+      "id": "activate",
+      "name": "Activate & connect",
+      "short": "Activation",
+      "description": "Consent, provisioning, QR, phone settings and a clear finish.",
+      "steps": [
+        "readiness",
+        "provisioning",
+        "qr",
+        "install",
+        "settings",
+        "connected",
+        "profile"
+      ]
+    },
+    {
+      "id": "manage",
+      "name": "Manage your eSIMs",
+      "short": "Manage",
+      "description": "A useful everyday workspace for profiles, folders, top-ups and usage.",
+      "steps": [
+        "profile",
+        "label",
+        "folders",
+        "topup",
+        "usage"
+      ]
+    },
+    {
+      "id": "support",
+      "name": "Find a better connection",
+      "short": "Support",
+      "description": "Troubleshoot, understand local rules and get a profile review.",
+      "steps": [
+        "troubleshoot",
+        "fair-use",
+        "replacement",
+        "support"
+      ]
+    },
+    {
+      "id": "account",
+      "name": "Orders & account",
+      "short": "Account",
+      "description": "Keep receipts accessible and sensitive account actions deliberate.",
+      "steps": [
+        "orders",
+        "privacy"
+      ]
+    }
+  ],
+  "status": "Additional proposals; review before production integration."
+}

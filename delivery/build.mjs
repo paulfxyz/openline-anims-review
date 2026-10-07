@@ -5,8 +5,11 @@ import path from 'node:path';
 import {SOURCE_MAP,PAGE_FILES} from './source-map.mjs';
 import {QA_CHANGES} from '../qa/change-log.js';
 import {buildChecklist} from './checklist-build.mjs';
+import {SCREENS as MOBILE_SCREENS,FLOWS as MOBILE_FLOWS,SOURCE as MOBILE_SOURCE} from '../mobile-src/src/catalog.js';
 const root=path.resolve(import.meta.dirname,'..'), out=path.join(root,'delivery');
 const raw=JSON.parse(await fs.readFile(path.join(out,'baseline.json'),'utf8'));
+const previousChecklist=await fs.readFile(path.join(out,'checklist-data.json'),'utf8').then(JSON.parse).catch(()=>null);
+await fs.writeFile(path.join(root,'mobile/catalog.json'),JSON.stringify({source:MOBILE_SOURCE,screens:MOBILE_SCREENS,flows:MOBILE_FLOWS,status:'Additional proposals; review before production integration.'},null,2)+'\n');
 const absolute=p=>'https://openline-anims-review.vercel.app'+p;
 const safe=s=>String(s).replaceAll('|','\\|').replaceAll('\n',' ');
 const historical=c=>/Rejected|Superseded/.test(c.status);
@@ -26,6 +29,7 @@ const pages=raw.pages.map(p=>({...p,route:`/qa/${p.slug}`,file:`qa/${p.slug}.htm
   changeIds:QA_CHANGES.filter(c=>c.pages.includes(p.slug)||c.pages.includes('*')).map(c=>c.id),
   kind:p.redesignOf?'Retained alternative':p.standaloneRedesign?'Campaign concept':p.standaloneRefinement?'Original-template refinement':'Contextual page'}));
 const extras=[
+  {slug:'mobile',title:'Mobile app · 28 extra views',route:'/mobile',kind:'New mobile workflow proposals',file:'mobile/index.html'},
   {slug:'start',title:'Activate a plan',route:'/qa/start',kind:'Activation + gift sender',file:'qa/start.html'},
   {slug:'recipient',title:'Receive a gifted eSIM',route:'/qa/start?recipient=1',kind:'Recipient journey',file:'qa/start.html'},
   {slug:'chat',title:'Support chat',route:'/qa/chat',kind:'Interactive support concept',file:'qa/chat.html'},
@@ -34,11 +38,12 @@ const extras=[
 ].map(p=>({...p,files:[p.file,...(PAGE_FILES[p.slug==='recipient'?'start':p.slug]||[])],changeIds:QA_CHANGES.filter(c=>c.pages.includes(p.slug==='recipient'?'start':p.slug)||c.pages.includes('*')).map(c=>c.id)}));
 const changes=QA_CHANGES.map(c=>({...c,disposition:historical(c)?'History':c.id.startsWith('delivery-')&&!['delivery-release','delivery-checklist'].includes(c.id)?'Irina task':/Review options|QA alternative|Campaign draft/.test(c.status)?'Retained / review':'Current',
   files:[...new Set(c.pages.filter(p=>p!=='*').flatMap(p=>PAGE_FILES[p]||[`qa/${p}.html`]))]}));
-const manifest={release:'2026-10-06-r2',qaSourceCommit:'b32598f579f45ac0514c81ed64c87e07970de587',verifiedAt:'2026-10-06',verification:'Saved Comet choice and QA decision keys checked; no QA overrides; no customer codes or chat contents collected.',
-  counts:{choices:animations.length,pages:pages.length,tools:4,extraEntries:extras.length,changes:changes.length},
+const manifest={release:'2026-10-07-r3',qaSourceCommit:'b32598f579f45ac0514c81ed64c87e07970de587',verifiedAt:'2026-10-06',verification:'Original animation choice snapshot checked on 6 October, unchanged. Mobile proposals added 7 October and are not presumed approved. No customer codes or chat contents collected.',
+  counts:{choices:animations.length,pages:pages.length,tools:5,extraEntries:extras.length,changes:changes.length,mobileViews:MOBILE_SCREENS.length},
   decisions:{theme:'original',qaOverrides:{},pageStyleOverrides:{},sharedSlotOverrides:{},blogDefault:'blog',blogAlternative:'blogv',retainCurrent:'pluskyc'},
   styles:raw.styles,animations,pages,extras,changes};
-const checklist=buildChecklist(manifest,await fs.readFile(path.join(out,'acceptance.md'),'utf8'));
+const checklist=buildChecklist(manifest,await fs.readFile(path.join(out,'acceptance.md'),'utf8'),MOBILE_SCREENS);
+checklist.previousInventories=[...(previousChecklist?.previousInventories||[]),...(previousChecklist?[{fingerprint:previousChecklist.fingerprint,ids:previousChecklist.tasks.map(t=>t.id)}]:[])].filter((p,i,a)=>p.fingerprint!==checklist.fingerprint&&a.findIndex(x=>x.fingerprint===p.fingerprint)===i);
 manifest.counts.checklist=checklist.tasks.length;
 await fs.writeFile(path.join(out,'checklist-data.json'),JSON.stringify(checklist,null,2)+'\n');
 await fs.mkdir(path.join(out,'items'),{recursive:true});
@@ -50,7 +55,7 @@ const qaJs=await fs.readFile(path.join(root,'qa/qa.js'),'utf8');
 const fit=qaJs.slice(qaJs.indexOf('function fitArt('),qaJs.indexOf('/* Height follows width'));
 await fs.writeFile(path.join(out,'runtime/helpers/fit.js'),'// Frozen verbatim from qa/qa.js at delivery build.\nexport '+fit);
 await fs.writeFile(path.join(out,'manifest.json'),JSON.stringify(manifest,null,2)+'\n');
-const ledger=['# Openline full change ledger','','Release 2026-10-06-r2. Historical records retain rejected/superseded labels; do not implement them. Additional Irina tasks are requests, not completed QA changes.',''];
+const ledger=['# Openline full change ledger','','Release 2026-10-07-r3. Historical records retain rejected/superseded labels; do not implement them. Additional Irina tasks and new mobile proposals are not already completed production changes.',''];
 const copy=['# Openline wording and small-change inventory','','Apply current consolidated copy with the related layout, colour and interaction changes. Superseded records are historical; the complete implementation context is in the full ledger.',''];
 for(const c of changes){
   ledger.push(`## ${c.title}`,'',`- **ID:** \`${c.id}\``,`- **Disposition:** ${c.disposition} · ${c.status}`,`- **Scope:** ${c.pages.join(', ')}`,`- **Review:** [Open affected view](${absolute(c.route)})`,'',c.summary,'',c.delivery,'');

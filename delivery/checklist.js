@@ -15,13 +15,15 @@ function decodeHash(){
   const h=location.hash.slice(1),pos=h.indexOf('~ol1:');
   if(pos<0)return false;
   const parts=h.slice(pos+5).split(':');
-  if(parts.length!==2||parts[0]!==inventory.fingerprint)throw Error('This progress link belongs to a different checklist version. Import its JSON backup to match items by ID.');
+  const old=(inventory.previousInventories||[]).find(p=>p.fingerprint===parts[0]);
+  if(parts.length!==2||(parts[0]!==inventory.fingerprint&&!old))throw Error('This progress link belongs to an unknown checklist version. Import its JSON backup to match items by ID.');
+  const ids=old?old.ids:items.map(t=>t.id),known=new Set(items.map(t=>t.id));
   const encoded=parts[1];
   if(!/^[A-Za-z0-9_-]*$/.test(encoded)||encoded.length>3000)throw Error('This progress link is invalid. No item statuses were loaded.');
   const raw=atob(encoded.replaceAll('-','+').replaceAll('_','/'));
-  if(raw.length!==Math.ceil(items.length/2))throw Error('This progress link is incomplete. No item statuses were loaded.');
+  if(raw.length!==Math.ceil(ids.length/2))throw Error('This progress link is incomplete. No item statuses were loaded.');
   const next=new Map();
-  items.forEach((t,i)=>{const f=(raw.charCodeAt(Math.floor(i/2))>>(i%2*4))&15;if(!allowed.has(f))throw Error('Invalid checklist status in this progress link.');if(f)next.set(t.id,f);});
+  ids.forEach((id,i)=>{const f=(raw.charCodeAt(Math.floor(i/2))>>(i%2*4))&15;if(!allowed.has(f))throw Error('Invalid checklist status in this progress link.');if(f&&known.has(id))next.set(id,f);});
   flags=next;return true;
 }
 function encodedState(){

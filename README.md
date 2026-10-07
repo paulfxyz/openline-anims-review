@@ -2,6 +2,12 @@
 
 ## Current delivery release · 6 October 2026
 
+Release r3 on 7 October adds `/mobile`: 28 extra React mobile views across six
+connected workflows, matching Irina's existing app-screen design system. Source
+is in `mobile-src`; compiled assets and documentation are in `mobile`. The
+delivery pack, QA extras menu, changelog and per-view checklist include this
+extension. Known earlier checklist progress URLs are migrated by stable IDs.
+
 `/delivery` is now explicitly authorized and implemented. Open
 https://openline-anims-review.vercel.app/delivery for Irina's full brief,
 30 frozen animation choices, 22 page entries, four extra tools plus the gift

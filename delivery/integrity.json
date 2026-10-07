@@ -1,12 +1,12 @@
 {
-  "release": "2026-10-06-r2",
+  "release": "2026-10-07-r3",
   "qaSourceCommit": "b32598f579f45ac0514c81ed64c87e07970de587",
   "note": "Checksums cover public source files; ZIP and this integrity inventory exclude themselves. Private commercial correspondence is not included.",
   "files": [
     {
       "path": "README.md",
-      "bytes": 38310,
-      "sha256": "bcb9a3d0101af1230f3e9df701aec1ec6ec8b703ae4215162189e79215611152"
+      "bytes": 38699,
+      "sha256": "80f675225038a8762dfa12420d866cd67a2fd40d1fbf2af846ced39b8c4e80b9"
     },
     {
       "path": "STYLE-OMDM.md",
@@ -55,33 +55,33 @@
     },
     {
       "path": "delivery/brief.md",
-      "bytes": 18032,
-      "sha256": "4a9efbdbd0169b37b50b5b8e2db18cb160624411236cdf9639353c5e0aabd09d"
+      "bytes": 18695,
+      "sha256": "0824579bd434a81115caf8a0c8071f2303fbd40deeee9fc02887aeb768e45f58"
     },
     {
       "path": "delivery/build.mjs",
-      "bytes": 9608,
-      "sha256": "fae804a5488643028a6fe9cdd4e0eb3a90fc99432d9337714fe0181c541883af"
+      "bytes": 10648,
+      "sha256": "f631587a141858a68e200d973a20ae574e77e99b62dfb8ca1b6a2c0b001c4c86"
     },
     {
       "path": "delivery/change-ledger.md",
-      "bytes": 96534,
-      "sha256": "2b657209fc43730ee77fcc27765b3940384883499aa34b2253a9716fbf440e77"
+      "bytes": 98217,
+      "sha256": "4331e7af3ceda67ef843e5843dc0f41d10b056e4323bc1348ece25d262bbd915"
     },
     {
       "path": "delivery/checklist-build.mjs",
-      "bytes": 4986,
-      "sha256": "8eac6169a49eb9ee1ec75deba9af05e9acb5b558f373c5f06d62319ece5bc2bd"
+      "bytes": 5397,
+      "sha256": "e16225a016bc20421679347a3964c40b855323bd29fd6152dd413883d203a4e0"
     },
     {
       "path": "delivery/checklist-data.json",
-      "bytes": 186951,
-      "sha256": "804f1b873396532f412999cc1b120d210cb806fd9e9bdf76272bf6645084bcbc"
+      "bytes": 217792,
+      "sha256": "67a63447b748b913717dd99672d065176b0899065422979f5d770386a1180f31"
     },
     {
       "path": "delivery/checklist-guide.md",
-      "bytes": 3277,
-      "sha256": "99303bec71b52ab5bc3bb12be8a9214044303c4d0500d3051dbf728166eb0149"
+      "bytes": 3373,
+      "sha256": "81ec6ae74add8a2335255941772e6f2a71683fc4ed1613d75d0c04072855e745"
     },
     {
       "path": "delivery/checklist.css",
@@ -90,8 +90,8 @@
     },
     {
       "path": "delivery/checklist.js",
-      "bytes": 15267,
-      "sha256": "1866a2cf15ceada63ca9f100a2843236aca5d5af11fd83bf85352906bd279ada"
+      "bytes": 15445,
+      "sha256": "951d4a7b22d6ae64f031648e711aa1f129e9f57025437131010a96f45dbbcb41"
     },
     {
       "path": "delivery/copy-changes.md",
@@ -115,8 +115,8 @@
     },
     {
       "path": "delivery/index.html",
-      "bytes": 21685,
-      "sha256": "adc03ce3ede989cbe7cab90fd2fdb52870d4c3bbc016e9a39d50256af0e9b618"
+      "bytes": 21713,
+      "sha256": "31b1572c5cd8c744c738a73e5bbd6780fa3a504cae7f04706da2c5a783a538f4"
     },
     {
       "path": "delivery/items/affil.md",
@@ -270,8 +270,13 @@
     },
     {
       "path": "delivery/manifest.json",
-      "bytes": 183414,
-      "sha256": "1b599a10e09b59a79b3beb5dd8a64b168af91a6a0452311d9ef8d6ee55c7751f"
+      "bytes": 186180,
+      "sha256": "406eacdf740c41b3f4aee81e862dbd9e62444898b1731f20b4d6686e99fdb719"
+    },
+    {
+      "path": "delivery/mobile-handoff.md",
+      "bytes": 976,
+      "sha256": "a7281634904e1f447682661a01b88065225e4c79bd462d69e79a2cf7b4aa3db8"
     },
     {
       "path": "delivery/package.mjs",
@@ -280,8 +285,8 @@
     },
     {
       "path": "delivery/page-matrix.md",
-      "bytes": 31736,
-      "sha256": "a5dfd64dde7f08b1cc5f2e08334271670f4791e23e903a9afd808a3fbebaa966"
+      "bytes": 32679,
+      "sha256": "4b19f5130c4064bf41472c0aa6b02c73ed32de7491042d21e9c89877c2badcba"
     },
     {
       "path": "delivery/preview.html",
@@ -550,8 +555,8 @@
     },
     {
       "path": "delivery/source-map.mjs",
-      "bytes": 3785,
-      "sha256": "a1e0611fb576a2aa82a367ae10b4e70c6b02b53c0afcdf9e5b83456691350821"
+      "bytes": 3995,
+      "sha256": "061fe85d8c645da3aa6040403f021dd9b7b9c761e91057cade2664016cc904ab"
     },
     {
       "path": "img/kitty-ph.png",
@@ -757,6 +762,96 @@
       "path": "js/variants2.js",
       "bytes": 46698,
       "sha256": "edd2b64b986d9202bfa59c040bd255694a145d1d89c4a60b51178fb62872a26b"
+    },
+    {
+      "path": "mobile-src/index.html",
+      "bytes": 525,
+      "sha256": "4f00603f60e63b082679369a0ca7a8b715a9ad5caee24c7361b167906eede7af"
+    },
+    {
+      "path": "mobile-src/package-lock.json",
+      "bytes": 82371,
+      "sha256": "7292f74b704735dbe38ec3d1b4257321c12ee647036f1fe2430879cb74afcda2"
+    },
+    {
+      "path": "mobile-src/package.json",
+      "bytes": 376,
+      "sha256": "41b1c7faa6495629f89a8a6b3c19caf49f17acc5173f13ae68d9e80ba244540d"
+    },
+    {
+      "path": "mobile-src/public/brand.png",
+      "bytes": 5402,
+      "sha256": "5a3595456e4de21fa372bf3b11a8c5e1e88594e9c9c013512058d782e9983141"
+    },
+    {
+      "path": "mobile-src/public/esim-qr.png",
+      "bytes": 2069,
+      "sha256": "3d6b170a3770aedcd41cf63aae444dce75d06ba859779b811259cd6c9e3086bc"
+    },
+    {
+      "path": "mobile-src/src/catalog.js",
+      "bytes": 9822,
+      "sha256": "8b487d338e94db0f4932ddb78562101201e3a7bef8d719ea815f7b95b26a1a58"
+    },
+    {
+      "path": "mobile-src/src/main.jsx",
+      "bytes": 48178,
+      "sha256": "609c337b60bee6a2b4fe930ed14b8c6d1583590ee303f9833c203003d0f37b53"
+    },
+    {
+      "path": "mobile-src/src/style.css",
+      "bytes": 37535,
+      "sha256": "025817d1104bbab57b378b041a6fe6caea99092ff391682da2c1613ea09b7573"
+    },
+    {
+      "path": "mobile-src/vite.config.js",
+      "bytes": 279,
+      "sha256": "fd320a6ca5a374bc03dc71e5db925711dffce9e622861cf0c963766bc883a828"
+    },
+    {
+      "path": "mobile/assets/index-BYdlpXqi.js",
+      "bytes": 221255,
+      "sha256": "344c39ec91475d766acf937171a81a92c31f1fff237a6c83d64d6461d220c692"
+    },
+    {
+      "path": "mobile/assets/index-D03B87Fg.css",
+      "bytes": 41960,
+      "sha256": "05de8db302160d41410e0c14286ec670be59b1d474d8e73347cca8dadd1fe730"
+    },
+    {
+      "path": "mobile/brand.png",
+      "bytes": 5402,
+      "sha256": "5a3595456e4de21fa372bf3b11a8c5e1e88594e9c9c013512058d782e9983141"
+    },
+    {
+      "path": "mobile/catalog.json",
+      "bytes": 14316,
+      "sha256": "49e66f86e60a5ee1635777e5dc71bc79502498aa3feaf719ff2e165a2038a2d3"
+    },
+    {
+      "path": "mobile/changelog.md",
+      "bytes": 1574,
+      "sha256": "ffbd8007c1cab4c106204eeb7cbf76626a7434da8ed79eb372fec4a92f7ff9d6"
+    },
+    {
+      "path": "mobile/esim-qr.png",
+      "bytes": 2069,
+      "sha256": "3d6b170a3770aedcd41cf63aae444dce75d06ba859779b811259cd6c9e3086bc"
+    },
+    {
+      "path": "mobile/implementation.md",
+      "bytes": 7146,
+      "sha256": "9a556a363a595882b1270d481279cb6bb0efcd7f64fa26a2c5587b35bb0f0dcf"
+    },
+    {
+      "path": "mobile/index.html",
+      "bytes": 638,
+      "sha256": "9d2b26a8ebab892fb8609c1cda04d03ec5025895ac28ab083d87c16440325532"
+    },
+    {
+      "path": "mobile/qa.md",
+      "bytes": 3486,
+      "sha256": "e85f7f4050ebadcbe1e0b995d43d0e2b5fb3e904db89c43fe3b0fc7d9d412f75"
     },
     {
       "path": "omdm.html",
@@ -1540,8 +1635,8 @@
     },
     {
       "path": "qa/change-log.js",
-      "bytes": 59466,
-      "sha256": "21c81f238b17d31b77a43d1d6f78f8cc6e45222b1441790a9f001a49d8d97f7a"
+      "bytes": 60856,
+      "sha256": "af49ec70be91a60ed178b51fb36e2630cf9f607973cf3aa152c47b1db76d82d6"
     },
     {
       "path": "qa/changes.css",
@@ -1660,8 +1755,8 @@
     },
     {
       "path": "qa/index.html",
-      "bytes": 7891,
-      "sha256": "a0758520dc8b86fac0cbdb17015d60c3dfee3d34e5a96ee422a4c7a0674e9f9c"
+      "bytes": 8487,
+      "sha256": "d14275ec24d34b41edf7eab784bacdad8f6611f4e9c61624fa4b3dcc8219610c"
     },
     {
       "path": "qa/installation-guide.html",
@@ -1805,8 +1900,8 @@
     },
     {
       "path": "qa/qa.js",
-      "bytes": 34894,
-      "sha256": "c1ac0b213b98b7378f91224d61eee4598f3d7f55ad4a148d2fd8baf6c262bbd6"
+      "bytes": 34972,
+      "sha256": "29c01643dffcbeae1a45d58c268f1ea3074abcf593f6441cb44e9ab76b09debf"
     },
     {
       "path": "qa/recolor.js",

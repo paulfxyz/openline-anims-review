@@ -1,15 +1,16 @@
 {
-  "release": "2026-10-06-r2",
+  "release": "2026-10-07-r3",
   "qaSourceCommit": "b32598f579f45ac0514c81ed64c87e07970de587",
   "verifiedAt": "2026-10-06",
-  "verification": "Saved Comet choice and QA decision keys checked; no QA overrides; no customer codes or chat contents collected.",
+  "verification": "Original animation choice snapshot checked on 6 October, unchanged. Mobile proposals added 7 October and are not presumed approved. No customer codes or chat contents collected.",
   "counts": {
     "choices": 30,
     "pages": 22,
-    "tools": 4,
-    "extraEntries": 5,
-    "changes": 56,
-    "checklist": 297
+    "tools": 5,
+    "extraEntries": 6,
+    "changes": 57,
+    "mobileViews": 28,
+    "checklist": 327
   },
   "decisions": {
     "theme": "original",
@@ -1980,6 +1981,36 @@
   ],
   "extras": [
     {
+      "slug": "mobile",
+      "title": "Mobile app · 28 extra views",
+      "route": "/mobile",
+      "kind": "New mobile workflow proposals",
+      "file": "mobile/index.html",
+      "files": [
+        "mobile/index.html",
+        "mobile/index.html",
+        "mobile/catalog.json",
+        "mobile/implementation.md",
+        "mobile/changelog.md",
+        "mobile-src/src/catalog.js",
+        "mobile-src/src/main.jsx",
+        "mobile-src/src/style.css",
+        "mobile-src/package.json"
+      ],
+      "changeIds": [
+        "mobile-extra-workflows",
+        "delivery-release",
+        "delivery-general-badges",
+        "delivery-certification-badge",
+        "delivery-app-panel-polish",
+        "native-typography",
+        "context-fit",
+        "page-browser",
+        "clean-customer-presentation",
+        "qa-reporting"
+      ]
+    },
+    {
       "slug": "start",
       "title": "Activate a plan",
       "route": "/qa/start",
@@ -2144,6 +2175,29 @@
   ],
   "changes": [
     {
+      "id": "mobile-extra-workflows",
+      "title": "Mobile: 28 extra views across six connected workflows",
+      "pages": [
+        "mobile"
+      ],
+      "status": "Review options / new mobile proposals",
+      "route": "/mobile",
+      "changedAt": "2026-10-07",
+      "summary": "Added a /mobile extension to Irina’s 19-screen app reference: 28 companion views for cart/payment, purchase codes, gifting, activation, QR/setup, labels/folders/top-ups/usage, troubleshooting/profile review, support, orders and account controls. Gallery, search, workflow filtering, deep links, interactive phone player and selected failure states are included.",
+      "delivery": "Use the same observed React 18.3.1 and Lucide React 0.487.0 stack, Tailwind styling, native Openline typography, orange accent, 340×700 gallery phones and original component treatment. Editable React source is in mobile-src; built page and implementation notes are under mobile. Preserve Irina’s originals and treat these as new proposals to review, not already accepted replacements. Apply the later QA activation/gifting/fair-use rules rather than contradictory older reference copy. Payment/provisioning/account/support values are fixtures; no native app, PSP, provisioning, email or destructive server operation is connected. Individual mobile review/import tasks are added to the delivery checklist and existing saved checklist snapshots remain restorable.",
+      "disposition": "Retained / review",
+      "files": [
+        "mobile/index.html",
+        "mobile/catalog.json",
+        "mobile/implementation.md",
+        "mobile/changelog.md",
+        "mobile-src/src/catalog.js",
+        "mobile-src/src/main.jsx",
+        "mobile-src/src/style.css",
+        "mobile-src/package.json"
+      ]
+    },
+    {
       "id": "delivery-checklist",
       "title": "Delivery: interactive implementation checklist and introduction",
       "pages": [
@@ -2270,7 +2324,7 @@
       ],
       "status": "Implemented in QA",
       "route": "/qa",
-      "summary": "The bottom page label opens a searchable, keyboard-accessible menu for 22 page entries plus four extra tools.",
+      "summary": "The bottom page label opens a searchable, keyboard-accessible menu for 22 page entries plus five extra tools, including the mobile extension.",
       "delivery": "18 original pages, the retained About / Contact alternatives, Product Hunt and the original-template France refinement. The rejected 16-page alternative batch and the rejected France selector redesign must not be delivered.",
       "disposition": "Current",
       "files": []
