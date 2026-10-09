@@ -1,16 +1,16 @@
 {
-  "release": "2026-10-07-r3",
+  "release": "2026-10-09-r4",
   "qaSourceCommit": "b32598f579f45ac0514c81ed64c87e07970de587",
-  "verifiedAt": "2026-10-06",
-  "verification": "Original animation choice snapshot checked on 6 October, unchanged. Mobile proposals added 7 October and are not presumed approved. No customer codes or chat contents collected.",
+  "verifiedAt": "2026-10-09",
+  "verification": "Animation choice numbers remain unchanged. Page identities reconfirmed 9 October; login backdrop and composer reference fixed. Public revision gaps are recorded separately from implementation and final approval.",
   "counts": {
     "choices": 30,
     "pages": 22,
     "tools": 5,
     "extraEntries": 6,
-    "changes": 57,
+    "changes": 60,
     "mobileViews": 28,
-    "checklist": 327
+    "checklist": 346
   },
   "decisions": {
     "theme": "original",
@@ -63,7 +63,8 @@
         "#1E40AF",
         "#2563EB"
       ],
-      "note": "Royal blue accents over navy ink: dark blue for depth, royal blue for action, corporate rather than consumer."
+      "note": "Royal blue accents over navy ink: dark blue for depth, royal blue for action, corporate rather than consumer.",
+      "selected": true
     },
     "security": {
       "id": "ps-security",
@@ -78,7 +79,8 @@
         "#0F766E",
         "#14B8A6"
       ],
-      "note": "Deep teal: protective and calm, clearly apart from the green used for \"connected\" states."
+      "note": "Deep teal: protective and calm, clearly apart from the green used for \"connected\" states.",
+      "selected": true
     },
     "adblocking": {
       "id": "ps-adblocking",
@@ -93,7 +95,8 @@
         "#6D28D9",
         "#8B5CF6"
       ],
-      "note": "Ultraviolet: filtering and shielding, distinct from every other Features page."
+      "note": "Ultraviolet: filtering and shielding, distinct from every other Features page.",
+      "selected": true
     },
     "unlimited": {
       "id": "ps-unlimited",
@@ -108,7 +111,8 @@
         "#DB2777",
         "#F472B6"
       ],
-      "note": "Hot magenta: energy and abundance for the no-limits page."
+      "note": "Hot magenta: energy and abundance for the no-limits page.",
+      "selected": true
     },
     "iot": {
       "id": "ps-iot",
@@ -144,7 +148,8 @@
         "#6B6B6B",
         "#FBFAF7"
       ],
-      "note": "Black and white, Openline typography, square corners, no drop shadows — an editorial voice for the blog."
+      "note": "Black and white, Openline typography, square corners, no drop shadows — an editorial voice for the blog.",
+      "selected": true
     }
   },
   "animations": [
@@ -817,7 +822,7 @@
       "runtime": "delivery/runtime/js/icons.js",
       "preview": "/delivery/preview.html?key=aloha",
       "guide": "delivery/items/aloha.md",
-      "identity": "As shipped"
+      "identity": "Light-neutral tile · #F3F4F6"
     },
     {
       "key": "prin",
@@ -1595,9 +1600,14 @@
       "route": "/qa/login",
       "file": "qa/login.html",
       "files": [
-        "qa/login.html"
+        "qa/login.html",
+        "qa/qa.css",
+        "qa/hub.css",
+        "js/icons.js",
+        "delivery/runtime/animation.css"
       ],
       "changeIds": [
+        "login-neutral-tile",
         "delivery-release",
         "delivery-general-badges",
         "delivery-certification-badge",
@@ -2100,6 +2110,7 @@
         "qa/assets/support-portraits/README.md"
       ],
       "changeIds": [
+        "help-composer-resize-fix",
         "delivery-release",
         "delivery-general-badges",
         "delivery-certification-badge",
@@ -2175,6 +2186,70 @@
   ],
   "changes": [
     {
+      "id": "login-neutral-tile",
+      "title": "Login: light-neutral background for the chosen icon",
+      "pages": [
+        "login"
+      ],
+      "status": "Updated QA/source / Irina to integrate",
+      "route": "/qa/login",
+      "changedAt": "2026-10-09",
+      "summary": "The selected Globe & Pin (option 6) keeps its SVG, dimensions and animation, but the tile becomes #F3F4F6 with a subtle #E5E7EB inset edge instead of orange.",
+      "delivery": "Apply the updated tile to the final login. QA login, hub thumbnail, review-board badges, choice detail and portable delivery preview are consistent. This is a background change, not a new icon selection or a login-page recolour.",
+      "disposition": "Current",
+      "files": [
+        "qa/qa.css",
+        "qa/hub.css",
+        "js/icons.js",
+        "delivery/runtime/animation.css"
+      ]
+    },
+    {
+      "id": "help-composer-resize-fix",
+      "title": "Help composer: minimum height and safe resize autosizing",
+      "pages": [
+        "chat"
+      ],
+      "status": "Reference source fixed / live revisions integration pending",
+      "route": "/qa/chat",
+      "changedAt": "2026-10-09",
+      "summary": "The public revisions chat reproduces a clipped input after resize: 24px textarea height with about 45px required for line height plus padding. The shared reference CSS now guarantees the minimum content height, and JS autosizing recalculates on viewport/composer-width changes.",
+      "delivery": "Port qa/support/support.css and chat.js together. Use padding-aware border-box sizing and a max-height scroll cap; disconnect resize listeners/observer on close. Test empty, single/multiline text, resize, sidebar toggles, reopen, zoom and mobile keyboard. Paul called this a Typeform glitch, but the screenshot identifies the chat composer; no third-party Typeform integration was assumed or changed.",
+      "disposition": "Current",
+      "files": [
+        "qa/support/chat.js",
+        "qa/support/support.js",
+        "qa/support/support.css",
+        "qa/support/boot.js",
+        "qa/assets/ai/README.md",
+        "qa/assets/support-portraits/README.md"
+      ]
+    },
+    {
+      "id": "delivery-october9-followup",
+      "title": "Delivery follow-up: remaining gaps and final return package",
+      "pages": [
+        "delivery"
+      ],
+      "status": "Verified public review / follow-up required",
+      "route": "/delivery#follow-up",
+      "changedAt": "2026-10-09",
+      "summary": "A new prominent block records five confirmed palette gaps (Blog, Network, Security, AdBlocking, Unlimited), sampled Chrome/orange progress on IoT/Global, partial France integration, mobile visual parity, the reproduced help-input glitch, the neutral login tile and the required Figma/React/ZIP/Markdown final package.",
+      "delivery": "Credit already observed integrations instead of calling everything missing. Use the original app screens as the mobile visual master; 16px/24px master payment type and 16px vertical padding differ from the extension’s 14px/19.6px and 12px. Mobile final handoff remains pending harmonisation. Add fresh checklist rows for this review, preserve previous progress links, and do not claim that a final Figma or integrated Irina source archive was inspected or received.",
+      "disposition": "Current",
+      "files": [
+        "delivery/index.html",
+        "delivery/checklist.js",
+        "delivery/checklist.css",
+        "delivery/checklist-data.json",
+        "delivery/checklist-guide.md",
+        "delivery/followup-data.mjs",
+        "delivery/followup.js",
+        "delivery/followup.css",
+        "delivery/followup-2026-10-09.md"
+      ]
+    },
+    {
       "id": "mobile-extra-workflows",
       "title": "Mobile: 28 extra views across six connected workflows",
       "pages": [
@@ -2214,7 +2289,11 @@
         "delivery/checklist.js",
         "delivery/checklist.css",
         "delivery/checklist-data.json",
-        "delivery/checklist-guide.md"
+        "delivery/checklist-guide.md",
+        "delivery/followup-data.mjs",
+        "delivery/followup.js",
+        "delivery/followup.css",
+        "delivery/followup-2026-10-09.md"
       ]
     },
     {
@@ -2389,11 +2468,11 @@
         "unlimited",
         "blog"
       ],
-      "status": "Review options",
+      "status": "Required handoff defaults / reconfirmed 9 October",
       "route": "/qa",
-      "summary": "Network blue, Security teal, AdBlocking ultraviolet, Unlimited magenta and Blog newsprint are switchable within each page.",
-      "delivery": "The export includes each identity’s current on/off state and the global theme. Do not treat these proposals as approved production defaults.",
-      "disposition": "Retained / review",
+      "summary": "Network blue, Security teal, AdBlocking ultraviolet, Unlimited magenta and Blog newsprint are the page identities to integrate, alongside Global eSIM orange and IoT Chrome. Paul reconfirmed that more than Blog/Network must not remain uniformly orange.",
+      "delivery": "The export includes current on/off review controls and the global theme, but Irina’s handoff target is the full seven-page palette set. Match the rendered QA views, including deliberate brand/CTA/status exceptions. Apply page surfaces and text as well as animation colours; production content/functional sign-off is still separate.",
+      "disposition": "Current",
       "files": [
         "qa/core.js",
         "qa/recolor.js",
@@ -4260,5 +4339,122 @@
       "disposition": "Current",
       "files": []
     }
-  ]
+  ],
+  "followup": {
+    "date": "2026-10-09",
+    "palettes": [
+      {
+        "slug": "blog",
+        "title": "Blog",
+        "name": "Newsprint",
+        "hex": "#111111",
+        "swatches": [
+          "#111111",
+          "#6B6B6B",
+          "#FBFAF7"
+        ],
+        "status": "gap",
+        "finding": "Headline accent, badges and statistics are still orange; QA uses a monochrome editorial treatment.",
+        "action": "Apply the Newsprint page identity to headings, badges, icon tiles, cards, backgrounds and selected artwork. Preserve the orange actions that the QA reference deliberately retains.",
+        "current": "https://openline-revisions-hub.vercel.app/blog",
+        "target": "https://openline-anims-review.vercel.app/qa/blog"
+      },
+      {
+        "slug": "network",
+        "title": "Network",
+        "name": "Corporate blue",
+        "hex": "#1E40AF",
+        "swatches": [
+          "#1E3A8A",
+          "#1E40AF",
+          "#2563EB"
+        ],
+        "status": "gap",
+        "finding": "The headline accent and feature statistics still use #FF5314 instead of the blue/navy QA identity.",
+        "action": "Bring across the blue headings, navy ink, section washes, cards and Network HUD treatment. Importing the illustration alone is not the complete page change.",
+        "current": "https://openline-revisions-hub.vercel.app/network",
+        "target": "https://openline-anims-review.vercel.app/qa/network"
+      },
+      {
+        "slug": "security",
+        "title": "Security",
+        "name": "Vault teal",
+        "hex": "#0F766E",
+        "swatches": [
+          "#134E4A",
+          "#0F766E",
+          "#14B8A6"
+        ],
+        "status": "gap",
+        "finding": "“Online Threats”, the metrics and repeated page accents remain orange.",
+        "action": "Use the teal palette across the page and its existing illustrations, with green status signals kept distinct.",
+        "current": "https://openline-revisions-hub.vercel.app/security",
+        "target": "https://openline-anims-review.vercel.app/qa/security"
+      },
+      {
+        "slug": "adblocking",
+        "title": "AdBlocking",
+        "name": "Ultraviolet",
+        "hex": "#6D28D9",
+        "swatches": [
+          "#4C1D95",
+          "#6D28D9",
+          "#8B5CF6"
+        ],
+        "status": "gap",
+        "finding": "“Save Data”, the headline statistics and section accents remain orange.",
+        "action": "Apply the violet page identity to headings, badges, icon treatments, charts and tinted surfaces, matching the QA page in context.",
+        "current": "https://openline-revisions-hub.vercel.app/adblocking",
+        "target": "https://openline-anims-review.vercel.app/qa/adblocking"
+      },
+      {
+        "slug": "unlimited",
+        "title": "Unlimited",
+        "name": "Hot magenta",
+        "hex": "#DB2777",
+        "swatches": [
+          "#831843",
+          "#DB2777",
+          "#F472B6"
+        ],
+        "status": "gap",
+        "finding": "Updated promise/profile-replacement copy is present, but the heading, metrics and accents are still orange.",
+        "action": "Keep the revised fixed/unlimited policy copy and apply the magenta identity. Preserve the intentionally neutral usage cards and the explicit local-network caveat.",
+        "current": "https://openline-revisions-hub.vercel.app/unlimited",
+        "target": "https://openline-anims-review.vercel.app/qa/unlimited"
+      },
+      {
+        "slug": "iot",
+        "title": "IoT",
+        "name": "Chrome",
+        "hex": "#6B7280",
+        "swatches": [
+          "#1F2329",
+          "#6B7280",
+          "#D1D5DB"
+        ],
+        "status": "seen",
+        "finding": "The three mounted illustrations now show neutral steel/gunmetal treatment. This is not another “still orange” gap.",
+        "action": "Retain Chrome as default and finish the full responsive comparison. Orange Openline branding and meaningful green online states are intentional exceptions.",
+        "current": "https://openline-revisions-hub.vercel.app/iot",
+        "target": "https://openline-anims-review.vercel.app/qa/iot"
+      },
+      {
+        "slug": "global-esim",
+        "title": "Global eSIM",
+        "name": "Openline orange",
+        "hex": "#FF5314",
+        "swatches": [
+          "#FF5314",
+          "#FFB08F",
+          "#FFF3EB"
+        ],
+        "status": "seen",
+        "finding": "The sampled headings and accents are orange, which is the intended identity for this page.",
+        "action": "Keep the orange-only page treatment and verify every remaining box/illustration. Do not restore mixed blue, purple or green decorative sections, or recolour actual partner logos.",
+        "current": "https://openline-revisions-hub.vercel.app/global-esim",
+        "target": "https://openline-anims-review.vercel.app/qa/global-esim"
+      }
+    ]
+  }
 }

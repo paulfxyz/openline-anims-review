@@ -1,6 +1,22 @@
 # Openline delivery release verification
 
-Release: 2026-10-06-r2. Scope: the delivery hub, frozen selections, portable animation runtime, interactive implementation checklist, documentation and source packaging. Existing QA implementations are preserved; this report is not a fresh end-to-end certification of every existing flow, a Safari/iOS device test or a production backend test.
+Current release: 2026-10-09-r4. Scope: the delivery follow-up, seven page identities, neutral login tile, help-composer reference fix, interactive implementation checklist, documentation and source packaging. Existing QA implementations are preserved; this report is not a fresh end-to-end certification of every existing flow, a Safari/iOS device test or a production backend test.
+
+## 9 October follow-up verification
+
+The targeted comparison and its source links are recorded in [the follow-up report](https://openline-anims-review.vercel.app/delivery/followup-2026-10-09.md). It distinguishes five confirmed palette gaps from the sampled IoT Chrome and Global eSIM orange progress, partial France integration, mobile visual-system differences and final files awaiting confirmation. It does not claim that the entire revisions hub has been audited or modified.
+
+- **Inventory:** 30 animation selections remain unchanged. The current pack contains 22 page entries, five tools, six extra entries, 28 mobile views, 60 change records and 346 checklist items. Sixteen fresh checklist rows use the “9 October follow-up” type.
+- **Follow-up controls:** seven palette rows render; filters return five gaps or two observed-progress rows. “Track this follow-up” selects the correct checklist type and its 16 rows. The detailed Markdown report opens, and Escape dismisses it.
+- **Progress compatibility:** an r3 snapshot with 327 item IDs and one verified item restored as “1 of 346 items verified”. New items remained unchecked, and earlier inventory fingerprints are retained.
+- **Login:** the QA tile and portable delivery preview use `rgb(243, 244, 246)` with no background image. The 56px host and selected Globe & Pin artwork remain intact; only the surface treatment changed.
+- **Composer:** after resizing from 1440 × 1000 to 1440 × 900 and 375 × 812, the reference textarea retained a 45px single-line height and scroll height. Three lines expanded it to 94px. The visible mobile composer was checked with the sidebar closed; text, attachment and send controls remained aligned. Closing support produced no observed page errors.
+- **Responsive layout:** the new follow-up panel was inspected at desktop and 375px mobile. Mobile page scroll width remained 375px, with no horizontal overflow in the tested state.
+- **Scope limits:** real mobile keyboard behaviour, 200% browser zoom, Safari/iOS and Irina's integrated final build remain acceptance gates. No real support request, provisioning, transfer, payment, deletion or email was executed.
+
+## Earlier release baseline
+
+The sections below preserve the r2 verification history and its then-current counts. They are not the current r4 inventory.
 
 ## Interactive checklist update
 

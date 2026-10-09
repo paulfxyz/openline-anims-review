@@ -1,6 +1,12 @@
 @import url('/qa/typography.css');
 @import url('/qa/anim.css');
 @import url('/qa/changes.css');
+
+/* 9 October: keep the chosen animated icon, with a light neutral login tile. */
+[data-qa-slot="aloha"] {
+  background: #F3F4F6 !important;
+  box-shadow: inset 0 0 0 1px #E5E7EB;
+}
 /* ══════════════════════════════════════════════════════════════════════
    /qa chrome — the dock, the drawer and the slot labels.
    Everything is namespaced .qa-* and lives inside #qa-ui, which the

@@ -252,7 +252,25 @@ function composer() {
   const btnMic = root.querySelector('[data-mic]');
   let pending = [];
 
-  const grow = () => { ta.style.height = 'auto'; ta.style.height = Math.min(180, ta.scrollHeight) + 'px'; };
+  const grow = () => {
+    if (!ta.isConnected || !ta.getBoundingClientRect().width) return;
+    const css = getComputedStyle(ta);
+    const minimum = Math.ceil((parseFloat(css.lineHeight) || 25) + (parseFloat(css.paddingTop) || 0) + (parseFloat(css.paddingBottom) || 0) + (parseFloat(css.borderTopWidth) || 0) + (parseFloat(css.borderBottomWidth) || 0));
+    ta.style.height = 'auto';
+    ta.style.height = Math.min(180, Math.max(minimum, ta.scrollHeight)) + 'px';
+  };
+  let growFrame = 0, lastWidth = -1;
+  const scheduleGrow = () => { cancelAnimationFrame(growFrame); growFrame = requestAnimationFrame(grow); };
+  const resizeObserver = new ResizeObserver(entries => {
+    const width = entries[0]?.contentRect.width || 0;
+    if (Math.abs(width - lastWidth) > .5) { lastWidth = width; scheduleGrow(); }
+  });
+  resizeObserver.observe(root.querySelector('.olc-comp'));
+  window.addEventListener('resize', scheduleGrow);
+  owner.disposeComposerLayout = () => {
+    resizeObserver.disconnect(); cancelAnimationFrame(growFrame);
+    window.removeEventListener('resize', scheduleGrow);
+  };
   const sync = () => { const has = ta.value.trim() || pending.length; btnSend.disabled = !has; root.querySelector('.olc-comp').classList.toggle('has-text', !!has); };
   const drawTray = () => {
     tray.hidden = !pending.length;
@@ -623,6 +641,7 @@ export function closeChat() {
   const { root, ret } = S;
   cancelPending();
   S.resetComposer?.();
+  S.disposeComposerLayout?.();
   if (S.playing) S.playing.stop();
   S.msgs = S.msgs.filter(m => !m.typing); save();
   releaseMessages(S.msgs);

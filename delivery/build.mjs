@@ -6,8 +6,10 @@ import {SOURCE_MAP,PAGE_FILES} from './source-map.mjs';
 import {QA_CHANGES} from '../qa/change-log.js';
 import {buildChecklist} from './checklist-build.mjs';
 import {SCREENS as MOBILE_SCREENS,FLOWS as MOBILE_FLOWS,SOURCE as MOBILE_SOURCE} from '../mobile-src/src/catalog.js';
+import {PALETTE_REVIEW,FOLLOWUP_TASKS} from './followup-data.mjs';
 const root=path.resolve(import.meta.dirname,'..'), out=path.join(root,'delivery');
 const raw=JSON.parse(await fs.readFile(path.join(out,'baseline.json'),'utf8'));
+Object.values(raw.styles).forEach(style=>style.selected=true);
 const previousChecklist=await fs.readFile(path.join(out,'checklist-data.json'),'utf8').then(JSON.parse).catch(()=>null);
 await fs.writeFile(path.join(root,'mobile/catalog.json'),JSON.stringify({source:MOBILE_SOURCE,screens:MOBILE_SCREENS,flows:MOBILE_FLOWS,status:'Additional proposals; review before production integration.'},null,2)+'\n');
 const absolute=p=>'https://openline-anims-review.vercel.app'+p;
@@ -23,7 +25,7 @@ const animations=raw.animations.map(a=>{
     fitNote:diff>=.03?'Native artwork and destination slot differ. QA context-fit is included; validate in the final responsive component, never stretch.':'Native geometry closely matches the measured slot. Check responsive label size and companion pills.',
     source:`js/${module}`,runtime:`delivery/runtime/js/${module}`,preview:`/delivery/preview.html?key=${a.key}`,
     guide:`delivery/items/${a.key}.md`,
-    identity:raw.styles[a.page]?.name||'As shipped'};
+    identity:a.key==='aloha'?'Light-neutral tile · #F3F4F6':raw.styles[a.page]?.name||'As shipped'};
 });
 const pages=raw.pages.map(p=>({...p,route:`/qa/${p.slug}`,file:`qa/${p.slug}.html`,files:[`qa/${p.slug}.html`,...(PAGE_FILES[p.slug]||[])],
   changeIds:QA_CHANGES.filter(c=>c.pages.includes(p.slug)||c.pages.includes('*')).map(c=>c.id),
@@ -36,13 +38,13 @@ const extras=[
   {slug:'kb',title:'Knowledge base + device checker',route:'/qa/kb',kind:'Help tools',file:'qa/kb.html'},
   {slug:'modals',title:'Modal builder',route:'/qa/modals',kind:'Design tool',file:'qa/modals.html'},
 ].map(p=>({...p,files:[p.file,...(PAGE_FILES[p.slug==='recipient'?'start':p.slug]||[])],changeIds:QA_CHANGES.filter(c=>c.pages.includes(p.slug==='recipient'?'start':p.slug)||c.pages.includes('*')).map(c=>c.id)}));
-const changes=QA_CHANGES.map(c=>({...c,disposition:historical(c)?'History':c.id.startsWith('delivery-')&&!['delivery-release','delivery-checklist'].includes(c.id)?'Irina task':/Review options|QA alternative|Campaign draft/.test(c.status)?'Retained / review':'Current',
+const changes=QA_CHANGES.map(c=>({...c,disposition:historical(c)?'History':c.id.startsWith('delivery-')&&!['delivery-release','delivery-checklist','delivery-october9-followup'].includes(c.id)?'Irina task':/Review options|QA alternative|Campaign draft/.test(c.status)?'Retained / review':'Current',
   files:[...new Set(c.pages.filter(p=>p!=='*').flatMap(p=>PAGE_FILES[p]||[`qa/${p}.html`]))]}));
-const manifest={release:'2026-10-07-r3',qaSourceCommit:'b32598f579f45ac0514c81ed64c87e07970de587',verifiedAt:'2026-10-06',verification:'Original animation choice snapshot checked on 6 October, unchanged. Mobile proposals added 7 October and are not presumed approved. No customer codes or chat contents collected.',
+const manifest={release:'2026-10-09-r4',qaSourceCommit:'b32598f579f45ac0514c81ed64c87e07970de587',verifiedAt:'2026-10-09',verification:'Animation choice numbers remain unchanged. Page identities reconfirmed 9 October; login backdrop and composer reference fixed. Public revision gaps are recorded separately from implementation and final approval.',
   counts:{choices:animations.length,pages:pages.length,tools:5,extraEntries:extras.length,changes:changes.length,mobileViews:MOBILE_SCREENS.length},
   decisions:{theme:'original',qaOverrides:{},pageStyleOverrides:{},sharedSlotOverrides:{},blogDefault:'blog',blogAlternative:'blogv',retainCurrent:'pluskyc'},
-  styles:raw.styles,animations,pages,extras,changes};
-const checklist=buildChecklist(manifest,await fs.readFile(path.join(out,'acceptance.md'),'utf8'),MOBILE_SCREENS);
+  styles:raw.styles,animations,pages,extras,changes,followup:{date:'2026-10-09',palettes:PALETTE_REVIEW}};
+const checklist=buildChecklist(manifest,await fs.readFile(path.join(out,'acceptance.md'),'utf8'),MOBILE_SCREENS,FOLLOWUP_TASKS);
 checklist.previousInventories=[...(previousChecklist?.previousInventories||[]),...(previousChecklist?[{fingerprint:previousChecklist.fingerprint,ids:previousChecklist.tasks.map(t=>t.id)}]:[])].filter((p,i,a)=>p.fingerprint!==checklist.fingerprint&&a.findIndex(x=>x.fingerprint===p.fingerprint)===i);
 manifest.counts.checklist=checklist.tasks.length;
 await fs.writeFile(path.join(out,'checklist-data.json'),JSON.stringify(checklist,null,2)+'\n');
@@ -55,7 +57,7 @@ const qaJs=await fs.readFile(path.join(root,'qa/qa.js'),'utf8');
 const fit=qaJs.slice(qaJs.indexOf('function fitArt('),qaJs.indexOf('/* Height follows width'));
 await fs.writeFile(path.join(out,'runtime/helpers/fit.js'),'// Frozen verbatim from qa/qa.js at delivery build.\nexport '+fit);
 await fs.writeFile(path.join(out,'manifest.json'),JSON.stringify(manifest,null,2)+'\n');
-const ledger=['# Openline full change ledger','','Release 2026-10-07-r3. Historical records retain rejected/superseded labels; do not implement them. Additional Irina tasks and new mobile proposals are not already completed production changes.',''];
+const ledger=['# Openline full change ledger','','Release 2026-10-09-r4. Historical records retain rejected/superseded labels; do not implement them. The 9 October follow-up distinguishes verified public gaps from observed integrations and unverified final deliverables.',''];
 const copy=['# Openline wording and small-change inventory','','Apply current consolidated copy with the related layout, colour and interaction changes. Superseded records are historical; the complete implementation context is in the full ledger.',''];
 for(const c of changes){
   ledger.push(`## ${c.title}`,'',`- **ID:** \`${c.id}\``,`- **Disposition:** ${c.disposition} · ${c.status}`,`- **Scope:** ${c.pages.join(', ')}`,`- **Review:** [Open affected view](${absolute(c.route)})`,'',c.summary,'',c.delivery,'');

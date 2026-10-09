@@ -255,7 +255,7 @@ button.olc-card:hover { border-color: var(--ol-or); }
 .olc-chip button { flex: none; width: 26px; height: 26px; border-radius: 50%; border: 0; background: #fff; display: grid; place-items: center; }
 .olc-comp { display: flex; align-items: flex-end; gap: 6px; padding: 7px; border-radius: 26px; background: #fff; border: 2px solid var(--ol-line); transition: border-color .15s, box-shadow .15s; }
 .olc-comp:focus-within { border-color: var(--ol-or); box-shadow: 0 0 0 4px rgba(255, 83, 20, .1); }
-.olc-ta { flex: 1; min-width: 0; resize: none; border: 0; outline: 0; background: transparent; font: inherit; font-size: 17px; line-height: 1.45; padding: 10px 6px; max-height: 180px; color: var(--ol-ink); }
+.olc-ta { flex: 1; min-width: 0; resize: none; border: 0; outline: 0; background: transparent; font: inherit; font-size: 17px; line-height: 1.45; padding: 10px 6px; box-sizing: border-box; min-height: calc(1.45em + 20px); height: calc(1.45em + 20px); max-height: 180px; overflow-y: auto; color: var(--ol-ink); }
 .olc-cbtn { flex: none; width: 46px; height: 46px; border-radius: 50%; border: 0; background: transparent; display: grid; place-items: center; color: var(--ol-ink2); transition: background .15s, color .15s, opacity .15s; }
 .olc-cbtn:hover { background: var(--ol-soft); color: var(--ol-ink); }
 .olc-cbtn.is-send { background: var(--ol-or); color: #fff; }

@@ -101,6 +101,9 @@ export const PAGE_STYLES = {
 
 export const styleFor = (slug) => PAGE_STYLES[slug.replace('-redesign', '')] || null;
 
+// Paul reconfirmed the full page-identity handoff on 9 October.
+Object.values(PAGE_STYLES).forEach(style => { style.selected = true; });
+
 /* ── Boards, normalised exactly like /choice does ──────────────────── */
 
 export const STEPS = {};

@@ -1,6 +1,10 @@
 # Openline implementation brief for Irina
 
-Release: 6 October 2026, r2. This is the implementation handoff from Paul's design review, not a production launch or a claim that the prototype backends exist. Begin at the [delivery hub](https://openline-anims-review.vercel.app/delivery), read Paul's introduction and use the interactive checklist alongside the source pack.
+Current release: 9 October 2026, r4. This is the implementation handoff from Paul's design review, not a production launch or a claim that the prototype backends exist. Begin with the [9 October follow-up](https://openline-anims-review.vercel.app/delivery#follow-up), then use the interactive checklist and source pack.
+
+## Latest follow-up
+
+The new block records all seven page identities, five confirmed orange-palette gaps, partial France integration, the remaining mobile master-theme merge, a reproduced help-composer clipping bug and its reference-source fix, the neutral login tile and the required final Figma/React/ZIP/Markdown return. Use `followup-2026-10-09.md` for specific observations, source paths and acceptance checks; the final integrated artifacts have not been independently inspected in this review.
 
 ## Mobile extension added 7 October
 
@@ -23,7 +27,7 @@ Integrate the retained design direction into your existing Openline work. Treat 
 - **Retained alternatives:** About and Contact redesigns remain available beside their originals. The later batch of 16 alternatives was rejected and removed. Do not recreate it.
 - **France:** The full plan-selector redesign was rejected. Keep the original template and Data Bundles; apply only the current restrained Unlimited, calendar, fair-use and FAQ-support refinements.
 - **Blog decision:** Topic Picker is the current contextual default. The Long Read is also in the submitted selections but uses the same hero slot. Deliver it as a retained alternative, not an additional second illustration; ask Paul before replacing the default.
-- **Colour:** IoT Chrome and Global eSIM orange are explicitly selected defaults. Other currently enabled QA page identities are review directions, not a blanket production sign-off.
+- **Colour:** On 9 October Paul reconfirmed all seven page identities for handoff: Blog Newsprint, Network blue, Security teal, AdBlocking violet, Unlimited magenta, IoT Chrome and Global eSIM orange. Follow the rendered QA targets, including their deliberate brand/CTA/status exceptions; production sign-off remains separate.
 
 ## Your first hour
 

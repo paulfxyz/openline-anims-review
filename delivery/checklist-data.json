@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "release": "2026-10-07-r3",
-  "fingerprint": "81713a0cf8d9",
+  "release": "2026-10-09-r4",
+  "fingerprint": "8b4b8af3d2ad",
   "tasks": [
     {
       "id": "animation:tier1",
@@ -295,7 +295,7 @@
         "login"
       ],
       "title": "Import Globe & Pin · option 6",
-      "description": "Apply the selected Globe & Pin animation in The \"Aloha!\" icon, with As shipped identity. Native geometry closely matches the measured slot. Check responsive label size and companion pills.",
+      "description": "Apply the selected Globe & Pin animation in The \"Aloha!\" icon, with Light-neutral tile · #F3F4F6 identity. Native geometry closely matches the measured slot. Check responsive label size and companion pills.",
       "route": "/qa/login",
       "doc": "items/aloha.md",
       "files": [
@@ -450,6 +450,64 @@
       "doc": "items/affil.md",
       "files": [
         "delivery/runtime/js/contact-affil.js"
+      ],
+      "review": false
+    },
+    {
+      "id": "change:login-neutral-tile",
+      "type": "Blocks & interactions",
+      "pages": [
+        "login"
+      ],
+      "title": "Login: light-neutral background for the chosen icon",
+      "description": "The selected Globe & Pin (option 6) keeps its SVG, dimensions and animation, but the tile becomes #F3F4F6 with a subtle #E5E7EB inset edge instead of orange. Apply the updated tile to the final login. QA login, hub thumbnail, review-board badges, choice detail and portable delivery preview are consistent. This is a background change, not a new icon selection or a login-page recolour.",
+      "route": "/qa/login",
+      "files": [
+        "qa/qa.css",
+        "qa/hub.css",
+        "js/icons.js",
+        "delivery/runtime/animation.css"
+      ],
+      "review": false
+    },
+    {
+      "id": "change:help-composer-resize-fix",
+      "type": "Blocks & interactions",
+      "pages": [
+        "chat"
+      ],
+      "title": "Help composer: minimum height and safe resize autosizing",
+      "description": "The public revisions chat reproduces a clipped input after resize: 24px textarea height with about 45px required for line height plus padding. The shared reference CSS now guarantees the minimum content height, and JS autosizing recalculates on viewport/composer-width changes. Port qa/support/support.css and chat.js together. Use padding-aware border-box sizing and a max-height scroll cap; disconnect resize listeners/observer on close. Test empty, single/multiline text, resize, sidebar toggles, reopen, zoom and mobile keyboard. Paul called this a Typeform glitch, but the screenshot identifies the chat composer; no third-party Typeform integration was assumed or changed.",
+      "route": "/qa/chat",
+      "files": [
+        "qa/support/chat.js",
+        "qa/support/support.js",
+        "qa/support/support.css",
+        "qa/support/boot.js",
+        "qa/assets/ai/README.md",
+        "qa/assets/support-portraits/README.md"
+      ],
+      "review": false
+    },
+    {
+      "id": "change:delivery-october9-followup",
+      "type": "Blocks & interactions",
+      "pages": [
+        "delivery"
+      ],
+      "title": "Delivery follow-up: remaining gaps and final return package",
+      "description": "A new prominent block records five confirmed palette gaps (Blog, Network, Security, AdBlocking, Unlimited), sampled Chrome/orange progress on IoT/Global, partial France integration, mobile visual parity, the reproduced help-input glitch, the neutral login tile and the required Figma/React/ZIP/Markdown final package. Credit already observed integrations instead of calling everything missing. Use the original app screens as the mobile visual master; 16px/24px master payment type and 16px vertical padding differ from the extension’s 14px/19.6px and 12px. Mobile final handoff remains pending harmonisation. Add fresh checklist rows for this review, preserve previous progress links, and do not claim that a final Figma or integrated Irina source archive was inspected or received.",
+      "route": "/delivery#follow-up",
+      "files": [
+        "delivery/index.html",
+        "delivery/checklist.js",
+        "delivery/checklist.css",
+        "delivery/checklist-data.json",
+        "delivery/checklist-guide.md",
+        "delivery/followup-data.mjs",
+        "delivery/followup.js",
+        "delivery/followup.css",
+        "delivery/followup-2026-10-09.md"
       ],
       "review": false
     },
@@ -619,7 +677,7 @@
         "blog"
       ],
       "title": "Page-specific colour treatments",
-      "description": "Network blue, Security teal, AdBlocking ultraviolet, Unlimited magenta and Blog newsprint are switchable within each page. The export includes each identity’s current on/off state and the global theme. Do not treat these proposals as approved production defaults.",
+      "description": "Network blue, Security teal, AdBlocking ultraviolet, Unlimited magenta and Blog newsprint are the page identities to integrate, alongside Global eSIM orange and IoT Chrome. Paul reconfirmed that more than Blog/Network must not remain uniformly orange. The export includes current on/off review controls and the global theme, but Irina’s handoff target is the full seven-page palette set. Match the rendered QA views, including deliberate brand/CTA/status exceptions. Apply page surfaces and text as well as animation colours; production content/functional sign-off is still separate.",
       "route": "/qa",
       "files": [
         "qa/core.js",
@@ -3729,7 +3787,11 @@
       "description": "Review the entire Login view on desktop and mobile after applying its scoped items. Verify layout, wording, responsive spacing, button states, keyboard/focus and reduced motion.   This sign-off does not mark any individual item automatically.",
       "route": "/qa/login",
       "files": [
-        "qa/login.html"
+        "qa/login.html",
+        "qa/qa.css",
+        "qa/hub.css",
+        "js/icons.js",
+        "delivery/runtime/animation.css"
       ],
       "review": true
     },
@@ -5039,6 +5101,236 @@
         "mobile/implementation.md"
       ],
       "review": true
+    },
+    {
+      "id": "followup-20261009-palette-blog",
+      "title": "9 Oct · Blog: Newsprint",
+      "pages": [
+        "blog"
+      ],
+      "type": "9 October follow-up",
+      "description": "Confirmed palette gap. Headline accent, badges and statistics are still orange; QA uses a monochrome editorial treatment. Apply the Newsprint page identity to headings, badges, icon tiles, cards, backgrounds and selected artwork. Preserve the orange actions that the QA reference deliberately retains.",
+      "route": "/delivery#follow-up",
+      "files": [
+        "qa/core.js",
+        "qa/recolor.js",
+        "qa/paint.js"
+      ],
+      "review": false
+    },
+    {
+      "id": "followup-20261009-palette-network",
+      "title": "9 Oct · Network: Corporate blue",
+      "pages": [
+        "network"
+      ],
+      "type": "9 October follow-up",
+      "description": "Confirmed palette gap. The headline accent and feature statistics still use #FF5314 instead of the blue/navy QA identity. Bring across the blue headings, navy ink, section washes, cards and Network HUD treatment. Importing the illustration alone is not the complete page change.",
+      "route": "/delivery#follow-up",
+      "files": [
+        "qa/core.js",
+        "qa/recolor.js",
+        "qa/paint.js"
+      ],
+      "review": false
+    },
+    {
+      "id": "followup-20261009-palette-security",
+      "title": "9 Oct · Security: Vault teal",
+      "pages": [
+        "security"
+      ],
+      "type": "9 October follow-up",
+      "description": "Confirmed palette gap. “Online Threats”, the metrics and repeated page accents remain orange. Use the teal palette across the page and its existing illustrations, with green status signals kept distinct.",
+      "route": "/delivery#follow-up",
+      "files": [
+        "qa/core.js",
+        "qa/recolor.js",
+        "qa/paint.js"
+      ],
+      "review": false
+    },
+    {
+      "id": "followup-20261009-palette-adblocking",
+      "title": "9 Oct · AdBlocking: Ultraviolet",
+      "pages": [
+        "adblocking"
+      ],
+      "type": "9 October follow-up",
+      "description": "Confirmed palette gap. “Save Data”, the headline statistics and section accents remain orange. Apply the violet page identity to headings, badges, icon treatments, charts and tinted surfaces, matching the QA page in context.",
+      "route": "/delivery#follow-up",
+      "files": [
+        "qa/core.js",
+        "qa/recolor.js",
+        "qa/paint.js"
+      ],
+      "review": false
+    },
+    {
+      "id": "followup-20261009-palette-unlimited",
+      "title": "9 Oct · Unlimited: Hot magenta",
+      "pages": [
+        "unlimited"
+      ],
+      "type": "9 October follow-up",
+      "description": "Confirmed palette gap. Updated promise/profile-replacement copy is present, but the heading, metrics and accents are still orange. Keep the revised fixed/unlimited policy copy and apply the magenta identity. Preserve the intentionally neutral usage cards and the explicit local-network caveat.",
+      "route": "/delivery#follow-up",
+      "files": [
+        "qa/core.js",
+        "qa/recolor.js",
+        "qa/paint.js"
+      ],
+      "review": false
+    },
+    {
+      "id": "followup-20261009-palette-iot",
+      "title": "9 Oct · IoT: Chrome",
+      "pages": [
+        "iot"
+      ],
+      "type": "9 October follow-up",
+      "description": "Observed at sampled points; final verification still required. The three mounted illustrations now show neutral steel/gunmetal treatment. This is not another “still orange” gap. Retain Chrome as default and finish the full responsive comparison. Orange Openline branding and meaningful green online states are intentional exceptions.",
+      "route": "/delivery#follow-up",
+      "files": [
+        "qa/core.js",
+        "qa/recolor.js",
+        "qa/paint.js"
+      ],
+      "review": false
+    },
+    {
+      "id": "followup-20261009-palette-global-esim",
+      "title": "9 Oct · Global eSIM: Openline orange",
+      "pages": [
+        "global-esim"
+      ],
+      "type": "9 October follow-up",
+      "description": "Observed at sampled points; final verification still required. The sampled headings and accents are orange, which is the intended identity for this page. Keep the orange-only page treatment and verify every remaining box/illustration. Do not restore mixed blue, purple or green decorative sections, or recolour actual partner logos.",
+      "route": "/delivery#follow-up",
+      "files": [
+        "qa/core.js",
+        "qa/recolor.js",
+        "qa/paint.js"
+      ],
+      "review": false
+    },
+    {
+      "id": "followup-20261009-france-layout",
+      "title": "9 Oct · Finish the France Unlimited block",
+      "pages": [
+        "country-fr-redesign"
+      ],
+      "type": "9 October follow-up",
+      "description": "Keep the original France page and fixed Data Bundles. Match the QA Unlimited block: full-width balanced date/day row, “or number of days”, “Popular durations”, aligned number-only duration tiles, selected shadow, price/features and CTAs. The current narrow, heavier-bordered controls row is not the final QA block. Keep the already imported calendar and fair-use modal.",
+      "route": "https://openline-anims-review.vercel.app/qa/country-fr-redesign#fr-plans",
+      "files": [
+        "qa/country-fr-refinement.css",
+        "qa/country-fr-refinement.js"
+      ],
+      "review": false
+    },
+    {
+      "id": "followup-20261009-france-promise",
+      "title": "9 Oct · Remove France’s contradictory no-throttling headline",
+      "pages": [
+        "country-fr-redesign"
+      ],
+      "type": "9 October follow-up",
+      "description": "Replace “All plans include unlimited speed with no throttling” with “Fixed packages: no usage-based throttling. Unlimited plans: local network fair use applies.” Keep “Perfect for heavy users. Stream, video call, and browse without limits.” as the Unlimited introduction and retain its separate fair-use disclosure.",
+      "route": "https://openline-revisions-hub.vercel.app/country-fr",
+      "files": [
+        "qa/country-fr-changelog.md"
+      ],
+      "review": false
+    },
+    {
+      "id": "followup-20261009-mobile-master",
+      "title": "9 Oct · Merge all mobile views into Irina’s master visual system",
+      "pages": [
+        "mobile"
+      ],
+      "type": "9 October follow-up",
+      "description": "The 28 extra workflows are linked from app-screens, but common technology is not visual parity. Measured payment CTA: master 16px/24px with 16px vertical padding; extension 14px/19.6px with 12px vertical padding. Use the original app screens as master for component sizes, type, spacing, surfaces, shadows, cards, headers and navigation. Final mobile selection/build handoff remains on hold until harmonised; do not ask Kerem to choose between two competing themes.",
+      "route": "https://openline-revisions-hub.vercel.app/app-screens",
+      "files": [
+        "mobile/implementation.md",
+        "mobile-src/src/style.css"
+      ],
+      "review": false
+    },
+    {
+      "id": "followup-20261009-help-composer",
+      "title": "9 Oct · Port and verify the help-composer resize fix",
+      "pages": [
+        "chat"
+      ],
+      "type": "9 October follow-up",
+      "description": "Paul’s “Typeform” screenshot shows the chat message composer, not a verified third-party Typeform embed. After resizing the public modal, textarea height measured 24px against 45px scroll content (24.65px line-height + 20px padding), reproducing the clipping. Import the min-height/box-sizing floor and padding-aware, resize-aware autosize fix from this pack. Test empty, one line, multiline, sidebar open/closed, viewport changes, zoom and mobile keyboard; do not submit real support requests during visual QA.",
+      "route": "https://snap.paulfleury.com/YdlXYxrW",
+      "files": [
+        "qa/support/chat.js",
+        "qa/support/support.css"
+      ],
+      "review": false
+    },
+    {
+      "id": "followup-20261009-login-port",
+      "title": "9 Oct · Apply the light-neutral login-icon tile",
+      "pages": [
+        "login"
+      ],
+      "type": "9 October follow-up",
+      "description": "Preserve Globe & Pin option 6 and its animation. Replace the orange tile with #F3F4F6 and a subtle #E5E7EB inset edge. Use the updated QA/login and portable delivery preview; do not replace the selected glyph or recolour the entire login page.",
+      "route": "https://openline-anims-review.vercel.app/qa/login",
+      "files": [
+        "qa/qa.css",
+        "delivery/runtime/animation.css"
+      ],
+      "review": false
+    },
+    {
+      "id": "followup-20261009-figma",
+      "title": "Final return · Editable Figma master",
+      "pages": [
+        "delivery"
+      ],
+      "type": "9 October follow-up",
+      "description": "Provide an accessible editable Figma link/file with the final website, panel/cart and unified mobile components, variants and states. Identify the final master, remove competing alternatives from the production handoff, and confirm access for Paul and Kerem. This review has not verified receipt of that final file.",
+      "route": "/delivery#follow-up",
+      "review": true
+    },
+    {
+      "id": "followup-20261009-react",
+      "title": "Final return · Matching React source",
+      "pages": [
+        "delivery"
+      ],
+      "type": "9 October follow-up",
+      "description": "Provide the integrated React source with package.json, lockfile, assets, component/page mapping, build commands and revision/commit. It must match the final staging build and Figma, not just the separate AI reference source in this pack.",
+      "route": "/delivery#follow-up",
+      "review": true
+    },
+    {
+      "id": "followup-20261009-zip",
+      "title": "Final return · Versioned final ZIP",
+      "pages": [
+        "delivery"
+      ],
+      "type": "9 October follow-up",
+      "description": "Supply one dated/versioned ZIP containing the final source, assets and documentation. Verify a clean install/build and include staging/build references. This site’s reference ZIP is provided for integration; it is not evidence that Irina’s integrated final ZIP has been delivered.",
+      "route": "/delivery#follow-up",
+      "review": true
+    },
+    {
+      "id": "followup-20261009-markdown",
+      "title": "Final return · Change log and handoff Markdown",
+      "pages": [
+        "delivery"
+      ],
+      "type": "9 October follow-up",
+      "description": "Document what changed in animations, palette, layout, wording, interactions, modals, app screens and small details; list source paths, decisions, outstanding backend work and QA evidence. Return completion status for every delivery item with links, screenshots and blockers.",
+      "route": "/delivery#follow-up",
+      "review": true
     }
   ],
   "excludedHistory": [
@@ -5348,6 +5640,338 @@
         "extra:74ec75be11e4",
         "extra:476c0698ee92",
         "extra:404711c2de29"
+      ]
+    },
+    {
+      "fingerprint": "81713a0cf8d9",
+      "ids": [
+        "animation:tier1",
+        "animation:t1ai",
+        "animation:t1market",
+        "animation:t1access",
+        "animation:what",
+        "animation:travel",
+        "animation:referral",
+        "animation:homewhy",
+        "animation:nethero",
+        "animation:why",
+        "animation:bizhero",
+        "animation:bizneeds",
+        "animation:hosp",
+        "animation:iotwide",
+        "animation:iotchip",
+        "animation:iotdark",
+        "animation:pluslounge",
+        "animation:plusnomad",
+        "animation:pluskyc",
+        "animation:aloha",
+        "animation:prin",
+        "animation:team",
+        "animation:omhero",
+        "animation:ombook",
+        "animation:omctrl",
+        "animation:blog",
+        "animation:blogv",
+        "animation:install",
+        "animation:contact",
+        "animation:affil",
+        "change:mobile-extra-workflows",
+        "change:delivery-general-badges",
+        "change:delivery-certification-badge",
+        "change:delivery-home-original-three",
+        "change:delivery-app-panel-polish",
+        "change:native-typography",
+        "change:context-fit",
+        "change:page-browser",
+        "change:producthunt-qa",
+        "change:home-why-fit",
+        "change:referral-fit",
+        "change:page-identities",
+        "change:global-esim-orange",
+        "change:profile-switching-explainer",
+        "change:compact-profile-explainer",
+        "change:multi-tier1-profile-copy",
+        "change:multi-tier1-operator-ribbons",
+        "change:unlimited-profile-copy",
+        "change:unlimited-fixed-vs-mno-fair-use",
+        "change:country-fr-unlimited-refinement",
+        "change:country-fr-fair-use",
+        "change:country-fr-calendar-range",
+        "change:country-fr-calendar-polish",
+        "change:france-duration-cards-and-support",
+        "change:country-fr-unlimited-intro",
+        "change:iot-chrome",
+        "change:nomad-stability",
+        "change:about-layout",
+        "change:about-network-spacing",
+        "change:about-startup-locked",
+        "change:about-team-cities",
+        "change:redesign-button-parity",
+        "change:contact-layout",
+        "change:contact-channels",
+        "change:contact-chat-seeking",
+        "change:installation-preflight-install-first",
+        "change:installation-preflight-detail-modals",
+        "change:start-flow",
+        "change:start-gift-unlock-transfer",
+        "change:start-gift-recipient",
+        "change:start-profile-handoff",
+        "change:start-focused-redesign",
+        "change:start-normal-header-actions",
+        "change:start-quick-profile-modals",
+        "change:clean-customer-presentation",
+        "change:start-action-arrows",
+        "change:modal-builder",
+        "change:chat-sidebar-ai",
+        "change:chat-fresh-clear",
+        "change:chat-brand-portraits",
+        "change:help-modals",
+        "change:qa-reporting",
+        "copy:911ee7a8d8dc",
+        "copy:57d68ffaee08",
+        "copy:486d63706a3e",
+        "copy:ac87f11e128f",
+        "copy:52f1376b9842",
+        "copy:5f6c77108d60",
+        "copy:9e923042a765",
+        "copy:d645bcc986ca",
+        "copy:19a35cb9bafe",
+        "copy:b2bbcd53b1b9",
+        "copy:9f8d555cf111",
+        "copy:87e792562c2e",
+        "copy:f1f5c27333a0",
+        "copy:08e152150266",
+        "copy:b8128c74bc1c",
+        "copy:94cc116885a5",
+        "copy:10e73c3b8e54",
+        "copy:240632f087d7",
+        "copy:b1749c45305f",
+        "copy:e36191b41b40",
+        "copy:fb60a4425a1d",
+        "copy:9978f9cf1767",
+        "copy:2a1b55b9a375",
+        "copy:2e2e91b85635",
+        "copy:70b7978fe692",
+        "copy:469a64e4aa9c",
+        "copy:bd05a762af85",
+        "copy:d3a4782a49bf",
+        "copy:e65c65428239",
+        "copy:11c7d3b62158",
+        "copy:35ed9378e349",
+        "copy:0f4f09c38111",
+        "copy:6680318b036c",
+        "copy:b5755c88df66",
+        "copy:ee8c4ac35894",
+        "copy:b00d17d9902e",
+        "copy:ffd7c215f68a",
+        "copy:c648967cf542",
+        "copy:a52f29c20b77",
+        "copy:b7dab8bd736d",
+        "copy:cfb8e82a4cc9",
+        "copy:26bb11f82f3f",
+        "copy:817d2b1591b7",
+        "copy:9eddf96a4567",
+        "copy:38f2f42df9ce",
+        "copy:ae0207b2830d",
+        "copy:a2ff282b424b",
+        "copy:aad91211745b",
+        "copy:8c62fb6d018f",
+        "copy:4ef8c5b5d91a",
+        "copy:e870ccbea029",
+        "copy:e9dcfb00e350",
+        "copy:ea08a9e2457c",
+        "copy:ebaa43c12aef",
+        "copy:e532ec972900",
+        "copy:a4195f37cced",
+        "copy:1548e79bba7e",
+        "copy:6a1b676d97ee",
+        "copy:526c5699ab52",
+        "copy:f2ba8ab038a8",
+        "copy:313d86d62540",
+        "copy:6121fcacdb25",
+        "copy:93ea9350cc9f",
+        "copy:88ca84022024",
+        "copy:32848ca3b97d",
+        "copy:97099215872e",
+        "copy:ca74e4c552ee",
+        "copy:c1246fba8c3a",
+        "copy:f49cdc944940",
+        "copy:8af2fde33e6e",
+        "copy:80cdb5fefa88",
+        "copy:0ff987f96728",
+        "copy:43e544da8cb2",
+        "copy:9c43ebb3b2cd",
+        "copy:b49912de91c1",
+        "copy:5378bca8af92",
+        "copy:faf6de9a2254",
+        "copy:b98757dfef61",
+        "copy:eb2b32775a8b",
+        "copy:89cb347eb2a0",
+        "copy:f8140cffae3a",
+        "copy:aff41b4d7c64",
+        "copy:ed5cfc1f27a1",
+        "copy:1ed663c52c0d",
+        "copy:697348ea9cd8",
+        "copy:0fe0793f6a2f",
+        "copy:a9f864343cd7",
+        "copy:e1d66f5504dc",
+        "copy:541b8adb0ba0",
+        "copy:a19c4f76ba7a",
+        "copy:4a966b40d19f",
+        "copy:0787b6c94d15",
+        "copy:251c3f9344f6",
+        "copy:07c7d38649c9",
+        "copy:54ff94fecf72",
+        "copy:7e5b3359c323",
+        "copy:46c7fa6425c3",
+        "copy:e49ec299472b",
+        "copy:ef70381160d5",
+        "copy:13576328281f",
+        "copy:f50ae8a56d89",
+        "copy:ce37fa80d649",
+        "copy:40e0f51124e2",
+        "copy:64c85a295d29",
+        "copy:5d0c856e2e0d",
+        "copy:5570d683e36d",
+        "copy:f26a17113f4b",
+        "copy:280755f1e643",
+        "copy:940cdd40c3bb",
+        "copy:fe5793a18c3d",
+        "copy:2ad463d75896",
+        "copy:24e5190bfceb",
+        "copy:599bcdbde0c9",
+        "copy:f8c554172045",
+        "copy:0555acde7a83",
+        "copy:a38911ec8c38",
+        "copy:1330392ae8f3",
+        "copy:d4b902d848f7",
+        "copy:00d937f4c718",
+        "copy:444281d10374",
+        "copy:b7242ee2cbe7",
+        "copy:56f51ab1709f",
+        "copy:c8c36a5a1e6d",
+        "copy:2d313475ca92",
+        "copy:e47671baa3ec",
+        "copy:49982120ba57",
+        "copy:a0b5d969a89a",
+        "copy:15a864adf97e",
+        "copy:f8632c5eb54b",
+        "copy:e9ba18b18f12",
+        "copy:4121b14c9a03",
+        "copy:58919884e0dc",
+        "copy:8df59f47f34f",
+        "copy:a306ef7a5774",
+        "copy:660f41f9b02d",
+        "copy:e08896000d63",
+        "copy:2d30b697c4b5",
+        "page:home",
+        "page:multiple-tier1",
+        "page:global-esim",
+        "page:network",
+        "page:security",
+        "page:adblocking",
+        "page:unlimited",
+        "page:business",
+        "page:hospitality",
+        "page:iot",
+        "page:openline-plus",
+        "page:login",
+        "page:about",
+        "page:about-redesign",
+        "page:omdm-market",
+        "page:blog",
+        "page:installation-guide",
+        "page:contact",
+        "page:contact-redesign",
+        "page:affiliate",
+        "page:producthunt",
+        "page:country-fr-redesign",
+        "page:mobile",
+        "page:start",
+        "page:recipient",
+        "page:chat",
+        "page:kb",
+        "page:modals",
+        "accept:0e693a364241",
+        "accept:d342923b98ac",
+        "accept:68e733e310ca",
+        "accept:33f7806ea31b",
+        "accept:e2d4984f1783",
+        "accept:28837d992f3d",
+        "accept:9f179a073870",
+        "accept:e1d9e732a4a1",
+        "accept:d9667f7d5f8e",
+        "accept:50757a912843",
+        "accept:acea394f4012",
+        "accept:2be63fb40428",
+        "accept:db47b7a4c690",
+        "accept:ccbccb701899",
+        "accept:072fc9bbcbb2",
+        "accept:6eee96c036e1",
+        "accept:0b2a2edd23ac",
+        "accept:7b23e1c21f29",
+        "accept:b2c42a187000",
+        "accept:702390ea8565",
+        "accept:7a1ec618242a",
+        "accept:8ce5433868cb",
+        "accept:2d44e7478563",
+        "accept:b96adfda6dda",
+        "accept:30c2668337f2",
+        "accept:414647ba8ea7",
+        "accept:3f8f8bfa4c3f",
+        "accept:2af163533c60",
+        "accept:be95893ef318",
+        "accept:a2ca7a2ecbcf",
+        "accept:0c421c01b0e7",
+        "accept:e1a10bb9a70c",
+        "accept:cdd42c4144b9",
+        "accept:5da924a5fc82",
+        "accept:802f457b55b1",
+        "accept:189f96e7fb52",
+        "accept:24e90b919c80",
+        "accept:b0f58a75f328",
+        "accept:5950a05e77c7",
+        "accept:780a18bef89e",
+        "accept:c68a5b232643",
+        "accept:7c03d9b6ebeb",
+        "accept:2469d8b38eda",
+        "accept:647b8c2c1309",
+        "accept:81cf662dbdee",
+        "accept:b0e263a9ec57",
+        "accept:39fb71e645fa",
+        "accept:718009514bd3",
+        "extra:c9cd61893b35",
+        "extra:74ec75be11e4",
+        "extra:476c0698ee92",
+        "extra:404711c2de29",
+        "mobile:cart",
+        "mobile:delivery",
+        "mobile:payment",
+        "mobile:bank",
+        "mobile:pending",
+        "mobile:receipt",
+        "mobile:code",
+        "mobile:unlock",
+        "mobile:gift-ready",
+        "mobile:gift-received",
+        "mobile:gift-pending",
+        "mobile:readiness",
+        "mobile:provisioning",
+        "mobile:qr",
+        "mobile:install",
+        "mobile:settings",
+        "mobile:connected",
+        "mobile:profile",
+        "mobile:label",
+        "mobile:folders",
+        "mobile:topup",
+        "mobile:usage",
+        "mobile:troubleshoot",
+        "mobile:fair-use",
+        "mobile:replacement",
+        "mobile:support",
+        "mobile:orders",
+        "mobile:privacy"
       ]
     }
   ]

@@ -13,7 +13,7 @@ aloha · option 6 · ID `ic-globe` · Selected direction
 
 ## Fit and identity
 
-Native viewBox: `0 0 64 64`. Measured slot: 56 × 56. Identity: As shipped.
+Native viewBox: `0 0 64 64`. Measured slot: 56 × 56. Identity: Light-neutral tile · #F3F4F6.
 Native geometry closely matches the measured slot. Check responsive label size and companion pills.
 
 ## Mount

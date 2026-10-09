@@ -1,6 +1,45 @@
 # Openline full change ledger
 
-Release 2026-10-07-r3. Historical records retain rejected/superseded labels; do not implement them. Additional Irina tasks and new mobile proposals are not already completed production changes.
+Release 2026-10-09-r4. Historical records retain rejected/superseded labels; do not implement them. The 9 October follow-up distinguishes verified public gaps from observed integrations and unverified final deliverables.
+
+## Login: light-neutral background for the chosen icon
+
+- **ID:** `login-neutral-tile`
+- **Disposition:** Current · Updated QA/source / Irina to integrate
+- **Scope:** login
+- **Review:** [Open affected view](https://openline-anims-review.vercel.app/qa/login)
+
+The selected Globe & Pin (option 6) keeps its SVG, dimensions and animation, but the tile becomes #F3F4F6 with a subtle #E5E7EB inset edge instead of orange.
+
+Apply the updated tile to the final login. QA login, hub thumbnail, review-board badges, choice detail and portable delivery preview are consistent. This is a background change, not a new icon selection or a login-page recolour.
+
+Files: `qa/qa.css`, `qa/hub.css`, `js/icons.js`, `delivery/runtime/animation.css`
+
+## Help composer: minimum height and safe resize autosizing
+
+- **ID:** `help-composer-resize-fix`
+- **Disposition:** Current · Reference source fixed / live revisions integration pending
+- **Scope:** chat
+- **Review:** [Open affected view](https://openline-anims-review.vercel.app/qa/chat)
+
+The public revisions chat reproduces a clipped input after resize: 24px textarea height with about 45px required for line height plus padding. The shared reference CSS now guarantees the minimum content height, and JS autosizing recalculates on viewport/composer-width changes.
+
+Port qa/support/support.css and chat.js together. Use padding-aware border-box sizing and a max-height scroll cap; disconnect resize listeners/observer on close. Test empty, single/multiline text, resize, sidebar toggles, reopen, zoom and mobile keyboard. Paul called this a Typeform glitch, but the screenshot identifies the chat composer; no third-party Typeform integration was assumed or changed.
+
+Files: `qa/support/chat.js`, `qa/support/support.js`, `qa/support/support.css`, `qa/support/boot.js`, `qa/assets/ai/README.md`, `qa/assets/support-portraits/README.md`
+
+## Delivery follow-up: remaining gaps and final return package
+
+- **ID:** `delivery-october9-followup`
+- **Disposition:** Current · Verified public review / follow-up required
+- **Scope:** delivery
+- **Review:** [Open affected view](https://openline-anims-review.vercel.app/delivery#follow-up)
+
+A new prominent block records five confirmed palette gaps (Blog, Network, Security, AdBlocking, Unlimited), sampled Chrome/orange progress on IoT/Global, partial France integration, mobile visual parity, the reproduced help-input glitch, the neutral login tile and the required Figma/React/ZIP/Markdown final package.
+
+Credit already observed integrations instead of calling everything missing. Use the original app screens as the mobile visual master; 16px/24px master payment type and 16px vertical padding differ from the extension’s 14px/19.6px and 12px. Mobile final handoff remains pending harmonisation. Add fresh checklist rows for this review, preserve previous progress links, and do not claim that a final Figma or integrated Irina source archive was inspected or received.
+
+Files: `delivery/index.html`, `delivery/checklist.js`, `delivery/checklist.css`, `delivery/checklist-data.json`, `delivery/checklist-guide.md`, `delivery/followup-data.mjs`, `delivery/followup.js`, `delivery/followup.css`, `delivery/followup-2026-10-09.md`
 
 ## Mobile: 28 extra views across six connected workflows
 
@@ -26,7 +65,7 @@ Added a short introduction from Paul and a detailed applied/verified checklist f
 
 Track progress item by item; blocked work remains incomplete. Progress is encoded in the URL fragment, with a copyable progress link, JSON backup/import and Markdown report. It is not a shared server tracker or automatic approval. Rejected/superseded versions are excluded and conditional alternatives are decision checks. Paul explicitly expects the whole retained handoff implemented, with extra design initiative for panel, cart/checkout and mobile app because he took over the animation exploration/refinement. Private compensation details remain outside the public site.
 
-Files: `delivery/index.html`, `delivery/checklist.js`, `delivery/checklist.css`, `delivery/checklist-data.json`, `delivery/checklist-guide.md`
+Files: `delivery/index.html`, `delivery/checklist.js`, `delivery/checklist.css`, `delivery/checklist-data.json`, `delivery/checklist-guide.md`, `delivery/followup-data.mjs`, `delivery/followup.js`, `delivery/followup.css`, `delivery/followup-2026-10-09.md`
 
 ## Delivery: frozen implementation handoff for Irina
 
@@ -160,13 +199,13 @@ Files: `js/home-why.js`, `js/referral.js`
 ## Page-specific colour treatments
 
 - **ID:** `page-identities`
-- **Disposition:** Retained / review · Review options
+- **Disposition:** Current · Required handoff defaults / reconfirmed 9 October
 - **Scope:** network, security, adblocking, unlimited, blog
 - **Review:** [Open affected view](https://openline-anims-review.vercel.app/qa)
 
-Network blue, Security teal, AdBlocking ultraviolet, Unlimited magenta and Blog newsprint are switchable within each page.
+Network blue, Security teal, AdBlocking ultraviolet, Unlimited magenta and Blog newsprint are the page identities to integrate, alongside Global eSIM orange and IoT Chrome. Paul reconfirmed that more than Blog/Network must not remain uniformly orange.
 
-The export includes each identity’s current on/off state and the global theme. Do not treat these proposals as approved production defaults.
+The export includes current on/off review controls and the global theme, but Irina’s handoff target is the full seven-page palette set. Match the rendered QA views, including deliberate brand/CTA/status exceptions. Apply page surfaces and text as well as animation colours; production content/functional sign-off is still separate.
 
 Files: `qa/core.js`, `qa/recolor.js`, `qa/paint.js`, `qa/connectivity-copy.json`, `qa/unlimited-plan-copy.json`, `qa/connectivity-changes.js`, `qa/redesign/profile-switching.html`, `qa/profile-switching.css`, `qa/blog.html`
 

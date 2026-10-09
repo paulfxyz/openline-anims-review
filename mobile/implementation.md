@@ -2,6 +2,12 @@
 
 These are new companion views and interactive workflows for Irina and Kerem. They extend, rather than overwrite, [Irina’s 19-screen app reference](https://openline-revisions-hub.vercel.app/app-screens), inspected on 7 October 2026.
 
+## 9 October integration gate: one mobile master
+
+Paul has explicitly requested a final theme merge before Kerem chooses/builds the final mobile set. Shared React/Lucide technology, orange and a font family are not pixel parity: the current master payment CTA is 16px/24px with 16px vertical padding, while this extension is 14px/19.6px with 12px vertical padding.
+
+Keep these 28 workflows and states, but use Irina's original app screens as the authority for component scale, spacing, typography, surfaces, shadows and navigation. Final visual integration is pending; see the [detailed delivery follow-up](https://openline-anims-review.vercel.app/delivery#follow-up). This extension must not be handed to Kerem as a second competing final theme.
+
 ## Match the existing stack
 
 The reference bundle identifies React 18.3.1 and Lucide React 0.487.0, and the rendered page uses Tailwind-style utilities, native system typography and Openline orange `#FF5314`. The source page's phone containers measure 340 × 700px, with 24px corners; buttons use 12px corners and bold 14–16px labels. The new gallery follows those measurements and component conventions.

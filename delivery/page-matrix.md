@@ -82,7 +82,7 @@ Shared typography, context fit and production acceptance checks apply. Review th
 
 ### Apply and verify
 
-- **page-identities:** Network blue, Security teal, AdBlocking ultraviolet, Unlimited magenta and Blog newsprint are switchable within each page.
+- **page-identities:** Network blue, Security teal, AdBlocking ultraviolet, Unlimited magenta and Blog newsprint are the page identities to integrate, alongside Global eSIM orange and IoT Chrome. Paul reconfirmed that more than Blog/Network must not remain uniformly orange.
 
 Animation keys: `nethero` (6: Network HUD), `why` (3: Feature Stack).
 
@@ -101,7 +101,7 @@ Shared typography, context fit and production acceptance checks apply. Review th
 
 ### Apply and verify
 
-- **page-identities:** Network blue, Security teal, AdBlocking ultraviolet, Unlimited magenta and Blog newsprint are switchable within each page.
+- **page-identities:** Network blue, Security teal, AdBlocking ultraviolet, Unlimited magenta and Blog newsprint are the page identities to integrate, alongside Global eSIM orange and IoT Chrome. Paul reconfirmed that more than Blog/Network must not remain uniformly orange.
 
 Shared typography, context fit and production acceptance checks apply. Review the full ledger for detailed copy and backend boundaries.
 
@@ -118,7 +118,7 @@ Shared typography, context fit and production acceptance checks apply. Review th
 
 ### Apply and verify
 
-- **page-identities:** Network blue, Security teal, AdBlocking ultraviolet, Unlimited magenta and Blog newsprint are switchable within each page.
+- **page-identities:** Network blue, Security teal, AdBlocking ultraviolet, Unlimited magenta and Blog newsprint are the page identities to integrate, alongside Global eSIM orange and IoT Chrome. Paul reconfirmed that more than Blog/Network must not remain uniformly orange.
 
 Shared typography, context fit and production acceptance checks apply. Review the full ledger for detailed copy and backend boundaries.
 
@@ -137,7 +137,7 @@ Shared typography, context fit and production acceptance checks apply. Review th
 
 ### Apply and verify
 
-- **page-identities:** Network blue, Security teal, AdBlocking ultraviolet, Unlimited magenta and Blog newsprint are switchable within each page.
+- **page-identities:** Network blue, Security teal, AdBlocking ultraviolet, Unlimited magenta and Blog newsprint are the page identities to integrate, alongside Global eSIM orange and IoT Chrome. Paul reconfirmed that more than Blog/Network must not remain uniformly orange.
 - **profile-switching-explainer:** A new, prominent two-route explainer replaces the marked eSIM-switching warning and probability cards on Multi Tier-1, with a matching entry on Unlimited replacing the old competitor-throttling comparison. It distinguishes network selection within one profile from occasionally issuing an entirely new profile/provider setup.
 - **compact-profile-explainer:** The marked section now uses two equal cards with larger diagrams, 28px headings and 18px body text, replacing the dense multi-paragraph layout and tiny technical labels. One card explains a network change within the same eSIM; the other explains an entirely new profile/provider. Longer policy details are collapsed beneath.
 - **unlimited-profile-copy:** The consolidated copy now distinguishes the fixed-package full-speed allowance guarantee from unlimited plans with no Openline-imposed cap or throttling, while local MNO fair-use rules can still apply. Hero, feature cards, use cases, checklist, illustration labels and closing copy are aligned.
@@ -222,12 +222,16 @@ Shared typography, context fit and production acceptance checks apply. Review th
 ### Import files
 
 - `qa/login.html`
+- `qa/qa.css`
+- `qa/hub.css`
+- `js/icons.js`
+- `delivery/runtime/animation.css`
 
 ### Apply and verify
 
+- **login-neutral-tile:** The selected Globe & Pin (option 6) keeps its SVG, dimensions and animation, but the tile becomes #F3F4F6 with a subtle #E5E7EB inset edge instead of orange.
 
 Animation keys: `aloha` (6: Globe & Pin).
-- Preserve surrounding source content; apply selected slot replacements where listed and shared typography/fit rules. No unlisted full-page redesign is approved.
 
 Shared typography, context fit and production acceptance checks apply. Review the full ledger for detailed copy and backend boundaries.
 
@@ -296,7 +300,7 @@ Shared typography, context fit and production acceptance checks apply. Review th
 
 ### Apply and verify
 
-- **page-identities:** Network blue, Security teal, AdBlocking ultraviolet, Unlimited magenta and Blog newsprint are switchable within each page.
+- **page-identities:** Network blue, Security teal, AdBlocking ultraviolet, Unlimited magenta and Blog newsprint are the page identities to integrate, alongside Global eSIM orange and IoT Chrome. Paul reconfirmed that more than Blog/Network must not remain uniformly orange.
 
 Animation keys: `blog` (2: Topic Picker), `blogv` (6: The Long Read).
 
@@ -522,6 +526,7 @@ Shared typography, context fit and production acceptance checks apply. Review th
 
 ### Apply and verify
 
+- **help-composer-resize-fix:** The public revisions chat reproduces a clipped input after resize: 24px textarea height with about 45px required for line height plus padding. The shared reference CSS now guarantees the minimum content height, and JS autosizing recalculates on viewport/composer-width changes.
 - **contact-channels:** WhatsApp +1 (555) 484-2461; Instagram and Messenger/Facebook @askopenline; email ask@openline.com. The Contact page adds a Live hotline widget below 24/7 Global Support: +1 (8) 123 - ONLINE.
 - **chat-sidebar-ai:** Full-height collapsed rail opens on any tap/click; rail arrow, expanded-panel arrow and header icon toggle it. Nine editable prompts and seven AI providers use real locally hosted logos/favicons.
 - **chat-fresh-clear:** Animated welcome icon and Gary’s How can I help you? greeting appear for a new guest or after confirmed Clear chat. Text, files, voice, local history and simulated replies remain.

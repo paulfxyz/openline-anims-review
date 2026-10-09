@@ -1,5 +1,15 @@
 # Openline — Animation Review
 
+## Current follow-up · 9 October 2026
+
+Release r4 adds the prominent `/delivery#follow-up` review of Irina's update:
+all seven page identities, five confirmed palette gaps, France's partial block
+integration and contradictory headline, mobile master-theme harmonisation,
+the reproduced help-composer resize issue and the required final
+Figma/React/ZIP/Markdown package. The selected login icon now has a light-neutral
+tile; the shared composer source includes minimum-height and resize-aware sizing.
+See `delivery/followup-2026-10-09.md`. Earlier release sections are historical.
+
 ## Current delivery release · 6 October 2026
 
 Release r3 on 7 October adds `/mobile`: 28 extra React mobile views across six
