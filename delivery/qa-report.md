@@ -4,6 +4,8 @@ Current release: 2026-10-09-r4. Scope: the delivery follow-up, seven page identi
 
 ## 9 October follow-up verification
 
+The later summary refinement places the missing-items overview before Paul's introduction. Its five fix areas, separately labelled final-file requirements, evidence link and filtered-checklist shortcut formed the focused QA scope; the existing 346 checklist items and their progress IDs are unchanged. The entire summary was visible in the 1440 × 1000 desktop first view, while the 375 × 812 mobile first view exposed the heading and primary checklist action without horizontal overflow. Both shortcuts selected the 16 follow-up items; evidence navigation reached the detailed review. A checked item survived summary/evidence/checklist navigation and reload, then was unchecked successfully. No page errors were observed. These checks do not repeat or broaden the earlier public-site audit.
+
 The targeted comparison and its source links are recorded in [the follow-up report](https://openline-anims-review.vercel.app/delivery/followup-2026-10-09.md). It distinguishes five confirmed palette gaps from the sampled IoT Chrome and Global eSIM orange progress, partial France integration, mobile visual-system differences and final files awaiting confirmation. It does not claim that the entire revisions hub has been audited or modified.
 
 - **Inventory:** 30 animation selections remain unchanged. The current pack contains 22 page entries, five tools, six extra entries, 28 mobile views, 60 change records and 346 checklist items. Sixteen fresh checklist rows use the “9 October follow-up” type.

@@ -65,8 +65,8 @@
     },
     {
       "path": "delivery/change-ledger.md",
-      "bytes": 101921,
-      "sha256": "b7adbd4780d21751c08fb7ef8a875cb31f799ec0fb30878510dde17c53f76468"
+      "bytes": 102124,
+      "sha256": "b29f541677fe065b9455cd59622cc4f2582cf5208704cbbfb652739ff8ec3057"
     },
     {
       "path": "delivery/checklist-build.mjs",
@@ -75,8 +75,8 @@
     },
     {
       "path": "delivery/checklist-data.json",
-      "bytes": 242559,
-      "sha256": "f7eba75c2469d6909d895ca896cf5cd2e7fd5a2164e2d8a0867d6b43fb93fbfd"
+      "bytes": 242762,
+      "sha256": "bad065d2dfcffeea062afbaf773a92216ef85d8b151d97647bdc4387d3f426d2"
     },
     {
       "path": "delivery/checklist-guide.md",
@@ -110,8 +110,8 @@
     },
     {
       "path": "delivery/followup-2026-10-09.md",
-      "bytes": 11619,
-      "sha256": "9d33c40ae3a0d6f5699f79f9d359db2195d7640c8055236bb508e8b0c4a14f53"
+      "bytes": 11996,
+      "sha256": "2f149d67062b3232e6da84c924d3b9bc7a21a7e36b13e0101428cda8d3a62858"
     },
     {
       "path": "delivery/followup-data.mjs",
@@ -120,13 +120,13 @@
     },
     {
       "path": "delivery/followup.css",
-      "bytes": 5802,
-      "sha256": "272fee42e35e5033cffa27f3f0ef01df1e4d9fbd5c5a5b685f320c6551b9a040"
+      "bytes": 8553,
+      "sha256": "6701c74de066d6c57b1ec86fe043695a3a8fe880d69a111d9acb72234f960d1a"
     },
     {
       "path": "delivery/followup.js",
-      "bytes": 2077,
-      "sha256": "20296895abbe767e0897aae87200b7d4e8eca635e7e730aafd8771c0eb9a8b1c"
+      "bytes": 2110,
+      "sha256": "9dbbf3907eea9eee35ba3659bd09cd40b6846783ca61d48c55114d386d0cdac7"
     },
     {
       "path": "delivery/import-guide.md",
@@ -135,8 +135,8 @@
     },
     {
       "path": "delivery/index.html",
-      "bytes": 29835,
-      "sha256": "8c19b74f4fd55988284fee23ca269b635c91b768d9cefe2ef8b72303d8c137a4"
+      "bytes": 32774,
+      "sha256": "fef4abcac9c68219861a2c160994fa0b89408399b5fb275e6187298f4d22af1b"
     },
     {
       "path": "delivery/items/affil.md",
@@ -290,8 +290,8 @@
     },
     {
       "path": "delivery/manifest.json",
-      "bytes": 195577,
-      "sha256": "07e1a885138d8d7371db5cb2f8df7cd8ea1cca2eb552294a6f5cce54985448bd"
+      "bytes": 195780,
+      "sha256": "15e3644cade1f6d162d5546c7e145c2f9cd1464a20134259d2bca24762ca55e1"
     },
     {
       "path": "delivery/mobile-handoff.md",
@@ -320,8 +320,8 @@
     },
     {
       "path": "delivery/qa-report.md",
-      "bytes": 8755,
-      "sha256": "45dc3ccba8726b37de0493bce7da056782f293d0380e60171d36e5b03b562c12"
+      "bytes": 9549,
+      "sha256": "3218d252713368716a51c17e4fffc01f4a54e519a6fc8ec2de4e93da5919f54c"
     },
     {
       "path": "delivery/report-template.md",
@@ -1655,8 +1655,8 @@
     },
     {
       "path": "qa/change-log.js",
-      "bytes": 63802,
-      "sha256": "3bbad9370be874c9673389a3c3af3e647c77a9ff0eb8aac0b069b6635d86c9fe"
+      "bytes": 64005,
+      "sha256": "dceab5f78b34b67ddd5f9d41c41e8041bf27d4800602771ddef087abb6e8f92f"
     },
     {
       "path": "qa/changes.css",

@@ -7,14 +7,14 @@ document.querySelector('#followup-filter').addEventListener('change',e=>{
   const v=e.target.value;
   rows.querySelectorAll('.palette-row').forEach(r=>r.hidden=v!=='all'&&r.dataset.state!==v);
 });
-document.querySelector('#followup-track').addEventListener('click',()=>{
+document.querySelectorAll('[data-followup-track]').forEach(button=>button.addEventListener('click',()=>{
   const type=document.querySelector('#ck-type'),page=document.querySelector('#ck-page'),search=document.querySelector('#ck-search');
   if([...type.options].some(o=>o.value==='9 October follow-up')){
     page.value='all';search.value='';document.querySelector('#ck-status').value='all';
     type.value='9 October follow-up';type.dispatchEvent(new Event('change',{bubbles:true}));
   }
   document.querySelector('#checklist').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'});
-});
+}));
 let preview;
 try{preview=await mountAnimation(document.querySelector('#followup-login-icon'),'aloha');}
 catch{document.querySelector('#followup-login-icon').textContent='Open the QA login reference to preview.';}

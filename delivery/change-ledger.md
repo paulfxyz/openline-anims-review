@@ -35,7 +35,7 @@ Files: `qa/support/chat.js`, `qa/support/support.js`, `qa/support/support.css`, 
 - **Scope:** delivery
 - **Review:** [Open affected view](https://openline-anims-review.vercel.app/delivery#follow-up)
 
-A new prominent block records five confirmed palette gaps (Blog, Network, Security, AdBlocking, Unlimited), sampled Chrome/orange progress on IoT/Global, partial France integration, mobile visual parity, the reproduced help-input glitch, the neutral login tile and the required Figma/React/ZIP/Markdown final package.
+A top-of-page missing-items summary now precedes Paul’s intro, with five prioritised fix areas, separately labelled final-file requirements, and direct shortcuts to the follow-up checklist and evidence. The detailed review records five confirmed palette gaps (Blog, Network, Security, AdBlocking, Unlimited), sampled Chrome/orange progress on IoT/Global, partial France integration, mobile visual parity, the reproduced help-input glitch, the neutral login tile and the required Figma/React/ZIP/Markdown final package.
 
 Credit already observed integrations instead of calling everything missing. Use the original app screens as the mobile visual master; 16px/24px master payment type and 16px vertical padding differ from the extension’s 14px/19.6px and 12px. Mobile final handoff remains pending harmonisation. Add fresh checklist rows for this review, preserve previous progress links, and do not claim that a final Figma or integrated Irina source archive was inspected or received.
 
